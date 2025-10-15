@@ -1,0 +1,417 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model audit_log {
+  performed_action String    @db.VarChar(150)
+  date_time        DateTime? @default(now()) @db.Timestamp(6)
+  audit_id         Int       @id @default(autoincrement())
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model buy_records {
+  fund_id               Int
+  upload_id             Int
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  quantity              Int
+  price                 Decimal               @db.Decimal(12, 2)
+  txn_value             Decimal               @db.Decimal(16, 2)
+  commission_rate       String?               @default("") @db.VarChar(10)
+  commission_amount     Decimal?              @default(0) @db.Decimal(10, 2)
+  sebon_commission      Decimal?              @default(0) @db.Decimal(10, 2)
+  effective_rate        Decimal?              @default(0) @db.Decimal(10, 2)
+  net_payable           Decimal?              @default(0) @db.Decimal(16, 2)
+  transaction_date      DateTime              @db.Timestamp(6)
+  recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
+  contract_number       String                @id @db.VarChar(100)
+  fiscal_year_id        Int?
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: Cascade)
+  fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: Cascade)
+  uploads               uploads               @relation(fields: [upload_id], references: [upload_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model client_broker_mapping {
+  client_id                                                           String                  @id @db.VarChar(25)
+  fund_id                                                             Int
+  client_name                                                         String                  @db.VarChar(100)
+  client_broker                                                       Int
+  recorded_at                                                         DateTime?               @default(now()) @db.Timestamp(6)
+  boid                                                                String?                 @db.VarChar(100)
+  bonus_records                                                       bonus_records[]
+  buy_records                                                         buy_records[]
+  buy_records_staging                                                 buy_records_staging[]
+  cash_records                                                        cash_records[]
+  client_boid_mapping_client_broker_mapping_boidToclient_boid_mapping client_boid_mapping?    @relation("client_broker_mapping_boidToclient_boid_mapping", fields: [boid], references: [boid], onDelete: NoAction, onUpdate: NoAction)
+  funds                                                               funds                   @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  closeout_records                                                    closeout_records[]
+  fiscal_year_balance                                                 fiscal_year_balance[]
+  ipo_allotment_records                                               ipo_allotment_records[]
+  order_book                                                          order_book[]
+  promoter_records                                                    promoter_records[]
+  right_records                                                       right_records[]
+  sell_records                                                        sell_records[]
+  sell_records_staging                                                sell_records_staging[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model order_book {
+  upload_id             Int
+  contract_number       String                @id @db.VarChar(100)
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  transaction_type      String                @db.VarChar(10)
+  quantity              Int
+  price                 Decimal               @db.Decimal(12, 2)
+  txn_value             Decimal               @db.Decimal(16, 2)
+  transaction_date      DateTime              @db.Timestamp(6)
+  recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
+  fiscal_year_id        Int?
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
+  fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
+  uploads               uploads               @relation(fields: [upload_id], references: [upload_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model sell_records {
+  fund_id               Int
+  upload_id             Int
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  quantity              Int
+  price                 Decimal               @db.Decimal(12, 2)
+  txn_value             Decimal               @db.Decimal(16, 2)
+  commission_rate       String?               @default("") @db.VarChar(10)
+  commission_amount     Decimal?              @default(0) @db.Decimal(10, 2)
+  capital_gain_tax      Decimal?              @default(0) @db.Decimal(10, 2)
+  sebon_commission      Decimal?              @default(0) @db.Decimal(10, 2)
+  effective_rate        Decimal?              @default(0) @db.Decimal(10, 2)
+  net_receivable        Decimal?              @default(0) @db.Decimal(16, 2)
+  profit_loss           Decimal?              @default(0) @db.Decimal(14, 2)
+  transaction_date      DateTime              @db.Timestamp(6)
+  recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
+  approx_profit_loss    Decimal?              @db.Decimal(12, 2)
+  contract_number       String                @id @db.VarChar(100)
+  fiscal_year_id        Int?
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: Cascade)
+  fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: Cascade)
+  uploads               uploads               @relation(fields: [upload_id], references: [upload_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model uploads {
+  upload_id            Int                    @id @default(autoincrement())
+  file_name            String?                @db.VarChar(255)
+  uploaded_at          DateTime?              @default(now()) @db.Timestamp(6)
+  is_confirmed         Boolean?               @default(false)
+  buy_records          buy_records[]
+  buy_records_staging  buy_records_staging[]
+  order_book           order_book[]
+  pdf_records          pdf_records[]
+  sell_records         sell_records[]
+  sell_records_staging sell_records_staging[]
+}
+
+model users {
+  user_password String @db.VarChar(100)
+  user_email    String @id @db.VarChar(150)
+  user_id       Int    @default(autoincrement())
+}
+
+model fiscal_year_balance {
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  fiscal_year_id        Int
+  opening_quantity      Int?                  @default(0)
+  added_quantity        Int?                  @default(0)
+  closing_quantity      Int?                  @default(dbgenerated("(opening_quantity + added_quantity)"))
+  effective_rate        Decimal?              @db.Decimal(14, 2)
+  remarks               String?               @default("") @db.VarChar(300)
+  opening_rate          Decimal?              @default(0) @db.Decimal(14, 2)
+  demat                 Int?                  @default(0)
+  non_demat             Int?                  @default(dbgenerated("((opening_quantity + added_quantity) - demat)"))
+  fund_id               Int
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
+  fiscal_years          fiscal_years          @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([client_id, symbol, fiscal_year_id])
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model buy_records_staging {
+  fund_id               Int
+  upload_id             Int
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  quantity              Int
+  price                 Decimal               @db.Decimal(12, 2)
+  txn_value             Decimal               @db.Decimal(16, 2)
+  commission_rate       String?               @default("") @db.VarChar(10)
+  commission_amount     Decimal?              @default(0) @db.Decimal(10, 2)
+  sebon_commission      Decimal?              @default(0) @db.Decimal(10, 2)
+  effective_rate        Decimal?              @default(0) @db.Decimal(10, 2)
+  net_payable           Decimal?              @default(0) @db.Decimal(16, 2)
+  transaction_date      DateTime              @db.Timestamp(6)
+  recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
+  contract_number       String                @id @db.VarChar(100)
+  fiscal_year_id        Int?
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: Cascade)
+  fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: Cascade)
+  uploads               uploads               @relation(fields: [upload_id], references: [upload_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model fiscal_years {
+  fiscal_year_id         Int                     @id @default(autoincrement())
+  year_label             String                  @db.VarChar(20)
+  start_date             DateTime                @db.Date
+  end_date               DateTime                @db.Date
+  initial_balance_synced Boolean?                @default(false)
+  bonus_records          bonus_records[]
+  buy_records            buy_records[]
+  buy_records_staging    buy_records_staging[]
+  cash_records           cash_records[]
+  closeout_records       closeout_records[]
+  fiscal_year_balance    fiscal_year_balance[]
+  ipo_allotment_records  ipo_allotment_records[]
+  market_snapshots       market_snapshots[]
+  order_book             order_book[]
+  promoter_records       promoter_records[]
+  right_records          right_records[]
+  sell_records           sell_records[]
+  sell_records_staging   sell_records_staging[]
+  symbol_holdings        symbol_holdings[]
+}
+
+model funds {
+  fund_id               Int                     @id @default(autoincrement())
+  fund_name             String                  @db.VarChar(100)
+  uploaded_at           DateTime?               @default(now()) @db.Timestamp(6)
+  bonus_records         bonus_records[]
+  buy_records           buy_records[]
+  buy_records_staging   buy_records_staging[]
+  cash_records          cash_records[]
+  client_broker_mapping client_broker_mapping[]
+  closeout_records      closeout_records[]
+  fiscal_year_balance   fiscal_year_balance[]
+  ipo_allotment_records ipo_allotment_records[]
+  promoter_records      promoter_records[]
+  right_records         right_records[]
+  sell_records          sell_records[]
+  sell_records_staging  sell_records_staging[]
+  symbol_holdings       symbol_holdings[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model sell_records_staging {
+  fund_id               Int
+  upload_id             Int
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  quantity              Int
+  price                 Decimal               @db.Decimal(12, 2)
+  txn_value             Decimal               @db.Decimal(16, 2)
+  approx_profit_loss    Decimal?              @default(0) @db.Decimal(12, 2)
+  commission_rate       String?               @default("") @db.VarChar(10)
+  commission_amount     Decimal?              @default(0) @db.Decimal(10, 2)
+  capital_gain_tax      Decimal?              @default(0) @db.Decimal(10, 2)
+  sebon_commission      Decimal?              @default(0) @db.Decimal(10, 2)
+  effective_rate        Decimal?              @default(0) @db.Decimal(10, 2)
+  net_receivable        Decimal?              @default(0) @db.Decimal(16, 2)
+  profit_loss           Decimal?              @default(0) @db.Decimal(14, 2)
+  transaction_date      DateTime              @db.Timestamp(6)
+  recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
+  contract_number       String                @id @db.VarChar(100)
+  fiscal_year_id        Int?
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: Cascade)
+  fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: Cascade)
+  uploads               uploads               @relation(fields: [upload_id], references: [upload_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model stock_fulls {
+  symbol                String                  @id @db.VarChar(15)
+  full_form             String                  @db.VarChar(300)
+  sector_id             Int
+  is_auto_generated     Boolean?                @default(true)
+  bonus_records         bonus_records[]
+  buy_records           buy_records[]
+  buy_records_staging   buy_records_staging[]
+  cash_records          cash_records[]
+  closeout_records      closeout_records[]
+  fiscal_year_balance   fiscal_year_balance[]
+  ipo_allotment_records ipo_allotment_records[]
+  order_book            order_book[]
+  promoter_records      promoter_records[]
+  right_records         right_records[]
+  sell_records          sell_records[]
+  sell_records_staging  sell_records_staging[]
+  sectors               sectors                 @relation(fields: [sector_id], references: [sector_id], onDelete: NoAction, onUpdate: NoAction)
+  symbol_holdings       symbol_holdings[]
+}
+
+model bonus_records {
+  bonus_id              Int                   @id @default(autoincrement())
+  fund_id               Int
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  bonus_percent         Decimal               @db.Decimal(10, 2)
+  quantity              Int
+  bookclose_date        DateTime              @db.Date
+  effective_rate        Decimal               @default(0) @db.Decimal(12, 2)
+  fiscal_year_id        Int?
+  remarks               String?               @default("") @db.VarChar(300)
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
+  fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model cash_records {
+  cash_id               Int                   @id @default(autoincrement())
+  fund_id               Int
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  amount                Decimal               @db.Decimal(16, 2)
+  bookclose_date        DateTime              @db.Date
+  fiscal_year_id        Int?
+  recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
+  remarks               String?               @default("") @db.VarChar(300)
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
+  fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model promoter_records {
+  promoter_id           Int                   @id @default(autoincrement())
+  fund_id               Int
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  quantity              Int
+  effective_rate        Decimal               @default(0) @db.Decimal(12, 2)
+  total_value           Decimal?              @default(dbgenerated("((quantity)::numeric * effective_rate)")) @db.Decimal(16, 2)
+  fiscal_year_id        Int?
+  recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
+  added_at              DateTime?             @db.Date
+  remarks               String?               @default("") @db.VarChar(300)
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
+  fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model right_records {
+  right_id              Int                   @id @default(autoincrement())
+  fund_id               Int
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  right_ratio           String                @db.VarChar(12)
+  bookclose_date        DateTime              @db.Date
+  quantity              Int
+  effective_rate        Decimal               @default(0) @db.Decimal(12, 2)
+  fiscal_year_id        Int?
+  total_value           Decimal?              @default(dbgenerated("((quantity)::numeric * effective_rate)")) @db.Decimal(16, 2)
+  remarks               String?               @default("") @db.VarChar(300)
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
+  fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model sectors {
+  sector_id       Int           @id
+  sector_name     String        @db.VarChar(150)
+  instrument_type String        @db.VarChar(150)
+  stock_fulls     stock_fulls[]
+}
+
+model client_boid_mapping {
+  boid                                                                  String                  @id @db.VarChar(100)
+  dp_name                                                               String                  @db.VarChar(300)
+  client_id                                                             String                  @db.VarChar(100)
+  client_broker_mapping_client_broker_mapping_boidToclient_boid_mapping client_broker_mapping[] @relation("client_broker_mapping_boidToclient_boid_mapping")
+}
+
+model pdf_records {
+  pdf_id       Int      @id @default(autoincrement())
+  is_confirmed Boolean? @default(false)
+  upload_id    Int
+  dp_amount    Decimal  @default(0) @db.Decimal(10, 2)
+  uploads      uploads  @relation(fields: [upload_id], references: [upload_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model closeout_records {
+  closeout_id           Int                   @id @default(autoincrement())
+  fund_id               Int
+  fiscal_year_id        Int
+  client_id             String                @db.VarChar(25)
+  symbol                String                @db.VarChar(15)
+  closeout_quantity     Int
+  closeout_amount       Decimal               @db.Decimal(14, 2)
+  closeout_date         DateTime              @db.Date
+  recorded_at           DateTime              @default(now()) @db.Timestamp(6)
+  remarks               String?               @default("") @db.VarChar(300)
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
+  fiscal_years          fiscal_years          @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model ipo_allotment_records {
+  allotment_id          Int                   @id @default(autoincrement())
+  fund_id               Int
+  client_id             String                @db.VarChar(25)
+  quantity              Int
+  effective_rate        Decimal               @db.Decimal(14, 2)
+  total_value           Decimal?              @default(dbgenerated("((quantity)::numeric * effective_rate)")) @db.Decimal(16, 2)
+  fiscal_year_id        Int?
+  recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
+  added_at              DateTime              @db.Date
+  remarks               String?               @default("") @db.VarChar(300)
+  symbol                String                @db.VarChar(15)
+  client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
+  fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model market_snapshots {
+  id             Int          @id @default(autoincrement())
+  symbol         String       @db.VarChar(15)
+  fiscal_year_id Int
+  ltp            Decimal      @db.Decimal(14, 2)
+  snapshot_date  DateTime     @db.Timestamptz(6)
+  recorded_at    DateTime     @default(now()) @db.Timestamptz(6)
+  fiscal_years   fiscal_years @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onUpdate: NoAction)
+
+  @@unique([symbol, fiscal_year_id], map: "market_snapshots_symbol_fy_unique")
+}
+
+model symbol_holdings {
+  symbol         String       @db.VarChar(15)
+  fund_id        Int
+  fiscal_year_id Int
+  wacc           Decimal      @default(0) @db.Decimal(14, 2)
+  remarks        String?      @default("") @db.VarChar(300)
+  quantity       Int?         @default(0)
+  fiscal_years   fiscal_years @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds          funds        @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls    stock_fulls  @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([symbol, fund_id, fiscal_year_id])
+}
