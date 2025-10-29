@@ -40,7 +40,8 @@ import {
   getDividendInfoFiscal,
   getPortfolioGainersLosersFiscal,
   getInvestmentHighlightsFiscal,
-  getComprehensivePortfolioFiscal
+  getComprehensivePortfolioFiscal,
+  getFiscalID
 } from "@/app/api/graphsPageFiscalAPI/actions"
 import { 
   getCurrentFiscalYear,
@@ -86,6 +87,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts"
+import { prisma } from "@/lib/db"
 
 // Type definitions
 type userList = {
@@ -220,7 +222,10 @@ export default function GraphPageComponent() {
   
   // Fiscal year states
   const [fiscalYears, setFiscalYears] = useState<FiscalYearType[]>([])
-  const [selectedFiscalYear, setSelectedFiscalYear] = useState<number | null>(null)
+
+  
+
+  const [selectedFiscalYear, setSelectedFiscalYear] = useState<number>(0)
   const [useFiscalYearData, setUseFiscalYearData] = useState<boolean>(false)
   
   // Pagination state for comprehensive portfolio
@@ -317,7 +322,10 @@ export default function GraphPageComponent() {
         }, 200);
       } else {
         // Fetch current data (original logic)
-        const highlights = await getInvestmentHighlights(selectValue);
+        const currentID = await getFiscalID()
+        setSelectedFiscalYear(currentID)
+
+        const highlights = await getInvestmentHighlightsFiscal(selectValue, selectedFiscalYear);
         setInvestmentHighlights(highlights);
         
         // Show initial data, then load the rest

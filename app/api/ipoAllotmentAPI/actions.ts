@@ -366,7 +366,7 @@ export async function deleteIPOAllotmentStaging(stagingId: number) {
     }
 }
 
-export async function dematerializeIPOStaging(stagingId: number, clientId: string) {
+export async function dematerializeIPOStaging(stagingId: number, clientId: string, clientTrading: string) {
     try {
         // Validate client_id
         if (!clientId || clientId.trim() === '') {
@@ -397,6 +397,8 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
         }
 
         // Transfer to ipo_allotment_records (total_value is auto-generated)
+
+        if (clientTrading == "TRADING") {
         await prisma.ipo_allotment_records.create({
             data: {
                 fund_id: stagingRecord.fund_id,
@@ -422,6 +424,35 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
                 performed_action: `Dematerialized IPO Allotment: ${stagingRecord.stock_fulls.symbol} (${stagingRecord.quantity} shares) to Client ${clientId}`
             }
         });
+    } else if (clientTrading == "PROMOTER") {
+
+        await prisma.promoter_records.create({
+            data: {
+                fund_id: stagingRecord.fund_id,
+                client_id: clientId,
+                symbol: stagingRecord.symbol,
+                quantity: stagingRecord.quantity,
+                effective_rate: stagingRecord.effective_rate,
+                added_at: stagingRecord.added_at,
+                fiscal_year_id: stagingRecord.fiscal_year_id,
+                sub_id: stagingRecord.sub_id,
+                remarks: `Dematerialized from staging on ${new Date().toLocaleDateString()}`
+            }
+        });
+
+        // Delete from staging
+        await prisma.ipo_allotment_staging.delete({
+            where: { allotment_staging_id: stagingId }
+        });
+
+        // Create audit log
+        await prisma.audit_log.create({
+            data: {
+                performed_action: `Dematerialized IPO Allotment: ${stagingRecord.stock_fulls.symbol} (${stagingRecord.quantity} shares) to Client ${clientId}`
+            }
+        });
+
+    }
 
         return {
             success: true,

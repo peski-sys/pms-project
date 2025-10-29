@@ -255,6 +255,7 @@ export default function ManualHistoryComponent() {
   const [dematerializeDialogOpen, setDematerializeDialogOpen] = useState(false);
   const [selectedStagingRecord, setSelectedStagingRecord] = useState<IPOAllotmentStagingRecord | null>(null);
   const [clientIdForDemat, setClientIdForDemat] = useState<string>('');
+  const [clientTradingForDemat, setClientTradingForDemat] = useState<string>('');
   const [dematerializeLoading, setDematerializeLoading] = useState(false);
   
   // Pagination states for each tab
@@ -449,14 +450,14 @@ export default function ManualHistoryComponent() {
   };
 
   const handleDematerialize = async () => {
-    if (!selectedStagingRecord || !clientIdForDemat.trim()) {
+    if (!selectedStagingRecord || !clientIdForDemat.trim() || !clientTradingForDemat.trim()) {
       toast.error('Please select a client');
       return;
     }
 
     setDematerializeLoading(true);
     try {
-      const result = await dematerializeIPOStaging(selectedStagingRecord.allotment_staging_id, clientIdForDemat);
+      const result = await dematerializeIPOStaging(selectedStagingRecord.allotment_staging_id, clientIdForDemat, clientTradingForDemat);
       if (result.success) {
         setIPOAllotmentStagingRecords(prev => 
           prev.filter(record => record.allotment_staging_id !== selectedStagingRecord.allotment_staging_id)
@@ -465,6 +466,7 @@ export default function ManualHistoryComponent() {
         setDematerializeDialogOpen(false);
         setSelectedStagingRecord(null);
         setClientIdForDemat('');
+        setClientTradingForDemat('')
         // Refresh records to show in IPO Allotment tab
         const fiscalYearId = selectedFiscalYear ? Number(selectedFiscalYear) : undefined;
         fetchAllRecords(selectedFund, fiscalYearId);
@@ -1435,6 +1437,7 @@ export default function ManualHistoryComponent() {
                                 if (!open) {
                                   setSelectedStagingRecord(null);
                                   setClientIdForDemat('');
+                                  setClientTradingForDemat('');
                                 }
                               }}>
                                 <DialogTrigger asChild>
@@ -1477,12 +1480,25 @@ export default function ManualHistoryComponent() {
                                         </SelectContent>
                                       </Select>
                                     </div>
+                                      <div className="grid gap-2">
+                                      <Label htmlFor="client-id">Set as Held For:</Label>
+                                      <Select value={clientTradingForDemat} onValueChange={setClientTradingForDemat}>
+                                        <SelectTrigger className="w-full">
+                                          <SelectValue placeholder="Select a client" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="TRADING">Trading</SelectItem>
+                                          <SelectItem value="PROMOTER">Maturity</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
                                   </div>
                                   <DialogFooter>
                                     <Button variant="outline" onClick={() => {
                                       setDematerializeDialogOpen(false);
                                       setSelectedStagingRecord(null);
                                       setClientIdForDemat('');
+                                      setClientTradingForDemat('');
                                     }}>Cancel</Button>
                                     <Button 
                                       onClick={handleDematerialize} 

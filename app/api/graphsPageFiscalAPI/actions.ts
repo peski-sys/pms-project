@@ -22,10 +22,12 @@ export async function getSectorAllocationFiscal(selectUser: string, fiscalYearId
     try {
         const fiscalYearBalances = await prisma.fiscal_year_balance.findMany({
             where: {
+                
                 fiscal_year_id: fiscalYearId,
                 client_broker_mapping: {
                     client_name: selectUser,
                 },
+                source_type: "TRADING",
             },
             select: {
                 symbol: true,
@@ -78,16 +80,34 @@ export async function getSectorAllocationFiscal(selectUser: string, fiscalYearId
     }
 }
 
+export async function getFiscalID() {
+    const currentDate = new Date().toISOString()
+    const currentID = await prisma.fiscal_years.findMany({
+        where: {
+            start_date: {
+                lte: currentDate
+            },
+            end_date: {
+                gte: currentDate
+            },
+        }
+    })
+    const finalDate = currentID[0].fiscal_year_id
+    return finalDate
+}
+
 // Get investment highlights using fiscal year data
 export async function getInvestmentHighlightsFiscal(selectUser: string, fiscalYearId: number) {
     try {
         // Get trading securities total investment from fiscal_year_balance
         const tradingSecurities = await prisma.fiscal_year_balance.aggregate({
             where: {
+                
                 fiscal_year_id: fiscalYearId,
                 client_broker_mapping: {
                     client_name: selectUser,
                 },
+                source_type: "TRADING",
             },
             _sum: {
                 closing_quantity: true
@@ -97,10 +117,12 @@ export async function getInvestmentHighlightsFiscal(selectUser: string, fiscalYe
         // Get fiscal year balances for calculation
         const fiscalBalances = await prisma.fiscal_year_balance.findMany({
             where: {
+                
                 fiscal_year_id: fiscalYearId,
                 client_broker_mapping: {
                     client_name: selectUser,
                 },
+                source_type: "TRADING",
             },
             select: {
                 symbol: true,
@@ -255,6 +277,7 @@ export async function getComprehensivePortfolioFiscal(selectUser: string, fiscal
                 client_broker_mapping: {
                     client_name: selectUser,
                 },
+                source_type: "TRADING",
             },
             select: {
                 symbol: true,
@@ -334,10 +357,12 @@ export async function getPortfolioGainersLosersFiscal(selectUser: string, fiscal
     try {
         const fiscalBalances = await prisma.fiscal_year_balance.findMany({
             where: {
+                
                 fiscal_year_id: fiscalYearId,
                 client_broker_mapping: {
                     client_name: selectUser,
                 },
+                source_type: "TRADING",
             },
             select: {
                 symbol: true,
