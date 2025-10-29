@@ -194,6 +194,7 @@ async function _getUnrealizedGainsFiscal(selectUser: string, fiscalYearId: numbe
                 client_broker_mapping: {
                     client_name: selectUser,
                 },
+                source_type: "TRADING",
             },
             select: {
                 symbol: true,

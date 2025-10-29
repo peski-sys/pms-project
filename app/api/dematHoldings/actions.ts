@@ -208,9 +208,9 @@ export async function getDematHoldings(clientName: string, fiscalYearId?: number
       },
       fiscal_year_id: targetFiscalYearId,
       // Only include records where we have some demat quantity
-      demat: {
-        gt: 0
-      }
+      // demat: {
+      //   gt: 0
+      // }
     },
     select: {
       symbol: true,

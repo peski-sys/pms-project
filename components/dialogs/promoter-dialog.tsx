@@ -27,6 +27,7 @@ import { uploadPromoter } from "@/app/api/sidebarAPIs/actions"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { fetchClientsFor, getFunds } from "@/app/api/fundsAPI/actions"
+import { getSubClasses } from "@/app/api/subClassApiCalls/actions"
 import { Users } from "lucide-react"
 
 type response_funds = {
@@ -42,6 +43,15 @@ type cbMAP = {
   recorded_at: Date | null,
 }
 
+type SubClass = {
+  sub_id: number
+  fund_id: number
+  sub_name: string
+  funds: {
+    fund_name: string
+  }
+}
+
 interface PromoterDialogProps {
   onSuccess?: () => void;
 }
@@ -53,6 +63,8 @@ export function PromoterDialog({ onSuccess }: PromoterDialogProps) {
   const [listFunds, setListFunds] = useState<response_funds[]>()
   const [currentClient, setCurrentClient] = useState<string>('')
   const [listClients, setListClients] = useState<cbMAP[]>()
+  const [currentSubClass, setCurrentSubClass] = useState<string>('')
+  const [listSubClasses, setListSubClasses] = useState<SubClass[]>()
 
   const fetchFunds = async () => {
     const fetch_funds: response_funds[] = await getFunds();
@@ -68,12 +80,26 @@ export function PromoterDialog({ onSuccess }: PromoterDialogProps) {
     setListClients(fetch_clients)
   }
 
+  const fetchSubClasses = async () => {
+    const fetch_subclasses: SubClass[] = await getSubClasses()
+    const filteredSubClasses = fetch_subclasses.filter(sc => sc.funds.fund_name === currentFund)
+    setListSubClasses(filteredSubClasses)
+    // Set first sub class as default if available
+    if (filteredSubClasses.length > 0 && !currentSubClass) {
+      setCurrentSubClass(filteredSubClasses[0].sub_id.toString())
+    }
+  }
+
   const setFund = (value: string) => {
     setCurrentFund(value)
   }
 
   const setClient = (value: string) => {
     setCurrentClient(value)
+  }
+
+  const setSubClass = (value: string) => {
+    setCurrentSubClass(value)
   }
 
   useEffect(() => {
@@ -85,6 +111,7 @@ export function PromoterDialog({ onSuccess }: PromoterDialogProps) {
   useEffect(() => {
     if (currentFund) {
       fetchClients();
+      fetchSubClasses();
     }
   }, [currentFund])
 
@@ -99,6 +126,11 @@ export function PromoterDialog({ onSuccess }: PromoterDialogProps) {
       return
     }
 
+    if (!currentSubClass) {
+      toast.error('Please select a sub class.')
+      return
+    }
+
     if (!stock_symbol || !stock_quantity || !stock_price || !stock_added_at) {
       toast.error('Please fill in all required fields.')
       return
@@ -106,13 +138,14 @@ export function PromoterDialog({ onSuccess }: PromoterDialogProps) {
 
     try {
       setIsLoading(true);
-      await uploadPromoter(currentFund, currentClient, stock_symbol, stock_quantity, stock_price, stock_added_at)
+      await uploadPromoter(currentFund, currentClient, stock_symbol, stock_quantity, stock_price, stock_added_at, parseInt(currentSubClass))
       toast.success('Promoter shares added successfully!')
       setIsOpen(false);
       onSuccess?.();
       // Reset form
       setCurrentFund('');
       setCurrentClient('');
+      setCurrentSubClass('');
     } catch (error) {
       console.error('Error adding promoter shares:', error)
       toast.error('Failed to add promoter shares. Please try again.')
@@ -190,6 +223,22 @@ export function PromoterDialog({ onSuccess }: PromoterDialogProps) {
               <div className="grid gap-3">
                 <Label htmlFor="given_date">Added At</Label>
                 <Input name="given_date" type="date" required />
+              </div>
+
+              <div className="grid gap-3">
+                <Label htmlFor="sub_class">Sub Class</Label>
+                <Select name="sub_class" onValueChange={setSubClass} value={currentSubClass} required>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Sub Class" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {listSubClasses?.map((subClass) => (
+                      <SelectItem value={subClass.sub_id.toString()} key={subClass.sub_id}>
+                        {subClass.sub_name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </CardContent>
 

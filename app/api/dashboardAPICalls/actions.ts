@@ -248,6 +248,7 @@ async function _dashboardHoldings(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "TRADING",
         },
         select: {
             symbol: true,
@@ -317,6 +318,7 @@ async function _scripCount(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "TRADING",
         },
         select: {
             symbol: true,
@@ -388,6 +390,7 @@ async function _getUnrealizedGains(selectUser: string) {
                 client_broker_mapping: {
                     client_name: selectUser,
                 },
+                source_type: "TRADING",
             },
             select: {
                 symbol: true,
@@ -506,6 +509,7 @@ export async function getInvestmentBreakdown(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "TRADING",
         },
         select: {
             symbol: true,
@@ -658,6 +662,7 @@ export async function getStockInvestmentBreakdown(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "TRADING"
         },
         select: {
             symbol: true,
@@ -769,6 +774,7 @@ export async function getSectorAllocation(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "TRADING"
         },
         select: {
             symbol: true,
@@ -841,6 +847,7 @@ export async function getComprehensivePortfolio(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "TRADING"
         },
         select: {
             symbol: true,
@@ -989,6 +996,7 @@ export async function getSectorPortfolioSummary(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "TRADING"
         },
         select: {
             symbol: true,

@@ -67,6 +67,7 @@ export async function getMetricDataTrading(currentFund: string, fiscalID: string
             client_broker_mapping: {
                 client_name: given_fund
             },
+            source_type: "TRADING",
             closing_quantity: {
                 gt: 0 // Only get holdings with positive quantities
             }
@@ -123,7 +124,8 @@ export async function getMetricDataTrading(currentFund: string, fiscalID: string
             fiscal_year_id: previousFiscalYear.fiscal_year_id,
             client_broker_mapping: {
                 client_name: given_fund
-            }
+            },
+            source_type: "TRADING",
         },
         select: {
             symbol: true,
@@ -372,7 +374,8 @@ export async function getMetricDataPromoter(currentFund: string, fiscalID: strin
             fiscal_year_id: previousFiscalYear.fiscal_year_id,
             client_broker_mapping: {
                 client_name: given_fund
-            }
+            },
+            source_type: "TRADING",
         },
         select: {
             symbol: true,
@@ -465,7 +468,8 @@ export async function getFilterSymbols(currentFund: string, fiscalID: string) {
             funds: {
                 fund_name: given_fund,
             },
-            fiscal_year_id: given_fiscal
+            fiscal_year_id: given_fiscal,
+            source_type: "TRADING"
         },
         orderBy: {
             symbol: "asc"
@@ -565,7 +569,8 @@ export async function getFilterSymbols(currentFund: string, fiscalID: string) {
             funds: {
                 fund_name: given_fund,
             },
-            fiscal_year_id: given_fiscal
+            fiscal_year_id: given_fiscal,
+            source_type: "TRADING",
         },
         orderBy: {
             symbol: "asc"

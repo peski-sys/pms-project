@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -36,7 +37,7 @@ import { Pagination } from "@/components/ui/pagination"
 import { useState, useEffect, useMemo } from "react"
 import { getUsers } from "@/app/api/dashboardAPICalls/actions"
 import { getFiscal } from "@/app/api/fiscalAPI/actions"
-import { getMetricDataTradingFiscal, getMetricDataPromoterFiscal } from "@/app/api/secondDashboardFiscalAPI/actions"
+import { getMetricDataTradingFiscal, getMetricDataPromoterFiscal, getSubClassesForFund, getMetricDataSubClassFiscal } from "@/app/api/secondDashboardFiscalAPI/actions"
 import { universalExport } from "@/app/api/universalExport/actions"
 import { triggerFileDownload } from "@/lib/downloadUtils"
 import { toast } from "sonner"
@@ -116,6 +117,8 @@ export default function DashboardTwo() {
   const [currentFund, setcurrentFund] = useState<string>('')
   const [tradingData, setTradingData] = useState<MetricData[]>([])
   const [promoterData, setPromoterData] = useState<MetricData[]>([])
+  const [subClasses, setSubClasses] = useState<{sub_id: number, sub_name: string}[]>([])
+  const [subClassData, setSubClassData] = useState<Map<number, MetricData[]>>(new Map())
   const [isLoading, setIsLoading] = useState(false)
   const [isExporting, setIsExporting] = useState(false)
   const [isLoadingMain, setisLoadingMain] = useState(true)
@@ -127,6 +130,10 @@ export default function DashboardTwo() {
   // Pagination states for promoter table
   const [promoterCurrentPage, setPromoterCurrentPage] = useState(1)
   const promoterItemsPerPage = 10
+  
+  // Pagination states for sub class tables
+  const [subClassCurrentPages, setSubClassCurrentPages] = useState<Map<number, number>>(new Map())
+  const subClassItemsPerPage = 10
 
   // Consolidation function for trading data
   const consolidateTradingData = (data: MetricData[]) => {
@@ -217,6 +224,91 @@ export default function DashboardTwo() {
   // Calculate total pages
   const tradingTotalPages = Math.ceil(consolidatedTradingData.length / tradingItemsPerPage)
   const promoterTotalPages = Math.ceil(promoterData.length / promoterItemsPerPage)
+  
+  // Calculate totals for trading table
+  const tradingTotals = useMemo(() => {
+    return consolidatedTradingData.reduce((totals, item) => {
+      return {
+        opening_quantity: totals.opening_quantity + item.opening_quantity,
+        opening_amount: totals.opening_amount + item.opening_amount,
+        purchase_quantity: totals.purchase_quantity + item.purchase_quantity,
+        purchase_amount: totals.purchase_amount + item.purchase_amount,
+        right_quantity: totals.right_quantity + item.right_quantity,
+        right_total: totals.right_total + item.right_total,
+        bonus_quantity: totals.bonus_quantity + item.bonus_quantity,
+        sales_quantity: totals.sales_quantity + item.sales_quantity,
+        sales_cost: totals.sales_cost + item.sales_cost,
+        sales_amount: totals.sales_amount + item.sales_amount,
+        sales_profit: totals.sales_profit + item.sales_profit,
+        closing_quantity: totals.closing_quantity + item.closing_quantity,
+        closing_amount: totals.closing_amount + item.closing_amount,
+        demat: totals.demat + item.demat,
+        non_demat: totals.non_demat + item.non_demat,
+        unrealised_amount: totals.unrealised_amount + item.unrealised_amount
+      }
+    }, {
+      opening_quantity: 0, opening_amount: 0, purchase_quantity: 0, purchase_amount: 0,
+      right_quantity: 0, right_total: 0, bonus_quantity: 0, sales_quantity: 0,
+      sales_cost: 0, sales_amount: 0, sales_profit: 0, closing_quantity: 0,
+      closing_amount: 0, demat: 0, non_demat: 0, unrealised_amount: 0
+    })
+  }, [consolidatedTradingData])
+  
+  // Calculate total return percentage for trading
+  const tradingTotalReturnPercent = tradingTotals.closing_amount > 0 
+    ? (tradingTotals.unrealised_amount / tradingTotals.closing_amount) * 100 
+    : 0
+    
+  // Calculate totals for promoter table
+  const promoterTotals = useMemo(() => {
+    return promoterData.reduce((totals, item) => {
+      const marketValue = item.closing_quantity * item.market_price
+      return {
+        opening_quantity: totals.opening_quantity + item.opening_quantity,
+        opening_amount: totals.opening_amount + item.opening_amount,
+        closing_quantity: totals.closing_quantity + item.closing_quantity,
+        closing_amount: totals.closing_amount + item.closing_amount,
+        demat: totals.demat + item.demat,
+        non_demat: totals.non_demat + item.non_demat,
+        market_value: totals.market_value + marketValue,
+        unrealised_amount: totals.unrealised_amount + item.unrealised_amount
+      }
+    }, {
+      opening_quantity: 0, opening_amount: 0, closing_quantity: 0, closing_amount: 0,
+      demat: 0, non_demat: 0, market_value: 0, unrealised_amount: 0
+    })
+  }, [promoterData])
+  
+  // Calculate total return percentage for promoter
+  const promoterTotalReturnPercent = promoterTotals.closing_amount > 0 
+    ? (promoterTotals.unrealised_amount / promoterTotals.closing_amount) * 100 
+    : 0
+    
+  // Function to calculate totals for sub class data
+  const calculateSubClassTotals = (data: MetricData[]) => {
+    const totals = data.reduce((totals, item) => {
+      const marketValue = item.closing_quantity * item.market_price
+      return {
+        opening_quantity: totals.opening_quantity + item.opening_quantity,
+        opening_amount: totals.opening_amount + item.opening_amount,
+        closing_quantity: totals.closing_quantity + item.closing_quantity,
+        closing_amount: totals.closing_amount + item.closing_amount,
+        demat: totals.demat + item.demat,
+        non_demat: totals.non_demat + item.non_demat,
+        market_value: totals.market_value + marketValue,
+        unrealised_amount: totals.unrealised_amount + item.unrealised_amount
+      }
+    }, {
+      opening_quantity: 0, opening_amount: 0, closing_quantity: 0, closing_amount: 0,
+      demat: 0, non_demat: 0, market_value: 0, unrealised_amount: 0
+    })
+    
+    const totalReturnPercent = totals.closing_amount > 0 
+      ? (totals.unrealised_amount / totals.closing_amount) * 100 
+      : 0
+      
+    return { ...totals, totalReturnPercent }
+  }
 
   const userFetch = async () => {
       const userss: cbMAP[] = await getUsers();
@@ -250,13 +342,36 @@ export default function DashboardTwo() {
     
     setIsLoading(true)
     try {
-      const [tradingResponse, promoterResponse] = await Promise.all([
+      // Fetch trading, promoter, and sub classes data
+      const [tradingResponse, promoterResponse, subClassesResponse] = await Promise.all([
         getMetricDataTradingFiscal(currentFund, fiscalID),
-        getMetricDataPromoterFiscal(currentFund, fiscalID)
+        getMetricDataPromoterFiscal(currentFund, fiscalID),
+        getSubClassesForFund(currentFund, fiscalID)
       ])
       
       setTradingData(tradingResponse)
       setPromoterData(promoterResponse)
+      setSubClasses(subClassesResponse)
+      
+      // Fetch data for each sub class
+      if (subClassesResponse.length > 0) {
+        const subClassDataPromises = subClassesResponse.map(async (subClass) => {
+          const data = await getMetricDataSubClassFiscal(currentFund, fiscalID, subClass.sub_id)
+          return [subClass.sub_id, data] as [number, MetricData[]]
+        })
+        
+        const subClassResults = await Promise.all(subClassDataPromises)
+        const newSubClassData = new Map(subClassResults)
+        setSubClassData(newSubClassData)
+        
+        // Initialize pagination for sub classes
+        const initialPages = new Map()
+        subClassesResponse.forEach(sc => initialPages.set(sc.sub_id, 1))
+        setSubClassCurrentPages(initialPages)
+      } else {
+        setSubClassData(new Map())
+        setSubClassCurrentPages(new Map())
+      }
     } catch (error) {
       console.error('Error fetching metric data:', error)
     } finally {
@@ -274,6 +389,12 @@ export default function DashboardTwo() {
 
   const handlePromoterPageChange = (page: number) => {
     setPromoterCurrentPage(page)
+  }
+
+  const handleSubClassPageChange = (subClassId: number, page: number) => {
+    const newPages = new Map(subClassCurrentPages)
+    newPages.set(subClassId, page)
+    setSubClassCurrentPages(newPages)
   }
 
   async function handleExport() {
@@ -325,6 +446,154 @@ export default function DashboardTwo() {
       setIsExporting(false)
     }
   }
+
+  // Component to render sub class tables
+  const renderSubClassTable = (subClass: {sub_id: number, sub_name: string}) => {
+    const data = subClassData.get(subClass.sub_id) || []
+    const currentPage = subClassCurrentPages.get(subClass.sub_id) || 1
+    const startIndex = (currentPage - 1) * subClassItemsPerPage
+    const endIndex = startIndex + subClassItemsPerPage
+    const paginatedData = data.slice(startIndex, endIndex)
+    const totalPages = Math.ceil(data.length / subClassItemsPerPage)
+    const subClassTotals = calculateSubClassTotals(data)
+
+    return (
+      <Card key={subClass.sub_id} className="bg-white shadow-sm border border-gray-200 mb-6">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-semibold text-gray-900">{subClass.sub_name}</CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <Table className="min-w-full">
+              <TableHeader>
+                <TableRow>
+                  <TableHead rowSpan={2} className="text-center border-r">Company</TableHead>
+                  <TableHead rowSpan={2} className="text-center border-r">Code</TableHead>
+                  <TableHead rowSpan={2} className="text-center border-r">Category</TableHead>
+                  <TableHead colSpan={3} className="text-center border-r">Opening</TableHead>
+                  <TableHead colSpan={3} className="text-center border-r">Closing</TableHead>
+                  <TableHead colSpan={2} className="text-center border-r">Actual Closing</TableHead>
+                  <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
+                  <TableHead rowSpan={2} className="text-center border-r">Market Value</TableHead>
+                  <TableHead rowSpan={2} className="text-center border-r">Unrealised Amount</TableHead>
+                  <TableHead rowSpan={2} className="text-center border-r">Today %</TableHead>
+                  <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
+                </TableRow>
+                
+                <TableRow>
+                  <TableHead className="text-center">Quantity</TableHead>
+                  <TableHead className="text-center">Rate</TableHead>
+                  <TableHead className="text-center border-r">Amount</TableHead>
+                  <TableHead className="text-center">Quantity</TableHead>
+                  <TableHead className="text-center">Rate</TableHead>
+                  <TableHead className="text-center border-r">Amount</TableHead>
+                  <TableHead className="text-center">DEMAT</TableHead>
+                  <TableHead className="text-center border-r">NON-DEMAT</TableHead>
+                </TableRow>
+              </TableHeader>
+              
+              <TableBody>
+                {isLoading ? (
+                  <TableRow>
+                    <TableCell colSpan={14} className="text-center py-8">
+                      Loading {subClass.sub_name} data...
+                    </TableCell>
+                  </TableRow>
+                ) : paginatedData.length > 0 ? (
+                  paginatedData.map((data, index) => (
+                    <TableRow key={`subclass-${subClass.sub_id}-${data.code}-${index}`}>
+                      <TableCell className="font-medium border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.company}</Link></TableCell>
+                      <TableCell className="text-center border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.code}</Link></TableCell>
+                      <TableCell className="text-center border-r">{data.category}</TableCell>
+                      <TableCell className="text-center">{data.opening_quantity.toLocaleString()}</TableCell>
+                      <TableCell className="text-center">Rs. {data.opening_rate.toFixed(2)}</TableCell>
+                      <TableCell className="text-center border-r">Rs. {data.opening_amount.toLocaleString()}</TableCell>
+                      <TableCell className="text-center">{data.closing_quantity.toLocaleString()}</TableCell>
+                      <TableCell className="text-center">Rs. {data.closing_rate.toFixed(2)}</TableCell>
+                      <TableCell className="text-center border-r">Rs. {data.closing_amount.toLocaleString()}</TableCell>
+                      <TableCell className="text-center">{data.demat.toLocaleString()}</TableCell>
+                      <TableCell className="text-center border-r">{data.non_demat.toLocaleString()}</TableCell>
+                      <TableCell className="text-center border-r font-semibold">Rs. {data.market_price.toFixed(2)}</TableCell>
+                      <TableCell className="text-center border-r font-semibold">Rs. {(data.closing_quantity * data.market_price).toLocaleString()}</TableCell>
+                      <TableCell className={`text-center border-r font-semibold ${
+                        data.unrealised_amount >= 0 ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                        Rs. {data.unrealised_amount.toLocaleString()}
+                      </TableCell>
+                      <TableCell className={`text-center font-semibold ${
+                        data.today_return_percent >= 0 ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                        {data.today_return_percent.toFixed(2)}%
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <InlineRemarks
+                          initial={data.remarks || ''}
+                          onSave={async (value) => {
+                            if (!fiscalID) return;
+                            await savePromoterRemarks({ clientName: currentFund, fiscalYearId: Number(fiscalID), symbol: data.code, remarks: value })
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={14} className="text-center py-8 text-gray-500">
+                      No {subClass.sub_name} securities found.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+              
+              {/* Sub Class Table Footer with Totals */}
+              {data.length > 0 && (
+                <TableFooter>
+                  <TableRow className="bg-gray-100 font-semibold">
+                    <TableCell className="font-bold border-r">TOTAL</TableCell>
+                    <TableCell className="border-r">-</TableCell>
+                    <TableCell className="border-r">-</TableCell>
+                    <TableCell className="text-center">{subClassTotals.opening_quantity.toLocaleString()}</TableCell>
+                    <TableCell className="text-center">-</TableCell>
+                    <TableCell className="text-center border-r">Rs. {subClassTotals.opening_amount.toLocaleString()}</TableCell>
+                    <TableCell className="text-center">{subClassTotals.closing_quantity.toLocaleString()}</TableCell>
+                    <TableCell className="text-center">-</TableCell>
+                    <TableCell className="text-center border-r">Rs. {subClassTotals.closing_amount.toLocaleString()}</TableCell>
+                    <TableCell className="text-center">{subClassTotals.demat.toLocaleString()}</TableCell>
+                    <TableCell className="text-center border-r">{subClassTotals.non_demat.toLocaleString()}</TableCell>
+                    <TableCell className="text-center border-r">-</TableCell>
+                    <TableCell className="text-center border-r font-bold">Rs. {subClassTotals.market_value.toLocaleString()}</TableCell>
+                    <TableCell className={`text-center border-r font-bold ${
+                      subClassTotals.unrealised_amount >= 0 ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      Rs. {subClassTotals.unrealised_amount.toLocaleString()}
+                    </TableCell>
+                    <TableCell className={`text-center font-bold ${
+                      subClassTotals.totalReturnPercent >= 0 ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      {subClassTotals.totalReturnPercent.toFixed(2)}%
+                    </TableCell>
+                    <TableCell className="text-center">-</TableCell>
+                  </TableRow>
+                </TableFooter>
+              )}
+            </Table>
+          </div>
+          
+          {/* Sub Class Table Pagination */}
+          {data.length > subClassItemsPerPage && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => handleSubClassPageChange(subClass.sub_id, page)}
+              itemsPerPage={subClassItemsPerPage}
+              totalItems={data.length}
+            />
+          )}
+        </CardContent>
+      </Card>
+    )
+  }
+
   return (
     isLoadingMain ? (
       <div className="flex items-center justify-center h-screen">
@@ -347,7 +616,7 @@ export default function DashboardTwo() {
                   Metrics for Fiscal Year: {getFiscals?.find(f => f.fiscal_year_id.toString() === fiscalID)?.year_label}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Fund: {currentFund} | Data: {consolidatedTradingData.length} Trading + {promoterData.length} Promoter Securities
+                  Fund: {currentFund} | Data: {consolidatedTradingData.length} Trading + {promoterData.length} Promoter{subClasses.length > 0 ? ` + ${subClasses.length} Sub Classes` : ''} Securities
                 </p>
               </div>
             </div>
@@ -523,6 +792,52 @@ export default function DashboardTwo() {
               </TableRow>
             )}
           </TableBody>
+          
+          {/* Trading Table Footer with Totals */}
+          {consolidatedTradingData.length > 0 && (
+            <TableFooter>
+              <TableRow className="bg-gray-100 font-semibold">
+                <TableCell className="font-bold border-r">TOTAL</TableCell>
+                <TableCell className="border-r">-</TableCell>
+                <TableCell className="border-r">-</TableCell>
+                <TableCell className="text-center">{tradingTotals.opening_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center border-r">Rs. {tradingTotals.opening_amount.toLocaleString()}</TableCell>
+                <TableCell className="text-center">{tradingTotals.purchase_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center border-r">Rs. {tradingTotals.purchase_amount.toLocaleString()}</TableCell>
+                <TableCell className="text-center">{tradingTotals.right_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center border-r">Rs. {tradingTotals.right_total.toLocaleString()}</TableCell>
+                <TableCell className="text-center">{tradingTotals.bonus_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center border-r">-</TableCell>
+                <TableCell className="text-center">{tradingTotals.sales_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center">Rs. {tradingTotals.sales_cost.toLocaleString()}</TableCell>
+                <TableCell className="text-center">Rs. {tradingTotals.sales_amount.toLocaleString()}</TableCell>
+                <TableCell className={`text-center border-r ${
+                  tradingTotals.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  Rs. {tradingTotals.sales_profit.toLocaleString()}
+                </TableCell>
+                <TableCell className="text-center">{tradingTotals.closing_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center border-r">Rs. {tradingTotals.closing_amount.toLocaleString()}</TableCell>
+                <TableCell className="text-center">{tradingTotals.demat.toLocaleString()}</TableCell>
+                <TableCell className="text-center border-r">{tradingTotals.non_demat.toLocaleString()}</TableCell>
+                <TableCell className="text-center border-r">-</TableCell>
+                <TableCell className={`text-center border-r font-bold ${
+                  tradingTotals.unrealised_amount >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  Rs. {tradingTotals.unrealised_amount.toLocaleString()}
+                </TableCell>
+                <TableCell className={`text-center font-bold ${
+                  tradingTotalReturnPercent >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  {tradingTotalReturnPercent.toFixed(2)}%
+                </TableCell>
+                <TableCell className="text-center">-</TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </div>
       
@@ -555,7 +870,9 @@ export default function DashboardTwo() {
               <TableHead rowSpan={2} className="text-center border-r">Category</TableHead>
               <TableHead colSpan={3} className="text-center border-r">Opening</TableHead>
               <TableHead colSpan={3} className="text-center border-r">Closing</TableHead>
+              <TableHead colSpan={2} className="text-center border-r">Actual Closing</TableHead>
               <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
+              <TableHead rowSpan={2} className="text-center border-r">Market Value</TableHead>
               <TableHead rowSpan={2} className="text-center border-r">Unrealised Amount</TableHead>
               <TableHead rowSpan={2} className="text-center border-r">Today %</TableHead>
               <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
@@ -568,13 +885,15 @@ export default function DashboardTwo() {
               <TableHead className="text-center">Quantity</TableHead>
               <TableHead className="text-center">Rate</TableHead>
               <TableHead className="text-center border-r">Amount</TableHead>
+              <TableHead className="text-center">DEMAT</TableHead>
+              <TableHead className="text-center border-r">NON-DEMAT</TableHead>
             </TableRow>
           </TableHeader>
           
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={12} className="text-center py-8">
+                <TableCell colSpan={14} className="text-center py-8">
                   Loading promoter data...
                 </TableCell>
               </TableRow>
@@ -590,7 +909,10 @@ export default function DashboardTwo() {
                   <TableCell className="text-center">{data.closing_quantity.toLocaleString()}</TableCell>
                   <TableCell className="text-center">Rs. {data.closing_rate.toFixed(2)}</TableCell>
                   <TableCell className="text-center border-r">Rs. {data.closing_amount.toLocaleString()}</TableCell>
+                  <TableCell className="text-center">{data.demat.toLocaleString()}</TableCell>
+                  <TableCell className="text-center border-r">{data.non_demat.toLocaleString()}</TableCell>
                   <TableCell className="text-center border-r font-semibold">Rs. {data.market_price.toFixed(2)}</TableCell>
+                  <TableCell className="text-center border-r font-semibold">Rs. {(data.closing_quantity * data.market_price).toLocaleString()}</TableCell>
                   <TableCell className={`text-center border-r font-semibold ${
                     data.unrealised_amount >= 0 ? 'text-green-600' : 'text-red-600'
                   }`}>
@@ -614,12 +936,44 @@ export default function DashboardTwo() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={12} className="text-center py-8 text-gray-500">
+                <TableCell colSpan={14} className="text-center py-8 text-gray-500">
                   No promoter shares found. Please apply filters to load data.
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
+          
+          {/* Promoter Table Footer with Totals */}
+          {promoterData.length > 0 && (
+            <TableFooter>
+              <TableRow className="bg-gray-100 font-semibold">
+                <TableCell className="font-bold border-r">TOTAL</TableCell>
+                <TableCell className="border-r">-</TableCell>
+                <TableCell className="border-r">-</TableCell>
+                <TableCell className="text-center">{promoterTotals.opening_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center border-r">Rs. {promoterTotals.opening_amount.toLocaleString()}</TableCell>
+                <TableCell className="text-center">{promoterTotals.closing_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center border-r">Rs. {promoterTotals.closing_amount.toLocaleString()}</TableCell>
+                <TableCell className="text-center">{promoterTotals.demat.toLocaleString()}</TableCell>
+                <TableCell className="text-center border-r">{promoterTotals.non_demat.toLocaleString()}</TableCell>
+                <TableCell className="text-center border-r">-</TableCell>
+                <TableCell className="text-center border-r font-bold">Rs. {promoterTotals.market_value.toLocaleString()}</TableCell>
+                <TableCell className={`text-center border-r font-bold ${
+                  promoterTotals.unrealised_amount >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  Rs. {promoterTotals.unrealised_amount.toLocaleString()}
+                </TableCell>
+                <TableCell className={`text-center font-bold ${
+                  promoterTotalReturnPercent >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  {promoterTotalReturnPercent.toFixed(2)}%
+                </TableCell>
+                <TableCell className="text-center">-</TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </div>
       
@@ -635,6 +989,10 @@ export default function DashboardTwo() {
       )}
       </CardContent>
     </Card>
+    
+    {/* Sub Class Tables - Render each sub class */}
+    {subClasses.map(subClass => renderSubClassTable(subClass))}
+    
     </div>
     )
   )

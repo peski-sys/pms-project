@@ -817,8 +817,8 @@ export default function GraphPageComponent() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {(portfolioGainersLosers?.topGainers || []).map((stock) => (
-                                    <TableRow key={stock.symbol} className="hover:bg-gray-50">
+                                {(portfolioGainersLosers?.topGainers || []).map((stock, index) => (
+                                    <TableRow key={`gainer-${stock.symbol}-${index}`} className="hover:bg-gray-50">
                                         <TableCell className="py-3 px-4">
                                             <div>
                                                 <div className="font-medium"><Link href={`/dashboard/stock/${stock.symbol}`} target="_blank">{stock.symbol}</Link></div>
@@ -854,8 +854,8 @@ export default function GraphPageComponent() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {(portfolioGainersLosers?.topLosers || []).map((stock) => (
-                                    <TableRow key={stock.symbol} className="hover:bg-gray-50">
+                                {(portfolioGainersLosers?.topLosers || []).map((stock, index) => (
+                                    <TableRow key={`loser-${stock.symbol}-${index}`} className="hover:bg-gray-50">
                                         <TableCell className="py-3 px-4">
                                             <div>
                                                 <div className="font-medium"><Link href={`/dashboard/stock/${stock.symbol}`} target="_blank">{stock.symbol}</Link></div>

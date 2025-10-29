@@ -68,7 +68,8 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
                 fiscal_year_id: given_fiscal,
                 client_broker_mapping: {
                     client_name: given_fund
-                }
+                },
+                source_type: "TRADING",
             },
             select: {
                 symbol: true,
@@ -288,10 +289,11 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
     const given_fiscal = Number(fiscalID)
 
     try {
-        // Get all promoter holdings for the fiscal year
+        // Get all promoter holdings for the fiscal year with sub_id = 1
         const promoterHoldings = await prisma.promoter_records.findMany({
             where: {
                 fiscal_year_id: given_fiscal,
+                sub_id: 1, // Only show sub_id = 1 for default promoter shares
                 client_broker_mapping: {
                     client_name: given_fund
                 }
@@ -303,6 +305,7 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
                 total_value: true,
                 added_at: true,
                 remarks: true,
+                client_id: true, // Add client_id to get fiscal year balance data
                 stock_fulls: {
                     select: {
                         full_form: true,
@@ -318,6 +321,24 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
 
         const symbols = promoterHoldings.map(p => p.symbol)
         if (symbols.length === 0) return []
+
+        // Get DEMAT/Non-DEMAT data from fiscal_year_balance for promoter records
+        const fiscalBalanceData = await prisma.fiscal_year_balance.findMany({
+            where: {
+                fiscal_year_id: given_fiscal,
+                symbol: { in: symbols },
+                client_broker_mapping: {
+                    client_name: given_fund
+                },
+                source_type: "MATURITY" // Promoter records typically use MATURITY source type
+            },
+            select: {
+                symbol: true,
+                client_id: true,
+                demat: true,
+                non_demat: true
+            }
+        })
 
         // Get the previous fiscal year for opening balances
         const currentFiscalYear = await prisma.fiscal_years.findUnique({
@@ -341,6 +362,7 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             where: {
                 symbol: { in: symbols },
                 fiscal_year_id: previousFiscalYear.fiscal_year_id,
+                sub_id: 1, // Only get opening balances from sub_id = 1
                 client_broker_mapping: {
                     client_name: given_fund
                 }
@@ -358,12 +380,20 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
 
         // Create map for opening balances
         const openingMap = new Map(openingBalances.map(o => [o.symbol, o as any]))
+        
+        // Create map for fiscal balance data (DEMAT/Non-DEMAT)
+        const fiscalBalanceMap = new Map()
+        fiscalBalanceData.forEach(fb => {
+            const key = `${fb.symbol}_${fb.client_id}`
+            fiscalBalanceMap.set(key, fb)
+        })
 
         // For promoter shares, most transaction columns will be empty
         const metricData: MetricData[] = promoterHoldings.map(holding => {
             const symbol = holding.symbol
             const marketPrice = ltpMap.get(symbol) || 0
             const opening = openingMap.get(symbol)
+            const fiscalBalance = fiscalBalanceMap.get(`${symbol}_${holding.client_id}`)
             
             // Opening data from previous year's promoter records (if exists)
             const openingQty = sanitizeNumeric(opening?.quantity)
@@ -382,6 +412,10 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             
             // Calculate return percentage
             const todayReturnPercent = bookValue > 0 ? calculatePercentage(unrealisedAmount, bookValue) : 0
+            
+            // Get DEMAT/Non-DEMAT data
+            const dematQty = sanitizeNumeric(fiscalBalance?.demat) || closingQty // Default to total quantity if no fiscal balance
+            const nonDematQty = sanitizeNumeric(fiscalBalance?.non_demat) || 0
             
             return {
                 company: holding.stock_fulls.full_form,
@@ -413,8 +447,8 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
                 closing_rate: closingRate,
                 closing_amount: closingAmount,
                 
-                demat: 0, // Promoter shares don't have DEMAT/NON_DEMAT split
-                non_demat: 0,
+                demat: dematQty, // Get from fiscal_year_balance
+                non_demat: nonDematQty,
                 
                 market_price: marketPrice,
                 unrealised_amount: unrealisedAmount,
@@ -426,6 +460,238 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
         return metricData
     } catch (error) {
         console.error('Error getting promoter metric data:', error)
+        return []
+    }
+}
+
+// Get available sub classes for a specific fund (excluding sub_id = 1)
+export async function getSubClassesForFund(currentFund: string, fiscalID: string) {
+    const given_fund = currentFund
+    const given_fiscal = Number(fiscalID)
+
+    try {
+        // Get fund ID first
+        const fundData = await prisma.funds.findFirst({
+            where: { 
+                client_broker_mapping: {
+                    some: {
+                        client_name: given_fund
+                    }
+                }
+            },
+            select: { fund_id: true }
+        })
+
+        if (!fundData) return []
+
+        // Get sub classes that have promoter records in the current fiscal year
+        const subClassesWithData = await prisma.sub_classes.findMany({
+            where: {
+                fund_id: fundData.fund_id,
+                sub_id: { not: 1 }, // Exclude sub_id = 1
+                promoter_records: {
+                    some: {
+                        fiscal_year_id: given_fiscal,
+                        client_broker_mapping: {
+                            client_name: given_fund
+                        }
+                    }
+                }
+            },
+            select: {
+                sub_id: true,
+                sub_name: true
+            },
+            orderBy: {
+                sub_name: 'asc'
+            }
+        })
+
+        return subClassesWithData
+    } catch (error) {
+        console.error('Error getting sub classes for fund:', error)
+        return []
+    }
+}
+
+// Get comprehensive metric data for a specific sub class
+export async function getMetricDataSubClassFiscal(currentFund: string, fiscalID: string, subClassId: number): Promise<MetricData[]> {
+    const given_fund = currentFund
+    const given_fiscal = Number(fiscalID)
+
+    try {
+        // Get all promoter holdings for the specific sub class
+        const promoterHoldings = await prisma.promoter_records.findMany({
+            where: {
+                fiscal_year_id: given_fiscal,
+                sub_id: subClassId, // Filter by specific sub class
+                client_broker_mapping: {
+                    client_name: given_fund
+                }
+            },
+            select: {
+                symbol: true,
+                quantity: true,
+                effective_rate: true,
+                total_value: true,
+                added_at: true,
+                remarks: true,
+                client_id: true, // Add client_id to get fiscal year balance data
+                stock_fulls: {
+                    select: {
+                        full_form: true,
+                        sectors: {
+                            select: {
+                                sector_name: true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        const symbols = promoterHoldings.map(p => p.symbol)
+        if (symbols.length === 0) return []
+
+        // Get DEMAT/Non-DEMAT data from fiscal_year_balance for this sub class
+        const fiscalBalanceData = await prisma.fiscal_year_balance.findMany({
+            where: {
+                fiscal_year_id: given_fiscal,
+                symbol: { in: symbols },
+                client_broker_mapping: {
+                    client_name: given_fund
+                },
+                sub_id: subClassId, // Same sub class
+                source_type: "MATURITY" // Promoter records typically use MATURITY source type
+            },
+            select: {
+                symbol: true,
+                client_id: true,
+                demat: true,
+                non_demat: true
+            }
+        })
+
+        // Get the previous fiscal year for opening balances
+        const currentFiscalYear = await prisma.fiscal_years.findUnique({
+            where: { fiscal_year_id: given_fiscal }
+        })
+        
+        let previousFiscalYear = null
+        if (currentFiscalYear) {
+            previousFiscalYear = await prisma.fiscal_years.findFirst({
+                where: {
+                    end_date: {
+                        lt: currentFiscalYear.start_date
+                    }
+                },
+                orderBy: { end_date: 'desc' }
+            })
+        }
+
+        // Get opening balances from PREVIOUS fiscal year's promoter records for the same sub class
+        const openingBalances = previousFiscalYear ? await prisma.promoter_records.findMany({
+            where: {
+                symbol: { in: symbols },
+                fiscal_year_id: previousFiscalYear.fiscal_year_id,
+                sub_id: subClassId, // Same sub class as current
+                client_broker_mapping: {
+                    client_name: given_fund
+                }
+            },
+            select: {
+                symbol: true,
+                quantity: true,
+                effective_rate: true,
+                total_value: true
+            }
+        }) : []
+
+        // Batch fetch market prices from market_snapshots
+        const ltpMap = await getBatchMarketSnapshotLTP(symbols, given_fiscal)
+
+        // Create map for opening balances
+        const openingMap = new Map(openingBalances.map(o => [o.symbol, o as any]))
+        
+        // Create map for fiscal balance data (DEMAT/Non-DEMAT)
+        const fiscalBalanceMap = new Map()
+        fiscalBalanceData.forEach(fb => {
+            const key = `${fb.symbol}_${fb.client_id}`
+            fiscalBalanceMap.set(key, fb)
+        })
+
+        // Build metric data for this sub class (similar to promoter function)
+        const metricData: MetricData[] = promoterHoldings.map(holding => {
+            const symbol = holding.symbol
+            const marketPrice = ltpMap.get(symbol) || 0
+            const opening = openingMap.get(symbol)
+            const fiscalBalance = fiscalBalanceMap.get(`${symbol}_${holding.client_id}`)
+            
+            // Opening data from previous year (if exists)
+            const openingQty = sanitizeNumeric(opening?.quantity)
+            const openingRate = sanitizeNumeric(opening?.effective_rate)
+            const openingAmount = openingQty * openingRate
+            
+            // Closing data from current promoter records
+            const closingQty = sanitizeNumeric(holding.quantity)
+            const closingRate = sanitizeNumeric(holding.effective_rate)
+            const closingAmount = sanitizeNumeric(holding.total_value)
+            
+            // Calculate unrealized gain/loss based on effective_rate
+            const marketValue = closingQty * marketPrice
+            const bookValue = closingQty * closingRate // Using effective_rate for book value
+            const unrealisedAmount = marketValue - bookValue
+            
+            // Calculate return percentage
+            const todayReturnPercent = bookValue > 0 ? calculatePercentage(unrealisedAmount, bookValue) : 0
+            
+            // Get DEMAT/Non-DEMAT data
+            const dematQty = sanitizeNumeric(fiscalBalance?.demat) || closingQty // Default to total quantity if no fiscal balance
+            const nonDematQty = sanitizeNumeric(fiscalBalance?.non_demat) || 0
+            
+            return {
+                company: holding.stock_fulls.full_form,
+                code: symbol,
+                category: holding.stock_fulls.sectors.sector_name,
+                
+                // Opening data from previous year (if available)
+                opening_quantity: openingQty,
+                opening_rate: openingRate,
+                opening_amount: openingAmount,
+                
+                // No purchase/right/bonus/sales data for promoter shares
+                purchase_quantity: 0,
+                purchase_rate: 0,
+                purchase_amount: 0,
+                
+                right_quantity: 0,
+                right_total: 0,
+                
+                bonus_quantity: 0,
+                bonus_book_close_date: '',
+                
+                sales_quantity: 0,
+                sales_cost: 0,
+                sales_amount: 0,
+                sales_profit: 0,
+                
+                closing_quantity: closingQty,
+                closing_rate: closingRate,
+                closing_amount: closingAmount,
+                
+                demat: dematQty, // Get from fiscal_year_balance
+                non_demat: nonDematQty,
+                
+                market_price: marketPrice,
+                unrealised_amount: unrealisedAmount,
+                today_return_percent: todayReturnPercent,
+                remarks: holding.remarks || ""
+            }
+        })
+
+        return metricData
+    } catch (error) {
+        console.error('Error getting sub class metric data:', error)
         return []
     }
 }

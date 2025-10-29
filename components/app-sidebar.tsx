@@ -16,6 +16,7 @@ import {
   Rows4,
   BookText,
   Layers,
+  Tag,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -110,6 +111,11 @@ const data = {
       title: "Client Broker Mapping",
       url: "/dashboard/client-broker-mapping",
       icon: Cable,
+    },
+        {
+      title: "Sub Classes",
+      url: "/dashboard/sub-class",
+      icon: Tag,
     },
   ],
 }

@@ -731,7 +731,7 @@ const fetchSelect = async () => {
 <div className="mt-12 mb-6">
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-4">
-        <span className="text-xl font-bold">Portfolio Summary</span>
+        <span className="text-xl font-bold">Trading Portfolio Summary</span>
         {totalItems > 0 && (
           <span className="text-sm text-gray-500">
             ({totalItems} holdings{totalItems > itemsPerPage ? `, showing page ${currentPage} of ${totalPages}` : ''})

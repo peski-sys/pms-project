@@ -176,7 +176,7 @@ export async function uploadCloseout(currentFund: string, currentClient: string,
     }
 }
 
-export async function uploadPromoter(currentFund: string, currentClient: string, stock_symbol: string, stock_quantity: number, stock_price: number, stock_added_at: string) {
+export async function uploadPromoter(currentFund: string, currentClient: string, stock_symbol: string, stock_quantity: number, stock_price: number, stock_added_at: string, sub_id?: number) {
     try {
         // Validate inputs
         if (!currentFund || !currentClient || !stock_symbol || !stock_added_at) {
@@ -226,7 +226,8 @@ export async function uploadPromoter(currentFund: string, currentClient: string,
                 quantity: stock_quantity,
                 added_at: parsed_date,
                 effective_rate: stock_price,
-                fiscal_year_id: stock_fiscal_id
+                fiscal_year_id: stock_fiscal_id,
+                sub_id: sub_id || 1  // Default to 1 if not provided
             }
         });
 

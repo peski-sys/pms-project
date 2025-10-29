@@ -22,12 +22,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { uploadIPOAllotment } from "@/app/api/ipoAllotmentAPI/actions"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { uploadIPOAllotment, uploadIPOAllotmentStaging } from "@/app/api/ipoAllotmentAPI/actions"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { fetchClientsFor, getFunds } from "@/app/api/fundsAPI/actions"
 import { getListed } from "@/app/api/listedAPI/actions"
-import { TrendingUp, Star } from "lucide-react"
+import { getSubClasses } from "@/app/api/subClassApiCalls/actions"
+import { TrendingUp, Star, Users } from "lucide-react"
 
 type response_funds = {
   fund_id: number,
@@ -52,6 +54,15 @@ type StockInfo = {
   }
 }
 
+type SubClass = {
+  sub_id: number
+  fund_id: number
+  sub_name: string
+  funds: {
+    fund_name: string
+  }
+}
+
 interface IPOAllotmentDialogProps {
   onSuccess?: () => void;
 }
@@ -59,12 +70,15 @@ interface IPOAllotmentDialogProps {
 export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>('demat');
   const [currentFund, setCurrentFund] = useState<string>('')
   const [listFunds, setListFunds] = useState<response_funds[]>()
   const [currentClient, setCurrentClient] = useState<string>('')
   const [listClients, setListClients] = useState<cbMAP[]>()
   const [currentSymbol, setCurrentSymbol] = useState<string>('')
   const [listStocks, setListStocks] = useState<StockInfo[]>()
+  const [currentSubClass, setCurrentSubClass] = useState<string>('')
+  const [listSubClasses, setListSubClasses] = useState<SubClass[]>()
 
   const fetchFunds = async () => {
     const fetch_funds: response_funds[] = await getFunds();
@@ -85,6 +99,16 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
     setListStocks(fetch_stocks)
   }
 
+  const fetchSubClasses = async () => {
+    const fetch_subclasses: SubClass[] = await getSubClasses()
+    const filteredSubClasses = fetch_subclasses.filter(sc => sc.funds.fund_name === currentFund)
+    setListSubClasses(filteredSubClasses)
+    // Set first sub class as default if available
+    if (filteredSubClasses.length > 0 && !currentSubClass) {
+      setCurrentSubClass(filteredSubClasses[0].sub_id.toString())
+    }
+  }
+
   const setFund = (value: string) => {
     setCurrentFund(value)
   }
@@ -97,6 +121,10 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
     setCurrentSymbol(value)
   }
 
+  const setSubClass = (value: string) => {
+    setCurrentSubClass(value)
+  }
+
   useEffect(() => {
     if (isOpen) {
       fetchFunds();
@@ -107,6 +135,7 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
   useEffect(() => {
     if (currentFund) {
       fetchClients();
+      fetchSubClasses();
     }
   }, [currentFund])
 
@@ -115,8 +144,13 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
     const stock_price = Number(formData.get('given_price'));
     const stock_added_at = formData.get('given_date') as string;
 
-    if (!currentFund || !currentClient || !currentSymbol) {
-      toast.error('Please select fund, client, and symbol.')
+    if (!currentFund || !currentSymbol) {
+      toast.error('Please select fund and symbol.')
+      return
+    }
+
+    if (!currentSubClass) {
+      toast.error('Please select a sub class.')
       return
     }
 
@@ -125,18 +159,36 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
       return
     }
 
+    // DEMAT tab requires client_id
+    if (activeTab === 'demat' && !currentClient) {
+      toast.error('Please select a client.')
+      return
+    }
+
     try {
       setIsLoading(true);
-      const result = await uploadIPOAllotment(currentFund, currentClient, currentSymbol, stock_quantity, stock_price, stock_added_at)
+      let result;
+      
+      if (activeTab === 'demat') {
+        // Upload to ipo_allotment_records with client_id
+        result = await uploadIPOAllotment(currentFund, currentClient, currentSymbol, stock_quantity, stock_price, stock_added_at, parseInt(currentSubClass))
+      } else {
+        // Upload to ipo_allotment_staging without client_id
+        result = await uploadIPOAllotmentStaging(currentFund, currentSymbol, stock_quantity, stock_price, stock_added_at, parseInt(currentSubClass))
+      }
       
       if (result.success) {
-        toast.success('IPO allotment record added successfully!')
+        const message = activeTab === 'demat' 
+          ? 'IPO allotment record added successfully!' 
+          : 'Non-DEMAT IPO allotment added to staging successfully!';
+        toast.success(message)
         setIsOpen(false);
         onSuccess?.();
         // Reset form
         setCurrentFund('');
         setCurrentClient('');
         setCurrentSymbol('');
+        setCurrentSubClass('');
       } else {
         toast.error(result.error || 'Failed to add IPO allotment record')
       }
@@ -156,7 +208,7 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
           Add IPO Allotment
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[550px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-indigo-700">
             <Star className="w-5 h-5" />
@@ -164,9 +216,21 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
           </DialogTitle>
         </DialogHeader>
         
-        <form action={handleIPOAllotment} id="ipo-allotment-form">
-          <Card>
-            <CardContent className="grid gap-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="demat" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              DEMAT (Allocated)
+            </TabsTrigger>
+            <TabsTrigger value="non-demat" className="flex items-center gap-2">
+              <Star className="w-4 h-4" />
+              Non-DEMAT (Pending)
+            </TabsTrigger>
+          </TabsList>
+
+          <form action={handleIPOAllotment} id="ipo-allotment-form">
+            <Card className="mt-4">
+              <CardContent className="grid gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="fund">Fund</Label>
                 <Select name="fund" onValueChange={setFund} value={currentFund} required>
@@ -183,21 +247,36 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
                 </Select>
               </div>
 
-              <div className="grid gap-3">
-                <Label htmlFor="client">Client ID</Label>
-                <Select name="client" onValueChange={setClient} required>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Client" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {listClients?.map((details) => (
-                      <SelectItem value={details.client_id} key={details.client_id}>
-                        {details.client_id} | Broker: {details.client_broker}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <TabsContent value="demat" className="mt-0">
+                <div className="grid gap-3">
+                  <Label htmlFor="client">Client ID</Label>
+                  <Select name="client" onValueChange={setClient} required={activeTab === 'demat'}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Client" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {listClients?.map((details) => (
+                        <SelectItem value={details.client_id} key={details.client_id}>
+                          {details.client_id} | Broker: {details.client_broker}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="non-demat" className="mt-0">
+                <div className="bg-amber-50 border border-amber-200 p-3 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Star className="w-4 h-4 text-amber-600" />
+                    <span className="text-sm font-medium text-amber-800">Non-DEMAT Notice</span>
+                  </div>
+                  <p className="text-xs text-amber-700">
+                    This IPO allotment is not yet dematerialized to a specific client. 
+                    You can assign it to a client later from the Manual Stock History page.
+                  </p>
+                </div>
+              </TabsContent>
 
               <div className="grid gap-3">
                 <Label htmlFor="symbol">Stock Symbol</Label>
@@ -230,25 +309,43 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
                 <Input name="given_date" type="date" required />
               </div>
 
+              <div className="grid gap-3">
+                <Label htmlFor="sub_class">Sub Class</Label>
+                <Select name="sub_class" onValueChange={setSubClass} value={currentSubClass} required>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Sub Class" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {listSubClasses?.map((subClass) => (
+                      <SelectItem value={subClass.sub_id.toString()} key={subClass.sub_id}>
+                        {subClass.sub_name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               <div className="bg-indigo-50 border border-indigo-200 p-3 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <Star className="w-4 h-4 text-indigo-600" />
                   <span className="text-sm font-medium text-indigo-800">IPO Allotment Info</span>
                 </div>
                 <p className="text-xs text-indigo-600">
-                  This record will track IPO share allotments for the selected client. 
-                  The total value will be calculated automatically based on quantity × price.
+                  {activeTab === 'demat' 
+                    ? 'This record will track IPO share allotments for the selected client. The total value will be calculated automatically based on quantity × price.'
+                    : 'This IPO will be added to staging without a client assignment. You can dematerialize it later when the client is known.'}
                 </p>
               </div>
-            </CardContent>
+              </CardContent>
 
-            <CardFooter className="flex justify-end">
-              <Button type="submit" form="ipo-allotment-form" disabled={isLoading} className="bg-indigo-600 hover:bg-indigo-700">
-                {isLoading ? 'Adding...' : 'Save changes'}
-              </Button>
-            </CardFooter>
-          </Card>
-        </form>
+              <CardFooter className="flex justify-end">
+                <Button type="submit" form="ipo-allotment-form" disabled={isLoading} className="bg-indigo-600 hover:bg-indigo-700">
+                  {isLoading ? 'Adding...' : activeTab === 'demat' ? 'Save IPO Allotment' : 'Save to Staging'}
+                </Button>
+              </CardFooter>
+            </Card>
+          </form>
+        </Tabs>
       </DialogContent>
     </Dialog>
   )

@@ -39,6 +39,7 @@ export async function getSectorAllocation(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "TRADING",
         },
         select: {
             symbol: true,
@@ -156,6 +157,7 @@ export async function getPortfolioGainersLosers(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "TRADING",
         },
         select: {
             symbol: true,

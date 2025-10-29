@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { 
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -25,6 +25,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import { 
   getBonusRecords, 
   getPromoterRecords, 
@@ -35,7 +45,7 @@ import {
   deleteRightRecord,
   deleteCashRecord
 } from "@/app/api/manualHistoryAPI/actions";
-import { getIPOAllotmentRecords, deleteIPOAllotmentRecord } from "@/app/api/ipoAllotmentAPI/actions";
+import { getIPOAllotmentRecords, deleteIPOAllotmentRecord, getIPOAllotmentStagingRecords, deleteIPOAllotmentStaging, dematerializeIPOStaging } from "@/app/api/ipoAllotmentAPI/actions"
 import { PromoterDialog } from "@/components/dialogs/promoter-dialog"
 import { BonusDialog } from "@/components/dialogs/bonus-dialog"
 import { RightDialog } from "@/components/dialogs/right-dialog"
@@ -54,7 +64,8 @@ import {
   Calendar,
   Hash,
   Percent,
-  Star
+  Star,
+  PackageOpen
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
@@ -202,12 +213,38 @@ type IPOAllotmentRecord = {
   } | null;
 };
 
+type IPOAllotmentStagingRecord = {
+  allotment_staging_id: number;
+  fund_id: number;
+  quantity: number;
+  effective_rate: number;
+  total_value: number | null;
+  fiscal_year_id: number;
+  recorded_at: Date | null;
+  added_at: Date;
+  symbol: string;
+  funds: {
+    fund_name: string;
+  };
+  fiscal_years: {
+    year_label: string;
+  } | null;
+  stock_fulls: {
+    symbol: string;
+    full_form: string;
+  };
+  sub_classes: {
+    sub_name: string;
+  } | null;
+};
+
 export default function ManualHistoryComponent() {
   const [bonusRecords, setBonusRecords] = useState<BonusRecord[]>([]);
   const [promoterRecords, setPromoterRecords] = useState<PromoterRecord[]>([]);
   const [rightRecords, setRightRecords] = useState<RightRecord[]>([]);
   const [cashRecords, setCashRecords] = useState<CashRecord[]>([]);
   const [ipoAllotmentRecords, setIPOAllotmentRecords] = useState<IPOAllotmentRecord[]>([]);
+  const [ipoAllotmentStagingRecords, setIPOAllotmentStagingRecords] = useState<IPOAllotmentStagingRecord[]>([]);
   const [funds, setFunds] = useState<UserFund[]>([]);
   const [fiscalYears, setFiscalYears] = useState<FiscalYear[]>([]);
   const [selectedFund, setSelectedFund] = useState<string>("");
@@ -215,6 +252,10 @@ export default function ManualHistoryComponent() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("bonus");
   const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
+  const [dematerializeDialogOpen, setDematerializeDialogOpen] = useState(false);
+  const [selectedStagingRecord, setSelectedStagingRecord] = useState<IPOAllotmentStagingRecord | null>(null);
+  const [clientIdForDemat, setClientIdForDemat] = useState<string>('');
+  const [dematerializeLoading, setDematerializeLoading] = useState(false);
   
   // Pagination states for each tab
   const [bonusPage, setBonusPage] = useState(1);
@@ -222,17 +263,19 @@ export default function ManualHistoryComponent() {
   const [rightPage, setRightPage] = useState(1);
   const [cashPage, setCashPage] = useState(1);
   const [ipoPage, setIPOPage] = useState(1);
+  const [ipoStagingPage, setIPOStagingPage] = useState(1);
   const itemsPerPage = 10;
 
   const fetchAllRecords = async (fundName?: string, fiscalYearId?: number) => {
     setLoading(true);
     try {
-      const [bonus, promoter, right, cash, ipoAllotment] = await Promise.all([
+      const [bonus, promoter, right, cash, ipoAllotment, ipoStaging] = await Promise.all([
         getBonusRecords(fundName, fiscalYearId),
         getPromoterRecords(fundName, fiscalYearId),
         getRightRecords(fundName, fiscalYearId),
         getCashRecords(fundName, fiscalYearId),
-        getIPOAllotmentRecords(fundName, fiscalYearId)
+        getIPOAllotmentRecords(fundName, fiscalYearId),
+        getIPOAllotmentStagingRecords(fundName, fiscalYearId)
       ]);
 
       setBonusRecords(bonus);
@@ -240,6 +283,7 @@ export default function ManualHistoryComponent() {
       setRightRecords(right);
       setCashRecords(cash);
       setIPOAllotmentRecords(ipoAllotment);
+      setIPOAllotmentStagingRecords(ipoStaging);
     } catch (error) {
       console.error('Error fetching records:', error);
       toast.error('Failed to fetch records');
@@ -386,6 +430,55 @@ export default function ManualHistoryComponent() {
     }
   };
 
+  const handleDeleteIPOStaging = async (stagingId: number) => {
+    setDeleteLoading(`ipo-staging-${stagingId}`);
+    try {
+      const result = await deleteIPOAllotmentStaging(stagingId);
+      if (result.success) {
+        setIPOAllotmentStagingRecords(prev => prev.filter(record => record.allotment_staging_id !== stagingId));
+        toast.success('IPO staging record deleted successfully');
+      } else {
+        toast.error(result.error || 'Failed to delete IPO staging record');
+      }
+    } catch (error) {
+      console.error('Error deleting IPO staging record:', error);
+      toast.error('Failed to delete IPO staging record');
+    } finally {
+      setDeleteLoading(null);
+    }
+  };
+
+  const handleDematerialize = async () => {
+    if (!selectedStagingRecord || !clientIdForDemat.trim()) {
+      toast.error('Please select a client');
+      return;
+    }
+
+    setDematerializeLoading(true);
+    try {
+      const result = await dematerializeIPOStaging(selectedStagingRecord.allotment_staging_id, clientIdForDemat);
+      if (result.success) {
+        setIPOAllotmentStagingRecords(prev => 
+          prev.filter(record => record.allotment_staging_id !== selectedStagingRecord.allotment_staging_id)
+        );
+        toast.success(`IPO dematerialized to client ${clientIdForDemat}`);
+        setDematerializeDialogOpen(false);
+        setSelectedStagingRecord(null);
+        setClientIdForDemat('');
+        // Refresh records to show in IPO Allotment tab
+        const fiscalYearId = selectedFiscalYear ? Number(selectedFiscalYear) : undefined;
+        fetchAllRecords(selectedFund, fiscalYearId);
+      } else {
+        toast.error(result.error || 'Failed to dematerialize IPO');
+      }
+    } catch (error) {
+      console.error('Error dematerializing IPO:', error);
+      toast.error('Failed to dematerialize IPO');
+    } finally {
+      setDematerializeLoading(false);
+    }
+  };
+
   // Pagination calculations
   const bonusTotalPages = Math.ceil(bonusRecords.length / itemsPerPage);
   const bonusStartIndex = (bonusPage - 1) * itemsPerPage;
@@ -406,6 +499,10 @@ export default function ManualHistoryComponent() {
   const ipoTotalPages = Math.ceil(ipoAllotmentRecords.length / itemsPerPage);
   const ipoStartIndex = (ipoPage - 1) * itemsPerPage;
   const paginatedIPORecords = ipoAllotmentRecords.slice(ipoStartIndex, ipoStartIndex + itemsPerPage);
+  
+  const ipoStagingTotalPages = Math.ceil(ipoAllotmentStagingRecords.length / itemsPerPage);
+  const ipoStagingStartIndex = (ipoStagingPage - 1) * itemsPerPage;
+  const paginatedIPOStagingRecords = ipoAllotmentStagingRecords.slice(ipoStagingStartIndex, ipoStagingStartIndex + itemsPerPage);
 
   if (loading) {
     return (
@@ -520,7 +617,7 @@ export default function ManualHistoryComponent() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-5 h-12 bg-gray-100 rounded-lg p-1">
+        <TabsList className="grid w-full grid-cols-6 h-12 bg-gray-100 rounded-lg p-1">
           <TabsTrigger 
             value="bonus" 
             className="flex items-center gap-2 h-10 data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-emerald-700 data-[state=active]:text-white transition-all duration-200"
@@ -574,6 +671,17 @@ export default function ManualHistoryComponent() {
             <span className="sm:hidden">IPO</span>
             <Badge variant="secondary" className="ml-1 bg-indigo-100 text-indigo-800 text-xs">
               {ipoAllotmentRecords.length}
+            </Badge>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="ipo-staging"
+            className="flex items-center gap-2 h-10 data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-600 data-[state=active]:to-amber-700 data-[state=active]:text-white transition-all duration-200"
+          >
+            <PackageOpen className="w-4 h-4" />
+            <span className="hidden sm:inline">Non DEMAT IPO</span>
+            <span className="sm:hidden">Pending</span>
+            <Badge variant="secondary" className="ml-1 bg-amber-100 text-amber-800 text-xs">
+              {ipoAllotmentStagingRecords.length}
             </Badge>
           </TabsTrigger>
         </TabsList>
@@ -1237,6 +1345,204 @@ export default function ManualHistoryComponent() {
                   onPageChange={setIPOPage}
                   itemsPerPage={itemsPerPage}
                   totalItems={ipoAllotmentRecords.length}
+                />
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Non-DEMAT IPO Staging Records Tab */}
+        <TabsContent value="ipo-staging" className="mt-6">
+          <Card className="shadow-lg border-0">
+            <CardHeader className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-t-lg">
+              <CardTitle className="text-amber-800 flex items-center gap-2">
+                <PackageOpen className="w-5 h-5" />
+                Non-DEMAT IPO Allotment (Pending)
+                <Badge variant="secondary" className="ml-2 bg-amber-200 text-amber-800">
+                  {ipoAllotmentStagingRecords.length} records
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              {ipoAllotmentStagingRecords.length === 0 ? (
+                <div className="text-center py-12 text-gray-500">
+                  <PackageOpen className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                  <p className="text-lg font-medium mb-2">No Non-DEMAT IPO Records Found</p>
+                  <p className="text-sm">There are no pending IPO allotments awaiting dematerialization.</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-gray-50 border-b">
+                      <tr>
+                        <th className="text-left p-4 font-medium text-gray-700">Symbol</th>
+                        <th className="text-left p-4 font-medium text-gray-700">Fund</th>
+                        <th className="text-left p-4 font-medium text-gray-700">Sub Class</th>
+                        <th className="text-left p-4 font-medium text-gray-700">Quantity</th>
+                        <th className="text-left p-4 font-medium text-gray-700">Effective Rate</th>
+                        <th className="text-left p-4 font-medium text-gray-700">Total Value</th>
+                        <th className="text-left p-4 font-medium text-gray-700">Allotment Date</th>
+                        <th className="text-left p-4 font-medium text-gray-700">Fiscal Year</th>
+                        <th className="text-center p-4 font-medium text-gray-700">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {paginatedIPOStagingRecords.map((record, index) => (
+                        <tr key={record.allotment_staging_id} className={`border-b hover:bg-gray-50 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-25'}`}>
+                          <td className="p-4">
+                            <div className="flex flex-col">
+                              <span className="font-semibold text-amber-700">{record.stock_fulls.symbol}</span>
+                              <span className="text-xs text-gray-500 truncate max-w-32">{record.stock_fulls.full_form}</span>
+                            </div>
+                          </td>
+                          <td className="p-4">
+                            <Badge variant="outline" className="text-xs">
+                              {record.funds.fund_name}
+                            </Badge>
+                          </td>
+                          <td className="p-4">
+                            <Badge variant="secondary" className="text-xs">
+                              {record.sub_classes?.sub_name || 'N/A'}
+                            </Badge>
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center gap-1">
+                              <Hash className="w-3 h-3 text-gray-600" />
+                              <span className="font-medium">{record.quantity.toLocaleString()}</span>
+                            </div>
+                          </td>
+                          <td className="p-4">
+                            <span className="font-medium text-gray-900">Rs. {Number(record.effective_rate).toFixed(2)}</span>
+                          </td>
+                          <td className="p-4">
+                            <span className="font-semibold text-amber-700">Rs. {Number(record.total_value || 0).toFixed(2)}</span>
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center gap-1">
+                              <Calendar className="w-3 h-3 text-gray-600" />
+                              <span className="text-sm">{format(new Date(record.added_at), 'dd MMM yyyy')}</span>
+                            </div>
+                          </td>
+                          <td className="p-4">
+                            <Badge variant="secondary" className="text-xs">
+                              {record.fiscal_years?.year_label || 'N/A'}
+                            </Badge>
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center justify-center gap-2">
+                              <Dialog open={dematerializeDialogOpen && selectedStagingRecord?.allotment_staging_id === record.allotment_staging_id} onOpenChange={(open) => {
+                                setDematerializeDialogOpen(open);
+                                if (!open) {
+                                  setSelectedStagingRecord(null);
+                                  setClientIdForDemat('');
+                                }
+                              }}>
+                                <DialogTrigger asChild>
+                                  <Button 
+                                    variant="default" 
+                                    size="sm" 
+                                    className="h-8 bg-green-600 hover:bg-green-700 text-white"
+                                    onClick={() => setSelectedStagingRecord(record)}
+                                  >
+                                    <Users className="w-3 h-3 mr-1" />
+                                    Dematerialize
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent>
+                                  <DialogHeader>
+                                    <DialogTitle className="text-green-700">Dematerialize IPO Allotment</DialogTitle>
+                                    <DialogDescription>
+                                      Assign this IPO allotment to a specific client. The record will be moved from staging to IPO allotment records.
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div className="grid gap-4 py-4">
+                                    <div className="bg-amber-50 border border-amber-200 p-3 rounded-lg">
+                                      <p className="text-sm font-medium text-amber-800">IPO Details:</p>
+                                      <p className="text-xs text-amber-700 mt-1">
+                                        <strong>{record.stock_fulls.symbol}</strong> - {record.quantity} shares @ Rs. {Number(record.effective_rate).toFixed(2)}
+                                      </p>
+                                    </div>
+                                    <div className="grid gap-2">
+                                      <Label htmlFor="client-id">Select Client</Label>
+                                      <Select value={clientIdForDemat} onValueChange={setClientIdForDemat}>
+                                        <SelectTrigger className="w-full">
+                                          <SelectValue placeholder="Select a client" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          {funds.map((client) => (
+                                            <SelectItem key={client.client_id} value={client.client_id}>
+                                              {client.client_name} ({client.client_id})
+                                            </SelectItem>
+                                          ))}
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+                                  </div>
+                                  <DialogFooter>
+                                    <Button variant="outline" onClick={() => {
+                                      setDematerializeDialogOpen(false);
+                                      setSelectedStagingRecord(null);
+                                      setClientIdForDemat('');
+                                    }}>Cancel</Button>
+                                    <Button 
+                                      onClick={handleDematerialize} 
+                                      disabled={dematerializeLoading || !clientIdForDemat}
+                                      className="bg-green-600 hover:bg-green-700"
+                                    >
+                                      {dematerializeLoading ? 'Processing...' : 'Dematerialize'}
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+                              
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button 
+                                    variant="destructive" 
+                                    size="sm" 
+                                    className="h-8 w-8 p-0"
+                                    disabled={deleteLoading === `ipo-staging-${record.allotment_staging_id}`}
+                                  >
+                                    {deleteLoading === `ipo-staging-${record.allotment_staging_id}` ? (
+                                      <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                                    ) : (
+                                      <Trash2 className="w-3 h-3" />
+                                    )}
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle className="text-red-600">Delete Non-DEMAT IPO Record</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      Are you sure you want to delete this pending IPO allotment for <strong>{record.stock_fulls.symbol}</strong>? This action cannot be undone.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction 
+                                      onClick={() => handleDeleteIPOStaging(record.allotment_staging_id)}
+                                      className="bg-red-600 hover:bg-red-700"
+                                    >
+                                      Delete
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+              {ipoAllotmentStagingRecords.length > 0 && (
+                <Pagination
+                  currentPage={ipoStagingPage}
+                  totalPages={ipoStagingTotalPages}
+                  onPageChange={setIPOStagingPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={ipoAllotmentStagingRecords.length}
                 />
               )}
             </CardContent>

@@ -141,9 +141,12 @@ model fiscal_year_balance {
   demat                 Int?                  @default(0)
   non_demat             Int?                  @default(dbgenerated("((opening_quantity + added_quantity) - demat)"))
   fund_id               Int
+  source_type           String?               @default("TRADING") @db.VarChar(50)
+  sub_id                Int?                  @default(1)
   client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
   fiscal_years          fiscal_years          @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
   funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  sub_classes           sub_classes?          @relation(fields: [sub_id], references: [sub_id], onDelete: NoAction, onUpdate: NoAction)
   stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([client_id, symbol, fiscal_year_id])
@@ -187,6 +190,7 @@ model fiscal_years {
   closeout_records       closeout_records[]
   fiscal_year_balance    fiscal_year_balance[]
   ipo_allotment_records  ipo_allotment_records[]
+  ipo_allotment_staging  ipo_allotment_staging[]
   market_snapshots       market_snapshots[]
   order_book             order_book[]
   promoter_records       promoter_records[]
@@ -208,10 +212,12 @@ model funds {
   closeout_records      closeout_records[]
   fiscal_year_balance   fiscal_year_balance[]
   ipo_allotment_records ipo_allotment_records[]
+  ipo_allotment_staging ipo_allotment_staging[]
   promoter_records      promoter_records[]
   right_records         right_records[]
   sell_records          sell_records[]
   sell_records_staging  sell_records_staging[]
+  sub_classes           sub_classes[]
   symbol_holdings       symbol_holdings[]
 }
 
@@ -255,6 +261,7 @@ model stock_fulls {
   closeout_records      closeout_records[]
   fiscal_year_balance   fiscal_year_balance[]
   ipo_allotment_records ipo_allotment_records[]
+  ipo_allotment_staging ipo_allotment_staging[]
   order_book            order_book[]
   promoter_records      promoter_records[]
   right_records         right_records[]
@@ -309,9 +316,11 @@ model promoter_records {
   recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
   added_at              DateTime?             @db.Date
   remarks               String?               @default("") @db.VarChar(300)
+  sub_id                Int?                  @default(1)
   client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
   fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
   funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  sub_classes           sub_classes?          @relation(fields: [sub_id], references: [sub_id], onDelete: NoAction, onUpdate: NoAction)
   stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
 }
 
@@ -384,9 +393,11 @@ model ipo_allotment_records {
   added_at              DateTime              @db.Date
   remarks               String?               @default("") @db.VarChar(300)
   symbol                String                @db.VarChar(15)
+  sub_id                Int?                  @default(1)
   client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction)
   fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
   funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  sub_classes           sub_classes?          @relation(fields: [sub_id], references: [sub_id], onDelete: NoAction, onUpdate: NoAction)
   stock_fulls           stock_fulls           @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
 }
 
@@ -409,9 +420,43 @@ model symbol_holdings {
   wacc           Decimal      @default(0) @db.Decimal(14, 2)
   remarks        String?      @default("") @db.VarChar(300)
   quantity       Int?         @default(0)
+  source_type    String?      @default("TRADING") @db.VarChar(50)
+  sub_id         Int?         @default(1)
   fiscal_years   fiscal_years @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
   funds          funds        @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  sub_classes    sub_classes? @relation(fields: [sub_id], references: [sub_id], onDelete: NoAction, onUpdate: NoAction)
   stock_fulls    stock_fulls  @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([symbol, fund_id, fiscal_year_id])
+}
+
+model sub_classes {
+  sub_id                Int                     @id @default(autoincrement())
+  fund_id               Int
+  sub_name              String                  @db.VarChar(200)
+  added_at              DateTime?               @default(now()) @db.Timestamp(6)
+  fiscal_year_balance   fiscal_year_balance[]
+  ipo_allotment_records ipo_allotment_records[]
+  ipo_allotment_staging ipo_allotment_staging[]
+  promoter_records      promoter_records[]
+  funds                 funds                   @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  symbol_holdings       symbol_holdings[]
+}
+
+model ipo_allotment_staging {
+  allotment_staging_id Int          @id @default(autoincrement())
+  fund_id              Int
+  quantity             Int
+  effective_rate       Decimal      @db.Decimal(14, 2)
+  total_value          Decimal?     @default(dbgenerated("((quantity)::numeric * effective_rate)")) @db.Decimal(16, 2)
+  fiscal_year_id       Int
+  recorded_at          DateTime?    @default(now()) @db.Timestamp(6)
+  added_at             DateTime     @db.Date
+  remarks              String?      @db.VarChar(300)
+  symbol               String       @db.VarChar(15)
+  sub_id               Int
+  fiscal_years         fiscal_years @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
+  funds                funds        @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
+  sub_classes          sub_classes  @relation(fields: [sub_id], references: [sub_id], onDelete: NoAction, onUpdate: NoAction)
+  stock_fulls          stock_fulls  @relation(fields: [symbol], references: [symbol], onDelete: NoAction, onUpdate: NoAction)
 }
