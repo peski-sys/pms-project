@@ -477,36 +477,39 @@ export default function OrderBooks() {
         </Dialog>
         </form>
 
-        <form action={handleDelete} id={`${orders.upload_id}-${orders.file_name}`}>
-          <input value={`${orders.upload_id}`} type="hidden" name="upload-id" readOnly/>
-          <input value={`${orders.file_name}`} type="hidden" name="file-name" readOnly/>
-        <Dialog>
-        <DialogTrigger asChild>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 hover:border-red-300"
-            >
-              <Trash className="h-4 w-4" />
-              Delete
-            </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>⚠️ Confirm Deletion</DialogTitle>
-            <DialogDescription>Are you sure you want to delete this record?</DialogDescription>
-          </DialogHeader>
-            <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">No</Button>
+        {/* Only show delete button if record is NOT confirmed */}
+        {!orders.is_confirmed && (
+          <form action={handleDelete} id={`${orders.upload_id}-${orders.file_name}`}>
+            <input value={`${orders.upload_id}`} type="hidden" name="upload-id" readOnly/>
+            <input value={`${orders.file_name}`} type="hidden" name="file-name" readOnly/>
+          <Dialog>
+          <DialogTrigger asChild>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 hover:border-red-300"
+              >
+                <Trash className="h-4 w-4" />
+                Delete
+              </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>⚠️ Confirm Deletion</DialogTitle>
+              <DialogDescription>Are you sure you want to delete this record?</DialogDescription>
+            </DialogHeader>
+              <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">No</Button>
+              </DialogClose>
+              <DialogClose asChild>
+              <Button type="submit" form={`${orders.upload_id}-${orders.file_name}`} className="bg-red-500 hover:bg-red-600">Yes, Delete</Button>
             </DialogClose>
-            <DialogClose asChild>
-            <Button type="submit" form={`${orders.upload_id}-${orders.file_name}`} className="bg-red-500 hover:bg-red-600">Yes, Delete</Button>
-          </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-    </Dialog>
-    </form>
+            </DialogFooter>
+          </DialogContent>
+      </Dialog>
+      </form>
+        )}
         </div>
     </CardAction>
   </CardHeader>

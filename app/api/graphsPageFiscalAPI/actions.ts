@@ -32,6 +32,7 @@ export async function getSectorAllocationFiscal(selectUser: string, fiscalYearId
             select: {
                 symbol: true,
                 closing_quantity: true,
+                effective_rate: true,
                 stock_fulls: {
                     select: {
                         sectors: {
@@ -53,15 +54,14 @@ export async function getSectorAllocationFiscal(selectUser: string, fiscalYearId
 
         for (const balance of fiscalYearBalances) {
             const sectorName = balance.stock_fulls.sectors.sector_name;
-            const currentLTP = ltpMap.get(balance.symbol) || 0;
-            const marketValue = sanitizeNumeric(balance.closing_quantity) * currentLTP;
+            const costValue = sanitizeNumeric(balance.closing_quantity) * sanitizeNumeric(balance.effective_rate);
             
-            totalValue += marketValue;
+            totalValue += costValue;
             
             if (sectorMap.has(sectorName)) {
-                sectorMap.set(sectorName, sectorMap.get(sectorName)! + marketValue);
+                sectorMap.set(sectorName, sectorMap.get(sectorName)! + costValue);
             } else {
-                sectorMap.set(sectorName, marketValue);
+                sectorMap.set(sectorName, costValue);
             }
         }
 
@@ -81,43 +81,76 @@ export async function getSectorAllocationFiscal(selectUser: string, fiscalYearId
 }
 
 export async function getFiscalID() {
-    const currentDate = new Date().toISOString()
-    const currentID = await prisma.fiscal_years.findMany({
-        where: {
-            start_date: {
-                lte: currentDate
+    try {
+        const currentDate = new Date().toISOString()
+        const currentID = await prisma.fiscal_years.findMany({
+            where: {
+                start_date: {
+                    lte: currentDate
+                },
+                end_date: {
+                    gte: currentDate
+                },
             },
-            end_date: {
-                gte: currentDate
-            },
+            orderBy: {
+                fiscal_year_id: 'desc'
+            }
+        })
+        
+        // Return fiscal year ID if found, otherwise return 0 as fallback
+        if (currentID.length > 0 && currentID[0]?.fiscal_year_id) {
+            return currentID[0].fiscal_year_id
         }
-    })
-    const finalDate = currentID[0].fiscal_year_id
-    return finalDate
+        
+        // Fallback: get the most recent fiscal year
+        const latestFiscalYear = await prisma.fiscal_years.findFirst({
+            orderBy: {
+                fiscal_year_id: 'desc'
+            },
+            select: {
+                fiscal_year_id: true
+            }
+        })
+        
+        return latestFiscalYear?.fiscal_year_id || 0
+    } catch (error) {
+        console.error('Error getting current fiscal year ID:', error)
+        return 0
+    }
 }
 
-// Get investment highlights using fiscal year data
+// Get investment highlights using fiscal year data (IFRS-compliant)
 export async function getInvestmentHighlightsFiscal(selectUser: string, fiscalYearId: number) {
     try {
-        // Get trading securities total investment from fiscal_year_balance
-        const tradingSecurities = await prisma.fiscal_year_balance.aggregate({
+        // Get fund_id from client name
+        const clientMapping = await prisma.client_broker_mapping.findFirst({
             where: {
-                
-                fiscal_year_id: fiscalYearId,
-                client_broker_mapping: {
-                    client_name: selectUser,
-                },
-                source_type: "TRADING",
+                client_name: selectUser
             },
-            _sum: {
-                closing_quantity: true
+            select: {
+                fund_id: true
             }
         });
 
-        // Get fiscal year balances for calculation
-        const fiscalBalances = await prisma.fiscal_year_balance.findMany({
+        if (!clientMapping) {
+            return {
+                tradingSecurities: 0,
+                listedEquityShares: 0,
+                maturitySecurities: 0,
+                totalInvestment: 0,
+                realizedGain: 0,
+                unrealizedGain: 0,
+                dividendIncome: 0,
+                netGain: 0,
+                realizedGainPercent: 0,
+                unrealizedGainPercent: 0,
+                netGainPercent: 0
+            };
+        }
+
+        // Get trading investments from fiscal_year_balance with source_type='TRADING' (cost value)
+        const tradingBalances = await prisma.fiscal_year_balance.findMany({
             where: {
-                
                 fiscal_year_id: fiscalYearId,
                 client_broker_mapping: {
                     client_name: selectUser,
@@ -125,39 +158,67 @@ export async function getInvestmentHighlightsFiscal(selectUser: string, fiscalYe
                 source_type: "TRADING",
             },
             select: {
-                symbol: true,
                 closing_quantity: true,
-                effective_rate: true
+                effective_rate: true,
+                symbol: true
             }
         });
 
-        // Calculate trading securities value
+        // Calculate trading total (cost value)
         let tradingValue = 0;
-        const symbols = fiscalBalances.map(b => b.symbol);
-        const ltpMap = await getBatchMarketSnapshotLTP(symbols, fiscalYearId);
-
-        for (const balance of fiscalBalances) {
+        for (const balance of tradingBalances) {
             const closingQty = sanitizeNumeric(balance.closing_quantity);
             const effectiveRate = sanitizeNumeric(balance.effective_rate);
-            tradingValue += (closingQty * effectiveRate);
+            const costValue = closingQty * effectiveRate;
+            tradingValue += costValue;
         }
 
-        // Get maturity securities from promoter_records
-        const maturitySecurities = await prisma.promoter_records.aggregate({
+        // Get promoter investments from promoter_records table (cost value)
+        const promoterRecords = await prisma.promoter_records.findMany({
             where: {
                 fiscal_year_id: fiscalYearId,
                 client_broker_mapping: {
                     client_name: selectUser,
                 },
             },
-            _sum: {
+            select: {
+                quantity: true,
+                effective_rate: true,
+            }
+        });
+
+        // Calculate promoter total (cost value)
+        let promoterValue = 0;
+        for (const record of promoterRecords) {
+            const quantity = sanitizeNumeric(record.quantity);
+            const effectiveRate = sanitizeNumeric(record.effective_rate);
+            const costValue = quantity * effectiveRate;
+            promoterValue += costValue;
+        }
+
+        // Get IPO allotment staging records total_value
+        const ipoStagingRecords = await prisma.ipo_allotment_staging.findMany({
+            where: {
+                fiscal_year_id: fiscalYearId,
+                fund_id: clientMapping.fund_id
+            },
+            select: {
                 total_value: true
             }
         });
 
-        const maturityValue = sanitizeNumeric(maturitySecurities._sum.total_value);
+        // Calculate IPO staging total
+        let ipoStagingValue = 0;
+        for (const record of ipoStagingRecords) {
+            const totalValue = sanitizeNumeric(record.total_value);
+            ipoStagingValue += totalValue;
+        }
+
+        // Calculate totals
+        const maturityValue = promoterValue + ipoStagingValue;
+        const totalInvestment = tradingValue + maturityValue;
         
-        // Get realized gains from sell_records
+        // Get realized gains from sell_records (only for trading securities)
         const realizedGains = await prisma.sell_records.aggregate({
             where: {
                 fiscal_year_id: fiscalYearId,
@@ -170,9 +231,12 @@ export async function getInvestmentHighlightsFiscal(selectUser: string, fiscalYe
             }
         });
 
-        // Calculate unrealized gains using market snapshots
+        // Calculate unrealized gains using market snapshots (only for trading securities)
         let unrealizedGain = 0;
-        for (const balance of fiscalBalances) {
+        const symbols = tradingBalances.map(b => b.symbol);
+        const ltpMap = await getBatchMarketSnapshotLTP(symbols, fiscalYearId);
+        
+        for (const balance of tradingBalances) {
             const closingQty = sanitizeNumeric(balance.closing_quantity);
             const effectiveRate = sanitizeNumeric(balance.effective_rate);
             const marketPrice = ltpMap.get(balance.symbol) || 0;
@@ -196,7 +260,6 @@ export async function getInvestmentHighlightsFiscal(selectUser: string, fiscalYe
         
         const dividendIncome = sanitizeNumeric(dividends._sum.amount);
         const realizedGain = sanitizeNumeric(realizedGains._sum.profit_loss);
-        const totalInvestment = tradingValue + maturityValue;
         const netGain = realizedGain + unrealizedGain;
         
         return {

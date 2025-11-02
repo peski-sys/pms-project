@@ -54,6 +54,9 @@ type MetricData = {
 
     // Remarks
     remarks?: string
+    
+    // IPO Staging indicator
+    isIPOStaging?: boolean
 }
 
 // Get comprehensive metric data for held for trading securities using fiscal_year_balance
@@ -319,7 +322,51 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             }
         })
 
-        const symbols = promoterHoldings.map(p => p.symbol)
+        // Get fund_id for IPO staging records
+        const fundData = await prisma.client_broker_mapping.findFirst({
+            where: {
+                client_name: given_fund
+            },
+            select: { fund_id: true }
+        })
+
+        // Get IPO allotment staging records with sub_id = 1 (not dematerialized yet)
+        const ipoStagingHoldings = fundData ? await prisma.ipo_allotment_staging.groupBy({
+            by: ['symbol'],
+            where: {
+                fiscal_year_id: given_fiscal,
+                fund_id: fundData.fund_id,
+                sub_id: 1 // Only sub_id = 1 for promoter table
+            },
+            _sum: {
+                quantity: true,
+                total_value: true
+            },
+            _avg: {
+                effective_rate: true
+            }
+        }) : []
+
+        // Get stock details for IPO staging records
+        const ipoSymbols = ipoStagingHoldings.map(h => h.symbol)
+        const ipoStockDetails = ipoSymbols.length > 0 ? await prisma.stock_fulls.findMany({
+            where: {
+                symbol: { in: ipoSymbols }
+            },
+            select: {
+                symbol: true,
+                full_form: true,
+                sectors: {
+                    select: {
+                        sector_name: true
+                    }
+                }
+            }
+        }) : []
+
+        const ipoStockMap = new Map(ipoStockDetails.map(s => [s.symbol, s]))
+
+        const symbols = [...promoterHoldings.map(p => p.symbol), ...ipoSymbols]
         if (symbols.length === 0) return []
 
         // Get DEMAT/Non-DEMAT data from fiscal_year_balance for promoter records
@@ -375,11 +422,29 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             }
         }) : []
 
+        // Get opening balances from PREVIOUS fiscal year's IPO staging records
+        const ipoOpeningBalances = (previousFiscalYear && fundData) ? await prisma.ipo_allotment_staging.groupBy({
+            by: ['symbol'],
+            where: {
+                fiscal_year_id: previousFiscalYear.fiscal_year_id,
+                fund_id: fundData.fund_id,
+                sub_id: 1
+            },
+            _sum: {
+                quantity: true,
+                total_value: true
+            },
+            _avg: {
+                effective_rate: true
+            }
+        }) : []
+
         // Batch fetch market prices from market_snapshots
         const ltpMap = await getBatchMarketSnapshotLTP(symbols, given_fiscal)
 
         // Create map for opening balances
         const openingMap = new Map(openingBalances.map(o => [o.symbol, o as any]))
+        const ipoOpeningMap = new Map(ipoOpeningBalances.map(o => [o.symbol, o]))
         
         // Create map for fiscal balance data (DEMAT/Non-DEMAT)
         const fiscalBalanceMap = new Map()
@@ -388,8 +453,8 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             fiscalBalanceMap.set(key, fb)
         })
 
-        // For promoter shares, most transaction columns will be empty
-        const metricData: MetricData[] = promoterHoldings.map(holding => {
+        // Process promoter records
+        const promoterData: MetricData[] = promoterHoldings.map(holding => {
             const symbol = holding.symbol
             const marketPrice = ltpMap.get(symbol) || 0
             const opening = openingMap.get(symbol)
@@ -453,11 +518,86 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
                 market_price: marketPrice,
                 unrealised_amount: unrealisedAmount,
                 today_return_percent: todayReturnPercent,
-                remarks: holding.remarks || ""
+                remarks: holding.remarks || "",
+                isIPOStaging: false // Regular promoter record
             }
         })
 
-        return metricData
+        // Process IPO staging records (sub_id = 1)
+        const ipoData: MetricData[] = ipoStagingHoldings.map(holding => {
+            const symbol = holding.symbol
+            const stockDetail = ipoStockMap.get(symbol)
+            const marketPriceFromLTP = ltpMap.get(symbol) || 0
+            const opening = ipoOpeningMap.get(symbol)
+            
+            // Opening data from previous year's IPO staging records (if exists)
+            const openingQty = sanitizeNumeric(opening?._sum.quantity) || 0
+            const openingRate = sanitizeNumeric(opening?._avg.effective_rate) || 0
+            const openingAmount = openingQty * openingRate
+            
+            // Closing data from current IPO staging records
+            const closingQty = sanitizeNumeric(holding._sum.quantity) || 0
+            const closingRate = sanitizeNumeric(holding._avg.effective_rate) || 0
+            const closingAmount = sanitizeNumeric(holding._sum.total_value) || 0
+            
+            // Use closing rate as market price if market value is zero (no LTP available)
+            const marketPrice = marketPriceFromLTP > 0 ? marketPriceFromLTP : closingRate
+            
+            // Calculate unrealized gain/loss
+            const marketValue = closingQty * marketPrice
+            const bookValue = closingQty * closingRate
+            const unrealisedAmount = marketValue - bookValue
+            
+            // Calculate return percentage
+            const todayReturnPercent = bookValue > 0 ? calculatePercentage(unrealisedAmount, bookValue) : 0
+            
+            // For IPO staging: all NON-DEMAT (not dematerialized yet)
+            const dematQty = 0
+            const nonDematQty = closingQty
+            
+            return {
+                company: stockDetail?.full_form || symbol,
+                code: symbol,
+                category: stockDetail?.sectors.sector_name || 'Unknown',
+                
+                // Opening data from previous year (if available)
+                opening_quantity: openingQty,
+                opening_rate: openingRate,
+                opening_amount: openingAmount,
+                
+                // No purchase/right/bonus/sales data for IPO staging
+                purchase_quantity: 0,
+                purchase_rate: 0,
+                purchase_amount: 0,
+                
+                right_quantity: 0,
+                right_total: 0,
+                
+                bonus_quantity: 0,
+                bonus_book_close_date: '',
+                
+                sales_quantity: 0,
+                sales_cost: 0,
+                sales_amount: 0,
+                sales_profit: 0,
+                
+                closing_quantity: closingQty,
+                closing_rate: closingRate,
+                closing_amount: closingAmount,
+                
+                demat: dematQty, // Always 0 for staging (not dematerialized)
+                non_demat: nonDematQty, // All quantity is non-demat
+                
+                market_price: marketPrice,
+                unrealised_amount: unrealisedAmount,
+                today_return_percent: todayReturnPercent,
+                remarks: '', // No remarks in staging table
+                isIPOStaging: true // Mark as IPO staging record
+            }
+        })
+
+        // Combine promoter and IPO staging data
+        return [...promoterData, ...ipoData]
     } catch (error) {
         console.error('Error getting promoter metric data:', error)
         return []
@@ -696,8 +836,8 @@ export async function getMetricDataSubClassFiscal(currentFund: string, fiscalID:
     }
 }
 
-// Get comprehensive metric data for Non-DEMAT IPO allotments (staging)
-export async function getMetricDataIPOStagingFiscal(currentFund: string, fiscalID: string): Promise<MetricData[]> {
+// Get comprehensive metric data for Non-DEMAT IPO allotments (staging) with sub_id != 1
+export async function getMetricDataIPOStagingOtherFiscal(currentFund: string, fiscalID: string): Promise<MetricData[]> {
     const given_fund = currentFund
     const given_fiscal = Number(fiscalID)
 
@@ -712,12 +852,13 @@ export async function getMetricDataIPOStagingFiscal(currentFund: string, fiscalI
 
         if (!fundData) return []
 
-        // Get all IPO staging holdings for the fiscal year, grouped by symbol and sub_id
+        // Get all IPO staging holdings for the fiscal year with sub_id != 1, grouped by symbol and sub_id
         const ipoStagingHoldings = await prisma.ipo_allotment_staging.groupBy({
             by: ['symbol', 'sub_id'],
             where: {
                 fiscal_year_id: given_fiscal,
-                fund_id: fundData.fund_id
+                fund_id: fundData.fund_id,
+                sub_id: { not: 1 } // Only sub_id != 1 for other sub classes
             },
             _sum: {
                 quantity: true,
@@ -767,12 +908,13 @@ export async function getMetricDataIPOStagingFiscal(currentFund: string, fiscalI
             })
         }
 
-        // Get opening balances from PREVIOUS fiscal year's IPO staging records
-        const openingBalances = previousFiscalYear ? await prisma.ipo_allotment_staging.groupBy({
+        // Get opening balances from PREVIOUS fiscal year's IPO staging records with sub_id != 1
+        const openingBalances = (previousFiscalYear && fundData) ? await prisma.ipo_allotment_staging.groupBy({
             by: ['symbol', 'sub_id'],
             where: {
                 fiscal_year_id: previousFiscalYear.fiscal_year_id,
-                fund_id: fundData.fund_id
+                fund_id: fundData.fund_id,
+                sub_id: { not: 1 } // Only sub_id != 1
             },
             _sum: {
                 quantity: true,
@@ -794,7 +936,7 @@ export async function getMetricDataIPOStagingFiscal(currentFund: string, fiscalI
             const symbol = holding.symbol
             const sub_id = holding.sub_id
             const stockDetail = stockMap.get(symbol)
-            const marketPrice = ltpMap.get(symbol) || 0
+            const marketPriceFromLTP = ltpMap.get(symbol) || 0
             const opening = openingMap.get(`${symbol}_${sub_id}`)
             
             // Opening data from previous year (if exists)
@@ -806,6 +948,9 @@ export async function getMetricDataIPOStagingFiscal(currentFund: string, fiscalI
             const closingQty = sanitizeNumeric(holding._sum.quantity) || 0
             const closingRate = sanitizeNumeric(holding._avg.effective_rate) || 0
             const closingAmount = sanitizeNumeric(holding._sum.total_value) || 0
+            
+            // Use closing rate as market price if market value is zero (no LTP available)
+            const marketPrice = marketPriceFromLTP > 0 ? marketPriceFromLTP : closingRate
             
             // Calculate unrealized gain/loss
             const marketValue = closingQty * marketPrice
@@ -855,13 +1000,14 @@ export async function getMetricDataIPOStagingFiscal(currentFund: string, fiscalI
                 market_price: marketPrice,
                 unrealised_amount: unrealisedAmount,
                 today_return_percent: todayReturnPercent,
-                remarks: '' // No remarks in staging table
+                remarks: '', // No remarks in staging table
+                isIPOStaging: true // Mark as IPO staging record
             }
         })
 
         return metricData
     } catch (error) {
-        console.error('Error getting IPO staging metric data:', error)
+        console.error('Error getting IPO staging other metric data:', error)
         return []
     }
 }

@@ -628,7 +628,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">Bonus Shares</span>
             <span className="sm:hidden">Bonus</span>
             <Badge variant="secondary" className="ml-1 bg-emerald-100 text-emerald-800 text-xs">
-              {bonusRecords.length}
+              {bonusRecords.length.toLocaleString()}
             </Badge>
           </TabsTrigger>
           <TabsTrigger 
@@ -639,7 +639,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">Promoter Shares</span>
             <span className="sm:hidden">Promoter</span>
             <Badge variant="secondary" className="ml-1 bg-purple-100 text-purple-800 text-xs">
-              {promoterRecords.length}
+              {promoterRecords.length.toLocaleString()}
             </Badge>
           </TabsTrigger>
           <TabsTrigger 
@@ -650,7 +650,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">Right Shares</span>
             <span className="sm:hidden">Rights</span>
             <Badge variant="secondary" className="ml-1 bg-blue-100 text-blue-800 text-xs">
-              {rightRecords.length}
+              {rightRecords.length.toLocaleString()}
             </Badge>
           </TabsTrigger>
           <TabsTrigger 
@@ -661,7 +661,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">Cash Dividend</span>
             <span className="sm:hidden">Cash</span>
             <Badge variant="secondary" className="ml-1 bg-orange-100 text-orange-800 text-xs">
-              {cashRecords.length}
+              {cashRecords.length.toLocaleString()}
             </Badge>
           </TabsTrigger>
           <TabsTrigger 
@@ -672,7 +672,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">IPO Allotment</span>
             <span className="sm:hidden">IPO</span>
             <Badge variant="secondary" className="ml-1 bg-indigo-100 text-indigo-800 text-xs">
-              {ipoAllotmentRecords.length}
+              {ipoAllotmentRecords.length.toLocaleString()}
             </Badge>
           </TabsTrigger>
           <TabsTrigger 
@@ -683,7 +683,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">Non DEMAT IPO</span>
             <span className="sm:hidden">Pending</span>
             <Badge variant="secondary" className="ml-1 bg-amber-100 text-amber-800 text-xs">
-              {ipoAllotmentStagingRecords.length}
+              {ipoAllotmentStagingRecords.length.toLocaleString()}
             </Badge>
           </TabsTrigger>
         </TabsList>

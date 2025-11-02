@@ -179,17 +179,20 @@ export default function DematHoldingsComponent() {
   }
   
   // Handle save button click - show confirmation dialog
-  const handleSaveClick = (symbol: string, field: 'ltp' | 'wacc') => {
-    const row = rows.find(r => r.symbol === symbol)
-    if (!row) return
-    
-    const newValue = editingFields[symbol]?.[field] || 0
-    const originalValue = field === 'ltp' ? row.today_closing_price : row.wacc
-    
-    // Only show confirmation if value has changed
-    if (newValue !== originalValue) {
-      setCurrentUpdate({ symbol, field, value: newValue, row })
-      setShowConfirmDialog(true)
+  const handleSaveClick = async (symbol: string, field: 'ltp' | 'wacc', row?: DematHoldingRow) => {
+    setPendingUpdates((pending) => [
+      ...pending,
+      { symbol, field, value: editingFields[symbol]?.[field] ?? 0, row: row || rows.find(r => r.symbol === symbol)! }
+    ])
+    try {
+      if (field === 'wacc') {
+        await updateWACCForSymbol(symbol, row?.fund_id ?? 0, row?.fiscal_year_id ?? 0, editingFields[symbol]?.wacc ?? 0)
+      } else if (field === 'ltp') {
+        await updateLTPForSymbol(symbol, row?.fiscal_year_id ?? 0, editingFields[symbol]?.ltp ?? 0)
+      }
+      await refresh(); // Refresh all data after update
+    } finally {
+      setPendingUpdates((pending) => pending.filter(u => !(u.symbol === symbol && u.field === field)))
     }
   }
   
@@ -334,129 +337,120 @@ export default function DematHoldingsComponent() {
         </CardContent>
       </Card>
 
-      {/* Table */}
-      <Card className="bg-white shadow-sm border border-gray-200">
-        <CardHeader>
-          <div className="flex justify-between items-center">
-            <CardTitle>Demat Holdings</CardTitle>
-            <div className="text-sm text-gray-600">
-              {selectedFiscalYear ? (
-                <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-xs font-medium">
-                  FY: {fiscalYears.find(fy => fy.fiscal_year_id === selectedFiscalYear)?.year_label || 'Unknown'}
-                </span>
-              ) : loading ? (
-                <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-md text-xs font-medium animate-pulse">
-                  Loading...
-                </span>
-              ) : null}
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <Table className="min-w-full">
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-center">S.N</TableHead>
-                  <TableHead>Scrip</TableHead>
-                  <TableHead className="text-right">Total Balance</TableHead>
-                  <TableHead className="text-right">Actual DEMAT</TableHead>
-                  <TableHead className="text-right">LTP (Fiscal Year)</TableHead>
-                  <TableHead className="text-right">Value @ LTP</TableHead>
-                  <TableHead>DP Name</TableHead>
-                  <TableHead className="text-right">WACC</TableHead>
-                  <TableHead className="text-right">Price Margin</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {loading ? (
-                  <TableRow>
-                    <TableCell colSpan={10} className="text-center py-10 text-gray-500">Loading...</TableCell>
-                  </TableRow>
-                ) : rows.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={10} className="text-center py-10 text-gray-500">No data</TableCell>
-                  </TableRow>
-                ) : (
-                  rows.map((r, idx) => {
-                    const currentLTP = editingFields[r.symbol]?.ltp || r.today_closing_price
-                    const currentWACC = editingFields[r.symbol]?.wacc || r.wacc
-                    const currentMarginPercent = currentWACC > 0 ? ((currentLTP - currentWACC) / currentWACC) * 100 : 0
-                    const barWidth = Math.min(100, ((currentLTP * r.demat) / maxValueLTP) * 100)
-                    const marginColor = currentMarginPercent >= 0 ? 'text-green-600' : 'text-red-600'
-                    const marginBar = currentMarginPercent >= 0 ? 'bg-green-500' : 'bg-red-500'
-                    return (
-                      <TableRow key={`${r.symbol}-${idx}`}>
-                        <TableCell className="text-center">{idx + 1}</TableCell>
-                        <TableCell>
-                          <div className="font-medium">{r.symbol}</div>
-                          <div className="text-xs text-gray-500">{r.company}</div>
-                        </TableCell>
-                        <TableCell className="text-right">{r.current_balance.toLocaleString()}</TableCell>
-                        <TableCell className="text-right">{r.demat.toLocaleString()}</TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex items-center gap-2 justify-end">
-                            <span className="text-sm">Rs.</span>
-                            <Input
-                              type="number"
-                              step="0.01"
-                              min="0"
-                              value={editingFields[r.symbol]?.ltp || r.today_closing_price}
-                              onChange={(e) => handleFieldChange(r.symbol, 'ltp', e.target.value)}
-                              className="w-24 h-8 text-right"
-                            />
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleSaveClick(r.symbol, 'ltp')}
-                              disabled={loading || (editingFields[r.symbol]?.ltp || 0) === r.today_closing_price}
-                              className="h-8 w-8 p-0"
-                            >
-                              <Save className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-right">Rs. {((editingFields[r.symbol]?.ltp || r.today_closing_price) * r.demat).toLocaleString()}</TableCell>
-                        <TableCell>{r.dp_name}</TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex items-center gap-2 justify-end">
-                            <span className="text-sm">Rs.</span>
-                            <Input
-                              type="number"
-                              step="0.01"
-                              min="0"
-                              value={editingFields[r.symbol]?.wacc || r.wacc}
-                              onChange={(e) => handleFieldChange(r.symbol, 'wacc', e.target.value)}
-                              className="w-24 h-8 text-right"
-                            />
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleSaveClick(r.symbol, 'wacc')}
-                              disabled={loading || (editingFields[r.symbol]?.wacc || 0) === r.wacc}
-                              className="h-8 w-8 p-0"
-                            >
-                              <Save className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                        <TableCell className={`text-right ${marginColor}`}>
-                          <div className="flex items-center gap-2 justify-end">
-                            <div className="w-20 h-1.5 bg-gray-200 rounded">
-                              <div className={`h-1.5 rounded ${marginBar}`} style={{ width: `${Math.min(100, Math.abs(currentMarginPercent))}%` }} />
+      {/* TABLES GROUPED BY DP NAME */}
+      {/** Group rows by DP Name **/}
+      {useMemo(() => {
+        if (loading) return (
+          <Card className="bg-white shadow-sm border border-gray-200 mt-4"><CardContent className="p-9 text-center text-gray-500">Loading...</CardContent></Card>
+        )
+        if (rows.length === 0) return (
+          <Card className="bg-white shadow-sm border border-gray-200 mt-4"><CardContent className="p-9 text-center text-gray-500">No data</CardContent></Card>
+        )
+
+        // Group by dp_name
+        const grouped = rows.reduce((acc, row) => {
+          (acc[row.dp_name || '-'] = acc[row.dp_name || '-'] || []).push(row);
+          return acc;
+        }, {} as Record<string, DematHoldingRow[]>);
+
+        return Object.entries(grouped).map(([dp, groupRows], gIdx) => (
+          <Card key={dp} className="bg-white shadow-sm border border-gray-200 mt-6">
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>DP: {dp}</CardTitle>
+                <div className="text-xs text-blue-700 bg-blue-100 px-2 py-1 rounded-md">Holdings: {groupRows.length}</div>
+              </div>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="overflow-x-auto">
+                <Table className="min-w-full">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-center">S.N</TableHead>
+                      <TableHead>Scrip</TableHead>
+                      <TableHead className="text-right">Total Balance</TableHead>
+                      <TableHead className="text-right">Actual DEMAT</TableHead>
+                      <TableHead className="text-right">LTP (Fiscal Year)</TableHead>
+                      <TableHead className="text-right">Value @ LTP</TableHead>
+                      <TableHead className="text-right">WACC</TableHead>
+                      <TableHead className="text-right">Price Margin</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {groupRows.map((r, idx) => {
+                      const currentLTP = editingFields[r.symbol]?.ltp || r.today_closing_price;
+                      const marginColor = r.price_margin_percent > 0 ? "text-green-600" : (r.price_margin_percent < 0 ? "text-red-600" : "text-gray-600");
+                      const marginBar = r.price_margin_percent > 0 ? "bg-green-400" : (r.price_margin_percent < 0 ? "bg-red-400" : "bg-gray-400");
+                      const currentMarginPercent = ((currentLTP - (editingFields[r.symbol]?.wacc || r.wacc)) / (editingFields[r.symbol]?.wacc || r.wacc)) * 100 || 0;
+                      return (
+                        <TableRow key={r.symbol}>
+                          <TableCell className="text-center">{idx + 1}</TableCell>
+                          <TableCell>{r.company}<br /><span className="text-xs text-gray-500">{r.symbol}</span></TableCell>
+                          <TableCell className="text-right">{r.current_balance}</TableCell>
+                          <TableCell className="text-right">{r.demat}</TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex items-center gap-2 justify-end">
+                              <span className="text-sm">Rs.</span>
+                              <Input
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                value={editingFields[r.symbol]?.ltp || r.today_closing_price}
+                                onChange={(e) => handleFieldChange(r.symbol, 'ltp', e.target.value)}
+                                className="w-24 h-8 text-right"
+                              />
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleSaveClick(r.symbol, 'ltp', r)}
+                                disabled={loading || (editingFields[r.symbol]?.ltp === undefined || editingFields[r.symbol]?.ltp === r.today_closing_price)}
+                                className="h-8 w-8 p-0"
+                              >
+                                <Save className="h-3 w-3" />
+                              </Button>
                             </div>
-                            {currentMarginPercent.toFixed(2)}%
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    )
-                  })
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
+                          </TableCell>
+                          <TableCell className="text-right">Rs. {((currentLTP) * r.demat).toLocaleString()}</TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex items-center gap-2 justify-end">
+                              <span className="text-sm">Rs.</span>
+                              <Input
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                value={editingFields[r.symbol]?.wacc || r.wacc}
+                                onChange={(e) => handleFieldChange(r.symbol, 'wacc', e.target.value)}
+                                className="w-24 h-8 text-right"
+                              />
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleSaveClick(r.symbol, 'wacc', r)}
+                                disabled={loading || (editingFields[r.symbol]?.wacc === undefined || editingFields[r.symbol]?.wacc === r.wacc)}
+                                className="h-8 w-8 p-0"
+                              >
+                                <Save className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                          <TableCell className={`text-right ${marginColor}`}>
+                            <div className="flex items-center gap-2 justify-end">
+                              <div className="w-20 h-1.5 bg-gray-200 rounded">
+                                <div className={`h-1.5 rounded ${marginBar}`} style={{ width: `${Math.min(100, Math.abs(currentMarginPercent))}%` }} />
+                              </div>
+                              {currentMarginPercent.toFixed(2)}%
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+        ));
+      }, [rows, editingFields, loading])}
       
       {/* Confirmation Dialog */}
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>

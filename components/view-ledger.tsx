@@ -32,7 +32,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { RefreshCw, Download } from "lucide-react"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { getUsers } from "@/app/api/dashboardAPICalls/actions"
 import { getFiscal } from "@/app/api/fiscalAPI/actions"
 import { filterDataGrouped, getSymbolHoldingsEffectiveRate } from "@/app/api/ledgerPageCalls/actions"
@@ -99,7 +99,7 @@ interface EligibleRecord {
   opening_quantity: number
   effective_rate: number
   total_value: number
-  record_type: 'opening' | 'bonus' | 'rights' | 'promoter' | 'ipo_allotment'
+  record_type: 'opening' | 'bonus' | 'rights' | 'promoter' | 'ipo_allotment' | 'ipo_allotment_staging'
   id: string
   date: Date | null
   client_id: string
@@ -112,6 +112,8 @@ interface EligibleRecord {
   right_id?: number
   promoter_id?: number
   allotment_id?: number
+  staging_id?: number
+  sub_id?: number
 }
 
 interface LedgerTotals {
@@ -207,6 +209,22 @@ export default function ViewLedger() {
   const [effectiveRate, setEffectiveRate] = useState<number>(INITIAL_STATE.EFFECTIVE_RATE)
   const [effectiveRateLoading, setEffectiveRateLoading] = useState(INITIAL_STATE.RATE_LOADING)
   const [isLoadingMain, setIsLoadingMain] = useState(INITIAL_STATE.LOADING)
+
+  // Derived: Price Per Share = (Eligible Amount + Purchase Total Cost) / (Eligible Shares + Purchase Shares)
+  const pricePerShare = useMemo(() => {
+    if (!ledgerData || !ledgerData.totals) return 0
+    const eligibleQty = (ledgerData.totals.eligible?.totalEligibleQuantity ?? ledgerData.totals.opening?.totalEligibleQuantity ?? 0) || 0
+    const eligibleAmount = (ledgerData.totals.eligible?.totalEligibleValue ?? ledgerData.totals.opening?.totalEligibleValue ?? 0) || 0
+
+    const purchaseQty = ledgerData.totals.purchase?.totalQuantity ?? 0
+    const purchaseCost = ledgerData.totals.purchase?.totalNetPayable ?? 0
+
+    const totalQty = (eligibleQty || 0) + (purchaseQty || 0)
+    const totalCost = (eligibleAmount || 0) + (purchaseCost || 0)
+
+    if (totalQty <= 0) return 0
+    return totalCost / totalQty
+  }, [ledgerData])
 
   // Event Handlers
   const handleFundChange = (value: string) => {
@@ -358,6 +376,19 @@ export default function ViewLedger() {
               {/* Price Per Share Display - positioned right after the text */}
               <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm ml-4">
                 <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Price Per Share</div>
+                <div className="flex items-center justify-center">
+                  {effectiveRateLoading ? (
+                    <RefreshCw className="w-4 h-4 animate-spin text-blue-600" />
+                  ) : (
+                    <span className="text-lg font-bold text-gray-900">
+                      <mark> Rs. {pricePerShare > 0 ? pricePerShare.toFixed(2) : 'N/A'} </mark>
+                    </span>
+                  )}
+                </div>
+              </div>
+
+                            <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm ml-4">
+                <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">WACC</div>
                 <div className="flex items-center justify-center">
                   {effectiveRateLoading ? (
                     <RefreshCw className="w-4 h-4 animate-spin text-blue-600" />
@@ -580,6 +611,12 @@ export default function ViewLedger() {
                             label: 'IPO Allotment', 
                             color: 'bg-indigo-100 text-indigo-800', 
                             icon: '🚀'
+                          }
+                        case 'ipo_allotment_staging':
+                          return { 
+                            label: 'IPO Staging', 
+                            color: 'bg-amber-100 text-amber-800', 
+                            icon: '⏳'
                           }
                         default:
                           return { 

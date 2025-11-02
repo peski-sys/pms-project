@@ -44,6 +44,7 @@ export async function getSectorAllocation(selectUser: string) {
         select: {
             symbol: true,
             closing_quantity: true,
+            effective_rate: true,
             stock_fulls: {
                 select: {
                     sectors: {
@@ -65,15 +66,14 @@ export async function getSectorAllocation(selectUser: string) {
 
     for (const holding of holdings) {
         const sectorName = holding.stock_fulls.sectors.sector_name;
-        const currentLTP = ltpMap.get(holding.symbol) || 0;
-        const marketValue = sanitizeNumeric(holding.closing_quantity) * currentLTP;
+        const costValue = sanitizeNumeric(holding.closing_quantity) * sanitizeNumeric(holding.effective_rate);
         
-        totalValue += marketValue;
+        totalValue += costValue;
         
         if (sectorMap.has(sectorName)) {
-            sectorMap.set(sectorName, sectorMap.get(sectorName)! + marketValue);
+            sectorMap.set(sectorName, sectorMap.get(sectorName)! + costValue);
         } else {
-            sectorMap.set(sectorName, marketValue);
+            sectorMap.set(sectorName, costValue);
         }
     }
 
@@ -151,6 +151,7 @@ export async function getPortfolioGainersLosers(selectUser: string) {
         return { topGainers: [], topLosers: [] };
     }
 
+    // Fetch all holdings for the client (could be more than one per symbol)
     const holdings = await prisma.fiscal_year_balance.findMany({
         where: {
             fiscal_year_id: currentFiscalYear.fiscal_year_id,
@@ -164,20 +165,42 @@ export async function getPortfolioGainersLosers(selectUser: string) {
             closing_quantity: true,
             effective_rate: true,
             stock_fulls: {
-                select: {
-                    full_form: true,
-                }
+                select: { full_form: true }
             }
         }
     });
 
+    // Aggregate holdings by symbol (sum quantities, weighted avg rate)
+    const symbolMap = new Map();
+    for (const h of holdings) {
+        const qty = sanitizeNumeric(h.closing_quantity);
+        const rate = sanitizeNumeric(h.effective_rate);
+        if (!symbolMap.has(h.symbol)) {
+            symbolMap.set(h.symbol, {
+                symbol: h.symbol,
+                total_quantity: qty,
+                total_cost: qty * rate,
+                stock_fulls: h.stock_fulls,
+            });
+        } else {
+            const prev = symbolMap.get(h.symbol);
+            prev.total_quantity += qty;
+            prev.total_cost += qty * rate;
+        }
+    }
+    const aggregatedHoldings = Array.from(symbolMap.values()).map(h => ({
+        symbol: h.symbol,
+        closing_quantity: h.total_quantity,
+        effective_rate: h.total_quantity > 0 ? h.total_cost / h.total_quantity : 0,
+        stock_fulls: h.stock_fulls,
+    }));
+
     // Batch fetch LTP for all symbols using market snapshots
-    const symbols = holdings.map(h => h.symbol);
+    const symbols = aggregatedHoldings.map(h => h.symbol);
     const ltpMap = await getBatchMarketSnapshotLTP(symbols, currentFiscalYear.fiscal_year_id);
 
     const performanceData = [];
-
-    for (const holding of holdings) {
+    for (const holding of aggregatedHoldings) {
         const currentLTP = ltpMap.get(holding.symbol) || 0;
         const quantity = sanitizeNumeric(holding.closing_quantity);
         const effectiveRate = sanitizeNumeric(holding.effective_rate);

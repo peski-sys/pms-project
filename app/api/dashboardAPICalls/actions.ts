@@ -111,8 +111,46 @@ async function _getTotalInvestment(selectUser: string) {
             return { _sum: { total_value: 0 }, error: 'No current fiscal year' };
         }
 
-        // Get fiscal year balances for current fiscal year (filter by user but will combine by fund)
-        const fiscalBalances = await prisma.fiscal_year_balance.findMany({
+        // Get fund_id from client name
+        const clientMapping = await prisma.client_broker_mapping.findFirst({
+            where: {
+                client_name: selectUser
+            },
+            select: {
+                fund_id: true
+            }
+        });
+
+        if (!clientMapping) {
+            return { _sum: { total_value: 0 }, error: 'No fund mapping found' };
+        }
+
+        // Get trading investments from fiscal_year_balance with source_type='TRADING'
+        const tradingBalances = await prisma.fiscal_year_balance.findMany({
+            where: {
+                fiscal_year_id: currentFiscalYear.fiscal_year_id,
+                client_broker_mapping: {
+                    client_name: selectUser,
+                },
+                source_type: "TRADING",
+            },
+            select: {
+                closing_quantity: true,
+                effective_rate: true,
+            }
+        });
+
+        // Calculate total from trading balances (cost value)
+        let tradingTotal = 0;
+        tradingBalances.forEach(balance => {
+            const closingQty = sanitizeNumeric(balance.closing_quantity);
+            const effectiveRate = sanitizeNumeric(balance.effective_rate);
+            const costValue = FinancialCalculator.multiply(closingQty, effectiveRate);
+            tradingTotal = FinancialCalculator.add(tradingTotal, costValue);
+        });
+
+        // Get promoter investments from promoter_records table (cost value)
+        const promoterRecords = await prisma.promoter_records.findMany({
             where: {
                 fiscal_year_id: currentFiscalYear.fiscal_year_id,
                 client_broker_mapping: {
@@ -120,28 +158,43 @@ async function _getTotalInvestment(selectUser: string) {
                 },
             },
             select: {
-                symbol: true,
-                closing_quantity: true,
+                quantity: true,
                 effective_rate: true,
-                fund_id: true,
-                fiscal_year_id: true
             }
         });
 
-        // Combine holdings by fund_id, fiscal_year_id, and symbol
-        const combinedHoldings = combineHoldingsByFund(fiscalBalances);
-
-        // Batch fetch LTP for all symbols
-        const symbols = combinedHoldings.map(b => b.symbol);
-        const ltpMap = await getBatchMarketSnapshotLTP(symbols, currentFiscalYear.fiscal_year_id);
-
-        let totalInvestment = 0;
-        combinedHoldings.forEach(balance => {
-            const closingQty = sanitizeNumeric(balance.closing_quantity);
-            const currentLTP = ltpMap.get(balance.symbol) || 0;
-            // Use market value for total investment with decimal precision
-            totalInvestment = FinancialCalculator.add(totalInvestment, FinancialCalculator.multiply(closingQty, currentLTP));
+        // Calculate total from promoter records (cost value)
+        let promoterTotal = 0;
+        promoterRecords.forEach(record => {
+            const quantity = sanitizeNumeric(record.quantity);
+            const effectiveRate = sanitizeNumeric(record.effective_rate);
+            const costValue = FinancialCalculator.multiply(quantity, effectiveRate);
+            promoterTotal = FinancialCalculator.add(promoterTotal, costValue);
         });
+
+        // Get IPO allotment staging records total_value
+        const ipoStagingRecords = await prisma.ipo_allotment_staging.findMany({
+            where: {
+                fiscal_year_id: currentFiscalYear.fiscal_year_id,
+                fund_id: clientMapping.fund_id
+            },
+            select: {
+                total_value: true
+            }
+        });
+
+        // Calculate total from IPO staging records
+        let ipoStagingTotal = 0;
+        ipoStagingRecords.forEach(record => {
+            const totalValue = sanitizeNumeric(record.total_value);
+            ipoStagingTotal = FinancialCalculator.add(ipoStagingTotal, totalValue);
+        });
+
+        // Total Investment = trading total + promoter total + ipo_allotment_staging total_value
+        const totalInvestment = FinancialCalculator.add(
+            FinancialCalculator.add(tradingTotal, promoterTotal), 
+            ipoStagingTotal
+        );
         
         return {
             _sum: {
@@ -514,6 +567,7 @@ export async function getInvestmentBreakdown(selectUser: string) {
         select: {
             symbol: true,
             closing_quantity: true,
+            effective_rate: true,
             fund_id: true,
             fiscal_year_id: true,
             stock_fulls: {
@@ -531,17 +585,61 @@ export async function getInvestmentBreakdown(selectUser: string) {
     // Combine trading investments by fund_id, fiscal_year_id, and symbol
     const combinedTradingInvestments = combineHoldingsByFund(tradingInvestments);
 
-    // Get maturity investments (from promoter_records for current fiscal year) with selective fields
-    const maturityInvestments = await prisma.promoter_records.findMany({
+    // Get fund_id from client name
+    const clientMapping = await prisma.client_broker_mapping.findFirst({
+        where: {
+            client_name: selectUser
+        },
+        select: {
+            fund_id: true
+        }
+    });
+
+    if (!clientMapping) {
+        return {
+            trading: { data: [], total: 0, count: 0 },
+            maturity: { data: [], total: 0, count: 0 },
+            allSectors: []
+        };
+    }
+
+    // Get maturity investments from fiscal_year_balance with source_type='PROMOTER'
+    const maturityInvestments = await prisma.fiscal_year_balance.findMany({
         where: {
             fiscal_year_id: currentFiscalYear.fiscal_year_id,
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "PROMOTER",
+        },
+        select: {
+            symbol: true,
+            closing_quantity: true,
+            effective_rate: true,
+            fund_id: true,
+            fiscal_year_id: true,
+            stock_fulls: {
+                select: {
+                    sectors: {
+                        select: {
+                            sector_name: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Get IPO allotment staging records for maturity
+    const ipoStagingInvestments = await prisma.ipo_allotment_staging.findMany({
+        where: {
+            fiscal_year_id: currentFiscalYear.fiscal_year_id,
+            fund_id: clientMapping.fund_id
         },
         select: {
             symbol: true,
             quantity: true,
+            effective_rate: true,
             fund_id: true,
             stock_fulls: {
                 select: {
@@ -555,49 +653,59 @@ export async function getInvestmentBreakdown(selectUser: string) {
         }
     });
 
-    // Combine maturity investments by fund_id and symbol
-    const combinedMaturityInvestments = combinePromoterRecordsByFund(maturityInvestments);
+    // Combine maturity investments by fund_id, fiscal_year_id, and symbol
+    const combinedMaturityInvestments = combineHoldingsByFund(maturityInvestments);
+    
+    // Add IPO staging records to maturity investments
+    const ipoStagingMapped = ipoStagingInvestments.map(record => ({
+        symbol: record.symbol,
+        closing_quantity: record.quantity,
+        effective_rate: record.effective_rate,
+        fund_id: record.fund_id,
+        fiscal_year_id: currentFiscalYear.fiscal_year_id,
+        stock_fulls: record.stock_fulls
+    }));
+    
+    const combinedMaturityWithIPO = [...combinedMaturityInvestments, ...ipoStagingMapped];
 
     // Get all unique symbols for batch LTP fetching
     const allSymbols = [
         ...combinedTradingInvestments.map(inv => inv.symbol),
-        ...combinedMaturityInvestments.map(inv => inv.symbol)
+        ...combinedMaturityWithIPO.map(inv => inv.symbol)
     ];
     const ltpMap = await getBatchMarketSnapshotLTP(allSymbols, currentFiscalYear.fiscal_year_id);
 
-    // Group trading investments by sector
+    // Group trading investments by sector (using cost value for IFRS compliance)
     const tradingSectorMap = new Map<string, number>();
     let tradingTotal = 0;
 
     for (const investment of combinedTradingInvestments) {
         const sectorName = investment.stock_fulls.sectors.sector_name;
-        const currentLTP = ltpMap.get(investment.symbol) || 0;
-        const marketValue = FinancialCalculator.multiply(sanitizeNumeric(investment.closing_quantity), currentLTP);
+        const costValue = FinancialCalculator.multiply(sanitizeNumeric(investment.closing_quantity), sanitizeNumeric(investment.effective_rate));
         
-        tradingTotal = FinancialCalculator.add(tradingTotal, marketValue);
+        tradingTotal = FinancialCalculator.add(tradingTotal, costValue);
         
         if (tradingSectorMap.has(sectorName)) {
-            tradingSectorMap.set(sectorName, FinancialCalculator.add(tradingSectorMap.get(sectorName)!, marketValue));
+            tradingSectorMap.set(sectorName, FinancialCalculator.add(tradingSectorMap.get(sectorName)!, costValue));
         } else {
-            tradingSectorMap.set(sectorName, marketValue);
+            tradingSectorMap.set(sectorName, costValue);
         }
     }
 
-    // Group maturity investments by sector
+    // Group maturity investments by sector (using cost value for IFRS compliance)
     const maturitySectorMap = new Map<string, number>();
     let maturityTotal = 0;
 
-    for (const investment of combinedMaturityInvestments) {
+    for (const investment of combinedMaturityWithIPO) {
         const sectorName = investment.stock_fulls.sectors.sector_name;
-        const currentLTP = ltpMap.get(investment.symbol) || 0;
-        const marketValue = FinancialCalculator.multiply(sanitizeNumeric(investment.quantity), currentLTP);
+        const costValue = FinancialCalculator.multiply(sanitizeNumeric(investment.closing_quantity), sanitizeNumeric(investment.effective_rate));
         
-        maturityTotal = FinancialCalculator.add(maturityTotal, marketValue);
+        maturityTotal = FinancialCalculator.add(maturityTotal, costValue);
         
         if (maturitySectorMap.has(sectorName)) {
-            maturitySectorMap.set(sectorName, FinancialCalculator.add(maturitySectorMap.get(sectorName)!, marketValue));
+            maturitySectorMap.set(sectorName, FinancialCalculator.add(maturitySectorMap.get(sectorName)!, costValue));
         } else {
-            maturitySectorMap.set(sectorName, marketValue);
+            maturitySectorMap.set(sectorName, costValue);
         }
     }
 
@@ -667,6 +775,7 @@ export async function getStockInvestmentBreakdown(selectUser: string) {
         select: {
             symbol: true,
             closing_quantity: true,
+            effective_rate: true,
             fund_id: true,
             fiscal_year_id: true
         }
@@ -675,42 +784,79 @@ export async function getStockInvestmentBreakdown(selectUser: string) {
     // Combine trading investments by fund_id, fiscal_year_id, and symbol
     const combinedTradingInvestments = combineHoldingsByFund(tradingInvestments);
 
-    // Get maturity investments (from promoter_records for current fiscal year) with selective fields
-    const maturityInvestments = await prisma.promoter_records.findMany({
+    // Get fund_id from client name
+    const clientMapping = await prisma.client_broker_mapping.findFirst({
+        where: {
+            client_name: selectUser
+        },
+        select: {
+            fund_id: true
+        }
+    });
+
+    if (!clientMapping) {
+        return {
+            trading: { data: [], total: 0, count: 0 },
+            maturity: { data: [], total: 0, count: 0 }
+        };
+    }
+
+    // Get maturity investments from fiscal_year_balance with source_type='PROMOTER'
+    const maturityInvestments = await prisma.fiscal_year_balance.findMany({
         where: {
             fiscal_year_id: currentFiscalYear.fiscal_year_id,
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "PROMOTER",
+        },
+        select: {
+            symbol: true,
+            closing_quantity: true,
+            effective_rate: true,
+            fund_id: true,
+            fiscal_year_id: true
+        }
+    });
+
+    // Get IPO allotment staging records for maturity
+    const ipoStagingInvestments = await prisma.ipo_allotment_staging.findMany({
+        where: {
+            fiscal_year_id: currentFiscalYear.fiscal_year_id,
+            fund_id: clientMapping.fund_id
         },
         select: {
             symbol: true,
             quantity: true,
+            effective_rate: true,
             fund_id: true
         }
     });
 
-    // Combine maturity investments by fund_id and symbol
-    const combinedMaturityInvestments = combinePromoterRecordsByFund(maturityInvestments);
-
-    // Batch fetch LTP for all unique symbols
-    const allSymbols = [
-        ...combinedTradingInvestments.map(inv => inv.symbol),
-        ...combinedMaturityInvestments.map(inv => inv.symbol)
-    ];
-    const ltpMap = await getBatchMarketSnapshotLTP(allSymbols, currentFiscalYear.fiscal_year_id);
+    // Combine maturity investments by fund_id, fiscal_year_id, and symbol
+    const combinedMaturityInvestments = combineHoldingsByFund(maturityInvestments);
+    
+    // Add IPO staging records to maturity investments
+    const ipoStagingMapped = ipoStagingInvestments.map(record => ({
+        symbol: record.symbol,
+        closing_quantity: record.quantity,
+        effective_rate: record.effective_rate,
+        fund_id: record.fund_id,
+        fiscal_year_id: currentFiscalYear.fiscal_year_id
+    }));
+    
+    const combinedMaturityWithIPO = [...combinedMaturityInvestments, ...ipoStagingMapped];
 
     const tradingData = [];
     let tradingTotal = 0;
 
     for (const investment of combinedTradingInvestments) {
-        const currentLTP = ltpMap.get(investment.symbol) || 0;
-        const marketValue = FinancialCalculator.multiply(sanitizeNumeric(investment.closing_quantity), currentLTP);
-        tradingTotal = FinancialCalculator.add(tradingTotal, marketValue);
+        const costValue = FinancialCalculator.multiply(sanitizeNumeric(investment.closing_quantity), sanitizeNumeric(investment.effective_rate));
+        tradingTotal = FinancialCalculator.add(tradingTotal, costValue);
         
         tradingData.push({
             symbol: investment.symbol,
-            value: marketValue,
+            value: costValue,
             percentage: 0 // Will calculate after getting total
         });
     }
@@ -718,14 +864,13 @@ export async function getStockInvestmentBreakdown(selectUser: string) {
     const maturityData = [];
     let maturityTotal = 0;
 
-    for (const investment of combinedMaturityInvestments) {
-        const currentLTP = ltpMap.get(investment.symbol) || 0;
-        const marketValue = FinancialCalculator.multiply(sanitizeNumeric(investment.quantity), currentLTP);
-        maturityTotal = FinancialCalculator.add(maturityTotal, marketValue);
+    for (const investment of combinedMaturityWithIPO) {
+        const costValue = FinancialCalculator.multiply(sanitizeNumeric(investment.closing_quantity), sanitizeNumeric(investment.effective_rate));
+        maturityTotal = FinancialCalculator.add(maturityTotal, costValue);
         
         maturityData.push({
             symbol: investment.symbol,
-            value: marketValue,
+            value: costValue,
             percentage: 0 // Will calculate after getting total
         });
     }
@@ -748,7 +893,7 @@ export async function getStockInvestmentBreakdown(selectUser: string) {
         maturity: {
             data: maturityData.sort((a, b) => b.value - a.value), // All stocks sorted by value
             total: maturityTotal,
-            count: combinedMaturityInvestments.length
+            count: combinedMaturityWithIPO.length
         }
     };
 }
@@ -847,7 +992,6 @@ export async function getComprehensivePortfolio(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
-            source_type: "TRADING"
         },
         select: {
             symbol: true,
@@ -1180,7 +1324,7 @@ export async function getSectorPortfolioSummary(selectUser: string) {
     };
 }
 
-// Get investment highlights data
+// Get investment highlights data (IFRS-compliant)
 export async function getInvestmentHighlights(selectUser: string) {
     // Get current fiscal year
     const currentDate = new Date();
@@ -1207,12 +1351,104 @@ export async function getInvestmentHighlights(selectUser: string) {
         };
     }
 
-    // Get trading securities (buy_records - sell_records)
-    const tradingSecurities = await getTotalInvestment(selectUser);
-    const totalInvestment = tradingSecurities._sum.total_value;
+    // Get fund_id from client name
+    const clientMapping = await prisma.client_broker_mapping.findFirst({
+        where: {
+            client_name: selectUser
+        },
+        select: {
+            fund_id: true
+        }
+    });
+
+    if (!clientMapping) {
+        return {
+            tradingSecurities: 0,
+            listedEquityShares: 0,
+            maturitySecurities: 0,
+            totalInvestment: 0,
+            realizedGain: 0,
+            unrealizedGain: 0,
+            dividendIncome: 0,
+            netGain: 0,
+            realizedGainPercent: 0,
+            unrealizedGainPercent: 0,
+            netGainPercent: 0
+        };
+    }
+
+    // Get trading investments from fiscal_year_balance with source_type='TRADING' (cost value)
+    const tradingBalances = await prisma.fiscal_year_balance.findMany({
+        where: {
+            fiscal_year_id: currentFiscalYear.fiscal_year_id,
+            client_broker_mapping: {
+                client_name: selectUser,
+            },
+            source_type: "TRADING",
+        },
+        select: {
+            closing_quantity: true,
+            effective_rate: true,
+            symbol: true
+        }
+    });
+
+    // Calculate trading total (cost value)
+    let tradingValue = 0;
+    for (const balance of tradingBalances) {
+        const closingQty = sanitizeNumeric(balance.closing_quantity);
+        const effectiveRate = sanitizeNumeric(balance.effective_rate);
+        const costValue = FinancialCalculator.multiply(closingQty, effectiveRate);
+        tradingValue = FinancialCalculator.add(tradingValue, costValue);
+    }
+
+    // Get promoter investments from promoter_records table (cost value)
+    const promoterRecords = await prisma.promoter_records.findMany({
+        where: {
+            fiscal_year_id: currentFiscalYear.fiscal_year_id,
+            client_broker_mapping: {
+                client_name: selectUser,
+            },
+        },
+        select: {
+            quantity: true,
+            effective_rate: true,
+        }
+    });
+
+    // Calculate promoter total (cost value)
+    let promoterValue = 0;
+    for (const record of promoterRecords) {
+        const quantity = sanitizeNumeric(record.quantity);
+        const effectiveRate = sanitizeNumeric(record.effective_rate);
+        const costValue = FinancialCalculator.multiply(quantity, effectiveRate);
+        promoterValue = FinancialCalculator.add(promoterValue, costValue);
+    }
+
+    // Get IPO allotment staging records total_value
+    const ipoStagingRecords = await prisma.ipo_allotment_staging.findMany({
+        where: {
+            fiscal_year_id: currentFiscalYear.fiscal_year_id,
+            fund_id: clientMapping.fund_id
+        },
+        select: {
+            total_value: true
+        }
+    });
+
+    // Calculate IPO staging total
+    let ipoStagingValue = 0;
+    for (const record of ipoStagingRecords) {
+        const totalValue = sanitizeNumeric(record.total_value);
+        ipoStagingValue = FinancialCalculator.add(ipoStagingValue, totalValue);
+    }
+
+    // Calculate totals
+    const maturityValue = FinancialCalculator.add(promoterValue, ipoStagingValue);
+    const totalInvestment = FinancialCalculator.add(tradingValue, maturityValue);
     
-    // Get maturity securities (promoter_records) filtered by current fiscal year
-    const maturitySecurities = await prisma.promoter_records.aggregate({
+    // Get realized gains (only for trading securities)
+    const realizedGains = await prisma.sell_records.aggregate({
         where: {
             fiscal_year_id: currentFiscalYear.fiscal_year_id,
             client_broker_mapping: {
@@ -1220,16 +1456,11 @@ export async function getInvestmentHighlights(selectUser: string) {
             },
         },
         _sum: {
-            total_value: true
+            profit_loss: true
         }
     });
     
-    const maturityValue = Number(maturitySecurities._sum.total_value || 0);
-    
-    // Get realized gains
-    const realizedGains = await realisedProfitLoss(selectUser);
-    
-    // Get unrealized gains
+    // Get unrealized gains (only for trading securities)
     const unrealizedData = await getUnrealizedGains(selectUser);
     
     // Get dividend income filtered by current fiscal year
@@ -1246,15 +1477,15 @@ export async function getInvestmentHighlights(selectUser: string) {
     });
     
     const dividendIncome = Number(dividends._sum.amount || 0);
-    const realizedGain = realizedGains._sum.profit_loss;
+    const realizedGain = Number(realizedGains._sum.profit_loss || 0);
     const unrealizedGain = unrealizedData.total_unrealized_gain;
     const netGain = realizedGain + unrealizedGain;
     
     return {
-        tradingSecurities: totalInvestment,
-        listedEquityShares: totalInvestment, // Assuming all trading securities are equity shares
+        tradingSecurities: tradingValue,
+        listedEquityShares: tradingValue, // Assuming all trading securities are equity shares
         maturitySecurities: maturityValue,
-        totalInvestment: totalInvestment + maturityValue,
+        totalInvestment: totalInvestment,
         realizedGain: realizedGain,
         unrealizedGain: unrealizedGain,
         dividendIncome: dividendIncome,

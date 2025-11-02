@@ -107,6 +107,9 @@ type MetricData = {
 
     // Remarks (optional)
     remarks?: string
+    
+    // IPO Staging indicator (optional)
+    isIPOStaging?: boolean
 }
 
 export default function DashboardTwo() {
@@ -899,7 +902,11 @@ export default function DashboardTwo() {
               </TableRow>
             ) : promoterData.length > 0 ? (
               paginatedPromoterData.map((data, index) => (
-                <TableRow key={`promoter-${data.code}-${index}`}>
+                <TableRow 
+                  key={`promoter-${data.code}-${index}`}
+                  className={data.isIPOStaging ? "bg-yellow-100 hover:bg-yellow-200" : ""}
+                  title={data.isIPOStaging ? "IPO Staging (Non-DEMAT)" : undefined}
+                >
                   <TableCell className="font-medium border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.company}</Link></TableCell>
                   <TableCell className="text-center border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.code}</Link></TableCell>
                   <TableCell className="text-center border-r">{data.category}</TableCell>

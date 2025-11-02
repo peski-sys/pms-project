@@ -78,7 +78,8 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
             opening_rate: true,
             closing_quantity: true,
             remarks: true,
-            client_id: true
+            client_id: true,
+            source_type: true
         }
     })
 
@@ -123,8 +124,11 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
         }
     })
 
-    // Fetch promoter records
-    const promoter_records = await prisma.promoter_records.findMany({
+    // Check if any opening balance records have source_type 'PROMOTER'
+    const hasPromoterSourceType = opening_balances.some(record => record.source_type === 'PROMOTER')
+    
+    // Only fetch promoter records if no opening balance records have source_type 'PROMOTER'
+    const promoter_records = hasPromoterSourceType ? [] : await prisma.promoter_records.findMany({
         where: {
             fiscal_year_id: given_fiscal,
             symbol: given_symbol,
@@ -162,6 +166,34 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
             remarks: true
         }
     })
+
+    // Get fund_id from client name first
+    const clientMapping = await prisma.client_broker_mapping.findFirst({
+        where: {
+            client_name: given_fund
+        },
+        select: {
+            fund_id: true
+        }
+    })
+
+    // Fetch IPO allotment staging records for eligible records
+    const ipo_allotment_staging_records = clientMapping ? await prisma.ipo_allotment_staging.findMany({
+        where: {
+            fiscal_year_id: given_fiscal,
+            symbol: given_symbol,
+            fund_id: clientMapping.fund_id
+        },
+        select: {
+            allotment_staging_id: true,
+            quantity: true,
+            effective_rate: true,
+            total_value: true,
+            added_at: true,
+            remarks: true,
+            sub_id: true
+        }
+    }) : []
 
     // Group purchase records by date, symbol, and client_id
     const purchaseGroups = new Map<string, {
@@ -596,6 +628,20 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
         client_id: d.client_id,
         allotment_id: d.allotment_id
     }))
+
+    // Add IPO allotment staging records to eligible
+    const ipo_allotment_staging_sanitized = ipo_allotment_staging_records.map((d, index) => ({
+        opening_quantity: Number(d.quantity),
+        effective_rate: FinancialCalculator.round(Number(d.effective_rate || 0)),
+        total_value: FinancialCalculator.round(Number(d.total_value || 0)),
+        record_type: 'ipo_allotment_staging' as const,
+        id: `ipo-staging-${index}`,
+        date: d.added_at, // Added at date for IPO allotment staging records
+        remarks: d.remarks || '',
+        client_id: given_fund, // Use fund name as client_id since staging records don't have client_id
+        staging_id: d.allotment_staging_id,
+        sub_id: d.sub_id
+    }))
     
     // Combine all eligible records
     const eligible_records = [
@@ -603,7 +649,8 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
         ...bonus_sanitized,
         ...rights_sanitized,
         ...promoter_sanitized,
-        ...ipo_allotment_sanitized
+        ...ipo_allotment_sanitized,
+        ...ipo_allotment_staging_sanitized
     ].sort((a, b) => {
         if (!a.date && !b.date) return 0
         if (!a.date) return -1
