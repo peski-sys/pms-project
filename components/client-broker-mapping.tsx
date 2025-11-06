@@ -57,12 +57,14 @@ import {
   DialogClose
 } from "@/components/ui/dialog"
 import { getFunds } from "@/app/api/fundsAPI/actions"
+import { getCurrentSessionUser } from "@/app/api/dashboardAPICalls/actions"
 
 export default function ClientMap() {
     const [fetchBrokerClientData, setFetchBrokerClientData] = useState<BrokerClientData[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [listFunds, selectlistFunds] = useState<fund_data[]>()
     const [selectValue, setselectValue] = useState<string>('')
+    const [isAdmin, setIsAdmin] = useState<boolean | null>()
 
 
     function handleValueChange(value: string) {
@@ -73,6 +75,8 @@ export default function ClientMap() {
     const loadBrokerClientData = async () => {
         setIsLoading(true);
         try {
+          const userPermission = await getCurrentSessionUser()
+          setIsAdmin(userPermission)
             const response: BrokerClientData[] = await getBrokerClientData();
             setFetchBrokerClientData(response);
 
@@ -166,7 +170,7 @@ export default function ClientMap() {
                 <RefreshCw className={`size-4 ${isLoading ? 'animate-spin' : ''}`} />
                 Refresh Data
             </Button>
-            
+            {isAdmin && 
             <Dialog>
                 <DialogTrigger asChild>
                   <Button>+ Add Client Mapping</Button>
@@ -226,6 +230,7 @@ export default function ClientMap() {
                   </DialogFooter>
                 </DialogContent>
             </Dialog>
+            }
         </div>
 
         <Card className="shadow-sm border">

@@ -100,6 +100,7 @@ import { toast } from "sonner"
 import { UploadDEMAT } from "./upload-dialog-demat"
 import { Pagination } from "./ui/pagination"
 import { UploadMigration } from "./upload-dialog-migration"
+import { getCurrentSessionUser } from "@/app/api/dashboardAPICalls/actions"
 
 export default function OrderBooks() {
 
@@ -107,6 +108,7 @@ export default function OrderBooks() {
   const [selectedData, setselectedData] = useState<overall_result>()
   const [currentID, setcurrentID] = useState<number>()
   const [Isloading, setIsLoading] = useState<boolean>(false)
+  const [isAdmin, setIsAdmin] = useState<boolean | null>()
   
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1)
@@ -115,6 +117,8 @@ export default function OrderBooks() {
 
   const fetchOrders = async () => {
     try {
+      const userPermission = await getCurrentSessionUser()
+      setIsAdmin(userPermission)
       const list_orders: orderType[] = await getOrderBooks();
       setListOrders(list_orders)
     } catch (error) {
@@ -233,11 +237,13 @@ export default function OrderBooks() {
             <h2 className="text-lg font-semibold text-gray-900">Upload New Files</h2>
             <p className="text-sm text-gray-600">Upload DEMAT statements or trading order books</p>
           </div>
+          {isAdmin && 
           <div className="flex gap-3">
             <UploadDEMAT onUpload={uploadDone} />
             <UploadBook onUpload={uploadDone} />
             {/* <UploadMigration onUpload={uploadDone} /> */}
           </div>
+}
         </div>
       </div>
 

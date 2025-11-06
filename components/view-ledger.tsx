@@ -33,7 +33,7 @@ import { Input } from "@/components/ui/input"
 import { RefreshCw, Download } from "lucide-react"
 
 import { useEffect, useMemo, useState } from "react"
-import { getUsers } from "@/app/api/dashboardAPICalls/actions"
+import { getCurrentSessionUser, getUsers } from "@/app/api/dashboardAPICalls/actions"
 import { getFiscal } from "@/app/api/fiscalAPI/actions"
 import { filterDataGrouped, getSymbolHoldingsEffectiveRate } from "@/app/api/ledgerPageCalls/actions"
 import { universalExport } from "@/app/api/universalExport/actions"
@@ -207,8 +207,10 @@ export default function ViewLedger() {
   const [ledgerData, setLedgerData] = useState<OverallLedgerData | undefined>(undefined)
   const [isExporting, setIsExporting] = useState(INITIAL_STATE.EXPORTING)
   const [effectiveRate, setEffectiveRate] = useState<number>(INITIAL_STATE.EFFECTIVE_RATE)
+  const [waccTaxBase, setWaccTaxBase] = useState<number>(0)
   const [effectiveRateLoading, setEffectiveRateLoading] = useState(INITIAL_STATE.RATE_LOADING)
   const [isLoadingMain, setIsLoadingMain] = useState(INITIAL_STATE.LOADING)
+  const [isAdmin, setIsAdmin] = useState<boolean | null>()
 
   // Derived: Price Per Share = (Eligible Amount + Purchase Total Cost) / (Eligible Shares + Purchase Shares)
   const pricePerShare = useMemo(() => {
@@ -236,7 +238,7 @@ export default function ViewLedger() {
   }
 
   const handleSymbolChange = (value: string) => {
-    setSymbol(value)
+    setSymbol(value.toUpperCase())
   }
 
   const fetchEffectiveRate = async (symbolValue: string, fundValue: string) => {
@@ -246,9 +248,11 @@ export default function ViewLedger() {
     try {
       const rateData = await getSymbolHoldingsEffectiveRate(symbolValue, fundValue)
       setEffectiveRate(rateData.success ? rateData.effective_rate : INITIAL_STATE.EFFECTIVE_RATE)
+      setWaccTaxBase(rateData.success ? (rateData.wacc_tax_base || 0) : 0)
     } catch (error) {
       console.error('Error fetching effective rate:', error)
       setEffectiveRate(INITIAL_STATE.EFFECTIVE_RATE)
+      setWaccTaxBase(0)
     } finally {
       setEffectiveRateLoading(false)
     }
@@ -331,6 +335,9 @@ export default function ViewLedger() {
       
       setUsers(usersData)
       setFiscalYears(fiscalData)
+
+      const userPermission = await getCurrentSessionUser()
+      setIsAdmin(userPermission)
       
       if (usersData.length > 0) {
         const firstUser = usersData[0].client_name
@@ -399,6 +406,19 @@ export default function ViewLedger() {
                   )}
                 </div>
               </div>
+
+              <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm ml-4">
+                <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Tax Base WACC</div>
+                <div className="flex items-center justify-center">
+                  {effectiveRateLoading ? (
+                    <RefreshCw className="w-4 h-4 animate-spin text-blue-600" />
+                  ) : (
+                    <span className="text-lg font-bold text-gray-900">
+                      <mark> Rs. {waccTaxBase > 0 ? waccTaxBase.toFixed(2) : 'N/A'} </mark>
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
             
             <Button onClick={handleExport} disabled={isExporting} className="bg-blue-600 hover:bg-blue-700">
@@ -410,6 +430,7 @@ export default function ViewLedger() {
       )}
 
       {/* Manual Stock Entry Buttons */}
+      {isAdmin && 
       <Card className="bg-white shadow-sm border border-gray-200 mb-6">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg font-semibold text-gray-900">Manual Stock Entry</CardTitle>
@@ -425,6 +446,7 @@ export default function ViewLedger() {
           </div>
         </CardContent>
       </Card>
+}
 
       {/* Filters Section */}
       <Card className="bg-white shadow-sm border border-gray-200 mb-6">

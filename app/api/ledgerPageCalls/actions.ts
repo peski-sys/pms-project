@@ -753,7 +753,8 @@ export async function getSymbolHoldingsEffectiveRate(symbol: string, currentFund
             return {
                 success: false,
                 message: `No fund mapping found for ${currentFund}`,
-                effective_rate: 0
+                effective_rate: 0,
+                wacc_tax_base: 0
             };
         }
 
@@ -773,7 +774,8 @@ export async function getSymbolHoldingsEffectiveRate(symbol: string, currentFund
             return {
                 success: false,
                 message: 'No current fiscal year found',
-                effective_rate: 0
+                effective_rate: 0,
+                wacc_tax_base: 0
             };
         }
 
@@ -786,6 +788,7 @@ export async function getSymbolHoldingsEffectiveRate(symbol: string, currentFund
             },
             select: {
                 wacc: true, // This is the WACC/effective rate in symbol_holdings
+                wacc_tax_base: true, // Tax base WACC
                 symbol: true
             }
         });
@@ -807,17 +810,19 @@ export async function getSymbolHoldingsEffectiveRate(symbol: string, currentFund
             });
 
             if (!fiscalBalance) {
-                return {
-                    success: false,
-                    message: `No holdings found for symbol ${symbol} in fund ${currentFund}`,
-                    effective_rate: 0
-                };
+            return {
+                success: false,
+                message: `No holdings found for symbol ${symbol} in fund ${currentFund}`,
+                effective_rate: 0,
+                wacc_tax_base: 0
+            };
             }
 
             return {
                 success: true,
                 message: 'Effective rate found from fiscal year balance',
                 effective_rate: parseFloat(Number(fiscalBalance.effective_rate).toFixed(2)),
+                wacc_tax_base: 0, // No tax base WACC available from fiscal year balance
                 symbol: fiscalBalance.symbol
             };
         }
@@ -826,6 +831,7 @@ export async function getSymbolHoldingsEffectiveRate(symbol: string, currentFund
             success: true,
             message: 'WACC found successfully',
             effective_rate: parseFloat(Number(holdings.wacc).toFixed(2)),
+            wacc_tax_base: holdings.wacc_tax_base ? parseFloat(Number(holdings.wacc_tax_base).toFixed(2)) : 0,
             symbol: holdings.symbol
         };
 
@@ -834,7 +840,8 @@ export async function getSymbolHoldingsEffectiveRate(symbol: string, currentFund
         return {
             success: false,
             message: 'Error fetching effective rate',
-            effective_rate: 0
+            effective_rate: 0,
+            wacc_tax_base: 0
         };
     }
 }

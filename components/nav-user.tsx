@@ -3,9 +3,13 @@
 import {
   ChevronsUpDown,
   LogOut,
+  Users,
 } from "lucide-react"
+import { useEffect, useState } from "react"
+import Link from "next/link"
 
 import { useAuth } from "@/hooks/use-auth"
+import { getCurrentSessionUser } from "@/app/api/dashboardAPICalls/actions"
 
 import {
   Avatar,
@@ -29,6 +33,20 @@ import {
 export function NavUser() {
 
   const { user, logout, isLoading } = useAuth();
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const adminStatus = await getCurrentSessionUser()
+        setIsAdmin(adminStatus ?? false)
+      } catch (error) {
+        console.error("Error checking admin status:", error)
+        setIsAdmin(false)
+      }
+    }
+    checkAdminStatus()
+  }, [])
 
   const userData = {
     name: "Prabhu Capital",
@@ -75,6 +93,15 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
+            {isAdmin && (
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/user-management" className="flex gap-2 w-full">
+                  <Users className="size-4" />
+                  Manage Users
+                </Link>
+              </DropdownMenuItem>
+            )}
+            {isAdmin && <DropdownMenuSeparator />}
             <DropdownMenuItem>
               <div onClick={logout} className="flex gap-2">
                 <LogOut />

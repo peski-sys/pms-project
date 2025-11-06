@@ -1,6 +1,6 @@
 "use client"
 
-import { getListed, getNewData, addNewStock } from "@/app/api/listedAPI/actions"
+import { getListed, getNewData, addNewStock, updatePromoterSector } from "@/app/api/listedAPI/actions"
 import { Card, CardContent } from "./ui/card"
 import {
   Table,
@@ -20,6 +20,7 @@ import { RefreshCw } from "lucide-react"
 import { toast } from "sonner"
 import { Pagination } from "./ui/pagination"
 import { SectorAutocompleteInput } from "./ui/sector-autocomplete-input"
+import { PromoterSectorAutocomplete } from "./ui/promoter-sector-autocomplete"
 
 import {
   Dialog,
@@ -44,15 +45,22 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useEffect, useState } from "react"
+import { getCurrentSessionUser } from "@/app/api/dashboardAPICalls/actions"
 
 type getting_listed = {
     symbol: string,
     full_form: string,
     sector_id: number | null,
+    promoter_sector_id: number | null,
+    is_auto_generated: boolean | null,
     sectors: {
       sector_name: string,
       instrument_type: string,
-    }
+    },
+    promoter_sector: {
+      sector_name: string,
+      instrument_type: string,
+    } | null
 }
 
 
@@ -63,11 +71,14 @@ export default function ListedStocksComponent() {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [isAdmin, setIsAdmin] = useState<boolean | null>()
     
     // Add Stock Dialog state
     const [selectedSector, setSelectedSector] = useState<{sector_id: number, sector_name: string, instrument_type: string} | null>(null)
     const [instrumentType, setInstrumentType] = useState<string>('')
     const [isUploadingStock, setIsUploadingStock] = useState(false)
+    const [updatingPromoterSectors, setUpdatingPromoterSectors] = useState<Map<string, boolean>>(new Map())
+    const [promoterSectorSelections, setPromoterSectorSelections] = useState<Map<string, {sector_id: number, sector_name: string, instrument_type: string} | null>>(new Map())
     
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -76,6 +87,8 @@ export default function ListedStocksComponent() {
     const fetchSocks = async () => {
         setIsLoading(true)
         try {
+            const userPermission = await getCurrentSessionUser()
+            setIsAdmin(userPermission)
             const response: getting_listed[] = await getListed()
             setStocks(response)
         } catch (error) {
@@ -164,6 +177,62 @@ export default function ListedStocksComponent() {
         setInstrumentType(sector ? sector.instrument_type : '')
     }
 
+    const handlePromoterSectorChange = async (symbol: string, sector: {sector_id: number, sector_name: string, instrument_type: string} | null) => {
+        setUpdatingPromoterSectors(prev => new Map(prev.set(symbol, true)))
+        try {
+            const promoterSectorId = sector ? sector.sector_id : null
+            const result = await updatePromoterSector(symbol, promoterSectorId)
+            
+            if (result.success) {
+                toast.success(result.message)
+                await fetchSocks()
+            } else {
+                toast.error(result.message)
+                // Reset selection on error
+                setPromoterSectorSelections(prev => {
+                    const newMap = new Map(prev)
+                    newMap.delete(symbol)
+                    return newMap
+                })
+            }
+        } catch (error) {
+            console.error('Error updating promoter sector:', error)
+            toast.error('Failed to update promoter sector')
+            // Reset selection on error
+            setPromoterSectorSelections(prev => {
+                const newMap = new Map(prev)
+                newMap.delete(symbol)
+                return newMap
+            })
+        } finally {
+            setUpdatingPromoterSectors(prev => {
+                const newMap = new Map(prev)
+                newMap.delete(symbol)
+                return newMap
+            })
+        }
+    }
+
+    // Initialize promoter sector selections when stocks are loaded
+    useEffect(() => {
+        if (stocks) {
+            const initialSelections = new Map<string, {sector_id: number, sector_name: string, instrument_type: string} | null>()
+            stocks.forEach(stock => {
+                if (stock.sector_id === 14) {
+                    // Set the promoter sector if it exists
+                    if (stock.promoter_sector && stock.promoter_sector_id) {
+                        initialSelections.set(stock.symbol, {
+                            sector_id: stock.promoter_sector_id,
+                            sector_name: stock.promoter_sector.sector_name,
+                            instrument_type: stock.promoter_sector.instrument_type
+                        })
+                    }
+                }
+            })
+            setPromoterSectorSelections(initialSelections)
+        }
+    }, [stocks])
+
     return (
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
             {/* Summary Cards */}
@@ -245,6 +314,7 @@ export default function ListedStocksComponent() {
             </div>
 
             <div className="flex justify-between items-center mb-6">
+              {isAdmin && 
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button
@@ -282,6 +352,8 @@ export default function ListedStocksComponent() {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
+            }
+            {isAdmin && 
             <Dialog>
                 <DialogTrigger asChild>
                   <Button>+ Add Stock</Button>
@@ -348,6 +420,7 @@ export default function ListedStocksComponent() {
                   </DialogFooter>
                 </DialogContent>
             </Dialog>
+}
         </div>
 
             {/* Error Message */}
@@ -405,13 +478,14 @@ export default function ListedStocksComponent() {
                       <TableHead>Full Form</TableHead>
                       <TableHead>Category</TableHead>
                       <TableHead className="text-right">Instrument Type</TableHead>
+                      <TableHead>Promoter Sector</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {
                     isLoading || isRefreshing ? (
                 <TableRow>
-                    <TableCell colSpan={4} className="text-center py-8">
+                    <TableCell colSpan={5} className="text-center py-8">
                         <RefreshCw className="animate-spin size-6 mx-auto mb-2" />
                         <p>{isRefreshing ? 'Refreshing stock data... This may take a few minutes.' : 'Loading data...'}</p>
                         {isRefreshing && (
@@ -422,14 +496,47 @@ export default function ListedStocksComponent() {
                     </TableCell>
                 </TableRow>
     ) : (
-                    paginatedStocks?.map((details) => (
-                    <TableRow key={details.symbol}>
-                      <TableCell className="font-medium"><Link href={`/dashboard/stock/${details.symbol}`} target="_blank">{details.symbol}</Link></TableCell>
-                      <TableCell><Link href={`/dashboard/stock/${details.symbol}`} target="_blank">{details.full_form}</Link></TableCell>
-                      <TableCell>{details.sectors.sector_name}</TableCell>
-                      <TableCell className="text-right">{details.sectors.instrument_type}</TableCell>
-                    </TableRow>
-                    ))
+                    paginatedStocks?.map((details) => {
+                      const isPromoterStock = details.sector_id === 14
+                      const currentPromoterSector = promoterSectorSelections.get(details.symbol)
+                      const isUpdating = updatingPromoterSectors.get(details.symbol) || false
+                      
+                      return (
+                        <TableRow key={details.symbol}>
+                          <TableCell className="font-medium"><Link href={`/dashboard/stock/${details.symbol}`} target="_blank">{details.symbol}</Link></TableCell>
+                          <TableCell><Link href={`/dashboard/stock/${details.symbol}`} target="_blank">{details.full_form}</Link></TableCell>
+                          <TableCell>{details.sectors.sector_name}</TableCell>
+                          <TableCell className="text-right">{details.sectors.instrument_type}</TableCell>
+                          <TableCell>
+                            {isPromoterStock ? (
+                              <div className="min-w-[280px]">
+                                {isUpdating ? (
+                                  <div className="flex items-center gap-2">
+                                    <RefreshCw className="w-4 h-4 animate-spin text-gray-500" />
+                                    <span className="text-sm text-gray-500">Updating...</span>
+                                  </div>
+                                ) : (
+                                  <PromoterSectorAutocomplete
+                                    key={`promoter-${details.symbol}-${details.promoter_sector_id || 'none'}`}
+                                    defaultValue={details.promoter_sector?.sector_name || ""}
+                                    placeholder="Select promoter sector..."
+                                    disabled={isUpdating}
+                                    onConfirm={(sector) => {
+                                      // Update local state
+                                      setPromoterSectorSelections(prev => new Map(prev.set(details.symbol, sector)))
+                                      // Trigger server update
+                                      handlePromoterSectorChange(details.symbol, sector)
+                                    }}
+                                  />
+                                )}
+                              </div>
+                            ) : (
+                              <span className="text-sm text-gray-400">-</span>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })
                   )
 
 }

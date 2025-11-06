@@ -33,6 +33,18 @@ export function SectorAutocompleteInput({
   const inputRef = useRef<HTMLInputElement>(null)
   const suggestionsRef = useRef<HTMLDivElement>(null)
 
+  // Sync with defaultValue changes (only if value doesn't match)
+  useEffect(() => {
+    if (defaultValue !== value && (!selectedSector || selectedSector.sector_name !== defaultValue)) {
+      setValue(defaultValue)
+      // Only reset selected sector if the new defaultValue doesn't match current selection
+      if (defaultValue && selectedSector && selectedSector.sector_name !== defaultValue) {
+        setSelectedSector(null)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValue])
+
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (value.length > 0) {

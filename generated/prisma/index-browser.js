@@ -200,7 +200,8 @@ exports.Prisma.UploadsScalarFieldEnum = {
 exports.Prisma.UsersScalarFieldEnum = {
   user_password: 'user_password',
   user_email: 'user_email',
-  user_id: 'user_id'
+  user_id: 'user_id',
+  is_admin: 'is_admin'
 };
 
 exports.Prisma.Fiscal_year_balanceScalarFieldEnum = {
@@ -279,7 +280,8 @@ exports.Prisma.Stock_fullsScalarFieldEnum = {
   symbol: 'symbol',
   full_form: 'full_form',
   sector_id: 'sector_id',
-  is_auto_generated: 'is_auto_generated'
+  is_auto_generated: 'is_auto_generated',
+  promoter_sector_id: 'promoter_sector_id'
 };
 
 exports.Prisma.Bonus_recordsScalarFieldEnum = {
@@ -396,11 +398,14 @@ exports.Prisma.Symbol_holdingsScalarFieldEnum = {
   symbol: 'symbol',
   fund_id: 'fund_id',
   fiscal_year_id: 'fiscal_year_id',
-  wacc: 'wacc',
   remarks: 'remarks',
   quantity: 'quantity',
   source_type: 'source_type',
-  sub_id: 'sub_id'
+  sub_id: 'sub_id',
+  total_txn_value: 'total_txn_value',
+  total_with_commission: 'total_with_commission',
+  wacc_tax_base: 'wacc_tax_base',
+  wacc: 'wacc'
 };
 
 exports.Prisma.Sub_classesScalarFieldEnum = {

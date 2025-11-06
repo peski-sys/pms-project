@@ -4,6 +4,7 @@ import { prisma } from '@/lib/db';
 import { sanitizeNumeric, calculatePercentage } from '@/lib/apiUtils';
 import { getMarketSnapshotLTP, getBatchMarketSnapshotLTP } from '@/lib/marketSnapshotUtils';
 import { withMarketSnapshotUpdate } from '@/lib/marketSnapshotAutoUpdate';
+import { FinancialCalculator } from '@/lib/decimalUtils';
 
 // Import helper functions from dashboardAPICalls
 // Helper function to combine holdings by fund_id, fiscal_year_id, and symbol
@@ -72,6 +73,40 @@ function combinePromoterRecordsByFund(records: any[]): any[] {
     });
     
     return Array.from(combinedMap.values());
+}
+
+// Helper function to batch fetch promoter sectors and create a map
+async function getPromoterSectorMap(): Promise<Map<number, string>> {
+    const promoterSectors = await prisma.sectors.findMany({
+        select: {
+            sector_id: true,
+            sector_name: true
+        }
+    });
+    
+    const sectorMap = new Map<number, string>();
+    promoterSectors.forEach(sector => {
+        sectorMap.set(sector.sector_id, sector.sector_name);
+    });
+    
+    return sectorMap;
+}
+
+// Helper function to get the correct sector name for a stock
+function getCorrectSectorName(
+    stockFulls: { sector_id: number; promoter_sector_id: number | null; sectors: { sector_name: string } },
+    promoterSectorMap: Map<number, string>
+): string {
+    // If sector_id is 14 and promoter_sector_id exists and is not 0, use promoter sector
+    if (stockFulls.sector_id === 14 && stockFulls.promoter_sector_id && stockFulls.promoter_sector_id !== 0) {
+        const promoterSectorName = promoterSectorMap.get(stockFulls.promoter_sector_id);
+        if (promoterSectorName) {
+            return promoterSectorName;
+        }
+    }
+    
+    // Otherwise, use the default sector
+    return stockFulls.sectors.sector_name;
 }
 
 // Get current fiscal year based on current date
@@ -375,6 +410,8 @@ export async function getInvestmentBreakdownFiscal(selectUser: string, fiscalYea
                 fiscal_year_id: true,
                 stock_fulls: {
                     select: {
+                        sector_id: true,
+                        promoter_sector_id: true,
                         sectors: {
                             select: {
                                 sector_name: true
@@ -405,6 +442,8 @@ export async function getInvestmentBreakdownFiscal(selectUser: string, fiscalYea
                 fiscal_year_id: true,
                 stock_fulls: {
                     select: {
+                        sector_id: true,
+                        promoter_sector_id: true,
                         sectors: {
                             select: {
                                 sector_name: true
@@ -428,6 +467,8 @@ export async function getInvestmentBreakdownFiscal(selectUser: string, fiscalYea
                 fund_id: true,
                 stock_fulls: {
                     select: {
+                        sector_id: true,
+                        promoter_sector_id: true,
                         sectors: {
                             select: {
                                 sector_name: true
@@ -460,35 +501,46 @@ export async function getInvestmentBreakdownFiscal(selectUser: string, fiscalYea
     ];
     const ltpMap = await getBatchMarketSnapshotLTP(allSymbols, fiscalYearId);
 
+    // Get promoter sector map for efficient sector name lookup
+    const promoterSectorMap = await getPromoterSectorMap();
+
     // Calculate trading sector values using cost value (for IFRS compliance)
     const tradingSectorMap = new Map<string, number>();
     let tradingTotal = 0;
 
     for (const investment of combinedTradingInvestments) {
-        const sectorName = investment.stock_fulls.sectors.sector_name;
-        const costValue = sanitizeNumeric(investment.closing_quantity) * sanitizeNumeric(investment.effective_rate);
+        const sectorName = getCorrectSectorName(investment.stock_fulls, promoterSectorMap);
+        const costValue = FinancialCalculator.multiply(
+            sanitizeNumeric(investment.closing_quantity), 
+            sanitizeNumeric(investment.effective_rate)
+        );
         
-        tradingTotal += costValue;
+        tradingTotal = FinancialCalculator.add(tradingTotal, costValue);
         
         if (tradingSectorMap.has(sectorName)) {
-            tradingSectorMap.set(sectorName, tradingSectorMap.get(sectorName)! + costValue);
+            tradingSectorMap.set(sectorName, FinancialCalculator.add(tradingSectorMap.get(sectorName)!, costValue));
         } else {
             tradingSectorMap.set(sectorName, costValue);
         }
     }
 
         // Calculate maturity sector values using cost value (for IFRS compliance)
+        // Includes IPO staging records with their effective_rate
         const maturitySectorMap = new Map<string, number>();
         let maturityTotal = 0;
 
         for (const investment of combinedMaturityWithIPO) {
-            const sectorName = investment.stock_fulls.sectors.sector_name;
-            const costValue = sanitizeNumeric(investment.closing_quantity) * sanitizeNumeric(investment.effective_rate);
+            const sectorName = getCorrectSectorName(investment.stock_fulls, promoterSectorMap);
+            // Use effective_rate from IPO staging records (already included in combinedMaturityWithIPO)
+            const costValue = FinancialCalculator.multiply(
+                sanitizeNumeric(investment.closing_quantity), 
+                sanitizeNumeric(investment.effective_rate)
+            );
             
-            maturityTotal += costValue;
+            maturityTotal = FinancialCalculator.add(maturityTotal, costValue);
             
             if (maturitySectorMap.has(sectorName)) {
-                maturitySectorMap.set(sectorName, maturitySectorMap.get(sectorName)! + costValue);
+                maturitySectorMap.set(sectorName, FinancialCalculator.add(maturitySectorMap.get(sectorName)!, costValue));
             } else {
                 maturitySectorMap.set(sectorName, costValue);
             }

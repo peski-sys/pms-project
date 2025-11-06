@@ -37,6 +37,7 @@ import { RefreshCw, Building2, Tag } from "lucide-react"
 import { toast } from "sonner"
 import { useEffect, useState } from "react"
 import { Badge } from "./ui/badge"
+import { getCurrentSessionUser } from "@/app/api/dashboardAPICalls/actions"
 
 type SubClass = {
     sub_id: number
@@ -64,10 +65,13 @@ export default function SubClassComponent() {
     const [selectedFund, setSelectedFund] = useState<string>('')
     const [subClassName, setSubClassName] = useState('')
     const [dialogOpen, setDialogOpen] = useState(false)
+    const [isAdmin, setIsAdmin] = useState<boolean | null>()
 
     const fetchData = async () => {
         setIsLoading(true)
         try {
+            const userPermission = await getCurrentSessionUser()
+            setIsAdmin(userPermission)
             const [subClassesData, fundsData] = await Promise.all([
                 getSubClasses(),
                 getFunds()
@@ -166,6 +170,7 @@ export default function SubClassComponent() {
             </div>
 
             <div className="flex justify-between items-center mb-6">
+                {isAdmin && 
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                     <DialogTrigger asChild>
                         <Button>+ Add Sub Class</Button>
@@ -212,6 +217,7 @@ export default function SubClassComponent() {
                         </form>
                     </DialogContent>
                 </Dialog>
+                }
             </div>
 
             <Card className="shadow-sm border">

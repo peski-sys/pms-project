@@ -4,6 +4,42 @@ import { prisma } from "@/lib/db"
 import { sanitizeNumeric, calculatePercentage } from '@/lib/apiUtils'
 import { getBatchMarketSnapshotLTP } from '@/lib/marketSnapshotUtils'
 
+// Helper function to batch fetch promoter sectors and create a map
+// Returns a Map<sector_id, sector_name> for all promoter sectors
+async function getPromoterSectorMap(): Promise<Map<number, string>> {
+    const promoterSectors = await prisma.sectors.findMany({
+        select: {
+            sector_id: true,
+            sector_name: true
+        }
+    });
+    
+    const sectorMap = new Map<number, string>();
+    promoterSectors.forEach(sector => {
+        sectorMap.set(sector.sector_id, sector.sector_name);
+    });
+    
+    return sectorMap;
+}
+
+// Helper function to get the correct sector name for a stock
+// When sector_id = 14, use promoter_sector_id instead
+function getCorrectSectorName(
+    stockFulls: { sector_id: number; promoter_sector_id: number | null; sectors: { sector_name: string } },
+    promoterSectorMap: Map<number, string>
+): string {
+    // If sector_id is 14 and promoter_sector_id exists and is not 0, use promoter sector
+    if (stockFulls.sector_id === 14 && stockFulls.promoter_sector_id && stockFulls.promoter_sector_id !== 0) {
+        const promoterSectorName = promoterSectorMap.get(stockFulls.promoter_sector_id);
+        if (promoterSectorName) {
+            return promoterSectorName;
+        }
+    }
+    
+    // Otherwise, use the default sector
+    return stockFulls.sectors.sector_name;
+}
+
 type MetricData = {
     // Company Info
     company: string
@@ -86,6 +122,8 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
                 stock_fulls: {
                     select: {
                         full_form: true,
+                        sector_id: true,
+                        promoter_sector_id: true,
                         sectors: {
                             select: {
                                 sector_name: true
@@ -101,6 +139,9 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
 
         // Batch fetch market prices from market_snapshots
         const ltpMap = await getBatchMarketSnapshotLTP(symbols, given_fiscal)
+
+        // Get promoter sector map for efficient sector name lookup
+        const promoterSectorMap = await getPromoterSectorMap()
 
         // DEMAT/NON_DEMAT values are now included in fiscalYearBalances query above
 
@@ -244,7 +285,7 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
             return {
                 company: balance.stock_fulls.full_form,
                 code: symbol,
-                category: balance.stock_fulls.sectors.sector_name,
+                category: getCorrectSectorName(balance.stock_fulls, promoterSectorMap),
                 
                 opening_quantity: openingQty,
                 opening_rate: openingRate,
@@ -312,6 +353,8 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
                 stock_fulls: {
                     select: {
                         full_form: true,
+                        sector_id: true,
+                        promoter_sector_id: true,
                         sectors: {
                             select: {
                                 sector_name: true
@@ -356,6 +399,8 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             select: {
                 symbol: true,
                 full_form: true,
+                sector_id: true,
+                promoter_sector_id: true,
                 sectors: {
                     select: {
                         sector_name: true
@@ -442,6 +487,9 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
         // Batch fetch market prices from market_snapshots
         const ltpMap = await getBatchMarketSnapshotLTP(symbols, given_fiscal)
 
+        // Get promoter sector map for efficient sector name lookup
+        const promoterSectorMap = await getPromoterSectorMap()
+
         // Create map for opening balances
         const openingMap = new Map(openingBalances.map(o => [o.symbol, o as any]))
         const ipoOpeningMap = new Map(ipoOpeningBalances.map(o => [o.symbol, o]))
@@ -485,7 +533,7 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             return {
                 company: holding.stock_fulls.full_form,
                 code: symbol,
-                category: holding.stock_fulls.sectors.sector_name,
+                category: getCorrectSectorName(holding.stock_fulls, promoterSectorMap),
                 
                 // Opening data from previous year (if available)
                 opening_quantity: openingQty,
@@ -558,7 +606,7 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             return {
                 company: stockDetail?.full_form || symbol,
                 code: symbol,
-                category: stockDetail?.sectors.sector_name || 'Unknown',
+                category: stockDetail ? getCorrectSectorName(stockDetail, promoterSectorMap) : 'Unknown',
                 
                 // Opening data from previous year (if available)
                 opening_quantity: openingQty,

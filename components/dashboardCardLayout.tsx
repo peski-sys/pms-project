@@ -39,7 +39,7 @@ type holdingsData = {
   client_id: string,
   fund_id?: number,
   symbol: string,
-  cost_price: number,
+  price_per_share: number,
   quantity: number,
   total_value: string,
   client_broker_mapping: clientBroker,
@@ -61,7 +61,7 @@ type gainLoss = {
   }
 }
 
-import { getUsers, getUnrealizedGains, getInvestmentBreakdown, getSectorPortfolioSummary, getStockInvestmentBreakdown, getLatestLTP } from "@/app/api/dashboardAPICalls/actions";
+import { getUsers, getUnrealizedGains, getInvestmentBreakdown, getSectorPortfolioSummary, getStockInvestmentBreakdown, getLatestLTP, getCurrentSessionUser } from "@/app/api/dashboardAPICalls/actions";
 import { 
   getCurrentFiscalYear,
   getAllFiscalYears,
@@ -226,6 +226,8 @@ export default function Dashcard() {
   const [investmentBreakdown, setInvestmentBreakdown] = useState<InvestmentBreakdownType | null>(null)
   const [stockInvestmentBreakdown, setStockInvestmentBreakdown] = useState<StockInvestmentBreakdownType | null>(null)
   const [sectorPortfolioSummary, setSectorPortfolioSummary] = useState<SectorPortfolioSummaryType | null>(null)
+
+  const [isAdmin, setIsAdmin] = useState<boolean | null>()
   
   // Fiscal year states
   const [fiscalYears, setFiscalYears] = useState<FiscalYearType[]>([])
@@ -253,6 +255,10 @@ function handleFiscalYearChange(fiscalYearId: string) {
 const fetchSelect = async () => {
     setIsLoading(true)
     try {
+
+        const userPermission = await getCurrentSessionUser()
+        setIsAdmin(userPermission)
+
         const listUsers: userList[] = await getUsers();
         setlistUsersValue(listUsers);
         
@@ -305,7 +311,7 @@ const fetchSelect = async () => {
         client_id: holding.client_id || '',
         fund_id: holding.fund_id || 0,
         symbol: holding.symbol || '',
-        cost_price: Number(holding.effective_rate || 0),
+        price_per_share: Number(holding.effective_rate || 0),
         quantity: Number(holding.closing_quantity || 0),
         total_value: Number(((holding.closing_quantity || 0) * (holding.effective_rate || 0)).toFixed(0)),
         client_broker_mapping: { client_name: selectValue },
@@ -568,7 +574,9 @@ const fetchSelect = async () => {
               </div>
             )}
           </div>
+          {isAdmin && 
           <UploadBook onUpload={uploadDone} />
+}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
 <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0 shadow-lg">
@@ -771,7 +779,7 @@ const fetchSelect = async () => {
   <TableHeader>
     <TableRow>
       <TableHead className="font-medium">Stock</TableHead>
-      <TableHead className="text-center">Cost Price</TableHead>
+      <TableHead className="text-center">Price Per Share</TableHead>
       <TableHead className="text-center">Quantity</TableHead>
       <TableHead className="text-right">Value</TableHead>
       <TableHead className="text-right">Unrealised P&L</TableHead>
@@ -805,7 +813,7 @@ const fetchSelect = async () => {
       </TooltipContent>
       </Tooltip>
       </TableCell>
-      <TableCell className="text-center">Rs. {(row.cost_price || 0).toLocaleString()}</TableCell>
+      <TableCell className="text-center">Rs. {(row.price_per_share || 0).toLocaleString()}</TableCell>
       <TableCell className="text-center">{(row.quantity || 0).toLocaleString()}</TableCell>
       <TableCell className="text-right">Rs. {Number(row.total_value || 0).toLocaleString()}</TableCell>
       <TableCell className={`text-right ${(row.unrealizedGain || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>

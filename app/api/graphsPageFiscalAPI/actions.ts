@@ -6,6 +6,42 @@ import { getBatchMarketSnapshotLTP } from '@/lib/marketSnapshotUtils';
 
 const microservice_url = process.env.MICROSERVICE_URL
 
+// Helper function to batch fetch promoter sectors and create a map
+// Returns a Map<sector_id, sector_name> for all promoter sectors
+async function getPromoterSectorMap(): Promise<Map<number, string>> {
+    const promoterSectors = await prisma.sectors.findMany({
+        select: {
+            sector_id: true,
+            sector_name: true
+        }
+    });
+    
+    const sectorMap = new Map<number, string>();
+    promoterSectors.forEach(sector => {
+        sectorMap.set(sector.sector_id, sector.sector_name);
+    });
+    
+    return sectorMap;
+}
+
+// Helper function to get the correct sector name for a stock
+// When sector_id = 14, use promoter_sector_id instead
+function getCorrectSectorName(
+    stockFulls: { sector_id: number; promoter_sector_id: number | null; sectors: { sector_name: string } },
+    promoterSectorMap: Map<number, string>
+): string {
+    // If sector_id is 14 and promoter_sector_id exists and is not 0, use promoter sector
+    if (stockFulls.sector_id === 14 && stockFulls.promoter_sector_id && stockFulls.promoter_sector_id !== 0) {
+        const promoterSectorName = promoterSectorMap.get(stockFulls.promoter_sector_id);
+        if (promoterSectorName) {
+            return promoterSectorName;
+        }
+    }
+    
+    // Otherwise, use the default sector
+    return stockFulls.sectors.sector_name;
+}
+
 // Keep market indexes unchanged as requested
 export async function getAllIndex() {
     try{
@@ -35,6 +71,8 @@ export async function getSectorAllocationFiscal(selectUser: string, fiscalYearId
                 effective_rate: true,
                 stock_fulls: {
                     select: {
+                        sector_id: true,
+                        promoter_sector_id: true,
                         sectors: {
                             select: {
                                 sector_name: true
@@ -49,11 +87,14 @@ export async function getSectorAllocationFiscal(selectUser: string, fiscalYearId
         const symbols = fiscalYearBalances.map(h => h.symbol);
         const ltpMap = await getBatchMarketSnapshotLTP(symbols, fiscalYearId);
 
+        // Get promoter sector map for efficient sector name lookup
+        const promoterSectorMap = await getPromoterSectorMap();
+
         const sectorMap = new Map<string, number>();
         let totalValue = 0;
 
         for (const balance of fiscalYearBalances) {
-            const sectorName = balance.stock_fulls.sectors.sector_name;
+            const sectorName = getCorrectSectorName(balance.stock_fulls, promoterSectorMap);
             const costValue = sanitizeNumeric(balance.closing_quantity) * sanitizeNumeric(balance.effective_rate);
             
             totalValue += costValue;
@@ -400,7 +441,7 @@ export async function getComprehensivePortfolioFiscal(selectUser: string, fiscal
                 sector: balance.stock_fulls.sectors.sector_name,
                 quantity,
                 bookValue,
-                costPrice: effectiveRate, // Using effective_rate as Cost Price
+                pricePerShare: effectiveRate, // Using effective_rate as Price Per Share
                 marketRate: currentLTP,
                 unrealisedPnL: unrealizedPnL,
                 pnlPercent,
@@ -478,5 +519,110 @@ export async function getPortfolioGainersLosersFiscal(selectUser: string, fiscal
             topGainers: [],
             topLosers: []
         };
+    }
+}
+
+// Get profit/loss as of today for chart - from fiscal_year_balance where source_type='TRADING'
+export async function getProfitLossTodayFiscal(selectUser: string, fiscalYearId: number) {
+    try {
+        // Get holdings from fiscal_year_balance where source_type='TRADING'
+        const holdings = await prisma.fiscal_year_balance.findMany({
+            where: {
+                fiscal_year_id: fiscalYearId,
+                client_broker_mapping: {
+                    client_name: selectUser,
+                },
+                source_type: "TRADING",
+            },
+            select: {
+                symbol: true,
+                closing_quantity: true,
+                effective_rate: true,
+                fund_id: true,
+                fiscal_year_id: true,
+                stock_fulls: {
+                    select: {
+                        full_form: true
+                    }
+                }
+            }
+        });
+
+        if (!holdings || holdings.length === 0) {
+            return [];
+        }
+
+        // Combine holdings by fund_id, fiscal_year_id, and symbol
+        const combinedMap = new Map<string, any>();
+        
+        holdings.forEach(holding => {
+            const key = `${holding.fund_id}_${holding.fiscal_year_id || 'null'}_${holding.symbol}`;
+            const quantity = sanitizeNumeric(holding.closing_quantity || 0);
+            const rate = sanitizeNumeric(holding.effective_rate || 0);
+            const totalValue = quantity * rate;
+            
+            if (combinedMap.has(key)) {
+                const existing = combinedMap.get(key);
+                const existingQuantity = existing.closing_quantity;
+                const existingTotalValue = existing.total_cost_value;
+                const newTotalQuantity = existingQuantity + quantity;
+                const newTotalCostValue = existingTotalValue + totalValue;
+                
+                // Calculate weighted average cost price
+                const newAverageRate = newTotalQuantity > 0 ? newTotalCostValue / newTotalQuantity : 0;
+                
+                combinedMap.set(key, {
+                    ...existing,
+                    closing_quantity: newTotalQuantity,
+                    effective_rate: newAverageRate,
+                    total_cost_value: newTotalCostValue
+                });
+            } else {
+                combinedMap.set(key, {
+                    ...holding,
+                    closing_quantity: quantity,
+                    effective_rate: rate,
+                    total_cost_value: totalValue
+                });
+            }
+        });
+        
+        const combinedHoldings = Array.from(combinedMap.values());
+
+        // Batch fetch LTP for all symbols from market_snapshots
+        const symbols = combinedHoldings.map(h => h.symbol);
+        const ltpMap = await getBatchMarketSnapshotLTP(symbols, fiscalYearId);
+
+        // Calculate unrealized gain/loss for each stock
+        const profitLossData = combinedHoldings.map(holding => {
+            const currentLTP = ltpMap.get(holding.symbol) || 0;
+            const quantity = sanitizeNumeric(holding.closing_quantity);
+            const effectiveRate = sanitizeNumeric(holding.effective_rate);
+            
+            // Calculate unrealized gain/loss
+            const bookValue = quantity * effectiveRate;
+            const marketValue = quantity * currentLTP;
+            const unrealizedGainLoss = marketValue - bookValue;
+            
+            // Calculate percentage gain/loss
+            const pnlPercent = bookValue > 0 ? calculatePercentage(unrealizedGainLoss, bookValue) : 0;
+
+            return {
+                code: holding.symbol,
+                companyName: holding.stock_fulls.full_form,
+                pnlPercent: pnlPercent,
+                gainPercent: pnlPercent, // For chart compatibility
+                unrealizedGainLoss: unrealizedGainLoss,
+                quantity: quantity,
+                effectiveRate: effectiveRate,
+                currentLTP: currentLTP
+            };
+        });
+
+        // Sort by gain percentage descending
+        return profitLossData.sort((a, b) => b.pnlPercent - a.pnlPercent);
+    } catch (error) {
+        console.error('Error getting fiscal profit/loss today:', error);
+        return [];
     }
 }

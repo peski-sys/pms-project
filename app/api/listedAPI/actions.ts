@@ -15,7 +15,12 @@ type chukul_data = {
 export async function getListed() {
     try {
         const listed_securities = await prisma.stock_fulls.findMany({
-            include: {
+            select: {
+                symbol: true,
+                full_form: true,
+                sector_id: true,
+                promoter_sector_id: true,
+                is_auto_generated: true,
                 sectors: {
                     select: {
                         sector_name: true,
@@ -24,7 +29,51 @@ export async function getListed() {
                 }
             }
         });
-        return listed_securities
+        
+        // Get all unique promoter sector IDs
+        const promoterSectorIds = listed_securities
+            .filter(stock => stock.promoter_sector_id && stock.promoter_sector_id !== 0)
+            .map(stock => stock.promoter_sector_id!)
+            .filter((id, index, arr) => arr.indexOf(id) === index); // Remove duplicates
+        
+        // Fetch all promoter sectors in one query
+        const promoterSectors = promoterSectorIds.length > 0
+            ? await prisma.sectors.findMany({
+                where: {
+                    sector_id: { in: promoterSectorIds }
+                },
+                select: {
+                    sector_id: true,
+                    sector_name: true,
+                    instrument_type: true
+                }
+            })
+            : [];
+        
+        // Create a map for quick lookup
+        const promoterSectorMap = new Map(
+            promoterSectors.map(sector => [sector.sector_id, sector])
+        );
+        
+        // Map stocks with promoter sector details
+        const stocksWithPromoterSectors = listed_securities.map((stock) => {
+            if (stock.promoter_sector_id && stock.promoter_sector_id !== 0) {
+                const promoterSector = promoterSectorMap.get(stock.promoter_sector_id);
+                return {
+                    ...stock,
+                    promoter_sector: promoterSector ? {
+                        sector_name: promoterSector.sector_name,
+                        instrument_type: promoterSector.instrument_type
+                    } : null
+                };
+            }
+            return {
+                ...stock,
+                promoter_sector: null
+            };
+        });
+        
+        return stocksWithPromoterSectors
     } catch (error) {
         console.log('Failed to fetch listed securities');
         return [];
@@ -209,6 +258,84 @@ export async function addNewStock(symbol: string, fullForm: string, sectorId: nu
         return {
             success: false,
             message: error instanceof Error ? error.message : 'Failed to add stock'
+        };
+    }
+}
+
+/**
+ * Update promoter sector ID for a stock
+ */
+export async function updatePromoterSector(symbol: string, promoterSectorId: number | null) {
+    try {
+        // Validate inputs
+        if (!symbol) {
+            return {
+                success: false,
+                message: 'Symbol is required'
+            };
+        }
+
+        // Check if stock exists
+        const existingStock = await prisma.stock_fulls.findUnique({
+            where: {
+                symbol: symbol.toUpperCase()
+            }
+        });
+
+        if (!existingStock) {
+            return {
+                success: false,
+                message: `Stock with symbol ${symbol.toUpperCase()} not found`
+            };
+        }
+
+        // If promoterSectorId is provided, verify it exists
+        if (promoterSectorId !== null && promoterSectorId !== 0) {
+            const promoterSector = await prisma.sectors.findUnique({
+                where: {
+                    sector_id: promoterSectorId
+                }
+            });
+
+            if (!promoterSector) {
+                return {
+                    success: false,
+                    message: 'Invalid promoter sector selected'
+                };
+            }
+        }
+
+        // Update promoter sector
+        await prisma.stock_fulls.update({
+            where: {
+                symbol: symbol.toUpperCase()
+            },
+            data: {
+                promoter_sector_id: promoterSectorId === 0 ? null : promoterSectorId
+            }
+        });
+
+        // Create audit log
+        const sectorName = promoterSectorId && promoterSectorId !== 0 
+            ? (await prisma.sectors.findUnique({ where: { sector_id: promoterSectorId }, select: { sector_name: true } }))?.sector_name || 'Unknown'
+            : 'None';
+        
+        await prisma.audit_log.create({
+            data: {
+                performed_action: `Updated promoter sector for ${symbol.toUpperCase()} to ${sectorName}`
+            }
+        });
+
+        return {
+            success: true,
+            message: `Promoter sector updated successfully for ${symbol.toUpperCase()}`
+        };
+        
+    } catch (error) {
+        console.error('Error updating promoter sector:', error);
+        return {
+            success: false,
+            message: error instanceof Error ? error.message : 'Failed to update promoter sector'
         };
     }
 }

@@ -11587,18 +11587,21 @@ export namespace Prisma {
     user_password: string | null
     user_email: string | null
     user_id: number | null
+    is_admin: boolean | null
   }
 
   export type UsersMaxAggregateOutputType = {
     user_password: string | null
     user_email: string | null
     user_id: number | null
+    is_admin: boolean | null
   }
 
   export type UsersCountAggregateOutputType = {
     user_password: number
     user_email: number
     user_id: number
+    is_admin: number
     _all: number
   }
 
@@ -11615,18 +11618,21 @@ export namespace Prisma {
     user_password?: true
     user_email?: true
     user_id?: true
+    is_admin?: true
   }
 
   export type UsersMaxAggregateInputType = {
     user_password?: true
     user_email?: true
     user_id?: true
+    is_admin?: true
   }
 
   export type UsersCountAggregateInputType = {
     user_password?: true
     user_email?: true
     user_id?: true
+    is_admin?: true
     _all?: true
   }
 
@@ -11720,6 +11726,7 @@ export namespace Prisma {
     user_password: string
     user_email: string
     user_id: number
+    is_admin: boolean
     _count: UsersCountAggregateOutputType | null
     _avg: UsersAvgAggregateOutputType | null
     _sum: UsersSumAggregateOutputType | null
@@ -11745,27 +11752,31 @@ export namespace Prisma {
     user_password?: boolean
     user_email?: boolean
     user_id?: boolean
+    is_admin?: boolean
   }, ExtArgs["result"]["users"]>
 
   export type usersSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     user_password?: boolean
     user_email?: boolean
     user_id?: boolean
+    is_admin?: boolean
   }, ExtArgs["result"]["users"]>
 
   export type usersSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     user_password?: boolean
     user_email?: boolean
     user_id?: boolean
+    is_admin?: boolean
   }, ExtArgs["result"]["users"]>
 
   export type usersSelectScalar = {
     user_password?: boolean
     user_email?: boolean
     user_id?: boolean
+    is_admin?: boolean
   }
 
-  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"user_password" | "user_email" | "user_id", ExtArgs["result"]["users"]>
+  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"user_password" | "user_email" | "user_id" | "is_admin", ExtArgs["result"]["users"]>
 
   export type $usersPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "users"
@@ -11774,6 +11785,7 @@ export namespace Prisma {
       user_password: string
       user_email: string
       user_id: number
+      is_admin: boolean
     }, ExtArgs["result"]["users"]>
     composites: {}
   }
@@ -12200,6 +12212,7 @@ export namespace Prisma {
     readonly user_password: FieldRef<"users", 'String'>
     readonly user_email: FieldRef<"users", 'String'>
     readonly user_id: FieldRef<"users", 'Int'>
+    readonly is_admin: FieldRef<"users", 'Boolean'>
   }
     
 
@@ -19537,10 +19550,12 @@ export namespace Prisma {
 
   export type Stock_fullsAvgAggregateOutputType = {
     sector_id: number | null
+    promoter_sector_id: number | null
   }
 
   export type Stock_fullsSumAggregateOutputType = {
     sector_id: number | null
+    promoter_sector_id: number | null
   }
 
   export type Stock_fullsMinAggregateOutputType = {
@@ -19548,6 +19563,7 @@ export namespace Prisma {
     full_form: string | null
     sector_id: number | null
     is_auto_generated: boolean | null
+    promoter_sector_id: number | null
   }
 
   export type Stock_fullsMaxAggregateOutputType = {
@@ -19555,6 +19571,7 @@ export namespace Prisma {
     full_form: string | null
     sector_id: number | null
     is_auto_generated: boolean | null
+    promoter_sector_id: number | null
   }
 
   export type Stock_fullsCountAggregateOutputType = {
@@ -19562,16 +19579,19 @@ export namespace Prisma {
     full_form: number
     sector_id: number
     is_auto_generated: number
+    promoter_sector_id: number
     _all: number
   }
 
 
   export type Stock_fullsAvgAggregateInputType = {
     sector_id?: true
+    promoter_sector_id?: true
   }
 
   export type Stock_fullsSumAggregateInputType = {
     sector_id?: true
+    promoter_sector_id?: true
   }
 
   export type Stock_fullsMinAggregateInputType = {
@@ -19579,6 +19599,7 @@ export namespace Prisma {
     full_form?: true
     sector_id?: true
     is_auto_generated?: true
+    promoter_sector_id?: true
   }
 
   export type Stock_fullsMaxAggregateInputType = {
@@ -19586,6 +19607,7 @@ export namespace Prisma {
     full_form?: true
     sector_id?: true
     is_auto_generated?: true
+    promoter_sector_id?: true
   }
 
   export type Stock_fullsCountAggregateInputType = {
@@ -19593,6 +19615,7 @@ export namespace Prisma {
     full_form?: true
     sector_id?: true
     is_auto_generated?: true
+    promoter_sector_id?: true
     _all?: true
   }
 
@@ -19687,6 +19710,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated: boolean | null
+    promoter_sector_id: number | null
     _count: Stock_fullsCountAggregateOutputType | null
     _avg: Stock_fullsAvgAggregateOutputType | null
     _sum: Stock_fullsSumAggregateOutputType | null
@@ -19713,6 +19737,7 @@ export namespace Prisma {
     full_form?: boolean
     sector_id?: boolean
     is_auto_generated?: boolean
+    promoter_sector_id?: boolean
     bonus_records?: boolean | stock_fulls$bonus_recordsArgs<ExtArgs>
     buy_records?: boolean | stock_fulls$buy_recordsArgs<ExtArgs>
     buy_records_staging?: boolean | stock_fulls$buy_records_stagingArgs<ExtArgs>
@@ -19736,6 +19761,7 @@ export namespace Prisma {
     full_form?: boolean
     sector_id?: boolean
     is_auto_generated?: boolean
+    promoter_sector_id?: boolean
     sectors?: boolean | sectorsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock_fulls"]>
 
@@ -19744,6 +19770,7 @@ export namespace Prisma {
     full_form?: boolean
     sector_id?: boolean
     is_auto_generated?: boolean
+    promoter_sector_id?: boolean
     sectors?: boolean | sectorsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock_fulls"]>
 
@@ -19752,9 +19779,10 @@ export namespace Prisma {
     full_form?: boolean
     sector_id?: boolean
     is_auto_generated?: boolean
+    promoter_sector_id?: boolean
   }
 
-  export type stock_fullsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"symbol" | "full_form" | "sector_id" | "is_auto_generated", ExtArgs["result"]["stock_fulls"]>
+  export type stock_fullsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"symbol" | "full_form" | "sector_id" | "is_auto_generated" | "promoter_sector_id", ExtArgs["result"]["stock_fulls"]>
   export type stock_fullsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bonus_records?: boolean | stock_fulls$bonus_recordsArgs<ExtArgs>
     buy_records?: boolean | stock_fulls$buy_recordsArgs<ExtArgs>
@@ -19804,6 +19832,7 @@ export namespace Prisma {
       full_form: string
       sector_id: number
       is_auto_generated: boolean | null
+      promoter_sector_id: number | null
     }, ExtArgs["result"]["stock_fulls"]>
     composites: {}
   }
@@ -20246,6 +20275,7 @@ export namespace Prisma {
     readonly full_form: FieldRef<"stock_fulls", 'String'>
     readonly sector_id: FieldRef<"stock_fulls", 'Int'>
     readonly is_auto_generated: FieldRef<"stock_fulls", 'Boolean'>
+    readonly promoter_sector_id: FieldRef<"stock_fulls", 'Int'>
   }
     
 
@@ -32736,50 +32766,65 @@ export namespace Prisma {
   export type Symbol_holdingsAvgAggregateOutputType = {
     fund_id: number | null
     fiscal_year_id: number | null
-    wacc: Decimal | null
     quantity: number | null
     sub_id: number | null
+    total_txn_value: Decimal | null
+    total_with_commission: Decimal | null
+    wacc_tax_base: Decimal | null
+    wacc: Decimal | null
   }
 
   export type Symbol_holdingsSumAggregateOutputType = {
     fund_id: number | null
     fiscal_year_id: number | null
-    wacc: Decimal | null
     quantity: number | null
     sub_id: number | null
+    total_txn_value: Decimal | null
+    total_with_commission: Decimal | null
+    wacc_tax_base: Decimal | null
+    wacc: Decimal | null
   }
 
   export type Symbol_holdingsMinAggregateOutputType = {
     symbol: string | null
     fund_id: number | null
     fiscal_year_id: number | null
-    wacc: Decimal | null
     remarks: string | null
     quantity: number | null
     source_type: string | null
     sub_id: number | null
+    total_txn_value: Decimal | null
+    total_with_commission: Decimal | null
+    wacc_tax_base: Decimal | null
+    wacc: Decimal | null
   }
 
   export type Symbol_holdingsMaxAggregateOutputType = {
     symbol: string | null
     fund_id: number | null
     fiscal_year_id: number | null
-    wacc: Decimal | null
     remarks: string | null
     quantity: number | null
     source_type: string | null
     sub_id: number | null
+    total_txn_value: Decimal | null
+    total_with_commission: Decimal | null
+    wacc_tax_base: Decimal | null
+    wacc: Decimal | null
   }
 
   export type Symbol_holdingsCountAggregateOutputType = {
     symbol: number
     fund_id: number
     fiscal_year_id: number
-    wacc: number
     remarks: number
     quantity: number
     source_type: number
     sub_id: number
+    total_txn_value: number
+    total_with_commission: number
+    wacc_tax_base: number
+    wacc: number
     _all: number
   }
 
@@ -32787,50 +32832,65 @@ export namespace Prisma {
   export type Symbol_holdingsAvgAggregateInputType = {
     fund_id?: true
     fiscal_year_id?: true
-    wacc?: true
     quantity?: true
     sub_id?: true
+    total_txn_value?: true
+    total_with_commission?: true
+    wacc_tax_base?: true
+    wacc?: true
   }
 
   export type Symbol_holdingsSumAggregateInputType = {
     fund_id?: true
     fiscal_year_id?: true
-    wacc?: true
     quantity?: true
     sub_id?: true
+    total_txn_value?: true
+    total_with_commission?: true
+    wacc_tax_base?: true
+    wacc?: true
   }
 
   export type Symbol_holdingsMinAggregateInputType = {
     symbol?: true
     fund_id?: true
     fiscal_year_id?: true
-    wacc?: true
     remarks?: true
     quantity?: true
     source_type?: true
     sub_id?: true
+    total_txn_value?: true
+    total_with_commission?: true
+    wacc_tax_base?: true
+    wacc?: true
   }
 
   export type Symbol_holdingsMaxAggregateInputType = {
     symbol?: true
     fund_id?: true
     fiscal_year_id?: true
-    wacc?: true
     remarks?: true
     quantity?: true
     source_type?: true
     sub_id?: true
+    total_txn_value?: true
+    total_with_commission?: true
+    wacc_tax_base?: true
+    wacc?: true
   }
 
   export type Symbol_holdingsCountAggregateInputType = {
     symbol?: true
     fund_id?: true
     fiscal_year_id?: true
-    wacc?: true
     remarks?: true
     quantity?: true
     source_type?: true
     sub_id?: true
+    total_txn_value?: true
+    total_with_commission?: true
+    wacc_tax_base?: true
+    wacc?: true
     _all?: true
   }
 
@@ -32924,11 +32984,14 @@ export namespace Prisma {
     symbol: string
     fund_id: number
     fiscal_year_id: number
-    wacc: Decimal
     remarks: string | null
     quantity: number | null
     source_type: string | null
     sub_id: number | null
+    total_txn_value: Decimal
+    total_with_commission: Decimal
+    wacc_tax_base: Decimal | null
+    wacc: Decimal | null
     _count: Symbol_holdingsCountAggregateOutputType | null
     _avg: Symbol_holdingsAvgAggregateOutputType | null
     _sum: Symbol_holdingsSumAggregateOutputType | null
@@ -32954,11 +33017,14 @@ export namespace Prisma {
     symbol?: boolean
     fund_id?: boolean
     fiscal_year_id?: boolean
-    wacc?: boolean
     remarks?: boolean
     quantity?: boolean
     source_type?: boolean
     sub_id?: boolean
+    total_txn_value?: boolean
+    total_with_commission?: boolean
+    wacc_tax_base?: boolean
+    wacc?: boolean
     fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
     sub_classes?: boolean | symbol_holdings$sub_classesArgs<ExtArgs>
@@ -32969,11 +33035,14 @@ export namespace Prisma {
     symbol?: boolean
     fund_id?: boolean
     fiscal_year_id?: boolean
-    wacc?: boolean
     remarks?: boolean
     quantity?: boolean
     source_type?: boolean
     sub_id?: boolean
+    total_txn_value?: boolean
+    total_with_commission?: boolean
+    wacc_tax_base?: boolean
+    wacc?: boolean
     fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
     sub_classes?: boolean | symbol_holdings$sub_classesArgs<ExtArgs>
@@ -32984,11 +33053,14 @@ export namespace Prisma {
     symbol?: boolean
     fund_id?: boolean
     fiscal_year_id?: boolean
-    wacc?: boolean
     remarks?: boolean
     quantity?: boolean
     source_type?: boolean
     sub_id?: boolean
+    total_txn_value?: boolean
+    total_with_commission?: boolean
+    wacc_tax_base?: boolean
+    wacc?: boolean
     fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
     sub_classes?: boolean | symbol_holdings$sub_classesArgs<ExtArgs>
@@ -32999,14 +33071,17 @@ export namespace Prisma {
     symbol?: boolean
     fund_id?: boolean
     fiscal_year_id?: boolean
-    wacc?: boolean
     remarks?: boolean
     quantity?: boolean
     source_type?: boolean
     sub_id?: boolean
+    total_txn_value?: boolean
+    total_with_commission?: boolean
+    wacc_tax_base?: boolean
+    wacc?: boolean
   }
 
-  export type symbol_holdingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"symbol" | "fund_id" | "fiscal_year_id" | "wacc" | "remarks" | "quantity" | "source_type" | "sub_id", ExtArgs["result"]["symbol_holdings"]>
+  export type symbol_holdingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"symbol" | "fund_id" | "fiscal_year_id" | "remarks" | "quantity" | "source_type" | "sub_id" | "total_txn_value" | "total_with_commission" | "wacc_tax_base" | "wacc", ExtArgs["result"]["symbol_holdings"]>
   export type symbol_holdingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
@@ -33038,11 +33113,14 @@ export namespace Prisma {
       symbol: string
       fund_id: number
       fiscal_year_id: number
-      wacc: Prisma.Decimal
       remarks: string | null
       quantity: number | null
       source_type: string | null
       sub_id: number | null
+      total_txn_value: Prisma.Decimal
+      total_with_commission: Prisma.Decimal
+      wacc_tax_base: Prisma.Decimal | null
+      wacc: Prisma.Decimal | null
     }, ExtArgs["result"]["symbol_holdings"]>
     composites: {}
   }
@@ -33473,11 +33551,14 @@ export namespace Prisma {
     readonly symbol: FieldRef<"symbol_holdings", 'String'>
     readonly fund_id: FieldRef<"symbol_holdings", 'Int'>
     readonly fiscal_year_id: FieldRef<"symbol_holdings", 'Int'>
-    readonly wacc: FieldRef<"symbol_holdings", 'Decimal'>
     readonly remarks: FieldRef<"symbol_holdings", 'String'>
     readonly quantity: FieldRef<"symbol_holdings", 'Int'>
     readonly source_type: FieldRef<"symbol_holdings", 'String'>
     readonly sub_id: FieldRef<"symbol_holdings", 'Int'>
+    readonly total_txn_value: FieldRef<"symbol_holdings", 'Decimal'>
+    readonly total_with_commission: FieldRef<"symbol_holdings", 'Decimal'>
+    readonly wacc_tax_base: FieldRef<"symbol_holdings", 'Decimal'>
+    readonly wacc: FieldRef<"symbol_holdings", 'Decimal'>
   }
     
 
@@ -36466,7 +36547,8 @@ export namespace Prisma {
   export const UsersScalarFieldEnum: {
     user_password: 'user_password',
     user_email: 'user_email',
-    user_id: 'user_id'
+    user_id: 'user_id',
+    is_admin: 'is_admin'
   };
 
   export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
@@ -36563,7 +36645,8 @@ export namespace Prisma {
     symbol: 'symbol',
     full_form: 'full_form',
     sector_id: 'sector_id',
-    is_auto_generated: 'is_auto_generated'
+    is_auto_generated: 'is_auto_generated',
+    promoter_sector_id: 'promoter_sector_id'
   };
 
   export type Stock_fullsScalarFieldEnum = (typeof Stock_fullsScalarFieldEnum)[keyof typeof Stock_fullsScalarFieldEnum]
@@ -36713,11 +36796,14 @@ export namespace Prisma {
     symbol: 'symbol',
     fund_id: 'fund_id',
     fiscal_year_id: 'fiscal_year_id',
-    wacc: 'wacc',
     remarks: 'remarks',
     quantity: 'quantity',
     source_type: 'source_type',
-    sub_id: 'sub_id'
+    sub_id: 'sub_id',
+    total_txn_value: 'total_txn_value',
+    total_with_commission: 'total_with_commission',
+    wacc_tax_base: 'wacc_tax_base',
+    wacc: 'wacc'
   };
 
   export type Symbol_holdingsScalarFieldEnum = (typeof Symbol_holdingsScalarFieldEnum)[keyof typeof Symbol_holdingsScalarFieldEnum]
@@ -37437,12 +37523,14 @@ export namespace Prisma {
     user_password?: StringFilter<"users"> | string
     user_email?: StringFilter<"users"> | string
     user_id?: IntFilter<"users"> | number
+    is_admin?: BoolFilter<"users"> | boolean
   }
 
   export type usersOrderByWithRelationInput = {
     user_password?: SortOrder
     user_email?: SortOrder
     user_id?: SortOrder
+    is_admin?: SortOrder
   }
 
   export type usersWhereUniqueInput = Prisma.AtLeast<{
@@ -37452,12 +37540,14 @@ export namespace Prisma {
     NOT?: usersWhereInput | usersWhereInput[]
     user_password?: StringFilter<"users"> | string
     user_id?: IntFilter<"users"> | number
+    is_admin?: BoolFilter<"users"> | boolean
   }, "user_email">
 
   export type usersOrderByWithAggregationInput = {
     user_password?: SortOrder
     user_email?: SortOrder
     user_id?: SortOrder
+    is_admin?: SortOrder
     _count?: usersCountOrderByAggregateInput
     _avg?: usersAvgOrderByAggregateInput
     _max?: usersMaxOrderByAggregateInput
@@ -37472,6 +37562,7 @@ export namespace Prisma {
     user_password?: StringWithAggregatesFilter<"users"> | string
     user_email?: StringWithAggregatesFilter<"users"> | string
     user_id?: IntWithAggregatesFilter<"users"> | number
+    is_admin?: BoolWithAggregatesFilter<"users"> | boolean
   }
 
   export type fiscal_year_balanceWhereInput = {
@@ -38048,6 +38139,7 @@ export namespace Prisma {
     full_form?: StringFilter<"stock_fulls"> | string
     sector_id?: IntFilter<"stock_fulls"> | number
     is_auto_generated?: BoolNullableFilter<"stock_fulls"> | boolean | null
+    promoter_sector_id?: IntNullableFilter<"stock_fulls"> | number | null
     bonus_records?: Bonus_recordsListRelationFilter
     buy_records?: Buy_recordsListRelationFilter
     buy_records_staging?: Buy_records_stagingListRelationFilter
@@ -38070,6 +38162,7 @@ export namespace Prisma {
     full_form?: SortOrder
     sector_id?: SortOrder
     is_auto_generated?: SortOrderInput | SortOrder
+    promoter_sector_id?: SortOrderInput | SortOrder
     bonus_records?: bonus_recordsOrderByRelationAggregateInput
     buy_records?: buy_recordsOrderByRelationAggregateInput
     buy_records_staging?: buy_records_stagingOrderByRelationAggregateInput
@@ -38095,6 +38188,7 @@ export namespace Prisma {
     full_form?: StringFilter<"stock_fulls"> | string
     sector_id?: IntFilter<"stock_fulls"> | number
     is_auto_generated?: BoolNullableFilter<"stock_fulls"> | boolean | null
+    promoter_sector_id?: IntNullableFilter<"stock_fulls"> | number | null
     bonus_records?: Bonus_recordsListRelationFilter
     buy_records?: Buy_recordsListRelationFilter
     buy_records_staging?: Buy_records_stagingListRelationFilter
@@ -38117,6 +38211,7 @@ export namespace Prisma {
     full_form?: SortOrder
     sector_id?: SortOrder
     is_auto_generated?: SortOrderInput | SortOrder
+    promoter_sector_id?: SortOrderInput | SortOrder
     _count?: stock_fullsCountOrderByAggregateInput
     _avg?: stock_fullsAvgOrderByAggregateInput
     _max?: stock_fullsMaxOrderByAggregateInput
@@ -38132,6 +38227,7 @@ export namespace Prisma {
     full_form?: StringWithAggregatesFilter<"stock_fulls"> | string
     sector_id?: IntWithAggregatesFilter<"stock_fulls"> | number
     is_auto_generated?: BoolNullableWithAggregatesFilter<"stock_fulls"> | boolean | null
+    promoter_sector_id?: IntNullableWithAggregatesFilter<"stock_fulls"> | number | null
   }
 
   export type bonus_recordsWhereInput = {
@@ -38920,11 +39016,14 @@ export namespace Prisma {
     symbol?: StringFilter<"symbol_holdings"> | string
     fund_id?: IntFilter<"symbol_holdings"> | number
     fiscal_year_id?: IntFilter<"symbol_holdings"> | number
-    wacc?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     remarks?: StringNullableFilter<"symbol_holdings"> | string | null
     quantity?: IntNullableFilter<"symbol_holdings"> | number | null
     source_type?: StringNullableFilter<"symbol_holdings"> | string | null
     sub_id?: IntNullableFilter<"symbol_holdings"> | number | null
+    total_txn_value?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
+    wacc?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
     funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
     sub_classes?: XOR<Sub_classesNullableScalarRelationFilter, sub_classesWhereInput> | null
@@ -38935,11 +39034,14 @@ export namespace Prisma {
     symbol?: SortOrder
     fund_id?: SortOrder
     fiscal_year_id?: SortOrder
-    wacc?: SortOrder
     remarks?: SortOrderInput | SortOrder
     quantity?: SortOrderInput | SortOrder
     source_type?: SortOrderInput | SortOrder
     sub_id?: SortOrderInput | SortOrder
+    total_txn_value?: SortOrder
+    total_with_commission?: SortOrder
+    wacc_tax_base?: SortOrderInput | SortOrder
+    wacc?: SortOrderInput | SortOrder
     fiscal_years?: fiscal_yearsOrderByWithRelationInput
     funds?: fundsOrderByWithRelationInput
     sub_classes?: sub_classesOrderByWithRelationInput
@@ -38954,11 +39056,14 @@ export namespace Prisma {
     symbol?: StringFilter<"symbol_holdings"> | string
     fund_id?: IntFilter<"symbol_holdings"> | number
     fiscal_year_id?: IntFilter<"symbol_holdings"> | number
-    wacc?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     remarks?: StringNullableFilter<"symbol_holdings"> | string | null
     quantity?: IntNullableFilter<"symbol_holdings"> | number | null
     source_type?: StringNullableFilter<"symbol_holdings"> | string | null
     sub_id?: IntNullableFilter<"symbol_holdings"> | number | null
+    total_txn_value?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
+    wacc?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
     funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
     sub_classes?: XOR<Sub_classesNullableScalarRelationFilter, sub_classesWhereInput> | null
@@ -38969,11 +39074,14 @@ export namespace Prisma {
     symbol?: SortOrder
     fund_id?: SortOrder
     fiscal_year_id?: SortOrder
-    wacc?: SortOrder
     remarks?: SortOrderInput | SortOrder
     quantity?: SortOrderInput | SortOrder
     source_type?: SortOrderInput | SortOrder
     sub_id?: SortOrderInput | SortOrder
+    total_txn_value?: SortOrder
+    total_with_commission?: SortOrder
+    wacc_tax_base?: SortOrderInput | SortOrder
+    wacc?: SortOrderInput | SortOrder
     _count?: symbol_holdingsCountOrderByAggregateInput
     _avg?: symbol_holdingsAvgOrderByAggregateInput
     _max?: symbol_holdingsMaxOrderByAggregateInput
@@ -38988,11 +39096,14 @@ export namespace Prisma {
     symbol?: StringWithAggregatesFilter<"symbol_holdings"> | string
     fund_id?: IntWithAggregatesFilter<"symbol_holdings"> | number
     fiscal_year_id?: IntWithAggregatesFilter<"symbol_holdings"> | number
-    wacc?: DecimalWithAggregatesFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     remarks?: StringNullableWithAggregatesFilter<"symbol_holdings"> | string | null
     quantity?: IntNullableWithAggregatesFilter<"symbol_holdings"> | number | null
     source_type?: StringNullableWithAggregatesFilter<"symbol_holdings"> | string | null
     sub_id?: IntNullableWithAggregatesFilter<"symbol_holdings"> | number | null
+    total_txn_value?: DecimalWithAggregatesFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalWithAggregatesFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: DecimalNullableWithAggregatesFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
+    wacc?: DecimalNullableWithAggregatesFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sub_classesWhereInput = {
@@ -39751,42 +39862,49 @@ export namespace Prisma {
     user_password: string
     user_email: string
     user_id?: number
+    is_admin?: boolean
   }
 
   export type usersUncheckedCreateInput = {
     user_password: string
     user_email: string
     user_id?: number
+    is_admin?: boolean
   }
 
   export type usersUpdateInput = {
     user_password?: StringFieldUpdateOperationsInput | string
     user_email?: StringFieldUpdateOperationsInput | string
     user_id?: IntFieldUpdateOperationsInput | number
+    is_admin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type usersUncheckedUpdateInput = {
     user_password?: StringFieldUpdateOperationsInput | string
     user_email?: StringFieldUpdateOperationsInput | string
     user_id?: IntFieldUpdateOperationsInput | number
+    is_admin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type usersCreateManyInput = {
     user_password: string
     user_email: string
     user_id?: number
+    is_admin?: boolean
   }
 
   export type usersUpdateManyMutationInput = {
     user_password?: StringFieldUpdateOperationsInput | string
     user_email?: StringFieldUpdateOperationsInput | string
     user_id?: IntFieldUpdateOperationsInput | number
+    is_admin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type usersUncheckedUpdateManyInput = {
     user_password?: StringFieldUpdateOperationsInput | string
     user_email?: StringFieldUpdateOperationsInput | string
     user_id?: IntFieldUpdateOperationsInput | number
+    is_admin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type fiscal_year_balanceCreateInput = {
@@ -40396,6 +40514,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -40418,6 +40537,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -40438,6 +40558,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -40460,6 +40581,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -40481,12 +40603,14 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
   }
 
   export type stock_fullsUpdateManyMutationInput = {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type stock_fullsUncheckedUpdateManyInput = {
@@ -40494,6 +40618,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type bonus_recordsCreateInput = {
@@ -41223,10 +41348,13 @@ export namespace Prisma {
   }
 
   export type symbol_holdingsCreateInput = {
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
     fiscal_years: fiscal_yearsCreateNestedOneWithoutSymbol_holdingsInput
     funds: fundsCreateNestedOneWithoutSymbol_holdingsInput
     sub_classes?: sub_classesCreateNestedOneWithoutSymbol_holdingsInput
@@ -41237,18 +41365,24 @@ export namespace Prisma {
     symbol: string
     fund_id: number
     fiscal_year_id: number
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
     sub_id?: number | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUpdateInput = {
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     sub_classes?: sub_classesUpdateOneWithoutSymbol_holdingsNestedInput
@@ -41259,40 +41393,52 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     fund_id?: IntFieldUpdateOperationsInput | number
     fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsCreateManyInput = {
     symbol: string
     fund_id: number
     fiscal_year_id: number
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
     sub_id?: number | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUpdateManyMutationInput = {
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUncheckedUpdateManyInput = {
     symbol?: StringFieldUpdateOperationsInput | string
     fund_id?: IntFieldUpdateOperationsInput | number
     fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sub_classesCreateInput = {
@@ -42184,10 +42330,16 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type usersCountOrderByAggregateInput = {
     user_password?: SortOrder
     user_email?: SortOrder
     user_id?: SortOrder
+    is_admin?: SortOrder
   }
 
   export type usersAvgOrderByAggregateInput = {
@@ -42198,16 +42350,26 @@ export namespace Prisma {
     user_password?: SortOrder
     user_email?: SortOrder
     user_id?: SortOrder
+    is_admin?: SortOrder
   }
 
   export type usersMinOrderByAggregateInput = {
     user_password?: SortOrder
     user_email?: SortOrder
     user_id?: SortOrder
+    is_admin?: SortOrder
   }
 
   export type usersSumOrderByAggregateInput = {
     user_id?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type Fiscal_yearsScalarRelationFilter = {
@@ -42602,10 +42764,12 @@ export namespace Prisma {
     full_form?: SortOrder
     sector_id?: SortOrder
     is_auto_generated?: SortOrder
+    promoter_sector_id?: SortOrder
   }
 
   export type stock_fullsAvgOrderByAggregateInput = {
     sector_id?: SortOrder
+    promoter_sector_id?: SortOrder
   }
 
   export type stock_fullsMaxOrderByAggregateInput = {
@@ -42613,6 +42777,7 @@ export namespace Prisma {
     full_form?: SortOrder
     sector_id?: SortOrder
     is_auto_generated?: SortOrder
+    promoter_sector_id?: SortOrder
   }
 
   export type stock_fullsMinOrderByAggregateInput = {
@@ -42620,10 +42785,12 @@ export namespace Prisma {
     full_form?: SortOrder
     sector_id?: SortOrder
     is_auto_generated?: SortOrder
+    promoter_sector_id?: SortOrder
   }
 
   export type stock_fullsSumOrderByAggregateInput = {
     sector_id?: SortOrder
+    promoter_sector_id?: SortOrder
   }
 
   export type bonus_recordsCountOrderByAggregateInput = {
@@ -43119,49 +43286,64 @@ export namespace Prisma {
     symbol?: SortOrder
     fund_id?: SortOrder
     fiscal_year_id?: SortOrder
-    wacc?: SortOrder
     remarks?: SortOrder
     quantity?: SortOrder
     source_type?: SortOrder
     sub_id?: SortOrder
+    total_txn_value?: SortOrder
+    total_with_commission?: SortOrder
+    wacc_tax_base?: SortOrder
+    wacc?: SortOrder
   }
 
   export type symbol_holdingsAvgOrderByAggregateInput = {
     fund_id?: SortOrder
     fiscal_year_id?: SortOrder
-    wacc?: SortOrder
     quantity?: SortOrder
     sub_id?: SortOrder
+    total_txn_value?: SortOrder
+    total_with_commission?: SortOrder
+    wacc_tax_base?: SortOrder
+    wacc?: SortOrder
   }
 
   export type symbol_holdingsMaxOrderByAggregateInput = {
     symbol?: SortOrder
     fund_id?: SortOrder
     fiscal_year_id?: SortOrder
-    wacc?: SortOrder
     remarks?: SortOrder
     quantity?: SortOrder
     source_type?: SortOrder
     sub_id?: SortOrder
+    total_txn_value?: SortOrder
+    total_with_commission?: SortOrder
+    wacc_tax_base?: SortOrder
+    wacc?: SortOrder
   }
 
   export type symbol_holdingsMinOrderByAggregateInput = {
     symbol?: SortOrder
     fund_id?: SortOrder
     fiscal_year_id?: SortOrder
-    wacc?: SortOrder
     remarks?: SortOrder
     quantity?: SortOrder
     source_type?: SortOrder
     sub_id?: SortOrder
+    total_txn_value?: SortOrder
+    total_with_commission?: SortOrder
+    wacc_tax_base?: SortOrder
+    wacc?: SortOrder
   }
 
   export type symbol_holdingsSumOrderByAggregateInput = {
     fund_id?: SortOrder
     fiscal_year_id?: SortOrder
-    wacc?: SortOrder
     quantity?: SortOrder
     sub_id?: SortOrder
+    total_txn_value?: SortOrder
+    total_with_commission?: SortOrder
+    wacc_tax_base?: SortOrder
+    wacc?: SortOrder
   }
 
   export type sub_classesCountOrderByAggregateInput = {
@@ -44300,6 +44482,10 @@ export namespace Prisma {
     update?: sell_records_stagingUpdateWithWhereUniqueWithoutUploadsInput | sell_records_stagingUpdateWithWhereUniqueWithoutUploadsInput[]
     updateMany?: sell_records_stagingUpdateManyWithWhereWithoutUploadsInput | sell_records_stagingUpdateManyWithWhereWithoutUploadsInput[]
     deleteMany?: sell_records_stagingScalarWhereInput | sell_records_stagingScalarWhereInput[]
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type client_broker_mappingCreateNestedOneWithoutFiscal_year_balanceInput = {
@@ -47463,6 +47649,19 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type client_broker_mappingCreateWithoutBuy_recordsInput = {
     client_id: string
     client_name: string
@@ -47604,6 +47803,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
@@ -47625,6 +47825,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -47843,6 +48044,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -47864,6 +48066,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -49047,6 +49250,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -49068,6 +49272,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -49236,6 +49441,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -49257,6 +49463,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -49447,6 +49654,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -49468,6 +49676,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -49686,6 +49895,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -49707,6 +49917,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -50282,6 +50493,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -50303,6 +50515,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -50525,6 +50738,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -50546,6 +50760,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -50702,6 +50917,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
@@ -50723,6 +50939,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -50941,6 +51158,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -50962,6 +51180,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -51552,10 +51771,13 @@ export namespace Prisma {
   }
 
   export type symbol_holdingsCreateWithoutFiscal_yearsInput = {
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
     funds: fundsCreateNestedOneWithoutSymbol_holdingsInput
     sub_classes?: sub_classesCreateNestedOneWithoutSymbol_holdingsInput
     stock_fulls: stock_fullsCreateNestedOneWithoutSymbol_holdingsInput
@@ -51564,11 +51786,14 @@ export namespace Prisma {
   export type symbol_holdingsUncheckedCreateWithoutFiscal_yearsInput = {
     symbol: string
     fund_id: number
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
     sub_id?: number | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsCreateOrConnectWithoutFiscal_yearsInput = {
@@ -51857,11 +52082,14 @@ export namespace Prisma {
     symbol?: StringFilter<"symbol_holdings"> | string
     fund_id?: IntFilter<"symbol_holdings"> | number
     fiscal_year_id?: IntFilter<"symbol_holdings"> | number
-    wacc?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     remarks?: StringNullableFilter<"symbol_holdings"> | string | null
     quantity?: IntNullableFilter<"symbol_holdings"> | number | null
     source_type?: StringNullableFilter<"symbol_holdings"> | string | null
     sub_id?: IntNullableFilter<"symbol_holdings"> | number | null
+    total_txn_value?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
+    wacc?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsCreateWithoutFundsInput = {
@@ -52425,10 +52653,13 @@ export namespace Prisma {
   }
 
   export type symbol_holdingsCreateWithoutFundsInput = {
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
     fiscal_years: fiscal_yearsCreateNestedOneWithoutSymbol_holdingsInput
     sub_classes?: sub_classesCreateNestedOneWithoutSymbol_holdingsInput
     stock_fulls: stock_fullsCreateNestedOneWithoutSymbol_holdingsInput
@@ -52437,11 +52668,14 @@ export namespace Prisma {
   export type symbol_holdingsUncheckedCreateWithoutFundsInput = {
     symbol: string
     fiscal_year_id: number
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
     sub_id?: number | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsCreateOrConnectWithoutFundsInput = {
@@ -52857,6 +53091,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -52878,6 +53113,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -53096,6 +53332,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -53117,6 +53354,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -53699,10 +53937,13 @@ export namespace Prisma {
   }
 
   export type symbol_holdingsCreateWithoutStock_fullsInput = {
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
     fiscal_years: fiscal_yearsCreateNestedOneWithoutSymbol_holdingsInput
     funds: fundsCreateNestedOneWithoutSymbol_holdingsInput
     sub_classes?: sub_classesCreateNestedOneWithoutSymbol_holdingsInput
@@ -53711,11 +53952,14 @@ export namespace Prisma {
   export type symbol_holdingsUncheckedCreateWithoutStock_fullsInput = {
     fund_id: number
     fiscal_year_id: number
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
     sub_id?: number | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsCreateOrConnectWithoutStock_fullsInput = {
@@ -54116,6 +54360,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
@@ -54137,6 +54382,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -54327,6 +54573,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -54348,6 +54595,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -54504,6 +54752,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -54525,6 +54774,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -54715,6 +54965,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -54736,6 +54987,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -54918,6 +55170,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -54939,6 +55192,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -55161,6 +55415,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -55182,6 +55437,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -55338,6 +55594,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -55359,6 +55616,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -55549,6 +55807,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -55570,6 +55829,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -55589,6 +55849,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -55609,6 +55870,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -55659,6 +55921,7 @@ export namespace Prisma {
     full_form?: StringFilter<"stock_fulls"> | string
     sector_id?: IntFilter<"stock_fulls"> | number
     is_auto_generated?: BoolNullableFilter<"stock_fulls"> | boolean | null
+    promoter_sector_id?: IntNullableFilter<"stock_fulls"> | number | null
   }
 
   export type client_broker_mappingCreateWithoutClient_boid_mapping_client_broker_mapping_boidToclient_boid_mappingInput = {
@@ -55930,6 +56193,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -55951,6 +56215,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -56141,6 +56406,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -56162,6 +56428,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -56344,6 +56611,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -56365,6 +56633,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -56587,6 +56856,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -56608,6 +56878,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -56847,6 +57118,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -56868,6 +57140,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -57039,6 +57312,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -57060,6 +57334,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -57271,10 +57546,13 @@ export namespace Prisma {
   }
 
   export type symbol_holdingsCreateWithoutSub_classesInput = {
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
     fiscal_years: fiscal_yearsCreateNestedOneWithoutSymbol_holdingsInput
     funds: fundsCreateNestedOneWithoutSymbol_holdingsInput
     stock_fulls: stock_fullsCreateNestedOneWithoutSymbol_holdingsInput
@@ -57284,10 +57562,13 @@ export namespace Prisma {
     symbol: string
     fund_id: number
     fiscal_year_id: number
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsCreateOrConnectWithoutSub_classesInput = {
@@ -57552,6 +57833,7 @@ export namespace Prisma {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -57573,6 +57855,7 @@ export namespace Prisma {
     full_form: string
     sector_id: number
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -57744,6 +58027,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -57765,6 +58049,7 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -59100,11 +59385,14 @@ export namespace Prisma {
   export type symbol_holdingsCreateManyFiscal_yearsInput = {
     symbol: string
     fund_id: number
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
     sub_id?: number | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsUpdateWithoutFiscal_yearsInput = {
@@ -59712,10 +60000,13 @@ export namespace Prisma {
   }
 
   export type symbol_holdingsUpdateWithoutFiscal_yearsInput = {
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     funds?: fundsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     sub_classes?: sub_classesUpdateOneWithoutSymbol_holdingsNestedInput
     stock_fulls?: stock_fullsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
@@ -59724,21 +60015,27 @@ export namespace Prisma {
   export type symbol_holdingsUncheckedUpdateWithoutFiscal_yearsInput = {
     symbol?: StringFieldUpdateOperationsInput | string
     fund_id?: IntFieldUpdateOperationsInput | number
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsInput = {
     symbol?: StringFieldUpdateOperationsInput | string
     fund_id?: IntFieldUpdateOperationsInput | number
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsCreateManyFundsInput = {
@@ -59941,11 +60238,14 @@ export namespace Prisma {
   export type symbol_holdingsCreateManyFundsInput = {
     symbol: string
     fiscal_year_id: number
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
     sub_id?: number | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsUpdateWithoutFundsInput = {
@@ -60566,10 +60866,13 @@ export namespace Prisma {
   }
 
   export type symbol_holdingsUpdateWithoutFundsInput = {
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     sub_classes?: sub_classesUpdateOneWithoutSymbol_holdingsNestedInput
     stock_fulls?: stock_fullsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
@@ -60578,21 +60881,27 @@ export namespace Prisma {
   export type symbol_holdingsUncheckedUpdateWithoutFundsInput = {
     symbol?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUncheckedUpdateManyWithoutFundsInput = {
     symbol?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsCreateManyStock_fullsInput = {
@@ -60794,11 +61103,14 @@ export namespace Prisma {
   export type symbol_holdingsCreateManyStock_fullsInput = {
     fund_id: number
     fiscal_year_id: number
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
     sub_id?: number | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsUpdateWithoutStock_fullsInput = {
@@ -61383,10 +61695,13 @@ export namespace Prisma {
   }
 
   export type symbol_holdingsUpdateWithoutStock_fullsInput = {
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     sub_classes?: sub_classesUpdateOneWithoutSymbol_holdingsNestedInput
@@ -61395,33 +61710,41 @@ export namespace Prisma {
   export type symbol_holdingsUncheckedUpdateWithoutStock_fullsInput = {
     fund_id?: IntFieldUpdateOperationsInput | number
     fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUncheckedUpdateManyWithoutStock_fullsInput = {
     fund_id?: IntFieldUpdateOperationsInput | number
     fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type stock_fullsCreateManySectorsInput = {
     symbol: string
     full_form: string
     is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
   }
 
   export type stock_fullsUpdateWithoutSectorsInput = {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -61442,6 +61765,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -61462,6 +61786,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type client_broker_mappingCreateManyClient_boid_mapping_client_broker_mapping_boidToclient_boid_mappingInput = {
@@ -61581,10 +61906,13 @@ export namespace Prisma {
     symbol: string
     fund_id: number
     fiscal_year_id: number
-    wacc?: Decimal | DecimalJsLike | number | string
     remarks?: string | null
     quantity?: number | null
     source_type?: string | null
+    total_txn_value?: Decimal | DecimalJsLike | number | string
+    total_with_commission?: Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
+    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type fiscal_year_balanceUpdateWithoutSub_classesInput = {
@@ -61756,10 +62084,13 @@ export namespace Prisma {
   }
 
   export type symbol_holdingsUpdateWithoutSub_classesInput = {
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     stock_fulls?: stock_fullsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
@@ -61769,20 +62100,26 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     fund_id?: IntFieldUpdateOperationsInput | number
     fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUncheckedUpdateManyWithoutSub_classesInput = {
     symbol?: StringFieldUpdateOperationsInput | string
     fund_id?: IntFieldUpdateOperationsInput | number
     fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    wacc?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
 

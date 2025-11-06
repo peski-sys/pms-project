@@ -876,8 +876,6 @@ export default function DashboardTwo() {
               <TableHead colSpan={2} className="text-center border-r">Actual Closing</TableHead>
               <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
               <TableHead rowSpan={2} className="text-center border-r">Market Value</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Unrealised Amount</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Today %</TableHead>
               <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
             </TableRow>
             
@@ -896,7 +894,7 @@ export default function DashboardTwo() {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={14} className="text-center py-8">
+                <TableCell colSpan={12} className="text-center py-8">
                   Loading promoter data...
                 </TableCell>
               </TableRow>
@@ -920,16 +918,6 @@ export default function DashboardTwo() {
                   <TableCell className="text-center border-r">{data.non_demat.toLocaleString()}</TableCell>
                   <TableCell className="text-center border-r font-semibold">Rs. {data.market_price.toFixed(2)}</TableCell>
                   <TableCell className="text-center border-r font-semibold">Rs. {(data.closing_quantity * data.market_price).toLocaleString()}</TableCell>
-                  <TableCell className={`text-center border-r font-semibold ${
-                    data.unrealised_amount >= 0 ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    Rs. {data.unrealised_amount.toLocaleString()}
-                  </TableCell>
-                  <TableCell className={`text-center font-semibold ${
-                    data.today_return_percent >= 0 ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    {data.today_return_percent.toFixed(2)}%
-                  </TableCell>
                   <TableCell className="text-center">
                     <InlineRemarks
                       initial={data.remarks || ''}
@@ -943,7 +931,7 @@ export default function DashboardTwo() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={14} className="text-center py-8 text-gray-500">
+                <TableCell colSpan={12} className="text-center py-8 text-gray-500">
                   No promoter shares found. Please apply filters to load data.
                 </TableCell>
               </TableRow>
@@ -967,16 +955,6 @@ export default function DashboardTwo() {
                 <TableCell className="text-center border-r">{promoterTotals.non_demat.toLocaleString()}</TableCell>
                 <TableCell className="text-center border-r">-</TableCell>
                 <TableCell className="text-center border-r font-bold">Rs. {promoterTotals.market_value.toLocaleString()}</TableCell>
-                <TableCell className={`text-center border-r font-bold ${
-                  promoterTotals.unrealised_amount >= 0 ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  Rs. {promoterTotals.unrealised_amount.toLocaleString()}
-                </TableCell>
-                <TableCell className={`text-center font-bold ${
-                  promoterTotalReturnPercent >= 0 ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  {promoterTotalReturnPercent.toFixed(2)}%
-                </TableCell>
                 <TableCell className="text-center">-</TableCell>
               </TableRow>
             </TableFooter>
@@ -996,9 +974,6 @@ export default function DashboardTwo() {
       )}
       </CardContent>
     </Card>
-    
-    {/* Sub Class Tables - Render each sub class */}
-    {subClasses.map(subClass => renderSubClassTable(subClass))}
     
     </div>
     )

@@ -6,6 +6,44 @@ import { getBatchMarketSnapshotLTP } from '@/lib/marketSnapshotUtils';
 import { withMarketSnapshotUpdate } from '@/lib/marketSnapshotAutoUpdate';
 import { FinancialCalculator } from '@/lib/decimalUtils';
 import { toast } from 'sonner';
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/lib/auth-config";
+
+// Helper function to batch fetch promoter sectors and create a map
+// Returns a Map<sector_id, sector_name> for all promoter sectors
+async function getPromoterSectorMap(): Promise<Map<number, string>> {
+    const promoterSectors = await prisma.sectors.findMany({
+        select: {
+            sector_id: true,
+            sector_name: true
+        }
+    });
+    
+    const sectorMap = new Map<number, string>();
+    promoterSectors.forEach(sector => {
+        sectorMap.set(sector.sector_id, sector.sector_name);
+    });
+    
+    return sectorMap;
+}
+
+// Helper function to get the correct sector name for a stock
+// When sector_id = 14, use promoter_sector_id instead
+function getCorrectSectorName(
+    stockFulls: { sector_id: number; promoter_sector_id: number | null; sectors: { sector_name: string } },
+    promoterSectorMap: Map<number, string>
+): string {
+    // If sector_id is 14 and promoter_sector_id exists and is not 0, use promoter sector
+    if (stockFulls.sector_id === 14 && stockFulls.promoter_sector_id && stockFulls.promoter_sector_id !== 0) {
+        const promoterSectorName = promoterSectorMap.get(stockFulls.promoter_sector_id);
+        if (promoterSectorName) {
+            return promoterSectorName;
+        }
+    }
+    
+    // Otherwise, use the default sector
+    return stockFulls.sectors.sector_name;
+}
 
 // Helper function to combine holdings by fund_id, fiscal_year_id, and symbol
 function combineHoldingsByFund(holdings: any[]): any[] {
@@ -209,6 +247,21 @@ async function _getTotalInvestment(selectUser: string) {
         };
     }
 }
+export async function getCurrentSessionUser() {
+  const session = await getServerSession(authConfig);
+  const userObject = session?.user;
+
+  const adminPermission = await prisma.users.findUnique({
+    where: {
+        user_email: userObject.email
+    },
+    select: {
+        is_admin: true,
+    }
+  })
+
+  return adminPermission?.is_admin
+}
 
 export async function realisedProfitLoss(selectUser: string) {
     try {
@@ -335,7 +388,7 @@ async function _dashboardHoldings(selectUser: string) {
         return {
             symbol: balance.symbol || '',
             quantity: quantity,
-            cost_price: costPrice,
+            price_per_share: costPrice,
             total_value: totalValue.toFixed(0),
             demat: quantity, // Assume all are demat for fiscal year
             non_demat: 0,
@@ -496,7 +549,7 @@ async function _getUnrealizedGains(selectUser: string) {
                     client_id: `${holding.fund_id}`, // Use fund_id as identifier since we combined by fund
                     closing_quantity: quantity,
                     effective_rate: effectiveRate,
-                    cost_price: effectiveRate,
+                    price_per_share: effectiveRate,
                     quantity,
                     total_value: totalValue,
                     current_ltp: currentLTP,
@@ -572,6 +625,8 @@ export async function getInvestmentBreakdown(selectUser: string) {
             fiscal_year_id: true,
             stock_fulls: {
                 select: {
+                    sector_id: true,
+                    promoter_sector_id: true,
                     sectors: {
                         select: {
                             sector_name: true
@@ -620,6 +675,8 @@ export async function getInvestmentBreakdown(selectUser: string) {
             fiscal_year_id: true,
             stock_fulls: {
                 select: {
+                    sector_id: true,
+                    promoter_sector_id: true,
                     sectors: {
                         select: {
                             sector_name: true
@@ -643,6 +700,8 @@ export async function getInvestmentBreakdown(selectUser: string) {
             fund_id: true,
             stock_fulls: {
                 select: {
+                    sector_id: true,
+                    promoter_sector_id: true,
                     sectors: {
                         select: {
                             sector_name: true
@@ -675,12 +734,15 @@ export async function getInvestmentBreakdown(selectUser: string) {
     ];
     const ltpMap = await getBatchMarketSnapshotLTP(allSymbols, currentFiscalYear.fiscal_year_id);
 
+    // Get promoter sector map for efficient sector name lookup
+    const promoterSectorMap = await getPromoterSectorMap();
+
     // Group trading investments by sector (using cost value for IFRS compliance)
     const tradingSectorMap = new Map<string, number>();
     let tradingTotal = 0;
 
     for (const investment of combinedTradingInvestments) {
-        const sectorName = investment.stock_fulls.sectors.sector_name;
+        const sectorName = getCorrectSectorName(investment.stock_fulls, promoterSectorMap);
         const costValue = FinancialCalculator.multiply(sanitizeNumeric(investment.closing_quantity), sanitizeNumeric(investment.effective_rate));
         
         tradingTotal = FinancialCalculator.add(tradingTotal, costValue);
@@ -697,7 +759,7 @@ export async function getInvestmentBreakdown(selectUser: string) {
     let maturityTotal = 0;
 
     for (const investment of combinedMaturityWithIPO) {
-        const sectorName = investment.stock_fulls.sectors.sector_name;
+        const sectorName = getCorrectSectorName(investment.stock_fulls, promoterSectorMap);
         const costValue = FinancialCalculator.multiply(sanitizeNumeric(investment.closing_quantity), sanitizeNumeric(investment.effective_rate));
         
         maturityTotal = FinancialCalculator.add(maturityTotal, costValue);
@@ -739,7 +801,7 @@ export async function getInvestmentBreakdown(selectUser: string) {
         maturity: {
             data: maturityData, // All sectors, not just top 5
             total: maturityTotal,
-            count: combinedMaturityInvestments.length
+            count: combinedMaturityWithIPO.length  // Includes IPO staging records
         },
         allSectors: allSectors.map(s => s.sector_name) // List of all sectors
     };
@@ -928,6 +990,8 @@ export async function getSectorAllocation(selectUser: string) {
             fiscal_year_id: true,
             stock_fulls: {
                 select: {
+                    sector_id: true,
+                    promoter_sector_id: true,
                     sectors: {
                         select: {
                             sector_name: true
@@ -945,11 +1009,14 @@ export async function getSectorAllocation(selectUser: string) {
     const symbols = combinedHoldings.map(h => h.symbol);
     const ltpMap = await getBatchMarketSnapshotLTP(symbols, currentFiscalYear.fiscal_year_id);
 
+    // Get promoter sector map for efficient sector name lookup
+    const promoterSectorMap = await getPromoterSectorMap();
+
     const sectorMap = new Map<string, number>();
     let totalValue = 0;
 
     for (const holding of combinedHoldings) {
-        const sectorName = holding.stock_fulls.sectors.sector_name;
+        const sectorName = getCorrectSectorName(holding.stock_fulls, promoterSectorMap);
         const currentLTP = ltpMap.get(holding.symbol) || 0;
         const marketValue = sanitizeNumeric(holding.closing_quantity) * currentLTP;
         
@@ -992,6 +1059,7 @@ export async function getComprehensivePortfolio(selectUser: string) {
             client_broker_mapping: {
                 client_name: selectUser,
             },
+            source_type: "TRADING",
         },
         select: {
             symbol: true,
@@ -1056,7 +1124,7 @@ export async function getComprehensivePortfolio(selectUser: string) {
             sector: holding.stock_fulls.sectors.sector_name,
             quantity,
             bookValue,
-            costPrice: effectiveRate,
+            pricePerShare: effectiveRate,
             marketRate: currentLTP,
             unrealisedPnL: unrealizedPnL,
             pnlPercent,
@@ -1150,6 +1218,8 @@ export async function getSectorPortfolioSummary(selectUser: string) {
             fiscal_year_id: true,
             stock_fulls: {
                 select: {
+                    sector_id: true,
+                    promoter_sector_id: true,
                     sectors: {
                         select: {
                             sector_name: true
@@ -1176,6 +1246,8 @@ export async function getSectorPortfolioSummary(selectUser: string) {
             profit_loss: true,
             stock_fulls: {
                 select: {
+                    sector_id: true,
+                    promoter_sector_id: true,
                     sectors: {
                         select: {
                             sector_name: true
@@ -1200,6 +1272,8 @@ export async function getSectorPortfolioSummary(selectUser: string) {
             fund_id: true,
             stock_fulls: {
                 select: {
+                    sector_id: true,
+                    promoter_sector_id: true,
                     sectors: {
                         select: {
                             sector_name: true
@@ -1220,6 +1294,9 @@ export async function getSectorPortfolioSummary(selectUser: string) {
     ];
     const ltpMap = await getBatchMarketSnapshotLTP(allSymbols, currentFiscalYear.fiscal_year_id);
 
+    // Get promoter sector map for efficient sector name lookup
+    const promoterSectorMap = await getPromoterSectorMap();
+
     const sectorSummary = new Map<string, {
         sector: string,
         heldForTrading: number,
@@ -1235,7 +1312,7 @@ export async function getSectorPortfolioSummary(selectUser: string) {
 
     // Process trading holdings
     for (const holding of combinedHoldings) {
-        const sectorName = holding.stock_fulls.sectors.sector_name;
+        const sectorName = getCorrectSectorName(holding.stock_fulls, promoterSectorMap);
         const currentLTP = ltpMap.get(holding.symbol) || 0;
         const quantity = sanitizeNumeric(holding.closing_quantity);
         const effectiveRate = sanitizeNumeric(holding.effective_rate);
@@ -1263,7 +1340,7 @@ export async function getSectorPortfolioSummary(selectUser: string) {
 
     // Process maturity holdings
     for (const holding of combinedMaturityHoldings) {
-        const sectorName = holding.stock_fulls.sectors.sector_name;
+        const sectorName = getCorrectSectorName(holding.stock_fulls, promoterSectorMap);
         const currentLTP = ltpMap.get(holding.symbol) || 0;
         const marketValue = sanitizeNumeric(holding.quantity) * currentLTP;
         
@@ -1285,7 +1362,7 @@ export async function getSectorPortfolioSummary(selectUser: string) {
 
     // Process realized gains
     for (const sale of realizedGains) {
-        const sectorName = sale.stock_fulls.sectors.sector_name;
+        const sectorName = getCorrectSectorName(sale.stock_fulls, promoterSectorMap);
         const realizedGain = sanitizeNumeric(sale.profit_loss);
         
         totalRealizedGain += realizedGain;

@@ -33,7 +33,8 @@ import {
   getSectorAllocation, 
   getDividendInfo,
   getPortfolioGainersLosers, 
-  getAllIndex
+  getAllIndex,
+  getProfitLossToday
 } from "@/app/api/graphsPageAPICalls/actions"
 import {
   getSectorAllocationFiscal,
@@ -41,7 +42,8 @@ import {
   getPortfolioGainersLosersFiscal,
   getInvestmentHighlightsFiscal,
   getComprehensivePortfolioFiscal,
-  getFiscalID
+  getFiscalID,
+  getProfitLossTodayFiscal
 } from "@/app/api/graphsPageFiscalAPI/actions"
 import { 
   getCurrentFiscalYear,
@@ -87,7 +89,6 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts"
-import { prisma } from "@/lib/db"
 
 // Type definitions
 type userList = {
@@ -124,7 +125,7 @@ type ComprehensivePortfolioType = {
   sector: string;
   quantity: number;
   bookValue: number;
-  costPrice: number;
+  pricePerShare: number;
   marketRate: number;
   unrealisedPnL: number;
   pnlPercent: number;
@@ -219,6 +220,7 @@ export default function GraphPageComponent() {
   const [dividendInfo, setDividendInfo] = useState<DividendInfoType | null>(null)
   const [portfolioGainersLosers, setPortfolioGainersLosers] = useState<PortfolioGainersLosersType | null>(null)
   const [allIndexes, setallIndexes] = useState<indexes>()
+  const [profitLossToday, setProfitLossToday] = useState<ComprehensivePortfolioType | null>(null)
   
   // Fiscal year states
   const [fiscalYears, setFiscalYears] = useState<FiscalYearType[]>([])
@@ -309,12 +311,14 @@ export default function GraphPageComponent() {
         // Fetch heavy data last
         setTimeout(async () => {
           try {
-            const [portfolio, dividends] = await Promise.all([
+            const [portfolio, dividends, profitLoss] = await Promise.all([
               getComprehensivePortfolioFiscal(selectValue, selectedFiscalYear),
-              getDividendInfoFiscal(selectValue, selectedFiscalYear)
+              getDividendInfoFiscal(selectValue, selectedFiscalYear),
+              getProfitLossTodayFiscal(selectValue, selectedFiscalYear)
             ]);
             setComprehensivePortfolio(portfolio);
             setDividendInfo(dividends);
+            setProfitLossToday(profitLoss);
             setCurrentPage(1); // Reset pagination when new data is loaded
           } catch (error) {
             console.error('Error fetching fiscal tertiary data:', error);
@@ -348,12 +352,14 @@ export default function GraphPageComponent() {
         // Fetch heavy data last
         setTimeout(async () => {
           try {
-            const [portfolio, dividends] = await Promise.all([
+            const [portfolio, dividends, profitLoss] = await Promise.all([
               getComprehensivePortfolio(selectValue),
-              getDividendInfo(selectValue)
+              getDividendInfo(selectValue),
+              getProfitLossToday(selectValue)
             ]);
             setComprehensivePortfolio(portfolio);
             setDividendInfo(dividends);
+            setProfitLossToday(profitLoss);
             setCurrentPage(1); // Reset pagination when new data is loaded
           } catch (error) {
             console.error('Error fetching tertiary data:', error);
@@ -388,16 +394,17 @@ export default function GraphPageComponent() {
     }) || [];
   }, [sectorAllocation]);
 
-  // Memoize unrealized gain chart data
+  // Memoize unrealized gain chart data - use profitLossToday data from fiscal_year_balance
   const memoizedUnrealizedGainData = useMemo(() => {
-    return (comprehensivePortfolio || []).map(stock => ({
-      symbol: stock.code,
+    return (profitLossToday || []).map(stock => ({
+      symbol: stock.code, // Chart uses 'symbol' as dataKey
+      code: stock.code, // Keep for compatibility
       companyName: stock.companyName,
       pnlPercent: stock.pnlPercent,
       // For proper display - use actual percentage values
       gainPercent: stock.pnlPercent,
     })).sort((a, b) => b.pnlPercent - a.pnlPercent); // Sort by gain percentage descending
-  }, [comprehensivePortfolio]);
+  }, [profitLossToday]);
 
   // Memoized pagination calculations for comprehensive portfolio
   const paginatedPortfolioData = useMemo(() => {
@@ -974,7 +981,7 @@ export default function GraphPageComponent() {
                                     <TableHead className="font-semibold text-gray-900 py-3 px-4">Sector</TableHead>
                                     <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Quantity</TableHead>
                                     <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Book Value</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Cost Price</TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Price Per Share</TableHead>
                                     <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Market Rate</TableHead>
                                     <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Unrealised P&L</TableHead>
                                     <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">P&L %</TableHead>
@@ -999,7 +1006,7 @@ export default function GraphPageComponent() {
                                         </TableCell>
                                         <TableCell className="text-right font-medium py-3 px-4">{stock.quantity.toLocaleString()}</TableCell>
                                         <TableCell className="text-right py-3 px-4">Rs. {stock.bookValue.toLocaleString()}</TableCell>    
-                                        <TableCell className="text-right py-3 px-4">Rs. {stock.costPrice.toLocaleString()}</TableCell>
+                                        <TableCell className="text-right py-3 px-4">Rs. {stock.pricePerShare.toLocaleString()}</TableCell>
                                         <TableCell className="text-right py-3 px-4">Rs. {stock.marketRate.toLocaleString()}</TableCell>
                                         <TableCell className={`text-right font-semibold py-3 px-4 ${
                                             stock.unrealisedPnL >= 0 ? 'text-green-600' : 'text-red-600'

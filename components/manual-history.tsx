@@ -52,7 +52,7 @@ import { RightDialog } from "@/components/dialogs/right-dialog"
 import { CashDialog } from "@/components/dialogs/cash-dialog"
 import { CloseoutDialog } from "@/components/dialogs/closeout-dialog"
 import { IPOAllotmentDialog } from "@/components/dialogs/ipo-allotment-dialog"
-import { getUsers } from "@/app/api/dashboardAPICalls/actions";
+import { getCurrentSessionUser, getUsers } from "@/app/api/dashboardAPICalls/actions";
 import { getFiscal } from "@/app/api/fiscalAPI/actions";
 import { RefreshCw } from "lucide-react";
 import {
@@ -257,6 +257,7 @@ export default function ManualHistoryComponent() {
   const [clientIdForDemat, setClientIdForDemat] = useState<string>('');
   const [clientTradingForDemat, setClientTradingForDemat] = useState<string>('');
   const [dematerializeLoading, setDematerializeLoading] = useState(false);
+  const [isAdmin, setIsAdmin] = useState<boolean | null>()
   
   // Pagination states for each tab
   const [bonusPage, setBonusPage] = useState(1);
@@ -334,6 +335,8 @@ export default function ManualHistoryComponent() {
 
   useEffect(() => {
     const initializeData = async () => {
+      const userPermission = await getCurrentSessionUser()
+      setIsAdmin(userPermission)
       await Promise.all([
         fetchFunds(),
         fetchFiscalYears()
@@ -521,6 +524,7 @@ export default function ManualHistoryComponent() {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
       {/* Manual Stock Entry Buttons */}
+      {isAdmin && 
       <Card className="bg-white shadow-sm border border-gray-200 mb-6">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg font-semibold text-gray-900">Manual Stock Entry</CardTitle>
@@ -554,6 +558,7 @@ export default function ManualHistoryComponent() {
           </div>
         </CardContent>
       </Card>
+}
 
       {/* Fund and Fiscal Year Selection */}
       <div className="mb-6">
@@ -770,6 +775,7 @@ export default function ManualHistoryComponent() {
                             </Badge>
                           </td>
                           <td className="p-4 text-center">
+                            {isAdmin &&
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
                                 <Button 
@@ -803,6 +809,7 @@ export default function ManualHistoryComponent() {
                                 </AlertDialogFooter>
                               </AlertDialogContent>
                             </AlertDialog>
+                      }
                           </td>
                         </tr>
                       ))}
@@ -904,6 +911,7 @@ export default function ManualHistoryComponent() {
                             </Badge>
                           </td>
                           <td className="p-4 text-center">
+                            {isAdmin && 
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
                                 <Button 
@@ -937,6 +945,7 @@ export default function ManualHistoryComponent() {
                                 </AlertDialogFooter>
                               </AlertDialogContent>
                             </AlertDialog>
+}
                           </td>
                         </tr>
                       ))}
@@ -1042,6 +1051,7 @@ export default function ManualHistoryComponent() {
                             </Badge>
                           </td>
                           <td className="p-4 text-center">
+                            {isAdmin && 
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
                                 <Button 
@@ -1075,6 +1085,7 @@ export default function ManualHistoryComponent() {
                                 </AlertDialogFooter>
                               </AlertDialogContent>
                             </AlertDialog>
+}
                           </td>
                         </tr>
                       ))}
@@ -1175,6 +1186,7 @@ export default function ManualHistoryComponent() {
                             </div>
                           </td>
                           <td className="p-4 text-center">
+                            {isAdmin && 
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
                                 <Button 
@@ -1208,6 +1220,7 @@ export default function ManualHistoryComponent() {
                                 </AlertDialogFooter>
                               </AlertDialogContent>
                             </AlertDialog>
+}
                           </td>
                         </tr>
                       ))}
@@ -1300,6 +1313,7 @@ export default function ManualHistoryComponent() {
                             </Badge>
                           </td>
                           <td className="p-4 text-center">
+                            {isAdmin && 
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
                                 <Button 
@@ -1333,6 +1347,7 @@ export default function ManualHistoryComponent() {
                                 </AlertDialogFooter>
                               </AlertDialogContent>
                             </AlertDialog>
+}
                           </td>
                         </tr>
                       ))}
@@ -1431,6 +1446,7 @@ export default function ManualHistoryComponent() {
                             </Badge>
                           </td>
                           <td className="p-4">
+                            {isAdmin && 
                             <div className="flex items-center justify-center gap-2">
                               <Dialog open={dematerializeDialogOpen && selectedStagingRecord?.allotment_staging_id === record.allotment_staging_id} onOpenChange={(open) => {
                                 setDematerializeDialogOpen(open);
@@ -1545,6 +1561,7 @@ export default function ManualHistoryComponent() {
                                 </AlertDialogContent>
                               </AlertDialog>
                             </div>
+}
                           </td>
                         </tr>
                       ))}

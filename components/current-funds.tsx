@@ -30,6 +30,7 @@ import { RefreshCw } from "lucide-react"
 import { toast } from "sonner"
 
 import { useEffect, useState } from "react"
+import { getCurrentSessionUser } from "@/app/api/dashboardAPICalls/actions"
 
 type getting_funds = {
     fund_id: number,
@@ -41,11 +42,14 @@ export default function CurrentFundsComponent() {
 
     const [fund, setFund] = useState<getting_funds[]>()
     const [isLoading, setIsLoading] = useState(false);
+    const [isAdmin, setIsAdmin] = useState<boolean | null>()
 
 
     const fetchData = async () => {
         setIsLoading(true)
         try {
+            const userPermission = await getCurrentSessionUser()
+            setIsAdmin(userPermission)
             const response: getting_funds[] = await getFunds()
             setFund(response)
         } catch (error) {
@@ -141,6 +145,7 @@ export default function CurrentFundsComponent() {
             </div>
 
              <div className="flex justify-between items-center mb-6">
+                {isAdmin && 
             <Dialog>
                 <DialogTrigger asChild>
                   <Button>+ Add Fund</Button>
@@ -170,6 +175,7 @@ export default function CurrentFundsComponent() {
                   </DialogFooter>
                 </DialogContent>
             </Dialog>
+            }
         </div>
 
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { getUsers } from "@/app/api/dashboardAPICalls/actions"
+import { getCurrentSessionUser, getUsers } from "@/app/api/dashboardAPICalls/actions"
 import { getDematHoldings, getFiscalYears, updateLTPForSymbol, updateWACCForSymbol, type DematHoldingRow } from "@/app/api/dematHoldings/actions"
 
 import {
@@ -66,6 +66,7 @@ export default function DematHoldingsComponent() {
   const [rows, setRows] = useState<DematHoldingRow[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [ltpUpdateLoading, setLtpUpdateLoading] = useState<boolean>(false)
+  const [isAdmin, setIsAdmin] = useState<boolean | null>()
   
   // State for editable fields
   const [editingFields, setEditingFields] = useState<Record<string, { ltp: number; wacc: number }>>({}) 
@@ -82,6 +83,8 @@ export default function DematHoldingsComponent() {
           getFiscalYears()
         ])
         
+        const userPermission = await getCurrentSessionUser()
+        setIsAdmin(userPermission)
         setUsers(u)
         setFiscalYears(fy)
         
@@ -398,7 +401,9 @@ export default function DematHoldingsComponent() {
                                 value={editingFields[r.symbol]?.ltp || r.today_closing_price}
                                 onChange={(e) => handleFieldChange(r.symbol, 'ltp', e.target.value)}
                                 className="w-24 h-8 text-right"
+                                disabled={!isAdmin}
                               />
+                              {isAdmin &&
                               <Button
                                 size="sm"
                                 variant="outline"
@@ -408,6 +413,7 @@ export default function DematHoldingsComponent() {
                               >
                                 <Save className="h-3 w-3" />
                               </Button>
+                    }
                             </div>
                           </TableCell>
                           <TableCell className="text-right">Rs. {((currentLTP) * r.demat).toLocaleString()}</TableCell>
@@ -421,7 +427,9 @@ export default function DematHoldingsComponent() {
                                 value={editingFields[r.symbol]?.wacc || r.wacc}
                                 onChange={(e) => handleFieldChange(r.symbol, 'wacc', e.target.value)}
                                 className="w-24 h-8 text-right"
+                                disabled={!isAdmin}
                               />
+                              {isAdmin && 
                               <Button
                                 size="sm"
                                 variant="outline"
@@ -431,6 +439,7 @@ export default function DematHoldingsComponent() {
                               >
                                 <Save className="h-3 w-3" />
                               </Button>
+                    }
                             </div>
                           </TableCell>
                           <TableCell className={`text-right ${marginColor}`}>

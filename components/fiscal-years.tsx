@@ -27,6 +27,7 @@ import {
   DialogClose
 } from "@/components/ui/dialog"
 import { useEffect, useState } from "react"
+import { getCurrentSessionUser } from "@/app/api/dashboardAPICalls/actions"
 
 type getting_fiscal = {
     fiscal_year_id: number,
@@ -40,11 +41,14 @@ export default function FiscalYearComponent() {
 
     const [fiscal, setFiscal] = useState<getting_fiscal[]>()
     const [isLoading, setLoading] = useState(false);
+    const [isAdmin, setIsAdmin] = useState<boolean | null>()
     const [syncingFiscalId, setSyncingFiscalId] = useState<number | null>(null);
 
     const fetchFiscal = async () => {
         setLoading(true)
         try {
+          const userPermission = await getCurrentSessionUser()
+          setIsAdmin(userPermission)
             const response: getting_fiscal[] = await getFiscal()
             setFiscal(response)
         } catch (error) {
@@ -150,7 +154,7 @@ export default function FiscalYearComponent() {
             </div>
 
              <div className="flex justify-between items-center mb-6">
-            
+            {isAdmin && 
             <Dialog>
                 <DialogTrigger asChild>
                   <Button>+ Add Fiscal Year</Button>
@@ -189,6 +193,7 @@ export default function FiscalYearComponent() {
                   </DialogFooter>
                 </DialogContent>
             </Dialog>
+            }
         </div>
 
 
