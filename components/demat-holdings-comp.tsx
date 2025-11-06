@@ -427,9 +427,9 @@ export default function DematHoldingsComponent() {
                                 value={editingFields[r.symbol]?.wacc || r.wacc}
                                 onChange={(e) => handleFieldChange(r.symbol, 'wacc', e.target.value)}
                                 className="w-24 h-8 text-right"
-                                disabled={!isAdmin}
+                                disabled
                               />
-                              {isAdmin && 
+                              {/* {isAdmin && 
                               <Button
                                 size="sm"
                                 variant="outline"
@@ -439,7 +439,7 @@ export default function DematHoldingsComponent() {
                               >
                                 <Save className="h-3 w-3" />
                               </Button>
-                    }
+                    } */}
                             </div>
                           </TableCell>
                           <TableCell className={`text-right ${marginColor}`}>
