@@ -111,7 +111,7 @@ export default function StocksPage({
         setstockDetails(stock)
       }
 
-      const info: any = await fetchStockInformation(slug)
+      const info: any = await fetchStockInformation(slug.toUpperCase())
       
       // Check if API returned error status
       if (info && info.status === 'error') {
