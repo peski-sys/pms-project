@@ -132,6 +132,7 @@ type ComprehensivePortfolioType = {
   realisedPnL: number;
 }[]
 
+
 type DividendInfoType = {
   symbol: string;
   sector: string;
@@ -355,7 +356,7 @@ export default function GraphPageComponent() {
             const [portfolio, dividends, profitLoss] = await Promise.all([
               getComprehensivePortfolio(selectValue),
               getDividendInfo(selectValue),
-              getProfitLossToday(selectValue)
+              getProfitLossTodayFiscal(selectValue, selectedFiscalYear)
             ]);
             setComprehensivePortfolio(portfolio);
             setDividendInfo(dividends);

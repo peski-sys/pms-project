@@ -542,7 +542,8 @@ export async function getProfitLossTodayFiscal(selectUser: string, fiscalYearId:
                 fiscal_year_id: true,
                 stock_fulls: {
                     select: {
-                        full_form: true
+                        full_form: true,
+                        sectors: true,
                     }
                 }
             }
@@ -600,22 +601,24 @@ export async function getProfitLossTodayFiscal(selectUser: string, fiscalYearId:
             const effectiveRate = sanitizeNumeric(holding.effective_rate);
             
             // Calculate unrealized gain/loss
-            const bookValue = quantity * effectiveRate;
+            const bookValuee = quantity * effectiveRate;
             const marketValue = quantity * currentLTP;
-            const unrealizedGainLoss = marketValue - bookValue;
+            const unrealizedGainLoss = marketValue - bookValuee;
             
             // Calculate percentage gain/loss
-            const pnlPercent = bookValue > 0 ? calculatePercentage(unrealizedGainLoss, bookValue) : 0;
+            const pnlPercent = bookValuee > 0 ? calculatePercentage(unrealizedGainLoss, bookValuee) : 0;
 
             return {
                 code: holding.symbol,
                 companyName: holding.stock_fulls.full_form,
+                sector: holding.stock_fulls.sectors.sector_name,
                 pnlPercent: pnlPercent,
-                gainPercent: pnlPercent, // For chart compatibility
-                unrealizedGainLoss: unrealizedGainLoss,
+                realisedPnL: pnlPercent, // For chart compatibility
+                bookValue: bookValuee,
+                unrealisedPnL: unrealizedGainLoss,
                 quantity: quantity,
-                effectiveRate: effectiveRate,
-                currentLTP: currentLTP
+                pricePerShare: effectiveRate,
+                marketRate: currentLTP,
             };
         });
 
