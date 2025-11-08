@@ -1269,6 +1269,7 @@ export async function getSectorPortfolioSummary(selectUser: string) {
         select: {
             symbol: true,
             quantity: true,
+            effective_rate: true,
             fund_id: true,
             stock_fulls: {
                 select: {
@@ -1310,17 +1311,19 @@ export async function getSectorPortfolioSummary(selectUser: string) {
     let totalRealizedGain = 0;
     let totalUnrealizedGain = 0;
 
-    // Process trading holdings
+    // Process trading holdings (use cost value for heldForTrading; compute unrealized gain using LTP - cost)
     for (const holding of combinedHoldings) {
         const sectorName = getCorrectSectorName(holding.stock_fulls, promoterSectorMap);
-        const currentLTP = ltpMap.get(holding.symbol) || 0;
         const quantity = sanitizeNumeric(holding.closing_quantity);
         const effectiveRate = sanitizeNumeric(holding.effective_rate);
-        const bookValue = quantity * effectiveRate;
+        const costValue = quantity * effectiveRate;
+
+        // Fetch LTP only to compute unrealized gain
+        const currentLTP = ltpMap.get(holding.symbol) || 0;
         const marketValue = quantity * currentLTP;
-        const unrealizedGain = marketValue - bookValue;
+        const unrealizedGain = marketValue - costValue;
         
-        totalHeldForTrading += marketValue;
+        totalHeldForTrading += costValue;
         totalUnrealizedGain += unrealizedGain;
 
         if (!sectorSummary.has(sectorName)) {
@@ -1334,17 +1337,16 @@ export async function getSectorPortfolioSummary(selectUser: string) {
         }
 
         const sectorData = sectorSummary.get(sectorName)!;
-        sectorData.heldForTrading += marketValue;
+        sectorData.heldForTrading += costValue;
         sectorData.unrealizedGain += unrealizedGain;
     }
 
-    // Process maturity holdings
+    // Process maturity holdings (use cost value)
     for (const holding of combinedMaturityHoldings) {
         const sectorName = getCorrectSectorName(holding.stock_fulls, promoterSectorMap);
-        const currentLTP = ltpMap.get(holding.symbol) || 0;
-        const marketValue = sanitizeNumeric(holding.quantity) * currentLTP;
+        const costValue = sanitizeNumeric(holding.quantity) * sanitizeNumeric(holding.effective_rate);
         
-        totalHeldForMaturity += marketValue;
+        totalHeldForMaturity += costValue;
 
         if (!sectorSummary.has(sectorName)) {
             sectorSummary.set(sectorName, {
@@ -1357,7 +1359,7 @@ export async function getSectorPortfolioSummary(selectUser: string) {
         }
 
         const sectorData = sectorSummary.get(sectorName)!;
-        sectorData.heldForMaturity += marketValue;
+        sectorData.heldForMaturity += costValue;
     }
 
     // Process realized gains

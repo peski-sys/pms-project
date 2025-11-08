@@ -963,10 +963,16 @@ const fetchSelect = async () => {
     <p className="text-sm text-gray-600 mt-1">Investment distribution across sectors</p>
   </CardHeader>
   <CardContent>
+<Tabs defaultValue="trading" className="w-full">
+  <TabsList>
+    <TabsTrigger value="trading">Held for Trading</TabsTrigger>
+    <TabsTrigger value="maturity">Held for Maturity</TabsTrigger>
+  </TabsList>
+  <TabsContent value="trading" className="mt-4">
     <div className="space-y-4">
       <div className="text-center">
         <p className="text-sm font-medium text-gray-700">Total Trading Portfolio by Sector</p>
-        <p className="text-xs text-gray-500">*Amounts in Millions</p>
+        <p className="text-xs text-gray-500">*Amounts in Millions (Cost Value)</p>
       </div>
       <ChartContainer config={tradingChartConfig}>
         <BarChart
@@ -1051,6 +1057,98 @@ const fetchSelect = async () => {
         </div>
       </div>
     </div>
+  </TabsContent>
+  <TabsContent value="maturity" className="mt-4">
+    <div className="space-y-4">
+      <div className="text-center">
+        <p className="text-sm font-medium text-gray-700">Total Maturity Portfolio by Sector</p>
+        <p className="text-xs text-gray-500">*Amounts in Millions (Cost Value)</p>
+      </div>
+      <ChartContainer config={maturityChartConfig}>
+        <BarChart
+          accessibilityLayer
+          data={investmentBreakdown?.maturity.data || []}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 80,
+          }}
+        >
+          <XAxis
+            dataKey="sector"
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+            angle={-45}
+            tick={{ fontSize: 10,  textAnchor: 'end' }}
+            height={80}
+          />
+          <YAxis
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+            tick={{ fontSize: 12 }}
+            tickFormatter={(value) => `${(value / 1000000).toFixed(2)}`}
+          />
+          <ChartTooltip
+            cursor={false}
+            content={<ChartTooltipContent indicator="dashed" />}
+            formatter={(value) => [`Rs. ${Number(value).toLocaleString()}`, ""]}
+          />
+          <Bar dataKey="value" radius={4}>
+            {(investmentBreakdown?.maturity.data || []).map((entry, index) => {
+              const colors = [
+                '#8b5cf6', '#06b6d4', '#84cc16', '#f59e0b', '#ef4444',
+                '#3b82f6', '#10b981', '#f97316', '#6366f1', '#ec4899',
+                '#14b8a6', '#f59e0b', '#ef4444', '#6b7280', '#8b5cf6'
+              ];
+              return (
+                <Cell 
+                  key={`cell-${index}`} 
+                  fill={entry.value > 0 ? colors[index % colors.length] : '#e5e7eb'} 
+                />
+              );
+            })}
+          </Bar>
+        </BarChart>
+      </ChartContainer>
+      
+      {/* Sector List */}
+      <div className="mt-6">
+        <h4 className="text-sm font-medium mb-3 text-gray-700">All Sectors (Maturity Portfolio)</h4>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 text-xs">
+          {(investmentBreakdown?.maturity.data || []).map((sector, index) => {
+            const colors = [
+              '#8b5cf6', '#06b6d4', '#84cc16', '#f59e0b', '#ef4444',
+              '#3b82f6', '#10b981', '#f97316', '#6366f1', '#ec4899',
+              '#14b8a6', '#f59e0b', '#ef4444', '#6b7280', '#8b5cf6'
+            ];
+            return (
+              <div key={sector.sector} className="flex items-center gap-2 p-2 rounded border bg-gray-50">
+                <div 
+                  className="w-3 h-3 rounded-sm flex-shrink-0" 
+                  style={{ backgroundColor: sector.value > 0 ? colors[index % colors.length] : '#e5e7eb' }}
+                ></div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium truncate">{sector.sector}</div>
+                  <div className={`text-xs ${
+                    sector.value > 0 ? 'text-gray-600' : 'text-gray-400'
+                  }`}>
+                    {sector.value > 0 
+                      ? `${(sector.value / 1000000).toFixed(2)} Million (${sector.percentage.toFixed(2)}%)` 
+                      : '-'
+                    }
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </TabsContent>
+</Tabs>
   </CardContent>
 </Card>
 

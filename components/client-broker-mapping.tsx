@@ -30,6 +30,7 @@ type BrokerClientData = {
   client_name: string,
   client_broker: number,
   recorded_at: Date | null,
+  dp_name: string | null,
 }
 
 import {
@@ -241,7 +242,7 @@ export default function ClientMap() {
             <TableRow className="border-b border-gray-200">
               <TableHead className="px-6 py-4 font-semibold text-gray-900">Client ID</TableHead>
               <TableHead className="px-6 py-4 text-center font-semibold text-gray-900">BOID Number</TableHead>
-              <TableHead className="px-6 py-4 text-center font-semibold text-gray-900">Client Name</TableHead>
+              <TableHead className="px-6 py-4 text-center font-semibold text-gray-900">DP Name</TableHead>
               <TableHead className="px-6 py-4 text-right font-semibold text-gray-900">Broker Number</TableHead>
             </TableRow>
           </TableHeader>
@@ -264,7 +265,7 @@ export default function ClientMap() {
                 <TableRow key={row.client_id} className="border-b border-gray-100 hover:bg-gray-50">
                 <TableCell className="px-6 py-4 font-medium text-gray-900">{row.client_id}</TableCell>
                 <TableCell className="px-6 py-4 text-center text-gray-600">{row.boid || '-'}</TableCell>
-                  <TableCell className="px-6 py-4 text-center text-gray-900">{row.client_name}</TableCell>
+                  <TableCell className="px-6 py-4 text-center text-gray-900">{row.dp_name || '-'}</TableCell>
                 <TableCell className="px-6 py-4 text-right text-gray-600">{row.client_broker}</TableCell>
                 </TableRow>
                 ))

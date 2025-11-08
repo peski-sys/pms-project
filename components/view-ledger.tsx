@@ -212,8 +212,8 @@ export default function ViewLedger() {
   const [isLoadingMain, setIsLoadingMain] = useState(INITIAL_STATE.LOADING)
   const [isAdmin, setIsAdmin] = useState<boolean | null>()
 
-  // Derived: Price Per Share = (Eligible Amount + Purchase Total Cost) / (Eligible Shares + Purchase Shares)
-  const pricePerShare = useMemo(() => {
+  // Derived: Cost Price = (Eligible Amount + Purchase Total Cost) / (Eligible Shares + Purchase Shares)
+  const costPrice = useMemo(() => {
     if (!ledgerData || !ledgerData.totals) return 0
     const eligibleQty = (ledgerData.totals.eligible?.totalEligibleQuantity ?? ledgerData.totals.opening?.totalEligibleQuantity ?? 0) || 0
     const eligibleAmount = (ledgerData.totals.eligible?.totalEligibleValue ?? ledgerData.totals.opening?.totalEligibleValue ?? 0) || 0
@@ -227,6 +227,20 @@ export default function ViewLedger() {
     if (totalQty <= 0) return 0
     return totalCost / totalQty
   }, [ledgerData])
+
+  // Total Quantity = Eligible Quantity + Purchase Quantity - Sales Quantity
+  const totalQuantity = useMemo(() => {
+    if (!ledgerData || !ledgerData.totals) return 0
+    const eligibleQty = (ledgerData.totals.eligible?.totalEligibleQuantity ?? ledgerData.totals.opening?.totalEligibleQuantity ?? 0) || 0
+    const purchaseQty = ledgerData.totals.purchase?.totalQuantity ?? 0
+    const salesQty = ledgerData.totals.sales?.totalQuantity ?? 0
+    return (eligibleQty + purchaseQty) - salesQty
+  }, [ledgerData])
+
+  // Total Cost = Cost Price × Total Quantity
+  const totalCost = useMemo(() => {
+    return costPrice * totalQuantity
+  }, [costPrice, totalQuantity])
 
   // Event Handlers
   const handleFundChange = (value: string) => {
@@ -380,43 +394,33 @@ export default function ViewLedger() {
                 </p>
               </div>
               
-              {/* Price Per Share Display - positioned right after the text */}
+              {/* Cost Price Display */}
               <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm ml-4">
-                <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Price Per Share</div>
+                <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Cost Price</div>
                 <div className="flex items-center justify-center">
-                  {effectiveRateLoading ? (
-                    <RefreshCw className="w-4 h-4 animate-spin text-blue-600" />
-                  ) : (
-                    <span className="text-lg font-bold text-gray-900">
-                      <mark> Rs. {pricePerShare > 0 ? pricePerShare.toFixed(2) : 'N/A'} </mark>
-                    </span>
-                  )}
+                  <span className="text-lg font-bold text-gray-900">
+                    <mark> Rs. {costPrice > 0 ? costPrice.toFixed(2) : 'N/A'} </mark>
+                  </span>
                 </div>
               </div>
 
-                            <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm ml-4">
-                <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">WACC</div>
+              {/* Quantity Display */}
+              <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm ml-4">
+                <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Quantity</div>
                 <div className="flex items-center justify-center">
-                  {effectiveRateLoading ? (
-                    <RefreshCw className="w-4 h-4 animate-spin text-blue-600" />
-                  ) : (
-                    <span className="text-lg font-bold text-gray-900">
-                      <mark> Rs. {effectiveRate > 0 ? effectiveRate.toFixed(2) : 'N/A'} </mark>
-                    </span>
-                  )}
+                  <span className="text-lg font-bold text-gray-900">
+                    <mark> {totalQuantity > 0 ? totalQuantity.toLocaleString() : 'N/A'} </mark>
+                  </span>
                 </div>
               </div>
 
+              {/* Total Cost Display */}
               <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm ml-4">
-                <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Tax Base WACC</div>
+                <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Total Cost</div>
                 <div className="flex items-center justify-center">
-                  {effectiveRateLoading ? (
-                    <RefreshCw className="w-4 h-4 animate-spin text-blue-600" />
-                  ) : (
-                    <span className="text-lg font-bold text-gray-900">
-                      <mark> Rs. {waccTaxBase > 0 ? waccTaxBase.toFixed(2) : 'N/A'} </mark>
-                    </span>
-                  )}
+                  <span className="text-lg font-bold text-gray-900">
+                    <mark> Rs. {totalCost > 0 ? totalCost.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'N/A'} </mark>
+                  </span>
                 </div>
               </div>
             </div>

@@ -356,11 +356,23 @@ export default function DematHoldingsComponent() {
           return acc;
         }, {} as Record<string, DematHoldingRow[]>);
 
-        return Object.entries(grouped).map(([dp, groupRows], gIdx) => (
+        return Object.entries(grouped).map(([dp, groupRows], gIdx) => {
+          // Get client details from the first row in the group
+          const firstRow = groupRows[0];
+          
+          return (
           <Card key={dp} className="bg-white shadow-sm border border-gray-200 mt-6">
             <CardHeader>
-              <div className="flex justify-between items-center">
-                <CardTitle>DP: {dp}</CardTitle>
+              <div className="flex justify-between items-start">
+                <div className="space-y-1">
+                  <CardTitle className="text-lg font-semibold">Client Details</CardTitle>
+                  <div className="text-sm text-gray-700 space-y-0.5">
+                    <div><span className="font-medium">BOID:</span> {firstRow.boid}</div>
+                    <div><span className="font-medium">DP Name:</span> {firstRow.dp_name}</div>
+                    <div><span className="font-medium">Client ID:</span> {firstRow.client_id}</div>
+                    <div><span className="font-medium">Broker No:</span> {firstRow.client_broker}</div>
+                  </div>
+                </div>
                 <div className="text-xs text-blue-700 bg-blue-100 px-2 py-1 rounded-md">Holdings: {groupRows.length}</div>
               </div>
             </CardHeader>
@@ -458,7 +470,8 @@ export default function DematHoldingsComponent() {
               </div>
             </CardContent>
           </Card>
-        ));
+          );
+        });
       }, [rows, editingFields, loading])}
       
       {/* Confirmation Dialog */}

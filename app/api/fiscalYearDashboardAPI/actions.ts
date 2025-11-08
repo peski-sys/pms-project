@@ -365,8 +365,13 @@ async function _getUnrealizedGainsFiscal(selectUser: string, fiscalYearId: numbe
 // Get investment breakdown by sectors using fiscal year balance
 export async function getInvestmentBreakdownFiscal(selectUser: string, fiscalYearId: number) {
     try {
-        // Get all sectors from the database
+        // Get all sectors from the database, excluding sector_id=14
         const allSectors = await prisma.sectors.findMany({
+            where: {
+                sector_id: {
+                    not: 14
+                }
+            },
             select: {
                 sector_name: true
             },
@@ -494,13 +499,6 @@ export async function getInvestmentBreakdownFiscal(selectUser: string, fiscalYea
         
         const combinedMaturityWithIPO = [...combinedMaturityInvestments, ...ipoStagingMapped];
 
-    // Get all symbols for batch LTP fetching
-    const allSymbols = [
-        ...combinedTradingInvestments.map(inv => inv.symbol),
-        ...combinedMaturityWithIPO.map(inv => inv.symbol)
-    ];
-    const ltpMap = await getBatchMarketSnapshotLTP(allSymbols, fiscalYearId);
-
     // Get promoter sector map for efficient sector name lookup
     const promoterSectorMap = await getPromoterSectorMap();
 
@@ -607,8 +605,11 @@ export async function getSectorPortfolioSummaryFiscal(selectUser: string, fiscal
                 effective_rate: true,
                 fund_id: true,
                 fiscal_year_id: true,
+                source_type: true,
                 stock_fulls: {
                     select: {
+                        sector_id: true,
+                        promoter_sector_id: true,
                         sectors: {
                             select: {
                                 sector_name: true
@@ -630,30 +631,13 @@ export async function getSectorPortfolioSummaryFiscal(selectUser: string, fiscal
                     client_name: selectUser,
                 },
             },
-            include: {
-                stock_fulls: {
-                    include: {
-                        sectors: true
-                    }
-                }
-            }
-        });
-
-        // Get promoter records for maturity holdings
-        const promoterRecords = await prisma.promoter_records.findMany({
-            where: {
-                fiscal_year_id: fiscalYearId,
-                client_broker_mapping: {
-                    client_name: selectUser,
-                },
-            },
             select: {
                 symbol: true,
-                quantity: true,
-                effective_rate: true,
-                fund_id: true,
+                profit_loss: true,
                 stock_fulls: {
                     select: {
+                        sector_id: true,
+                        promoter_sector_id: true,
                         sectors: {
                             select: {
                                 sector_name: true
@@ -664,54 +648,105 @@ export async function getSectorPortfolioSummaryFiscal(selectUser: string, fiscal
             }
         });
 
-        // Combine promoter records by fund_id and symbol
-        const combinedPromoterRecords = combinePromoterRecordsByFund(promoterRecords);
+        // Get fund_id for IPO staging records
+        const clientMapping = await prisma.client_broker_mapping.findFirst({
+            where: {
+                client_name: selectUser
+            },
+            select: {
+                fund_id: true
+            }
+        });
 
-    // Batch fetch LTP for all symbols
+        // Get IPO allotment staging records for maturity
+        const ipoStagingRecords = clientMapping ? await prisma.ipo_allotment_staging.findMany({
+            where: {
+                fiscal_year_id: fiscalYearId,
+                fund_id: clientMapping.fund_id
+            },
+            select: {
+                symbol: true,
+                quantity: true,
+                effective_rate: true,
+                fund_id: true,
+                stock_fulls: {
+                    select: {
+                        sector_id: true,
+                        promoter_sector_id: true,
+                        sectors: {
+                            select: {
+                                sector_name: true
+                            }
+                        }
+                    }
+                }
+            }
+        }) : [];
+
+    // Get promoter sector map for efficient sector name lookup
+    const promoterSectorMap = await getPromoterSectorMap();
+
+    // Batch fetch LTP for all symbols (for unrealized gain calculation)
     const allSymbols = [
-        ...combinedFiscalBalances.map(b => b.symbol),
-        ...combinedPromoterRecords.map(p => p.symbol)
+        ...combinedFiscalBalances.map(b => b.symbol)
     ];
     const ltpMap = await getBatchMarketSnapshotLTP(allSymbols, fiscalYearId);
 
     // Group data by sector
     const sectorMap = new Map();
     
-    // Process fiscal year balances (held for trading)
+    // Process fiscal year balances (both trading and maturity from fiscal_year_balance)
     for (const balance of combinedFiscalBalances) {
-        const sectorName = balance.stock_fulls.sectors.sector_name;
-        const currentLTP = ltpMap.get(balance.symbol) || 0;
+        const sectorName = getCorrectSectorName(balance.stock_fulls, promoterSectorMap);
         const quantity = sanitizeNumeric(balance.closing_quantity);
         const effectiveRate = sanitizeNumeric(balance.effective_rate);
-        const marketValue = quantity * currentLTP;
         const costValue = quantity * effectiveRate;
-        const unrealizedGain = marketValue - costValue;
+        
+        // Calculate unrealized gain only for trading
+        let unrealizedGain = 0;
+        if (balance.source_type === 'TRADING') {
+            const currentLTP = ltpMap.get(balance.symbol) || 0;
+            const marketValue = quantity * currentLTP;
+            unrealizedGain = marketValue - costValue;
+        }
 
             if (!sectorMap.has(sectorName)) {
                 sectorMap.set(sectorName, {
                     sector: sectorName,
                     heldForTrading: 0,
                     heldForMaturity: 0,
+                    tradingCostValue: 0,
+                    maturityCostValue: 0,
                     realizedGain: 0,
                     unrealizedGain: 0
                 });
             }
 
             const sector = sectorMap.get(sectorName);
-            sector.heldForTrading += marketValue;
-            sector.unrealizedGain += unrealizedGain;
+            // Separate by source_type: TRADING vs PROMOTER
+            if (balance.source_type === 'TRADING') {
+                sector.heldForTrading += costValue; // Use cost value (effective_rate)
+                sector.tradingCostValue += costValue; // Track cost value for G/L% calculation
+                sector.unrealizedGain += unrealizedGain;
+            } else if (balance.source_type === 'PROMOTER') {
+                // Maturity holdings from fiscal_year_balance with source_type='PROMOTER'
+                sector.heldForMaturity += costValue; // Use cost value for maturity
+                sector.maturityCostValue += costValue; // Track cost value for G/L% calculation
+            }
         }
 
-        // Process promoter records (held for maturity)
-        for (const promoter of combinedPromoterRecords) {
-            const sectorName = promoter.stock_fulls.sectors.sector_name;
-            const maturityValue = sanitizeNumeric(promoter.quantity) * sanitizeNumeric(promoter.effective_rate);
+        // Process IPO staging records (maturity holdings)
+        for (const ipoRecord of ipoStagingRecords) {
+            const sectorName = getCorrectSectorName(ipoRecord.stock_fulls, promoterSectorMap);
+            const maturityValue = sanitizeNumeric(ipoRecord.quantity) * sanitizeNumeric(ipoRecord.effective_rate);
 
             if (!sectorMap.has(sectorName)) {
                 sectorMap.set(sectorName, {
                     sector: sectorName,
                     heldForTrading: 0,
                     heldForMaturity: 0,
+                    tradingCostValue: 0,
+                    maturityCostValue: 0,
                     realizedGain: 0,
                     unrealizedGain: 0
                 });
@@ -719,11 +754,12 @@ export async function getSectorPortfolioSummaryFiscal(selectUser: string, fiscal
 
             const sector = sectorMap.get(sectorName);
             sector.heldForMaturity += maturityValue;
+            sector.maturityCostValue += maturityValue; // Track cost value for G/L% calculation
         }
 
         // Process sell records (realized gains)
         for (const sell of sellRecords) {
-            const sectorName = sell.stock_fulls.sectors.sector_name;
+            const sectorName = getCorrectSectorName(sell.stock_fulls, promoterSectorMap);
             const realizedGain = sanitizeNumeric(sell.profit_loss);
 
             if (!sectorMap.has(sectorName)) {
@@ -731,6 +767,8 @@ export async function getSectorPortfolioSummaryFiscal(selectUser: string, fiscal
                     sector: sectorName,
                     heldForTrading: 0,
                     heldForMaturity: 0,
+                    tradingCostValue: 0,
+                    maturityCostValue: 0,
                     realizedGain: 0,
                     unrealizedGain: 0
                 });
@@ -752,9 +790,14 @@ export async function getSectorPortfolioSummaryFiscal(selectUser: string, fiscal
         // Add percentages to each sector
         sectors.forEach(sector => {
             const sectorTotalValue = sector.heldForTrading + sector.heldForMaturity;
+            const sectorTotalCostValue = sector.tradingCostValue + sector.maturityCostValue;
             sector.weightagePercent = calculatePercentage(sectorTotalValue, totalPortfolioValue);
-            sector.sectorGainPercent = sectorTotalValue > 0 ? 
-                calculatePercentage((sector.realizedGain + sector.unrealizedGain), sectorTotalValue) : 0;
+            // Calculate G/L% based on cost value, not market value
+            sector.sectorGainPercent = sectorTotalCostValue > 0 ? 
+                calculatePercentage((sector.realizedGain + sector.unrealizedGain), sectorTotalCostValue) : 0;
+            // Remove internal tracking fields before returning
+            delete sector.tradingCostValue;
+            delete sector.maturityCostValue;
         });
 
         return {

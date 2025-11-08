@@ -9,6 +9,9 @@ export type DematHoldingRow = {
   symbol: string;
   company: string;
   dp_name: string;
+  boid: string;
+  client_id: string;
+  client_broker: number;
   demat: number;
   current_balance: number; // demat quantity or quantity
   cost_price: number;
@@ -222,6 +225,8 @@ export async function getDematHoldings(clientName: string, fiscalYearId?: number
       fiscal_year_id: true,
       client_broker_mapping: {
         select: {
+          boid: true,
+          client_broker: true,
           client_boid_mapping_client_broker_mapping_boidToclient_boid_mapping: {
             select: {
               dp_name: true,
@@ -277,6 +282,10 @@ export async function getDematHoldings(clientName: string, fiscalYearId?: number
     const dp_name =
       h.client_broker_mapping?.client_boid_mapping_client_broker_mapping_boidToclient_boid_mapping?.dp_name ||
       "-";
+    
+    // Get BOID and client_broker from client_broker_mapping
+    const boid = h.client_broker_mapping?.boid || "-";
+    const client_broker = h.client_broker_mapping?.client_broker || 0;
 
     // Get actual WACC from symbol_holdings
     const wacc = sanitizeNumeric(symbolHoldingsData[index]?.wacc) || 0;
@@ -285,6 +294,9 @@ export async function getDematHoldings(clientName: string, fiscalYearId?: number
       symbol: h.symbol,
       company: h.stock_fulls.full_form,
       dp_name,
+      boid,
+      client_id: h.client_id,
+      client_broker,
       current_balance: quantity,
       cost_price: cost,
       ltp,

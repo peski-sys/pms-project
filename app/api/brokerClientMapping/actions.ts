@@ -10,8 +10,31 @@ export async function getBrokerClientData() {
             orderBy: {
                 fund_id: "asc",
             },
+            select: {
+                client_id: true,
+                fund_id: true,
+                client_name: true,
+                client_broker: true,
+                recorded_at: true,
+                boid: true,
+                client_boid_mapping_client_broker_mapping_boidToclient_boid_mapping: {
+                    select: {
+                        dp_name: true
+                    }
+                }
+            }
         });
-        return mapping;
+        
+        // Transform the data to include dp_name at the top level
+        return mapping.map(item => ({
+            client_id: item.client_id,
+            fund_id: item.fund_id,
+            client_name: item.client_name,
+            client_broker: item.client_broker,
+            recorded_at: item.recorded_at,
+            boid: item.boid,
+            dp_name: item.client_boid_mapping_client_broker_mapping_boidToclient_boid_mapping?.dp_name || null
+        }));
     } catch (error) {
         toast.error("Failed to fetch broker client data");
         throw error;
