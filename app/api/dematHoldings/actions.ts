@@ -157,7 +157,7 @@ export async function updateWACCForSymbol(
         fiscal_year_id: fiscalYearId
       },
       data: {
-        wacc: newWACC
+        wacc_tax_base: newWACC
       }
     });
 
@@ -168,7 +168,7 @@ export async function updateWACCForSymbol(
           symbol: symbol,
           fund_id: fundId,
           fiscal_year_id: fiscalYearId,
-          wacc: newWACC,
+          wacc_tax_base: newWACC,
           remarks: `WACC updated via Demat Holdings on ${new Date().toISOString()}`
         }
       });

@@ -1115,7 +1115,51 @@ export default function DashboardTwo() {
               </TableRow>
             )}
           </TableBody>
-          </Table>
+          {sortedTradingData.length > 0 && (
+            <TableFooter>
+              <TableRow className="bg-gray-100 font-semibold">
+                <TableCell className="font-bold border-r">TOTAL</TableCell>
+                <TableCell className="border-r">-</TableCell>
+                <TableCell className="border-r">-</TableCell>
+                <TableCell className="text-center">{tradingTotals.opening_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center border-r">Rs. {tradingTotals.opening_amount.toLocaleString()}</TableCell>
+                <TableCell className="text-center">{tradingTotals.purchase_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center border-r">Rs. {tradingTotals.purchase_amount.toLocaleString()}</TableCell>
+                <TableCell className="text-center">{tradingTotals.right_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center border-r">Rs. {tradingTotals.right_total.toLocaleString()}</TableCell>
+                <TableCell className="text-center">{tradingTotals.bonus_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center border-r">-</TableCell>
+                <TableCell className="text-center">{tradingTotals.sales_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center">Rs. {tradingTotals.sales_cost.toLocaleString()}</TableCell>
+                <TableCell className="text-center">Rs. {tradingTotals.sales_amount.toLocaleString()}</TableCell>
+                <TableCell className={`text-center border-r ${
+                  tradingTotals.sales_profit >= 0 ? "text-green-600" : "text-red-600"
+                }`}>
+                  Rs. {tradingTotals.sales_profit.toLocaleString()}
+                </TableCell>
+                <TableCell className="text-center">{tradingTotals.closing_quantity.toLocaleString()}</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center border-r">Rs. {tradingTotals.closing_amount.toLocaleString()}</TableCell>
+                <TableCell className="text-center">{tradingTotals.demat.toLocaleString()}</TableCell>
+                <TableCell className="text-center border-r">{tradingTotals.non_demat.toLocaleString()}</TableCell>
+                <TableCell className="text-center border-r">-</TableCell>
+                <TableCell className={`text-center border-r ${
+                  tradingTotals.unrealised_amount >= 0 ? "text-green-600" : "text-red-600"
+                }`}>
+                  Rs. {tradingTotals.unrealised_amount.toLocaleString()}
+                </TableCell>
+                <TableCell className={`text-center font-semibold ${
+                  tradingTotalReturnPercent >= 0 ? "text-green-600" : "text-red-600"
+                }`}>
+                  {tradingTotalReturnPercent.toFixed(2)}%
+                </TableCell>
+                <TableCell className="text-center">-</TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
+        </Table>
         </div>
       </CardContent>
       
@@ -1308,7 +1352,20 @@ export default function DashboardTwo() {
         </div>
       )}
     </Card>
-    
+
+    {/* Sub-Class Tables */}
+    {subClasses.length > 0 ? (
+      <div className="space-y-6">
+        {subClasses.map((subClass) => renderSubClassTable(subClass))}
+      </div>
+    ) : (
+      <Card className="bg-white shadow-sm border border-gray-200">
+        <CardContent className="py-8 text-center text-gray-500">
+          No additional sub-class holdings available for the selected filters.
+        </CardContent>
+      </Card>
+    )}
+
     </div>
     )
   )

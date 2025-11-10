@@ -451,100 +451,262 @@ export async function deleteIPOAllotmentStaging(stagingId: number) {
 
 export async function dematerializeIPOStaging(stagingId: number, clientId: string, clientTrading: string) {
     try {
-        // Validate client_id
         if (!clientId || clientId.trim() === '') {
             throw new Error('Client ID is required for dematerialization');
         }
 
-        // Get staging record
-        const stagingRecord = await prisma.fiscal_year_balance_staging.findUnique({
-            where: { staging_id: stagingId },
-            select: {
-                fund_id: true,
-                symbol: true,
-                closing_quantity: true,
-                effective_rate: true,
-                fiscal_year_id: true,
-                sub_id: true,
-                remarks: true
-            }
-        });
+        const normalizedHolding = clientTrading?.toUpperCase() === 'PROMOTER' ? 'PROMOTER' : 'TRADING';
 
-        if (!stagingRecord) {
-            throw new Error('IPO allotment staging record not found');
-        }
-
-        // Validate client exists
-        const clientExists = await prisma.client_broker_mapping.findUnique({
-            where: { client_id: clientId }
-        });
-
-        if (!clientExists) {
-            throw new Error(`Client ID ${clientId} does not exist`);
-        }
-
-        // Transfer to ipo_allotment_records (total_value is auto-generated)
-
-        const parsedRemarks = (() => {
-            try {
-                return stagingRecord.remarks ? JSON.parse(stagingRecord.remarks) : null
-            } catch {
-                return null
-            }
-        })()
-
-        const addedAtRaw = parsedRemarks?.added_at
-        const addedAt = addedAtRaw ? new Date(addedAtRaw) : new Date()
-        const remarksBase = `Dematerialized from staging on ${new Date().toLocaleDateString()}`
-
-        if (clientTrading === "TRADING") {
-            await prisma.ipo_allotment_records.create({
-                data: {
-                    fund_id: stagingRecord.fund_id,
-                    client_id: clientId,
-                    symbol: stagingRecord.symbol,
-                    quantity: Number(stagingRecord.closing_quantity ?? 0),
-                    effective_rate: Number(stagingRecord.effective_rate ?? 0),
-                    added_at: addedAt,
-                    fiscal_year_id: stagingRecord.fiscal_year_id,
-                    sub_id: stagingRecord.sub_id ?? 1,
-                    remarks: remarksBase
+        const transactionResult = await prisma.$transaction(async (tx) => {
+            const stagingRecord = await tx.fiscal_year_balance_staging.findUnique({
+                where: { staging_id: stagingId },
+                select: {
+                    fund_id: true,
+                    symbol: true,
+                    closing_quantity: true,
+                    opening_quantity: true,
+                    added_quantity: true,
+                    effective_rate: true,
+                    opening_rate: true,
+                    fiscal_year_id: true,
+                    sub_id: true,
+                    source_type: true,
+                    remarks: true
                 }
-            })
-        } else if (clientTrading === "PROMOTER") {
-            await prisma.promoter_records.create({
-                data: {
-                    fund_id: stagingRecord.fund_id,
-                    client_id: clientId,
-                    symbol: stagingRecord.symbol,
-                    quantity: Number(stagingRecord.closing_quantity ?? 0),
-                    effective_rate: Number(stagingRecord.effective_rate ?? 0),
-                    added_at: addedAt,
-                    fiscal_year_id: stagingRecord.fiscal_year_id,
-                    sub_id: stagingRecord.sub_id ?? 1,
-                    remarks: remarksBase
-                }
-            })
-        }
+            });
 
-        // Remove from staging
-        await prisma.fiscal_year_balance_staging.delete({
-            where: { staging_id: stagingId }
-        })
-
-        // Create audit log
-        await prisma.audit_log.create({
-            data: {
-                performed_action: `Dematerialized IPO Staging: ${stagingRecord.symbol} (${Number(stagingRecord.closing_quantity ?? 0)} shares) to Client ${clientId}`
+            if (!stagingRecord) {
+                throw new Error('IPO allotment staging record not found');
             }
-        })
+
+            const client = await tx.client_broker_mapping.findUnique({
+                where: { client_id: clientId },
+                select: {
+                    client_id: true,
+                    client_name: true,
+                    fund_id: true
+                }
+            });
+
+            if (!client) {
+                throw new Error(`Client ID ${clientId} does not exist`);
+            }
+
+            if (client.fund_id !== stagingRecord.fund_id) {
+                throw new Error('Selected client does not belong to the staging fund');
+            }
+
+            const parsedRemarks = (() => {
+                try {
+                    return stagingRecord.remarks ? JSON.parse(stagingRecord.remarks) : null;
+                } catch {
+                    return null;
+                }
+            })();
+
+            const addedAtRaw = parsedRemarks?.added_at;
+            const addedAt = addedAtRaw ? new Date(addedAtRaw) : new Date();
+            const noteSuffix = `Dematerialized to ${client.client_name ?? client.client_id} (${normalizedHolding}) on ${new Date().toISOString()}`;
+
+            const dematerializedQuantity = Number(stagingRecord.closing_quantity ?? 0);
+            const stagingEffectiveRate = Number(stagingRecord.effective_rate ?? 0);
+
+            if (normalizedHolding === 'TRADING') {
+                await tx.ipo_allotment_records.create({
+                    data: {
+                        fund_id: stagingRecord.fund_id,
+                        client_id: clientId,
+                        symbol: stagingRecord.symbol,
+                        quantity: dematerializedQuantity,
+                        effective_rate: stagingEffectiveRate,
+                        added_at: addedAt,
+                        fiscal_year_id: stagingRecord.fiscal_year_id,
+                        sub_id: stagingRecord.sub_id ?? 1,
+                        remarks: noteSuffix
+                    }
+                });
+            } else {
+                await tx.promoter_records.create({
+                    data: {
+                        fund_id: stagingRecord.fund_id,
+                        client_id: clientId,
+                        symbol: stagingRecord.symbol,
+                        quantity: dematerializedQuantity,
+                        effective_rate: stagingEffectiveRate,
+                        added_at: addedAt,
+                        fiscal_year_id: stagingRecord.fiscal_year_id,
+                        sub_id: stagingRecord.sub_id ?? 1,
+                        remarks: noteSuffix
+                    }
+                });
+            }
+
+            const [bonusStagingRecords, rightStagingRecords, cashStagingRecords] = await Promise.all([
+                tx.bonus_records_staging.findMany({
+                    where: {
+                        fund_id: stagingRecord.fund_id,
+                        symbol: stagingRecord.symbol,
+                        fiscal_year_id: stagingRecord.fiscal_year_id
+                    }
+                }),
+                tx.right_records_staging.findMany({
+                    where: {
+                        fund_id: stagingRecord.fund_id,
+                        symbol: stagingRecord.symbol,
+                        fiscal_year_id: stagingRecord.fiscal_year_id
+                    }
+                }),
+                tx.cash_records_staging.findMany({
+                    where: {
+                        fund_id: stagingRecord.fund_id,
+                        symbol: stagingRecord.symbol,
+                        fiscal_year_id: stagingRecord.fiscal_year_id
+                    }
+                })
+            ]);
+
+            const mapRemarks = (existing?: string | null) => {
+                const parts = [existing, noteSuffix].filter(Boolean);
+                return parts.join(' | ');
+            };
+
+            for (const bonus of bonusStagingRecords) {
+                await tx.bonus_records.create({
+                    data: {
+                        fund_id: bonus.fund_id,
+                        client_id: clientId,
+                        symbol: bonus.symbol,
+                        bonus_percent: Number(bonus.bonus_percent),
+                        quantity: Number(bonus.quantity),
+                        bookclose_date: bonus.bookclose_date,
+                        effective_rate: Number(bonus.effective_rate ?? 0),
+                        fiscal_year_id: bonus.fiscal_year_id,
+                        remarks: mapRemarks(bonus.remarks)
+                    }
+                });
+
+                await tx.bonus_records_staging.delete({ where: { bonus_staging_id: bonus.bonus_staging_id } });
+            }
+
+            for (const right of rightStagingRecords) {
+                await tx.right_records.create({
+                    data: {
+                        fund_id: right.fund_id,
+                        client_id: clientId,
+                        symbol: right.symbol,
+                        right_ratio: right.right_ratio,
+                        bookclose_date: right.bookclose_date,
+                        quantity: Number(right.quantity),
+                        effective_rate: Number(right.effective_rate ?? 0),
+                        total_value: right.total_value ? Number(right.total_value) : null,
+                        fiscal_year_id: right.fiscal_year_id,
+                        remarks: mapRemarks(right.remarks)
+                    }
+                });
+
+                await tx.right_records_staging.delete({ where: { right_staging_id: right.right_staging_id } });
+            }
+
+            for (const cash of cashStagingRecords) {
+                await tx.cash_records.create({
+                    data: {
+                        fund_id: cash.fund_id,
+                        client_id: clientId,
+                        symbol: cash.symbol,
+                        amount: Number(cash.amount),
+                        bookclose_date: cash.bookclose_date,
+                        fiscal_year_id: cash.fiscal_year_id,
+                        remarks: mapRemarks(cash.remarks)
+                    }
+                });
+
+                await tx.cash_records_staging.delete({ where: { cash_staging_id: cash.cash_staging_id } });
+            }
+
+            const existingBalance = await tx.fiscal_year_balance.findUnique({
+                where: {
+                    client_id_symbol_fiscal_year_id: {
+                        client_id: clientId,
+                        symbol: stagingRecord.symbol,
+                        fiscal_year_id: stagingRecord.fiscal_year_id
+                    }
+                }
+            });
+
+            const stagingAddedQuantity = Number(stagingRecord.added_quantity ?? dematerializedQuantity);
+            const stagingOpeningQuantity = Number(stagingRecord.opening_quantity ?? 0);
+
+            if (existingBalance) {
+                const existingClosing = Number(existingBalance.closing_quantity ?? 0);
+                const updatedClosing = existingClosing + dematerializedQuantity;
+                const existingEffective = Number(existingBalance.effective_rate ?? 0);
+                const weightedEffective = updatedClosing > 0
+                    ? ((existingEffective * existingClosing) + (stagingEffectiveRate * dematerializedQuantity)) / updatedClosing
+                    : stagingEffectiveRate;
+
+                await tx.fiscal_year_balance.update({
+                    where: {
+                        client_id_symbol_fiscal_year_id: {
+                            client_id: clientId,
+                            symbol: stagingRecord.symbol,
+                            fiscal_year_id: stagingRecord.fiscal_year_id
+                        }
+                    },
+                    data: {
+                        added_quantity: Number(existingBalance.added_quantity ?? 0) + stagingAddedQuantity,
+                        closing_quantity: updatedClosing,
+                        demat: Number(existingBalance.demat ?? 0) + dematerializedQuantity,
+                        non_demat: Math.max(Number(existingBalance.non_demat ?? 0) - dematerializedQuantity, 0),
+                        effective_rate: Number(weightedEffective.toFixed(6)),
+                        source_type: normalizedHolding,
+                        sub_id: stagingRecord.sub_id ?? existingBalance.sub_id ?? 1,
+                        remarks: mapRemarks(existingBalance.remarks)
+                    }
+                });
+            } else {
+                await tx.fiscal_year_balance.create({
+                    data: {
+                        client_id: clientId,
+                        symbol: stagingRecord.symbol,
+                        fiscal_year_id: stagingRecord.fiscal_year_id,
+                        fund_id: stagingRecord.fund_id,
+                        opening_quantity: stagingOpeningQuantity,
+                        added_quantity: stagingAddedQuantity,
+                        closing_quantity: dematerializedQuantity,
+                        effective_rate: stagingEffectiveRate,
+                        opening_rate: Number(stagingRecord.opening_rate ?? stagingEffectiveRate),
+                        demat: dematerializedQuantity,
+                        non_demat: 0,
+                        source_type: normalizedHolding,
+                        sub_id: stagingRecord.sub_id ?? 1,
+                        remarks: mapRemarks(stagingRecord.remarks ?? null)
+                    }
+                });
+            }
+
+            await tx.fiscal_year_balance_staging.delete({ where: { staging_id: stagingId } });
+
+            await tx.audit_log.create({
+                data: {
+                    performed_action: `Dematerialized Non-DEMAT holdings for ${stagingRecord.symbol} (${dematerializedQuantity} shares) to ${clientId} as ${normalizedHolding}`
+                }
+            });
+
+            return {
+                symbol: stagingRecord.symbol,
+                quantity: dematerializedQuantity,
+                bonusMigrated: bonusStagingRecords.length,
+                rightMigrated: rightStagingRecords.length,
+                cashMigrated: cashStagingRecords.length
+            };
+        });
 
         return {
             success: true,
             message: 'IPO allotment dematerialized successfully',
             data: {
-                symbol: stagingRecord.symbol,
-                quantity: Number(stagingRecord.closing_quantity ?? 0),
+                symbol: transactionResult.symbol,
+                quantity: transactionResult.quantity,
                 client_id: clientId
             }
         };

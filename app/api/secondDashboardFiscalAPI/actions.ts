@@ -41,6 +41,8 @@ function getCorrectSectorName(
 }
 
 type AggregatedStagingData = {
+    openingQuantity: number
+    openingAmount: number
     quantity: number
     amount: number
     demat: number
@@ -66,13 +68,16 @@ function resolveNonDemat(nonDemat: number, quantity: number, demat: number) {
 }
 
 function aggregateStagingBySymbol(
-    records: Array<{ symbol: string; closing_quantity: unknown; effective_rate: unknown; demat?: unknown; non_demat?: unknown }>
+    records: Array<{ symbol: string; opening_quantity?: unknown; opening_rate?: unknown; closing_quantity: unknown; effective_rate: unknown; demat?: unknown; non_demat?: unknown }>
 ): Map<string, AggregatedStagingData> {
     const map = new Map<string, AggregatedStagingData>()
 
     records.forEach(record => {
         if (!record.symbol) return
 
+        const openingQty = sanitizeNumeric((record as any).opening_quantity)
+        const openingRate = sanitizeNumeric((record as any).opening_rate)
+        const openingAmount = openingQty * openingRate
         const quantity = sanitizeNumeric(record.closing_quantity)
         const rate = sanitizeNumeric(record.effective_rate)
         const demat = sanitizeNumeric((record as any).demat)
@@ -82,12 +87,16 @@ function aggregateStagingBySymbol(
 
         const existing = map.get(record.symbol)
         if (existing) {
+            existing.openingQuantity += openingQty
+            existing.openingAmount += openingAmount
             existing.quantity += quantity
             existing.amount += amount
             existing.demat += demat
             existing.nonDemat += resolvedNonDemat
         } else {
             map.set(record.symbol, {
+                openingQuantity: openingQty,
+                openingAmount,
                 quantity,
                 amount,
                 demat,
@@ -100,7 +109,7 @@ function aggregateStagingBySymbol(
 }
 
 function aggregateStagingBySymbolAndSubId(
-    records: Array<{ symbol: string; sub_id: number | null; closing_quantity: unknown; effective_rate: unknown; demat?: unknown; non_demat?: unknown }>
+    records: Array<{ symbol: string; sub_id: number | null; opening_quantity?: unknown; opening_rate?: unknown; closing_quantity: unknown; effective_rate: unknown; demat?: unknown; non_demat?: unknown }>
 ): Map<string, AggregatedStagingWithSubId> {
     const map = new Map<string, AggregatedStagingWithSubId>()
 
@@ -109,6 +118,9 @@ function aggregateStagingBySymbolAndSubId(
 
         const subId = record.sub_id ?? null
         const key = `${record.symbol}_${subId ?? 'null'}`
+        const openingQty = sanitizeNumeric((record as any).opening_quantity)
+        const openingRate = sanitizeNumeric((record as any).opening_rate)
+        const openingAmount = openingQty * openingRate
         const quantity = sanitizeNumeric(record.closing_quantity)
         const rate = sanitizeNumeric(record.effective_rate)
         const demat = sanitizeNumeric((record as any).demat)
@@ -118,6 +130,8 @@ function aggregateStagingBySymbolAndSubId(
 
         const existing = map.get(key)
         if (existing) {
+            existing.openingQuantity += openingQty
+            existing.openingAmount += openingAmount
             existing.quantity += quantity
             existing.amount += amount
             existing.demat += demat
@@ -126,6 +140,8 @@ function aggregateStagingBySymbolAndSubId(
             map.set(key, {
                 symbol: record.symbol,
                 subId,
+                openingQuantity: openingQty,
+                openingAmount,
                 quantity,
                 amount,
                 demat,
@@ -735,13 +751,19 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
         const ipoData: MetricData[] = Array.from(ipoAggregated.entries()).map(([symbol, data]) => {
             const stockDetail = ipoStockMap.get(symbol)
             const marketPriceFromLTP = ltpMap.get(symbol) || 0
-            const opening = ipoOpeningMap.get(symbol)
-            
-            // Opening data from previous year's staging records (if exists)
-            const openingQty = opening?.quantity || 0
-            const openingAmount = opening?.amount || 0
+            const previousOpening = ipoOpeningMap.get(symbol)
+
+            const currentOpeningQty = sanitizeNumeric(data.openingQuantity)
+            const currentOpeningAmount = sanitizeNumeric(data.openingAmount)
+            const hasCurrentOpening = currentOpeningQty > 0
+
+            const fallbackOpeningQty = previousOpening ? sanitizeNumeric(previousOpening.openingQuantity ?? previousOpening.quantity) : 0
+            const fallbackOpeningAmount = previousOpening ? sanitizeNumeric(previousOpening.openingAmount ?? previousOpening.amount) : 0
+
+            const openingQty = hasCurrentOpening ? currentOpeningQty : fallbackOpeningQty
+            const openingAmount = hasCurrentOpening ? currentOpeningAmount : fallbackOpeningAmount
             const openingRate = openingQty > 0 ? openingAmount / openingQty : 0
-            
+
             // Closing data from current staging records
             const closingQty = data.quantity
             const closingAmount = data.amount
