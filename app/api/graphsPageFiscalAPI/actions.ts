@@ -237,22 +237,25 @@ export async function getInvestmentHighlightsFiscal(selectUser: string, fiscalYe
             promoterValue += costValue;
         }
 
-        // Get IPO allotment staging records total_value
-        const ipoStagingRecords = await prisma.ipo_allotment_staging.findMany({
+        // Get IPO staging records from fiscal_year_balance_staging (cost value)
+        const ipoStagingRecords = await prisma.fiscal_year_balance_staging.findMany({
             where: {
                 fiscal_year_id: fiscalYearId,
                 fund_id: clientMapping.fund_id
             },
             select: {
-                total_value: true
+                closing_quantity: true,
+                effective_rate: true
             }
         });
 
-        // Calculate IPO staging total
+        // Calculate IPO staging total using quantity * effective rate
         let ipoStagingValue = 0;
         for (const record of ipoStagingRecords) {
-            const totalValue = sanitizeNumeric(record.total_value);
-            ipoStagingValue += totalValue;
+            const quantity = sanitizeNumeric(record.closing_quantity);
+            const rate = sanitizeNumeric(record.effective_rate);
+            const costValue = quantity * rate;
+            ipoStagingValue += costValue;
         }
 
         // Calculate totals

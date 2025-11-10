@@ -231,9 +231,17 @@ export default function GraphPageComponent() {
   const [selectedFiscalYear, setSelectedFiscalYear] = useState<number>(0)
   const [useFiscalYearData, setUseFiscalYearData] = useState<boolean>(false)
   
-  // Pagination state for comprehensive portfolio
+  // Pagination and sorting state for comprehensive portfolio
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 10
+  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [sortField, setSortField] = useState<string | null>(null)
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
+
+  // Pagination and sorting state for dividend info
+  const [dividendPage, setDividendPage] = useState(1)
+  const [dividendItemsPerPage, setDividendItemsPerPage] = useState(10)
+  const [dividendSortField, setDividendSortField] = useState<string | null>(null)
+  const [dividendSortOrder, setDividendSortOrder] = useState<'asc' | 'desc'>('asc')
 
   // Handle select value change
   async function handleSelectValueChange(value: string) {
@@ -407,17 +415,120 @@ export default function GraphPageComponent() {
     })).sort((a, b) => b.pnlPercent - a.pnlPercent); // Sort by gain percentage descending
   }, [profitLossToday]);
 
+  // Helper function to render sort indicator
+  const SortIndicator = ({ field, tableSortField, tableSortOrder }: { field: string, tableSortField: string | null, tableSortOrder: 'asc' | 'desc' }) => {
+    if (tableSortField !== field) return <span className="text-gray-400 text-xs ml-1">⇅</span>;
+    return tableSortOrder === 'asc' ? <span className="text-blue-600 ml-1">↑</span> : <span className="text-blue-600 ml-1">↓</span>;
+  };
+
+  // Handle column header click for sorting - Comprehensive Portfolio
+  const handlePortfolioHeaderClick = (field: string) => {
+    if (sortField === field) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortOrder('asc');
+    }
+    setCurrentPage(1);
+  };
+
+  // Handle column header click for sorting - Dividend Info
+  const handleDividendHeaderClick = (field: string) => {
+    if (dividendSortField === field) {
+      setDividendSortOrder(dividendSortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setDividendSortField(field);
+      setDividendSortOrder('asc');
+    }
+    setDividendPage(1);
+  };
+
+  // Process and sort Comprehensive Portfolio data
+  const processedPortfolioData = useMemo(() => {
+    if (!comprehensivePortfolio) return [];
+    let data = [...comprehensivePortfolio];
+    
+    if (sortField) {
+      data.sort((a, b) => {
+        const aValue = a[sortField as keyof ComprehensivePortfolioType[0]];
+        const bValue = b[sortField as keyof ComprehensivePortfolioType[0]];
+        
+        if (aValue == null && bValue == null) return 0;
+        if (aValue == null) return sortOrder === 'asc' ? 1 : -1;
+        if (bValue == null) return sortOrder === 'asc' ? -1 : 1;
+        
+        if (typeof aValue === 'string') {
+          return sortOrder === 'asc' 
+            ? aValue.localeCompare(bValue as string)
+            : (bValue as string).localeCompare(aValue);
+        }
+        
+        if (typeof aValue === 'number') {
+          return sortOrder === 'asc' 
+            ? (aValue as number) - (bValue as number)
+            : (bValue as number) - (aValue as number);
+        }
+        
+        return 0;
+      });
+    }
+    
+    return data;
+  }, [comprehensivePortfolio, sortField, sortOrder]);
+
   // Memoized pagination calculations for comprehensive portfolio
   const paginatedPortfolioData = useMemo(() => {
-    const portfolioData = comprehensivePortfolio || []
-    const startIndex = (currentPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-    return portfolioData.slice(startIndex, endIndex)
-  }, [comprehensivePortfolio, currentPage, itemsPerPage])
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return processedPortfolioData.slice(startIndex, startIndex + itemsPerPage);
+  }, [processedPortfolioData, currentPage, itemsPerPage]);
 
   const totalPages = useMemo(() => {
-    return Math.ceil((comprehensivePortfolio || []).length / itemsPerPage)
-  }, [comprehensivePortfolio, itemsPerPage])
+    return Math.ceil(processedPortfolioData.length / itemsPerPage);
+  }, [processedPortfolioData, itemsPerPage]);
+
+  const totalPortfolioItems = processedPortfolioData.length;
+
+  // Process and sort Dividend Info data
+  const processedDividendData = useMemo(() => {
+    if (!dividendInfo) return [];
+    let data = [...dividendInfo];
+    
+    if (dividendSortField) {
+      data.sort((a, b) => {
+        const aValue = a[dividendSortField as keyof DividendInfoType[0]];
+        const bValue = b[dividendSortField as keyof DividendInfoType[0]];
+        
+        if (aValue == null && bValue == null) return 0;
+        if (aValue == null) return dividendSortOrder === 'asc' ? 1 : -1;
+        if (bValue == null) return dividendSortOrder === 'asc' ? -1 : 1;
+        
+        if (typeof aValue === 'string') {
+          return dividendSortOrder === 'asc' 
+            ? aValue.localeCompare(bValue as string)
+            : (bValue as string).localeCompare(aValue);
+        }
+        
+        if (typeof aValue === 'number') {
+          return dividendSortOrder === 'asc' 
+            ? (aValue as number) - (bValue as number)
+            : (bValue as number) - (aValue as number);
+        }
+        
+        return 0;
+      });
+    }
+    
+    return data;
+  }, [dividendInfo, dividendSortField, dividendSortOrder]);
+
+  // Paginated Dividend Info data
+  const paginatedDividendData = useMemo(() => {
+    const startIndex = (dividendPage - 1) * dividendItemsPerPage;
+    return processedDividendData.slice(startIndex, startIndex + dividendItemsPerPage);
+  }, [processedDividendData, dividendPage, dividendItemsPerPage]);
+
+  const dividendTotalPages = Math.ceil(processedDividendData.length / dividendItemsPerPage);
+  const dividendTotalItems = processedDividendData.length;
 
   // Effect to run when selectValue, selectedFiscalYear, or useFiscalYearData changes
   useEffect(() => {
@@ -970,23 +1081,78 @@ export default function GraphPageComponent() {
             {/* Comprehensive Portfolio Analysis */}
             <Card className="bg-white shadow-sm border border-gray-200 h-fit w-full mt-6">
                 <CardHeader className="pb-4">
-                    <CardTitle className="text-lg font-semibold text-gray-900">Comprehensive Portfolio Analysis</CardTitle>
+                    <div className="flex justify-between items-center">
+                        <CardTitle className="text-lg font-semibold text-gray-900">Comprehensive Portfolio Analysis</CardTitle>
+                        {totalPortfolioItems > 0 && (
+                            <span className="text-sm text-gray-500">({totalPortfolioItems} stocks)</span>
+                        )}
+                    </div>
                 </CardHeader>
                 <CardContent className="p-0">
                     <div className="w-full overflow-x-auto">
                         <Table className="min-w-full">
                             <TableHeader>
                                 <TableRow className="bg-gray-50">
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4">Company Name</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4">Code</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4">Sector</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Quantity</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Book Value</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Price Per Share</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Market Rate</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Unrealised P&L</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">P&L %</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Realised P&L</TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('companyName')}>
+                                        <div className="flex items-center justify-between">
+                                            Company Name
+                                            <SortIndicator field="companyName" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('code')}>
+                                        <div className="flex items-center justify-between">
+                                            Code
+                                            <SortIndicator field="code" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('sector')}>
+                                        <div className="flex items-center justify-between">
+                                            Sector
+                                            <SortIndicator field="sector" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('quantity')}>
+                                        <div className="flex items-center justify-end">
+                                            Quantity
+                                            <SortIndicator field="quantity" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('bookValue')}>
+                                        <div className="flex items-center justify-end">
+                                            Book Value
+                                            <SortIndicator field="bookValue" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('pricePerShare')}>
+                                        <div className="flex items-center justify-end">
+                                            Price Per Share
+                                            <SortIndicator field="pricePerShare" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('marketRate')}>
+                                        <div className="flex items-center justify-end">
+                                            Market Rate
+                                            <SortIndicator field="marketRate" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('unrealisedPnL')}>
+                                        <div className="flex items-center justify-end">
+                                            Unrealised P&L
+                                            <SortIndicator field="unrealisedPnL" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('pnlPercent')}>
+                                        <div className="flex items-center justify-end">
+                                            P&L %
+                                            <SortIndicator field="pnlPercent" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('realisedPnL')}>
+                                        <div className="flex items-center justify-end">
+                                            Realised P&L
+                                            <SortIndicator field="realisedPnL" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                        </div>
+                                    </TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -1059,14 +1225,39 @@ export default function GraphPageComponent() {
                     </div>
                     
                     {/* Pagination */}
-                    {(comprehensivePortfolio || []).length > itemsPerPage && (
-                        <Pagination
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={setCurrentPage}
-                            itemsPerPage={itemsPerPage}
-                            totalItems={(comprehensivePortfolio || []).length}
-                        />
+                    {totalPortfolioItems > 0 && (
+                        <div className="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <span className="text-sm text-gray-700">Items per page:</span>
+                                <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+                                    setItemsPerPage(parseInt(value));
+                                    setCurrentPage(1);
+                                }}>
+                                    <SelectTrigger className="w-20">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectItem value="5">5</SelectItem>
+                                            <SelectItem value="10">10</SelectItem>
+                                            <SelectItem value="15">15</SelectItem>
+                                            <SelectItem value="20">20</SelectItem>
+                                            <SelectItem value="25">25</SelectItem>
+                                            <SelectItem value="50">50</SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            {totalPortfolioItems > itemsPerPage && (
+                                <Pagination
+                                    currentPage={currentPage}
+                                    totalPages={totalPages}
+                                    onPageChange={setCurrentPage}
+                                    itemsPerPage={itemsPerPage}
+                                    totalItems={totalPortfolioItems}
+                                />
+                            )}
+                        </div>
                     )}
                 </CardContent>
             </Card>
@@ -1074,20 +1265,40 @@ export default function GraphPageComponent() {
             {/* Dividend Information Section */}
             <Card className="bg-white shadow-sm border border-gray-200 h-fit w-full mt-6">
                 <CardHeader className="pb-4">
-                    <CardTitle className="text-lg font-semibold text-gray-900">Dividend Information</CardTitle>
+                    <div className="flex justify-between items-center">
+                        <CardTitle className="text-lg font-semibold text-gray-900">Dividend Information</CardTitle>
+                        {dividendTotalItems > 0 && (
+                            <span className="text-sm text-gray-500">({dividendTotalItems} stocks)</span>
+                        )}
+                    </div>
                 </CardHeader>
                 <CardContent className="p-0">
                     <div className="w-full overflow-x-auto">
                         <Table className="min-w-full">
                             <TableHeader>
                                 <TableRow className="bg-gray-50">
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4">Symbol</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4">Sector</TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Dividend Amount (Rs.)</TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handleDividendHeaderClick('symbol')}>
+                                        <div className="flex items-center justify-between">
+                                            Symbol
+                                            <SortIndicator field="symbol" tableSortField={dividendSortField} tableSortOrder={dividendSortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handleDividendHeaderClick('sector')}>
+                                        <div className="flex items-center justify-between">
+                                            Sector
+                                            <SortIndicator field="sector" tableSortField={dividendSortField} tableSortOrder={dividendSortOrder} />
+                                        </div>
+                                    </TableHead>
+                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handleDividendHeaderClick('dividendAmount')}>
+                                        <div className="flex items-center justify-end">
+                                            Dividend Amount (Rs.)
+                                            <SortIndicator field="dividendAmount" tableSortField={dividendSortField} tableSortOrder={dividendSortOrder} />
+                                        </div>
+                                    </TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {(dividendInfo || []).map((stock) => (
+                                {paginatedDividendData.map((stock) => (
                                     <TableRow key={stock.symbol} className="hover:bg-gray-50">
                                         <TableCell className="font-medium font-mono py-3 px-4"><Link href={`/dashboard/stock/${stock.symbol}`} target="_blank">{stock.symbol}</Link></TableCell>
                                         <TableCell className="py-3 px-4">
@@ -1108,12 +1319,48 @@ export default function GraphPageComponent() {
                                 <TableRow className="bg-gray-100">
                                     <TableCell colSpan={2} className="font-semibold py-3 px-4">Total Expected Dividend</TableCell>
                                     <TableCell className="text-right font-bold text-green-600 py-3 px-4">
-                                        Rs. {(dividendInfo || []).reduce((sum, stock) => sum + stock.dividendAmount, 0).toFixed(2)}
+                                        Rs. {processedDividendData.reduce((sum, stock) => sum + stock.dividendAmount, 0).toFixed(2)}
                                     </TableCell>
                                 </TableRow>
                             </TableFooter>
                         </Table>
                     </div>
+                    
+                    {/* Pagination */}
+                    {dividendTotalItems > 0 && (
+                        <div className="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <span className="text-sm text-gray-700">Items per page:</span>
+                                <Select value={dividendItemsPerPage.toString()} onValueChange={(value) => {
+                                    setDividendItemsPerPage(parseInt(value));
+                                    setDividendPage(1);
+                                }}>
+                                    <SelectTrigger className="w-20">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectItem value="5">5</SelectItem>
+                                            <SelectItem value="10">10</SelectItem>
+                                            <SelectItem value="15">15</SelectItem>
+                                            <SelectItem value="20">20</SelectItem>
+                                            <SelectItem value="25">25</SelectItem>
+                                            <SelectItem value="50">50</SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            {dividendTotalItems > dividendItemsPerPage && (
+                                <Pagination
+                                    currentPage={dividendPage}
+                                    totalPages={dividendTotalPages}
+                                    onPageChange={setDividendPage}
+                                    itemsPerPage={dividendItemsPerPage}
+                                    totalItems={dividendTotalItems}
+                                />
+                            )}
+                        </div>
+                    )}
                 </CardContent>
             </Card>
         </div>

@@ -243,24 +243,6 @@ export async function getDematHoldings(clientName: string, fiscalYearId?: number
     orderBy: { symbol: "asc" },
   });
 
-  // Get WACC data from symbol_holdings for all the holdings
-  const symbolHoldingsPromises = holdings.map(h => 
-    h.fund_id ? prisma.symbol_holdings.findUnique({
-      where: {
-        symbol_fund_id_fiscal_year_id: {
-          symbol: h.symbol,
-          fund_id: h.fund_id,
-          fiscal_year_id: h.fiscal_year_id
-        }
-      },
-      select: {
-        wacc: true
-      }
-    }) : Promise.resolve(null)
-  );
-  
-  const symbolHoldingsData = await Promise.all(symbolHoldingsPromises);
-
   const symbols = holdings.map((h) => h.symbol);
   
   // Get LTP from market snapshots using the fiscal year we already determined
@@ -287,8 +269,8 @@ export async function getDematHoldings(clientName: string, fiscalYearId?: number
     const boid = h.client_broker_mapping?.boid || "-";
     const client_broker = h.client_broker_mapping?.client_broker || 0;
 
-    // Get actual WACC from symbol_holdings
-    const wacc = sanitizeNumeric(symbolHoldingsData[index]?.wacc) || 0;
+    // Use effective rate (cost) as WACC display value
+    const wacc = cost;
 
     return {
       symbol: h.symbol,
@@ -307,7 +289,7 @@ export async function getDematHoldings(clientName: string, fiscalYearId?: number
       value_ltp: valueLtp,
       investment_value: investmentValue,
       wacc: wacc,
-      price_margin_percent: wacc > 0 ? ((ltp - wacc) / wacc) * 100 : 0, // Use WACC for price margin calculation
+      price_margin_percent: wacc > 0 ? ((ltp - wacc) / wacc) * 100 : 0, // Use effective rate as WACC proxy
       // Additional fields for updates
       fund_id: h.fund_id || 0,
       fiscal_year_id: h.fiscal_year_id,

@@ -177,21 +177,21 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
         }
     })
 
-    // Fetch IPO allotment staging records for eligible records
-    const ipo_allotment_staging_records = clientMapping ? await prisma.ipo_allotment_staging.findMany({
+    // Fetch IPO staging records from fiscal_year_balance_staging for eligible records
+    const ipo_allotment_staging_records = clientMapping ? await prisma.fiscal_year_balance_staging.findMany({
         where: {
             fiscal_year_id: given_fiscal,
             symbol: given_symbol,
             fund_id: clientMapping.fund_id
         },
         select: {
-            allotment_staging_id: true,
-            quantity: true,
+            staging_id: true,
+            closing_quantity: true,
             effective_rate: true,
-            total_value: true,
-            added_at: true,
             remarks: true,
-            sub_id: true
+            sub_id: true,
+            demat: true,
+            non_demat: true
         }
     }) : []
 
@@ -629,19 +629,28 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
         allotment_id: d.allotment_id
     }))
 
-    // Add IPO allotment staging records to eligible
-    const ipo_allotment_staging_sanitized = ipo_allotment_staging_records.map((d, index) => ({
-        opening_quantity: Number(d.quantity),
-        effective_rate: FinancialCalculator.round(Number(d.effective_rate || 0)),
-        total_value: FinancialCalculator.round(Number(d.total_value || 0)),
-        record_type: 'ipo_allotment_staging' as const,
-        id: `ipo-staging-${index}`,
-        date: d.added_at, // Added at date for IPO allotment staging records
-        remarks: d.remarks || '',
-        client_id: given_fund, // Use fund name as client_id since staging records don't have client_id
-        staging_id: d.allotment_staging_id,
-        sub_id: d.sub_id
-    }))
+    // Add IPO staging records to eligible (non-dematerialized)
+    const ipo_allotment_staging_sanitized = ipo_allotment_staging_records.map(d => {
+        const quantity = Number(d.closing_quantity ?? 0)
+        const rate = Number(d.effective_rate ?? 0)
+        const totalValue = FinancialCalculator.multiply(String(rate), quantity)
+        const resolvedNonDemat = typeof d.non_demat === 'number' ? d.non_demat : quantity - Number(d.demat ?? 0)
+
+        return {
+            opening_quantity: quantity,
+            effective_rate: Number(FinancialCalculator.round(String(rate))),
+            total_value: Number(FinancialCalculator.round(totalValue)),
+            record_type: 'ipo_allotment_staging' as const,
+            id: `ipo-staging-${d.staging_id}`,
+            date: null,
+            remarks: d.remarks || '',
+            client_id: given_fund,
+            staging_id: d.staging_id,
+            sub_id: d.sub_id,
+            demat: Number(d.demat ?? 0),
+            non_demat: resolvedNonDemat > 0 ? resolvedNonDemat : quantity
+        }
+    })
     
     // Combine all eligible records
     const eligible_records = [

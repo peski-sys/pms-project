@@ -143,6 +143,26 @@ export type sub_classes = $Result.DefaultSelection<Prisma.$sub_classesPayload>
  * 
  */
 export type ipo_allotment_staging = $Result.DefaultSelection<Prisma.$ipo_allotment_stagingPayload>
+/**
+ * Model bonus_records_staging
+ * 
+ */
+export type bonus_records_staging = $Result.DefaultSelection<Prisma.$bonus_records_stagingPayload>
+/**
+ * Model cash_records_staging
+ * 
+ */
+export type cash_records_staging = $Result.DefaultSelection<Prisma.$cash_records_stagingPayload>
+/**
+ * Model right_records_staging
+ * 
+ */
+export type right_records_staging = $Result.DefaultSelection<Prisma.$right_records_stagingPayload>
+/**
+ * Model fiscal_year_balance_staging
+ * 
+ */
+export type fiscal_year_balance_staging = $Result.DefaultSelection<Prisma.$fiscal_year_balance_stagingPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -521,6 +541,46 @@ export class PrismaClient<
     * ```
     */
   get ipo_allotment_staging(): Prisma.ipo_allotment_stagingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.bonus_records_staging`: Exposes CRUD operations for the **bonus_records_staging** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Bonus_records_stagings
+    * const bonus_records_stagings = await prisma.bonus_records_staging.findMany()
+    * ```
+    */
+  get bonus_records_staging(): Prisma.bonus_records_stagingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cash_records_staging`: Exposes CRUD operations for the **cash_records_staging** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cash_records_stagings
+    * const cash_records_stagings = await prisma.cash_records_staging.findMany()
+    * ```
+    */
+  get cash_records_staging(): Prisma.cash_records_stagingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.right_records_staging`: Exposes CRUD operations for the **right_records_staging** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Right_records_stagings
+    * const right_records_stagings = await prisma.right_records_staging.findMany()
+    * ```
+    */
+  get right_records_staging(): Prisma.right_records_stagingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.fiscal_year_balance_staging`: Exposes CRUD operations for the **fiscal_year_balance_staging** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Fiscal_year_balance_stagings
+    * const fiscal_year_balance_stagings = await prisma.fiscal_year_balance_staging.findMany()
+    * ```
+    */
+  get fiscal_year_balance_staging(): Prisma.fiscal_year_balance_stagingDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -986,7 +1046,11 @@ export namespace Prisma {
     market_snapshots: 'market_snapshots',
     symbol_holdings: 'symbol_holdings',
     sub_classes: 'sub_classes',
-    ipo_allotment_staging: 'ipo_allotment_staging'
+    ipo_allotment_staging: 'ipo_allotment_staging',
+    bonus_records_staging: 'bonus_records_staging',
+    cash_records_staging: 'cash_records_staging',
+    right_records_staging: 'right_records_staging',
+    fiscal_year_balance_staging: 'fiscal_year_balance_staging'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1005,7 +1069,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "audit_log" | "buy_records" | "client_broker_mapping" | "order_book" | "sell_records" | "uploads" | "users" | "fiscal_year_balance" | "buy_records_staging" | "fiscal_years" | "funds" | "sell_records_staging" | "stock_fulls" | "bonus_records" | "cash_records" | "promoter_records" | "right_records" | "sectors" | "client_boid_mapping" | "pdf_records" | "closeout_records" | "ipo_allotment_records" | "market_snapshots" | "symbol_holdings" | "sub_classes" | "ipo_allotment_staging"
+      modelProps: "audit_log" | "buy_records" | "client_broker_mapping" | "order_book" | "sell_records" | "uploads" | "users" | "fiscal_year_balance" | "buy_records_staging" | "fiscal_years" | "funds" | "sell_records_staging" | "stock_fulls" | "bonus_records" | "cash_records" | "promoter_records" | "right_records" | "sectors" | "client_boid_mapping" | "pdf_records" | "closeout_records" | "ipo_allotment_records" | "market_snapshots" | "symbol_holdings" | "sub_classes" | "ipo_allotment_staging" | "bonus_records_staging" | "cash_records_staging" | "right_records_staging" | "fiscal_year_balance_staging"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2933,6 +2997,302 @@ export namespace Prisma {
           }
         }
       }
+      bonus_records_staging: {
+        payload: Prisma.$bonus_records_stagingPayload<ExtArgs>
+        fields: Prisma.bonus_records_stagingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.bonus_records_stagingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.bonus_records_stagingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload>
+          }
+          findFirst: {
+            args: Prisma.bonus_records_stagingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.bonus_records_stagingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload>
+          }
+          findMany: {
+            args: Prisma.bonus_records_stagingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload>[]
+          }
+          create: {
+            args: Prisma.bonus_records_stagingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload>
+          }
+          createMany: {
+            args: Prisma.bonus_records_stagingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.bonus_records_stagingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload>[]
+          }
+          delete: {
+            args: Prisma.bonus_records_stagingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload>
+          }
+          update: {
+            args: Prisma.bonus_records_stagingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload>
+          }
+          deleteMany: {
+            args: Prisma.bonus_records_stagingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.bonus_records_stagingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.bonus_records_stagingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload>[]
+          }
+          upsert: {
+            args: Prisma.bonus_records_stagingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$bonus_records_stagingPayload>
+          }
+          aggregate: {
+            args: Prisma.Bonus_records_stagingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBonus_records_staging>
+          }
+          groupBy: {
+            args: Prisma.bonus_records_stagingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Bonus_records_stagingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.bonus_records_stagingCountArgs<ExtArgs>
+            result: $Utils.Optional<Bonus_records_stagingCountAggregateOutputType> | number
+          }
+        }
+      }
+      cash_records_staging: {
+        payload: Prisma.$cash_records_stagingPayload<ExtArgs>
+        fields: Prisma.cash_records_stagingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.cash_records_stagingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.cash_records_stagingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload>
+          }
+          findFirst: {
+            args: Prisma.cash_records_stagingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.cash_records_stagingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload>
+          }
+          findMany: {
+            args: Prisma.cash_records_stagingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload>[]
+          }
+          create: {
+            args: Prisma.cash_records_stagingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload>
+          }
+          createMany: {
+            args: Prisma.cash_records_stagingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.cash_records_stagingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload>[]
+          }
+          delete: {
+            args: Prisma.cash_records_stagingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload>
+          }
+          update: {
+            args: Prisma.cash_records_stagingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload>
+          }
+          deleteMany: {
+            args: Prisma.cash_records_stagingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.cash_records_stagingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.cash_records_stagingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload>[]
+          }
+          upsert: {
+            args: Prisma.cash_records_stagingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cash_records_stagingPayload>
+          }
+          aggregate: {
+            args: Prisma.Cash_records_stagingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCash_records_staging>
+          }
+          groupBy: {
+            args: Prisma.cash_records_stagingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Cash_records_stagingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.cash_records_stagingCountArgs<ExtArgs>
+            result: $Utils.Optional<Cash_records_stagingCountAggregateOutputType> | number
+          }
+        }
+      }
+      right_records_staging: {
+        payload: Prisma.$right_records_stagingPayload<ExtArgs>
+        fields: Prisma.right_records_stagingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.right_records_stagingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.right_records_stagingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload>
+          }
+          findFirst: {
+            args: Prisma.right_records_stagingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.right_records_stagingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload>
+          }
+          findMany: {
+            args: Prisma.right_records_stagingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload>[]
+          }
+          create: {
+            args: Prisma.right_records_stagingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload>
+          }
+          createMany: {
+            args: Prisma.right_records_stagingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.right_records_stagingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload>[]
+          }
+          delete: {
+            args: Prisma.right_records_stagingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload>
+          }
+          update: {
+            args: Prisma.right_records_stagingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload>
+          }
+          deleteMany: {
+            args: Prisma.right_records_stagingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.right_records_stagingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.right_records_stagingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload>[]
+          }
+          upsert: {
+            args: Prisma.right_records_stagingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$right_records_stagingPayload>
+          }
+          aggregate: {
+            args: Prisma.Right_records_stagingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRight_records_staging>
+          }
+          groupBy: {
+            args: Prisma.right_records_stagingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Right_records_stagingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.right_records_stagingCountArgs<ExtArgs>
+            result: $Utils.Optional<Right_records_stagingCountAggregateOutputType> | number
+          }
+        }
+      }
+      fiscal_year_balance_staging: {
+        payload: Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>
+        fields: Prisma.fiscal_year_balance_stagingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.fiscal_year_balance_stagingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.fiscal_year_balance_stagingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload>
+          }
+          findFirst: {
+            args: Prisma.fiscal_year_balance_stagingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.fiscal_year_balance_stagingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload>
+          }
+          findMany: {
+            args: Prisma.fiscal_year_balance_stagingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload>[]
+          }
+          create: {
+            args: Prisma.fiscal_year_balance_stagingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload>
+          }
+          createMany: {
+            args: Prisma.fiscal_year_balance_stagingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.fiscal_year_balance_stagingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload>[]
+          }
+          delete: {
+            args: Prisma.fiscal_year_balance_stagingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload>
+          }
+          update: {
+            args: Prisma.fiscal_year_balance_stagingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload>
+          }
+          deleteMany: {
+            args: Prisma.fiscal_year_balance_stagingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.fiscal_year_balance_stagingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.fiscal_year_balance_stagingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload>[]
+          }
+          upsert: {
+            args: Prisma.fiscal_year_balance_stagingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$fiscal_year_balance_stagingPayload>
+          }
+          aggregate: {
+            args: Prisma.Fiscal_year_balance_stagingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFiscal_year_balance_staging>
+          }
+          groupBy: {
+            args: Prisma.fiscal_year_balance_stagingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Fiscal_year_balance_stagingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.fiscal_year_balance_stagingCountArgs<ExtArgs>
+            result: $Utils.Optional<Fiscal_year_balance_stagingCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3055,6 +3415,10 @@ export namespace Prisma {
     symbol_holdings?: symbol_holdingsOmit
     sub_classes?: sub_classesOmit
     ipo_allotment_staging?: ipo_allotment_stagingOmit
+    bonus_records_staging?: bonus_records_stagingOmit
+    cash_records_staging?: cash_records_stagingOmit
+    right_records_staging?: right_records_stagingOmit
+    fiscal_year_balance_staging?: fiscal_year_balance_stagingOmit
   }
 
   /* Types for Logging */
@@ -3342,9 +3706,11 @@ export namespace Prisma {
 
   export type Fiscal_yearsCountOutputType = {
     bonus_records: number
+    bonus_records_staging: number
     buy_records: number
     buy_records_staging: number
     cash_records: number
+    cash_records_staging: number
     closeout_records: number
     fiscal_year_balance: number
     ipo_allotment_records: number
@@ -3353,6 +3719,7 @@ export namespace Prisma {
     order_book: number
     promoter_records: number
     right_records: number
+    right_records_staging: number
     sell_records: number
     sell_records_staging: number
     symbol_holdings: number
@@ -3360,9 +3727,11 @@ export namespace Prisma {
 
   export type Fiscal_yearsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bonus_records?: boolean | Fiscal_yearsCountOutputTypeCountBonus_recordsArgs
+    bonus_records_staging?: boolean | Fiscal_yearsCountOutputTypeCountBonus_records_stagingArgs
     buy_records?: boolean | Fiscal_yearsCountOutputTypeCountBuy_recordsArgs
     buy_records_staging?: boolean | Fiscal_yearsCountOutputTypeCountBuy_records_stagingArgs
     cash_records?: boolean | Fiscal_yearsCountOutputTypeCountCash_recordsArgs
+    cash_records_staging?: boolean | Fiscal_yearsCountOutputTypeCountCash_records_stagingArgs
     closeout_records?: boolean | Fiscal_yearsCountOutputTypeCountCloseout_recordsArgs
     fiscal_year_balance?: boolean | Fiscal_yearsCountOutputTypeCountFiscal_year_balanceArgs
     ipo_allotment_records?: boolean | Fiscal_yearsCountOutputTypeCountIpo_allotment_recordsArgs
@@ -3371,6 +3740,7 @@ export namespace Prisma {
     order_book?: boolean | Fiscal_yearsCountOutputTypeCountOrder_bookArgs
     promoter_records?: boolean | Fiscal_yearsCountOutputTypeCountPromoter_recordsArgs
     right_records?: boolean | Fiscal_yearsCountOutputTypeCountRight_recordsArgs
+    right_records_staging?: boolean | Fiscal_yearsCountOutputTypeCountRight_records_stagingArgs
     sell_records?: boolean | Fiscal_yearsCountOutputTypeCountSell_recordsArgs
     sell_records_staging?: boolean | Fiscal_yearsCountOutputTypeCountSell_records_stagingArgs
     symbol_holdings?: boolean | Fiscal_yearsCountOutputTypeCountSymbol_holdingsArgs
@@ -3397,6 +3767,13 @@ export namespace Prisma {
   /**
    * Fiscal_yearsCountOutputType without action
    */
+  export type Fiscal_yearsCountOutputTypeCountBonus_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: bonus_records_stagingWhereInput
+  }
+
+  /**
+   * Fiscal_yearsCountOutputType without action
+   */
   export type Fiscal_yearsCountOutputTypeCountBuy_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: buy_recordsWhereInput
   }
@@ -3413,6 +3790,13 @@ export namespace Prisma {
    */
   export type Fiscal_yearsCountOutputTypeCountCash_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: cash_recordsWhereInput
+  }
+
+  /**
+   * Fiscal_yearsCountOutputType without action
+   */
+  export type Fiscal_yearsCountOutputTypeCountCash_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: cash_records_stagingWhereInput
   }
 
   /**
@@ -3474,6 +3858,13 @@ export namespace Prisma {
   /**
    * Fiscal_yearsCountOutputType without action
    */
+  export type Fiscal_yearsCountOutputTypeCountRight_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: right_records_stagingWhereInput
+  }
+
+  /**
+   * Fiscal_yearsCountOutputType without action
+   */
   export type Fiscal_yearsCountOutputTypeCountSell_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: sell_recordsWhereInput
   }
@@ -3499,9 +3890,11 @@ export namespace Prisma {
 
   export type FundsCountOutputType = {
     bonus_records: number
+    bonus_records_staging: number
     buy_records: number
     buy_records_staging: number
     cash_records: number
+    cash_records_staging: number
     client_broker_mapping: number
     closeout_records: number
     fiscal_year_balance: number
@@ -3509,6 +3902,7 @@ export namespace Prisma {
     ipo_allotment_staging: number
     promoter_records: number
     right_records: number
+    right_records_staging: number
     sell_records: number
     sell_records_staging: number
     sub_classes: number
@@ -3517,9 +3911,11 @@ export namespace Prisma {
 
   export type FundsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bonus_records?: boolean | FundsCountOutputTypeCountBonus_recordsArgs
+    bonus_records_staging?: boolean | FundsCountOutputTypeCountBonus_records_stagingArgs
     buy_records?: boolean | FundsCountOutputTypeCountBuy_recordsArgs
     buy_records_staging?: boolean | FundsCountOutputTypeCountBuy_records_stagingArgs
     cash_records?: boolean | FundsCountOutputTypeCountCash_recordsArgs
+    cash_records_staging?: boolean | FundsCountOutputTypeCountCash_records_stagingArgs
     client_broker_mapping?: boolean | FundsCountOutputTypeCountClient_broker_mappingArgs
     closeout_records?: boolean | FundsCountOutputTypeCountCloseout_recordsArgs
     fiscal_year_balance?: boolean | FundsCountOutputTypeCountFiscal_year_balanceArgs
@@ -3527,6 +3923,7 @@ export namespace Prisma {
     ipo_allotment_staging?: boolean | FundsCountOutputTypeCountIpo_allotment_stagingArgs
     promoter_records?: boolean | FundsCountOutputTypeCountPromoter_recordsArgs
     right_records?: boolean | FundsCountOutputTypeCountRight_recordsArgs
+    right_records_staging?: boolean | FundsCountOutputTypeCountRight_records_stagingArgs
     sell_records?: boolean | FundsCountOutputTypeCountSell_recordsArgs
     sell_records_staging?: boolean | FundsCountOutputTypeCountSell_records_stagingArgs
     sub_classes?: boolean | FundsCountOutputTypeCountSub_classesArgs
@@ -3554,6 +3951,13 @@ export namespace Prisma {
   /**
    * FundsCountOutputType without action
    */
+  export type FundsCountOutputTypeCountBonus_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: bonus_records_stagingWhereInput
+  }
+
+  /**
+   * FundsCountOutputType without action
+   */
   export type FundsCountOutputTypeCountBuy_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: buy_recordsWhereInput
   }
@@ -3570,6 +3974,13 @@ export namespace Prisma {
    */
   export type FundsCountOutputTypeCountCash_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: cash_recordsWhereInput
+  }
+
+  /**
+   * FundsCountOutputType without action
+   */
+  export type FundsCountOutputTypeCountCash_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: cash_records_stagingWhereInput
   }
 
   /**
@@ -3624,6 +4035,13 @@ export namespace Prisma {
   /**
    * FundsCountOutputType without action
    */
+  export type FundsCountOutputTypeCountRight_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: right_records_stagingWhereInput
+  }
+
+  /**
+   * FundsCountOutputType without action
+   */
   export type FundsCountOutputTypeCountSell_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: sell_recordsWhereInput
   }
@@ -3656,9 +4074,11 @@ export namespace Prisma {
 
   export type Stock_fullsCountOutputType = {
     bonus_records: number
+    bonus_records_staging: number
     buy_records: number
     buy_records_staging: number
     cash_records: number
+    cash_records_staging: number
     closeout_records: number
     fiscal_year_balance: number
     ipo_allotment_records: number
@@ -3666,6 +4086,7 @@ export namespace Prisma {
     order_book: number
     promoter_records: number
     right_records: number
+    right_records_staging: number
     sell_records: number
     sell_records_staging: number
     symbol_holdings: number
@@ -3673,9 +4094,11 @@ export namespace Prisma {
 
   export type Stock_fullsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bonus_records?: boolean | Stock_fullsCountOutputTypeCountBonus_recordsArgs
+    bonus_records_staging?: boolean | Stock_fullsCountOutputTypeCountBonus_records_stagingArgs
     buy_records?: boolean | Stock_fullsCountOutputTypeCountBuy_recordsArgs
     buy_records_staging?: boolean | Stock_fullsCountOutputTypeCountBuy_records_stagingArgs
     cash_records?: boolean | Stock_fullsCountOutputTypeCountCash_recordsArgs
+    cash_records_staging?: boolean | Stock_fullsCountOutputTypeCountCash_records_stagingArgs
     closeout_records?: boolean | Stock_fullsCountOutputTypeCountCloseout_recordsArgs
     fiscal_year_balance?: boolean | Stock_fullsCountOutputTypeCountFiscal_year_balanceArgs
     ipo_allotment_records?: boolean | Stock_fullsCountOutputTypeCountIpo_allotment_recordsArgs
@@ -3683,6 +4106,7 @@ export namespace Prisma {
     order_book?: boolean | Stock_fullsCountOutputTypeCountOrder_bookArgs
     promoter_records?: boolean | Stock_fullsCountOutputTypeCountPromoter_recordsArgs
     right_records?: boolean | Stock_fullsCountOutputTypeCountRight_recordsArgs
+    right_records_staging?: boolean | Stock_fullsCountOutputTypeCountRight_records_stagingArgs
     sell_records?: boolean | Stock_fullsCountOutputTypeCountSell_recordsArgs
     sell_records_staging?: boolean | Stock_fullsCountOutputTypeCountSell_records_stagingArgs
     symbol_holdings?: boolean | Stock_fullsCountOutputTypeCountSymbol_holdingsArgs
@@ -3709,6 +4133,13 @@ export namespace Prisma {
   /**
    * Stock_fullsCountOutputType without action
    */
+  export type Stock_fullsCountOutputTypeCountBonus_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: bonus_records_stagingWhereInput
+  }
+
+  /**
+   * Stock_fullsCountOutputType without action
+   */
   export type Stock_fullsCountOutputTypeCountBuy_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: buy_recordsWhereInput
   }
@@ -3725,6 +4156,13 @@ export namespace Prisma {
    */
   export type Stock_fullsCountOutputTypeCountCash_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: cash_recordsWhereInput
+  }
+
+  /**
+   * Stock_fullsCountOutputType without action
+   */
+  export type Stock_fullsCountOutputTypeCountCash_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: cash_records_stagingWhereInput
   }
 
   /**
@@ -3774,6 +4212,13 @@ export namespace Prisma {
    */
   export type Stock_fullsCountOutputTypeCountRight_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: right_recordsWhereInput
+  }
+
+  /**
+   * Stock_fullsCountOutputType without action
+   */
+  export type Stock_fullsCountOutputTypeCountRight_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: right_records_stagingWhereInput
   }
 
   /**
@@ -3865,18 +4310,24 @@ export namespace Prisma {
    */
 
   export type Sub_classesCountOutputType = {
+    bonus_records_staging: number
+    cash_records_staging: number
     fiscal_year_balance: number
     ipo_allotment_records: number
     ipo_allotment_staging: number
     promoter_records: number
+    right_records_staging: number
     symbol_holdings: number
   }
 
   export type Sub_classesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bonus_records_staging?: boolean | Sub_classesCountOutputTypeCountBonus_records_stagingArgs
+    cash_records_staging?: boolean | Sub_classesCountOutputTypeCountCash_records_stagingArgs
     fiscal_year_balance?: boolean | Sub_classesCountOutputTypeCountFiscal_year_balanceArgs
     ipo_allotment_records?: boolean | Sub_classesCountOutputTypeCountIpo_allotment_recordsArgs
     ipo_allotment_staging?: boolean | Sub_classesCountOutputTypeCountIpo_allotment_stagingArgs
     promoter_records?: boolean | Sub_classesCountOutputTypeCountPromoter_recordsArgs
+    right_records_staging?: boolean | Sub_classesCountOutputTypeCountRight_records_stagingArgs
     symbol_holdings?: boolean | Sub_classesCountOutputTypeCountSymbol_holdingsArgs
   }
 
@@ -3889,6 +4340,20 @@ export namespace Prisma {
      * Select specific fields to fetch from the Sub_classesCountOutputType
      */
     select?: Sub_classesCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Sub_classesCountOutputType without action
+   */
+  export type Sub_classesCountOutputTypeCountBonus_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: bonus_records_stagingWhereInput
+  }
+
+  /**
+   * Sub_classesCountOutputType without action
+   */
+  export type Sub_classesCountOutputTypeCountCash_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: cash_records_stagingWhereInput
   }
 
   /**
@@ -3917,6 +4382,13 @@ export namespace Prisma {
    */
   export type Sub_classesCountOutputTypeCountPromoter_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: promoter_recordsWhereInput
+  }
+
+  /**
+   * Sub_classesCountOutputType without action
+   */
+  export type Sub_classesCountOutputTypeCountRight_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: right_records_stagingWhereInput
   }
 
   /**
@@ -15396,9 +15868,11 @@ export namespace Prisma {
     end_date?: boolean
     initial_balance_synced?: boolean
     bonus_records?: boolean | fiscal_years$bonus_recordsArgs<ExtArgs>
+    bonus_records_staging?: boolean | fiscal_years$bonus_records_stagingArgs<ExtArgs>
     buy_records?: boolean | fiscal_years$buy_recordsArgs<ExtArgs>
     buy_records_staging?: boolean | fiscal_years$buy_records_stagingArgs<ExtArgs>
     cash_records?: boolean | fiscal_years$cash_recordsArgs<ExtArgs>
+    cash_records_staging?: boolean | fiscal_years$cash_records_stagingArgs<ExtArgs>
     closeout_records?: boolean | fiscal_years$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | fiscal_years$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | fiscal_years$ipo_allotment_recordsArgs<ExtArgs>
@@ -15407,6 +15881,7 @@ export namespace Prisma {
     order_book?: boolean | fiscal_years$order_bookArgs<ExtArgs>
     promoter_records?: boolean | fiscal_years$promoter_recordsArgs<ExtArgs>
     right_records?: boolean | fiscal_years$right_recordsArgs<ExtArgs>
+    right_records_staging?: boolean | fiscal_years$right_records_stagingArgs<ExtArgs>
     sell_records?: boolean | fiscal_years$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | fiscal_years$sell_records_stagingArgs<ExtArgs>
     symbol_holdings?: boolean | fiscal_years$symbol_holdingsArgs<ExtArgs>
@@ -15440,9 +15915,11 @@ export namespace Prisma {
   export type fiscal_yearsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"fiscal_year_id" | "year_label" | "start_date" | "end_date" | "initial_balance_synced", ExtArgs["result"]["fiscal_years"]>
   export type fiscal_yearsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bonus_records?: boolean | fiscal_years$bonus_recordsArgs<ExtArgs>
+    bonus_records_staging?: boolean | fiscal_years$bonus_records_stagingArgs<ExtArgs>
     buy_records?: boolean | fiscal_years$buy_recordsArgs<ExtArgs>
     buy_records_staging?: boolean | fiscal_years$buy_records_stagingArgs<ExtArgs>
     cash_records?: boolean | fiscal_years$cash_recordsArgs<ExtArgs>
+    cash_records_staging?: boolean | fiscal_years$cash_records_stagingArgs<ExtArgs>
     closeout_records?: boolean | fiscal_years$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | fiscal_years$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | fiscal_years$ipo_allotment_recordsArgs<ExtArgs>
@@ -15451,6 +15928,7 @@ export namespace Prisma {
     order_book?: boolean | fiscal_years$order_bookArgs<ExtArgs>
     promoter_records?: boolean | fiscal_years$promoter_recordsArgs<ExtArgs>
     right_records?: boolean | fiscal_years$right_recordsArgs<ExtArgs>
+    right_records_staging?: boolean | fiscal_years$right_records_stagingArgs<ExtArgs>
     sell_records?: boolean | fiscal_years$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | fiscal_years$sell_records_stagingArgs<ExtArgs>
     symbol_holdings?: boolean | fiscal_years$symbol_holdingsArgs<ExtArgs>
@@ -15463,9 +15941,11 @@ export namespace Prisma {
     name: "fiscal_years"
     objects: {
       bonus_records: Prisma.$bonus_recordsPayload<ExtArgs>[]
+      bonus_records_staging: Prisma.$bonus_records_stagingPayload<ExtArgs>[]
       buy_records: Prisma.$buy_recordsPayload<ExtArgs>[]
       buy_records_staging: Prisma.$buy_records_stagingPayload<ExtArgs>[]
       cash_records: Prisma.$cash_recordsPayload<ExtArgs>[]
+      cash_records_staging: Prisma.$cash_records_stagingPayload<ExtArgs>[]
       closeout_records: Prisma.$closeout_recordsPayload<ExtArgs>[]
       fiscal_year_balance: Prisma.$fiscal_year_balancePayload<ExtArgs>[]
       ipo_allotment_records: Prisma.$ipo_allotment_recordsPayload<ExtArgs>[]
@@ -15474,6 +15954,7 @@ export namespace Prisma {
       order_book: Prisma.$order_bookPayload<ExtArgs>[]
       promoter_records: Prisma.$promoter_recordsPayload<ExtArgs>[]
       right_records: Prisma.$right_recordsPayload<ExtArgs>[]
+      right_records_staging: Prisma.$right_records_stagingPayload<ExtArgs>[]
       sell_records: Prisma.$sell_recordsPayload<ExtArgs>[]
       sell_records_staging: Prisma.$sell_records_stagingPayload<ExtArgs>[]
       symbol_holdings: Prisma.$symbol_holdingsPayload<ExtArgs>[]
@@ -15879,9 +16360,11 @@ export namespace Prisma {
   export interface Prisma__fiscal_yearsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     bonus_records<T extends fiscal_years$bonus_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$bonus_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bonus_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    bonus_records_staging<T extends fiscal_years$bonus_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$bonus_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buy_records<T extends fiscal_years$buy_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$buy_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$buy_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buy_records_staging<T extends fiscal_years$buy_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$buy_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$buy_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cash_records<T extends fiscal_years$cash_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$cash_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cash_records_staging<T extends fiscal_years$cash_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$cash_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     closeout_records<T extends fiscal_years$closeout_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$closeout_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$closeout_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     fiscal_year_balance<T extends fiscal_years$fiscal_year_balanceArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$fiscal_year_balanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ipo_allotment_records<T extends fiscal_years$ipo_allotment_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$ipo_allotment_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -15890,6 +16373,7 @@ export namespace Prisma {
     order_book<T extends fiscal_years$order_bookArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$order_bookArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$order_bookPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     promoter_records<T extends fiscal_years$promoter_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$promoter_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$promoter_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     right_records<T extends fiscal_years$right_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$right_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    right_records_staging<T extends fiscal_years$right_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$right_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records<T extends fiscal_years$sell_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$sell_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records_staging<T extends fiscal_years$sell_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$sell_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     symbol_holdings<T extends fiscal_years$symbol_holdingsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$symbol_holdingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$symbol_holdingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -16339,6 +16823,30 @@ export namespace Prisma {
   }
 
   /**
+   * fiscal_years.bonus_records_staging
+   */
+  export type fiscal_years$bonus_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    where?: bonus_records_stagingWhereInput
+    orderBy?: bonus_records_stagingOrderByWithRelationInput | bonus_records_stagingOrderByWithRelationInput[]
+    cursor?: bonus_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Bonus_records_stagingScalarFieldEnum | Bonus_records_stagingScalarFieldEnum[]
+  }
+
+  /**
    * fiscal_years.buy_records
    */
   export type fiscal_years$buy_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16408,6 +16916,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Cash_recordsScalarFieldEnum | Cash_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * fiscal_years.cash_records_staging
+   */
+  export type fiscal_years$cash_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    where?: cash_records_stagingWhereInput
+    orderBy?: cash_records_stagingOrderByWithRelationInput | cash_records_stagingOrderByWithRelationInput[]
+    cursor?: cash_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Cash_records_stagingScalarFieldEnum | Cash_records_stagingScalarFieldEnum[]
   }
 
   /**
@@ -16600,6 +17132,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Right_recordsScalarFieldEnum | Right_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * fiscal_years.right_records_staging
+   */
+  export type fiscal_years$right_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    where?: right_records_stagingWhereInput
+    orderBy?: right_records_stagingOrderByWithRelationInput | right_records_stagingOrderByWithRelationInput[]
+    cursor?: right_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Right_records_stagingScalarFieldEnum | Right_records_stagingScalarFieldEnum[]
   }
 
   /**
@@ -16876,9 +17432,11 @@ export namespace Prisma {
     fund_name?: boolean
     uploaded_at?: boolean
     bonus_records?: boolean | funds$bonus_recordsArgs<ExtArgs>
+    bonus_records_staging?: boolean | funds$bonus_records_stagingArgs<ExtArgs>
     buy_records?: boolean | funds$buy_recordsArgs<ExtArgs>
     buy_records_staging?: boolean | funds$buy_records_stagingArgs<ExtArgs>
     cash_records?: boolean | funds$cash_recordsArgs<ExtArgs>
+    cash_records_staging?: boolean | funds$cash_records_stagingArgs<ExtArgs>
     client_broker_mapping?: boolean | funds$client_broker_mappingArgs<ExtArgs>
     closeout_records?: boolean | funds$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | funds$fiscal_year_balanceArgs<ExtArgs>
@@ -16886,6 +17444,7 @@ export namespace Prisma {
     ipo_allotment_staging?: boolean | funds$ipo_allotment_stagingArgs<ExtArgs>
     promoter_records?: boolean | funds$promoter_recordsArgs<ExtArgs>
     right_records?: boolean | funds$right_recordsArgs<ExtArgs>
+    right_records_staging?: boolean | funds$right_records_stagingArgs<ExtArgs>
     sell_records?: boolean | funds$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | funds$sell_records_stagingArgs<ExtArgs>
     sub_classes?: boolean | funds$sub_classesArgs<ExtArgs>
@@ -16914,9 +17473,11 @@ export namespace Prisma {
   export type fundsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"fund_id" | "fund_name" | "uploaded_at", ExtArgs["result"]["funds"]>
   export type fundsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bonus_records?: boolean | funds$bonus_recordsArgs<ExtArgs>
+    bonus_records_staging?: boolean | funds$bonus_records_stagingArgs<ExtArgs>
     buy_records?: boolean | funds$buy_recordsArgs<ExtArgs>
     buy_records_staging?: boolean | funds$buy_records_stagingArgs<ExtArgs>
     cash_records?: boolean | funds$cash_recordsArgs<ExtArgs>
+    cash_records_staging?: boolean | funds$cash_records_stagingArgs<ExtArgs>
     client_broker_mapping?: boolean | funds$client_broker_mappingArgs<ExtArgs>
     closeout_records?: boolean | funds$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | funds$fiscal_year_balanceArgs<ExtArgs>
@@ -16924,6 +17485,7 @@ export namespace Prisma {
     ipo_allotment_staging?: boolean | funds$ipo_allotment_stagingArgs<ExtArgs>
     promoter_records?: boolean | funds$promoter_recordsArgs<ExtArgs>
     right_records?: boolean | funds$right_recordsArgs<ExtArgs>
+    right_records_staging?: boolean | funds$right_records_stagingArgs<ExtArgs>
     sell_records?: boolean | funds$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | funds$sell_records_stagingArgs<ExtArgs>
     sub_classes?: boolean | funds$sub_classesArgs<ExtArgs>
@@ -16937,9 +17499,11 @@ export namespace Prisma {
     name: "funds"
     objects: {
       bonus_records: Prisma.$bonus_recordsPayload<ExtArgs>[]
+      bonus_records_staging: Prisma.$bonus_records_stagingPayload<ExtArgs>[]
       buy_records: Prisma.$buy_recordsPayload<ExtArgs>[]
       buy_records_staging: Prisma.$buy_records_stagingPayload<ExtArgs>[]
       cash_records: Prisma.$cash_recordsPayload<ExtArgs>[]
+      cash_records_staging: Prisma.$cash_records_stagingPayload<ExtArgs>[]
       client_broker_mapping: Prisma.$client_broker_mappingPayload<ExtArgs>[]
       closeout_records: Prisma.$closeout_recordsPayload<ExtArgs>[]
       fiscal_year_balance: Prisma.$fiscal_year_balancePayload<ExtArgs>[]
@@ -16947,6 +17511,7 @@ export namespace Prisma {
       ipo_allotment_staging: Prisma.$ipo_allotment_stagingPayload<ExtArgs>[]
       promoter_records: Prisma.$promoter_recordsPayload<ExtArgs>[]
       right_records: Prisma.$right_recordsPayload<ExtArgs>[]
+      right_records_staging: Prisma.$right_records_stagingPayload<ExtArgs>[]
       sell_records: Prisma.$sell_recordsPayload<ExtArgs>[]
       sell_records_staging: Prisma.$sell_records_stagingPayload<ExtArgs>[]
       sub_classes: Prisma.$sub_classesPayload<ExtArgs>[]
@@ -17351,9 +17916,11 @@ export namespace Prisma {
   export interface Prisma__fundsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     bonus_records<T extends funds$bonus_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$bonus_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bonus_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    bonus_records_staging<T extends funds$bonus_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, funds$bonus_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buy_records<T extends funds$buy_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$buy_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$buy_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buy_records_staging<T extends funds$buy_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, funds$buy_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$buy_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cash_records<T extends funds$cash_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$cash_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cash_records_staging<T extends funds$cash_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, funds$cash_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     client_broker_mapping<T extends funds$client_broker_mappingArgs<ExtArgs> = {}>(args?: Subset<T, funds$client_broker_mappingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$client_broker_mappingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     closeout_records<T extends funds$closeout_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$closeout_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$closeout_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     fiscal_year_balance<T extends funds$fiscal_year_balanceArgs<ExtArgs> = {}>(args?: Subset<T, funds$fiscal_year_balanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -17361,6 +17928,7 @@ export namespace Prisma {
     ipo_allotment_staging<T extends funds$ipo_allotment_stagingArgs<ExtArgs> = {}>(args?: Subset<T, funds$ipo_allotment_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     promoter_records<T extends funds$promoter_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$promoter_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$promoter_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     right_records<T extends funds$right_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$right_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    right_records_staging<T extends funds$right_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, funds$right_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records<T extends funds$sell_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$sell_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records_staging<T extends funds$sell_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, funds$sell_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sub_classes<T extends funds$sub_classesArgs<ExtArgs> = {}>(args?: Subset<T, funds$sub_classesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sub_classesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -17809,6 +18377,30 @@ export namespace Prisma {
   }
 
   /**
+   * funds.bonus_records_staging
+   */
+  export type funds$bonus_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    where?: bonus_records_stagingWhereInput
+    orderBy?: bonus_records_stagingOrderByWithRelationInput | bonus_records_stagingOrderByWithRelationInput[]
+    cursor?: bonus_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Bonus_records_stagingScalarFieldEnum | Bonus_records_stagingScalarFieldEnum[]
+  }
+
+  /**
    * funds.buy_records
    */
   export type funds$buy_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17878,6 +18470,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Cash_recordsScalarFieldEnum | Cash_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * funds.cash_records_staging
+   */
+  export type funds$cash_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    where?: cash_records_stagingWhereInput
+    orderBy?: cash_records_stagingOrderByWithRelationInput | cash_records_stagingOrderByWithRelationInput[]
+    cursor?: cash_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Cash_records_stagingScalarFieldEnum | Cash_records_stagingScalarFieldEnum[]
   }
 
   /**
@@ -18046,6 +18662,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Right_recordsScalarFieldEnum | Right_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * funds.right_records_staging
+   */
+  export type funds$right_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    where?: right_records_stagingWhereInput
+    orderBy?: right_records_stagingOrderByWithRelationInput | right_records_stagingOrderByWithRelationInput[]
+    cursor?: right_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Right_records_stagingScalarFieldEnum | Right_records_stagingScalarFieldEnum[]
   }
 
   /**
@@ -19739,9 +20379,11 @@ export namespace Prisma {
     is_auto_generated?: boolean
     promoter_sector_id?: boolean
     bonus_records?: boolean | stock_fulls$bonus_recordsArgs<ExtArgs>
+    bonus_records_staging?: boolean | stock_fulls$bonus_records_stagingArgs<ExtArgs>
     buy_records?: boolean | stock_fulls$buy_recordsArgs<ExtArgs>
     buy_records_staging?: boolean | stock_fulls$buy_records_stagingArgs<ExtArgs>
     cash_records?: boolean | stock_fulls$cash_recordsArgs<ExtArgs>
+    cash_records_staging?: boolean | stock_fulls$cash_records_stagingArgs<ExtArgs>
     closeout_records?: boolean | stock_fulls$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | stock_fulls$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | stock_fulls$ipo_allotment_recordsArgs<ExtArgs>
@@ -19749,6 +20391,7 @@ export namespace Prisma {
     order_book?: boolean | stock_fulls$order_bookArgs<ExtArgs>
     promoter_records?: boolean | stock_fulls$promoter_recordsArgs<ExtArgs>
     right_records?: boolean | stock_fulls$right_recordsArgs<ExtArgs>
+    right_records_staging?: boolean | stock_fulls$right_records_stagingArgs<ExtArgs>
     sell_records?: boolean | stock_fulls$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | stock_fulls$sell_records_stagingArgs<ExtArgs>
     sectors?: boolean | sectorsDefaultArgs<ExtArgs>
@@ -19785,9 +20428,11 @@ export namespace Prisma {
   export type stock_fullsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"symbol" | "full_form" | "sector_id" | "is_auto_generated" | "promoter_sector_id", ExtArgs["result"]["stock_fulls"]>
   export type stock_fullsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bonus_records?: boolean | stock_fulls$bonus_recordsArgs<ExtArgs>
+    bonus_records_staging?: boolean | stock_fulls$bonus_records_stagingArgs<ExtArgs>
     buy_records?: boolean | stock_fulls$buy_recordsArgs<ExtArgs>
     buy_records_staging?: boolean | stock_fulls$buy_records_stagingArgs<ExtArgs>
     cash_records?: boolean | stock_fulls$cash_recordsArgs<ExtArgs>
+    cash_records_staging?: boolean | stock_fulls$cash_records_stagingArgs<ExtArgs>
     closeout_records?: boolean | stock_fulls$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | stock_fulls$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | stock_fulls$ipo_allotment_recordsArgs<ExtArgs>
@@ -19795,6 +20440,7 @@ export namespace Prisma {
     order_book?: boolean | stock_fulls$order_bookArgs<ExtArgs>
     promoter_records?: boolean | stock_fulls$promoter_recordsArgs<ExtArgs>
     right_records?: boolean | stock_fulls$right_recordsArgs<ExtArgs>
+    right_records_staging?: boolean | stock_fulls$right_records_stagingArgs<ExtArgs>
     sell_records?: boolean | stock_fulls$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | stock_fulls$sell_records_stagingArgs<ExtArgs>
     sectors?: boolean | sectorsDefaultArgs<ExtArgs>
@@ -19812,9 +20458,11 @@ export namespace Prisma {
     name: "stock_fulls"
     objects: {
       bonus_records: Prisma.$bonus_recordsPayload<ExtArgs>[]
+      bonus_records_staging: Prisma.$bonus_records_stagingPayload<ExtArgs>[]
       buy_records: Prisma.$buy_recordsPayload<ExtArgs>[]
       buy_records_staging: Prisma.$buy_records_stagingPayload<ExtArgs>[]
       cash_records: Prisma.$cash_recordsPayload<ExtArgs>[]
+      cash_records_staging: Prisma.$cash_records_stagingPayload<ExtArgs>[]
       closeout_records: Prisma.$closeout_recordsPayload<ExtArgs>[]
       fiscal_year_balance: Prisma.$fiscal_year_balancePayload<ExtArgs>[]
       ipo_allotment_records: Prisma.$ipo_allotment_recordsPayload<ExtArgs>[]
@@ -19822,6 +20470,7 @@ export namespace Prisma {
       order_book: Prisma.$order_bookPayload<ExtArgs>[]
       promoter_records: Prisma.$promoter_recordsPayload<ExtArgs>[]
       right_records: Prisma.$right_recordsPayload<ExtArgs>[]
+      right_records_staging: Prisma.$right_records_stagingPayload<ExtArgs>[]
       sell_records: Prisma.$sell_recordsPayload<ExtArgs>[]
       sell_records_staging: Prisma.$sell_records_stagingPayload<ExtArgs>[]
       sectors: Prisma.$sectorsPayload<ExtArgs>
@@ -20228,9 +20877,11 @@ export namespace Prisma {
   export interface Prisma__stock_fullsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     bonus_records<T extends stock_fulls$bonus_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$bonus_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bonus_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    bonus_records_staging<T extends stock_fulls$bonus_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$bonus_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buy_records<T extends stock_fulls$buy_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$buy_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$buy_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     buy_records_staging<T extends stock_fulls$buy_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$buy_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$buy_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cash_records<T extends stock_fulls$cash_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$cash_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cash_records_staging<T extends stock_fulls$cash_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$cash_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     closeout_records<T extends stock_fulls$closeout_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$closeout_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$closeout_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     fiscal_year_balance<T extends stock_fulls$fiscal_year_balanceArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$fiscal_year_balanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ipo_allotment_records<T extends stock_fulls$ipo_allotment_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$ipo_allotment_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -20238,6 +20889,7 @@ export namespace Prisma {
     order_book<T extends stock_fulls$order_bookArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$order_bookArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$order_bookPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     promoter_records<T extends stock_fulls$promoter_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$promoter_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$promoter_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     right_records<T extends stock_fulls$right_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$right_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    right_records_staging<T extends stock_fulls$right_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$right_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records<T extends stock_fulls$sell_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$sell_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records_staging<T extends stock_fulls$sell_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$sell_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sectors<T extends sectorsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, sectorsDefaultArgs<ExtArgs>>): Prisma__sectorsClient<$Result.GetResult<Prisma.$sectorsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -20696,6 +21348,30 @@ export namespace Prisma {
   }
 
   /**
+   * stock_fulls.bonus_records_staging
+   */
+  export type stock_fulls$bonus_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    where?: bonus_records_stagingWhereInput
+    orderBy?: bonus_records_stagingOrderByWithRelationInput | bonus_records_stagingOrderByWithRelationInput[]
+    cursor?: bonus_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Bonus_records_stagingScalarFieldEnum | Bonus_records_stagingScalarFieldEnum[]
+  }
+
+  /**
    * stock_fulls.buy_records
    */
   export type stock_fulls$buy_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -20765,6 +21441,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Cash_recordsScalarFieldEnum | Cash_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * stock_fulls.cash_records_staging
+   */
+  export type stock_fulls$cash_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    where?: cash_records_stagingWhereInput
+    orderBy?: cash_records_stagingOrderByWithRelationInput | cash_records_stagingOrderByWithRelationInput[]
+    cursor?: cash_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Cash_records_stagingScalarFieldEnum | Cash_records_stagingScalarFieldEnum[]
   }
 
   /**
@@ -20933,6 +21633,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Right_recordsScalarFieldEnum | Right_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * stock_fulls.right_records_staging
+   */
+  export type stock_fulls$right_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    where?: right_records_stagingWhereInput
+    orderBy?: right_records_stagingOrderByWithRelationInput | right_records_stagingOrderByWithRelationInput[]
+    cursor?: right_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Right_records_stagingScalarFieldEnum | Right_records_stagingScalarFieldEnum[]
   }
 
   /**
@@ -32771,7 +33495,6 @@ export namespace Prisma {
     total_txn_value: Decimal | null
     total_with_commission: Decimal | null
     wacc_tax_base: Decimal | null
-    wacc: Decimal | null
   }
 
   export type Symbol_holdingsSumAggregateOutputType = {
@@ -32782,7 +33505,6 @@ export namespace Prisma {
     total_txn_value: Decimal | null
     total_with_commission: Decimal | null
     wacc_tax_base: Decimal | null
-    wacc: Decimal | null
   }
 
   export type Symbol_holdingsMinAggregateOutputType = {
@@ -32796,7 +33518,6 @@ export namespace Prisma {
     total_txn_value: Decimal | null
     total_with_commission: Decimal | null
     wacc_tax_base: Decimal | null
-    wacc: Decimal | null
   }
 
   export type Symbol_holdingsMaxAggregateOutputType = {
@@ -32810,7 +33531,6 @@ export namespace Prisma {
     total_txn_value: Decimal | null
     total_with_commission: Decimal | null
     wacc_tax_base: Decimal | null
-    wacc: Decimal | null
   }
 
   export type Symbol_holdingsCountAggregateOutputType = {
@@ -32824,7 +33544,6 @@ export namespace Prisma {
     total_txn_value: number
     total_with_commission: number
     wacc_tax_base: number
-    wacc: number
     _all: number
   }
 
@@ -32837,7 +33556,6 @@ export namespace Prisma {
     total_txn_value?: true
     total_with_commission?: true
     wacc_tax_base?: true
-    wacc?: true
   }
 
   export type Symbol_holdingsSumAggregateInputType = {
@@ -32848,7 +33566,6 @@ export namespace Prisma {
     total_txn_value?: true
     total_with_commission?: true
     wacc_tax_base?: true
-    wacc?: true
   }
 
   export type Symbol_holdingsMinAggregateInputType = {
@@ -32862,7 +33579,6 @@ export namespace Prisma {
     total_txn_value?: true
     total_with_commission?: true
     wacc_tax_base?: true
-    wacc?: true
   }
 
   export type Symbol_holdingsMaxAggregateInputType = {
@@ -32876,7 +33592,6 @@ export namespace Prisma {
     total_txn_value?: true
     total_with_commission?: true
     wacc_tax_base?: true
-    wacc?: true
   }
 
   export type Symbol_holdingsCountAggregateInputType = {
@@ -32890,7 +33605,6 @@ export namespace Prisma {
     total_txn_value?: true
     total_with_commission?: true
     wacc_tax_base?: true
-    wacc?: true
     _all?: true
   }
 
@@ -32991,7 +33705,6 @@ export namespace Prisma {
     total_txn_value: Decimal
     total_with_commission: Decimal
     wacc_tax_base: Decimal | null
-    wacc: Decimal | null
     _count: Symbol_holdingsCountAggregateOutputType | null
     _avg: Symbol_holdingsAvgAggregateOutputType | null
     _sum: Symbol_holdingsSumAggregateOutputType | null
@@ -33024,7 +33737,6 @@ export namespace Prisma {
     total_txn_value?: boolean
     total_with_commission?: boolean
     wacc_tax_base?: boolean
-    wacc?: boolean
     fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
     sub_classes?: boolean | symbol_holdings$sub_classesArgs<ExtArgs>
@@ -33042,7 +33754,6 @@ export namespace Prisma {
     total_txn_value?: boolean
     total_with_commission?: boolean
     wacc_tax_base?: boolean
-    wacc?: boolean
     fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
     sub_classes?: boolean | symbol_holdings$sub_classesArgs<ExtArgs>
@@ -33060,7 +33771,6 @@ export namespace Prisma {
     total_txn_value?: boolean
     total_with_commission?: boolean
     wacc_tax_base?: boolean
-    wacc?: boolean
     fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
     sub_classes?: boolean | symbol_holdings$sub_classesArgs<ExtArgs>
@@ -33078,10 +33788,9 @@ export namespace Prisma {
     total_txn_value?: boolean
     total_with_commission?: boolean
     wacc_tax_base?: boolean
-    wacc?: boolean
   }
 
-  export type symbol_holdingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"symbol" | "fund_id" | "fiscal_year_id" | "remarks" | "quantity" | "source_type" | "sub_id" | "total_txn_value" | "total_with_commission" | "wacc_tax_base" | "wacc", ExtArgs["result"]["symbol_holdings"]>
+  export type symbol_holdingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"symbol" | "fund_id" | "fiscal_year_id" | "remarks" | "quantity" | "source_type" | "sub_id" | "total_txn_value" | "total_with_commission" | "wacc_tax_base", ExtArgs["result"]["symbol_holdings"]>
   export type symbol_holdingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
@@ -33120,7 +33829,6 @@ export namespace Prisma {
       total_txn_value: Prisma.Decimal
       total_with_commission: Prisma.Decimal
       wacc_tax_base: Prisma.Decimal | null
-      wacc: Prisma.Decimal | null
     }, ExtArgs["result"]["symbol_holdings"]>
     composites: {}
   }
@@ -33558,7 +34266,6 @@ export namespace Prisma {
     readonly total_txn_value: FieldRef<"symbol_holdings", 'Decimal'>
     readonly total_with_commission: FieldRef<"symbol_holdings", 'Decimal'>
     readonly wacc_tax_base: FieldRef<"symbol_holdings", 'Decimal'>
-    readonly wacc: FieldRef<"symbol_holdings", 'Decimal'>
   }
     
 
@@ -34186,10 +34893,13 @@ export namespace Prisma {
     fund_id?: boolean
     sub_name?: boolean
     added_at?: boolean
+    bonus_records_staging?: boolean | sub_classes$bonus_records_stagingArgs<ExtArgs>
+    cash_records_staging?: boolean | sub_classes$cash_records_stagingArgs<ExtArgs>
     fiscal_year_balance?: boolean | sub_classes$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | sub_classes$ipo_allotment_recordsArgs<ExtArgs>
     ipo_allotment_staging?: boolean | sub_classes$ipo_allotment_stagingArgs<ExtArgs>
     promoter_records?: boolean | sub_classes$promoter_recordsArgs<ExtArgs>
+    right_records_staging?: boolean | sub_classes$right_records_stagingArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
     symbol_holdings?: boolean | sub_classes$symbol_holdingsArgs<ExtArgs>
     _count?: boolean | Sub_classesCountOutputTypeDefaultArgs<ExtArgs>
@@ -34220,10 +34930,13 @@ export namespace Prisma {
 
   export type sub_classesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"sub_id" | "fund_id" | "sub_name" | "added_at", ExtArgs["result"]["sub_classes"]>
   export type sub_classesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bonus_records_staging?: boolean | sub_classes$bonus_records_stagingArgs<ExtArgs>
+    cash_records_staging?: boolean | sub_classes$cash_records_stagingArgs<ExtArgs>
     fiscal_year_balance?: boolean | sub_classes$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | sub_classes$ipo_allotment_recordsArgs<ExtArgs>
     ipo_allotment_staging?: boolean | sub_classes$ipo_allotment_stagingArgs<ExtArgs>
     promoter_records?: boolean | sub_classes$promoter_recordsArgs<ExtArgs>
+    right_records_staging?: boolean | sub_classes$right_records_stagingArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
     symbol_holdings?: boolean | sub_classes$symbol_holdingsArgs<ExtArgs>
     _count?: boolean | Sub_classesCountOutputTypeDefaultArgs<ExtArgs>
@@ -34238,10 +34951,13 @@ export namespace Prisma {
   export type $sub_classesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "sub_classes"
     objects: {
+      bonus_records_staging: Prisma.$bonus_records_stagingPayload<ExtArgs>[]
+      cash_records_staging: Prisma.$cash_records_stagingPayload<ExtArgs>[]
       fiscal_year_balance: Prisma.$fiscal_year_balancePayload<ExtArgs>[]
       ipo_allotment_records: Prisma.$ipo_allotment_recordsPayload<ExtArgs>[]
       ipo_allotment_staging: Prisma.$ipo_allotment_stagingPayload<ExtArgs>[]
       promoter_records: Prisma.$promoter_recordsPayload<ExtArgs>[]
+      right_records_staging: Prisma.$right_records_stagingPayload<ExtArgs>[]
       funds: Prisma.$fundsPayload<ExtArgs>
       symbol_holdings: Prisma.$symbol_holdingsPayload<ExtArgs>[]
     }
@@ -34644,10 +35360,13 @@ export namespace Prisma {
    */
   export interface Prisma__sub_classesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    bonus_records_staging<T extends sub_classes$bonus_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$bonus_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cash_records_staging<T extends sub_classes$cash_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$cash_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     fiscal_year_balance<T extends sub_classes$fiscal_year_balanceArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$fiscal_year_balanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ipo_allotment_records<T extends sub_classes$ipo_allotment_recordsArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$ipo_allotment_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ipo_allotment_staging<T extends sub_classes$ipo_allotment_stagingArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$ipo_allotment_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     promoter_records<T extends sub_classes$promoter_recordsArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$promoter_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$promoter_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    right_records_staging<T extends sub_classes$right_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$right_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     funds<T extends fundsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fundsDefaultArgs<ExtArgs>>): Prisma__fundsClient<$Result.GetResult<Prisma.$fundsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     symbol_holdings<T extends sub_classes$symbol_holdingsArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$symbol_holdingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$symbol_holdingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -35079,6 +35798,54 @@ export namespace Prisma {
   }
 
   /**
+   * sub_classes.bonus_records_staging
+   */
+  export type sub_classes$bonus_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    where?: bonus_records_stagingWhereInput
+    orderBy?: bonus_records_stagingOrderByWithRelationInput | bonus_records_stagingOrderByWithRelationInput[]
+    cursor?: bonus_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Bonus_records_stagingScalarFieldEnum | Bonus_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * sub_classes.cash_records_staging
+   */
+  export type sub_classes$cash_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    where?: cash_records_stagingWhereInput
+    orderBy?: cash_records_stagingOrderByWithRelationInput | cash_records_stagingOrderByWithRelationInput[]
+    cursor?: cash_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Cash_records_stagingScalarFieldEnum | Cash_records_stagingScalarFieldEnum[]
+  }
+
+  /**
    * sub_classes.fiscal_year_balance
    */
   export type sub_classes$fiscal_year_balanceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -35172,6 +35939,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Promoter_recordsScalarFieldEnum | Promoter_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * sub_classes.right_records_staging
+   */
+  export type sub_classes$right_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    where?: right_records_stagingWhereInput
+    orderBy?: right_records_stagingOrderByWithRelationInput | right_records_stagingOrderByWithRelationInput[]
+    cursor?: right_records_stagingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Right_records_stagingScalarFieldEnum | Right_records_stagingScalarFieldEnum[]
   }
 
   /**
@@ -36436,6 +37227,4908 @@ export namespace Prisma {
 
 
   /**
+   * Model bonus_records_staging
+   */
+
+  export type AggregateBonus_records_staging = {
+    _count: Bonus_records_stagingCountAggregateOutputType | null
+    _avg: Bonus_records_stagingAvgAggregateOutputType | null
+    _sum: Bonus_records_stagingSumAggregateOutputType | null
+    _min: Bonus_records_stagingMinAggregateOutputType | null
+    _max: Bonus_records_stagingMaxAggregateOutputType | null
+  }
+
+  export type Bonus_records_stagingAvgAggregateOutputType = {
+    bonus_staging_id: number | null
+    fund_id: number | null
+    fiscal_year_id: number | null
+    bonus_percent: Decimal | null
+    quantity: number | null
+    effective_rate: Decimal | null
+    sub_id: number | null
+  }
+
+  export type Bonus_records_stagingSumAggregateOutputType = {
+    bonus_staging_id: number | null
+    fund_id: number | null
+    fiscal_year_id: number | null
+    bonus_percent: Decimal | null
+    quantity: number | null
+    effective_rate: Decimal | null
+    sub_id: number | null
+  }
+
+  export type Bonus_records_stagingMinAggregateOutputType = {
+    bonus_staging_id: number | null
+    fund_id: number | null
+    symbol: string | null
+    fiscal_year_id: number | null
+    bonus_percent: Decimal | null
+    quantity: number | null
+    bookclose_date: Date | null
+    effective_rate: Decimal | null
+    sub_id: number | null
+    remarks: string | null
+    recorded_at: Date | null
+    added_at: Date | null
+  }
+
+  export type Bonus_records_stagingMaxAggregateOutputType = {
+    bonus_staging_id: number | null
+    fund_id: number | null
+    symbol: string | null
+    fiscal_year_id: number | null
+    bonus_percent: Decimal | null
+    quantity: number | null
+    bookclose_date: Date | null
+    effective_rate: Decimal | null
+    sub_id: number | null
+    remarks: string | null
+    recorded_at: Date | null
+    added_at: Date | null
+  }
+
+  export type Bonus_records_stagingCountAggregateOutputType = {
+    bonus_staging_id: number
+    fund_id: number
+    symbol: number
+    fiscal_year_id: number
+    bonus_percent: number
+    quantity: number
+    bookclose_date: number
+    effective_rate: number
+    sub_id: number
+    remarks: number
+    recorded_at: number
+    added_at: number
+    _all: number
+  }
+
+
+  export type Bonus_records_stagingAvgAggregateInputType = {
+    bonus_staging_id?: true
+    fund_id?: true
+    fiscal_year_id?: true
+    bonus_percent?: true
+    quantity?: true
+    effective_rate?: true
+    sub_id?: true
+  }
+
+  export type Bonus_records_stagingSumAggregateInputType = {
+    bonus_staging_id?: true
+    fund_id?: true
+    fiscal_year_id?: true
+    bonus_percent?: true
+    quantity?: true
+    effective_rate?: true
+    sub_id?: true
+  }
+
+  export type Bonus_records_stagingMinAggregateInputType = {
+    bonus_staging_id?: true
+    fund_id?: true
+    symbol?: true
+    fiscal_year_id?: true
+    bonus_percent?: true
+    quantity?: true
+    bookclose_date?: true
+    effective_rate?: true
+    sub_id?: true
+    remarks?: true
+    recorded_at?: true
+    added_at?: true
+  }
+
+  export type Bonus_records_stagingMaxAggregateInputType = {
+    bonus_staging_id?: true
+    fund_id?: true
+    symbol?: true
+    fiscal_year_id?: true
+    bonus_percent?: true
+    quantity?: true
+    bookclose_date?: true
+    effective_rate?: true
+    sub_id?: true
+    remarks?: true
+    recorded_at?: true
+    added_at?: true
+  }
+
+  export type Bonus_records_stagingCountAggregateInputType = {
+    bonus_staging_id?: true
+    fund_id?: true
+    symbol?: true
+    fiscal_year_id?: true
+    bonus_percent?: true
+    quantity?: true
+    bookclose_date?: true
+    effective_rate?: true
+    sub_id?: true
+    remarks?: true
+    recorded_at?: true
+    added_at?: true
+    _all?: true
+  }
+
+  export type Bonus_records_stagingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which bonus_records_staging to aggregate.
+     */
+    where?: bonus_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of bonus_records_stagings to fetch.
+     */
+    orderBy?: bonus_records_stagingOrderByWithRelationInput | bonus_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: bonus_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` bonus_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` bonus_records_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned bonus_records_stagings
+    **/
+    _count?: true | Bonus_records_stagingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Bonus_records_stagingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Bonus_records_stagingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Bonus_records_stagingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Bonus_records_stagingMaxAggregateInputType
+  }
+
+  export type GetBonus_records_stagingAggregateType<T extends Bonus_records_stagingAggregateArgs> = {
+        [P in keyof T & keyof AggregateBonus_records_staging]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBonus_records_staging[P]>
+      : GetScalarType<T[P], AggregateBonus_records_staging[P]>
+  }
+
+
+
+
+  export type bonus_records_stagingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: bonus_records_stagingWhereInput
+    orderBy?: bonus_records_stagingOrderByWithAggregationInput | bonus_records_stagingOrderByWithAggregationInput[]
+    by: Bonus_records_stagingScalarFieldEnum[] | Bonus_records_stagingScalarFieldEnum
+    having?: bonus_records_stagingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Bonus_records_stagingCountAggregateInputType | true
+    _avg?: Bonus_records_stagingAvgAggregateInputType
+    _sum?: Bonus_records_stagingSumAggregateInputType
+    _min?: Bonus_records_stagingMinAggregateInputType
+    _max?: Bonus_records_stagingMaxAggregateInputType
+  }
+
+  export type Bonus_records_stagingGroupByOutputType = {
+    bonus_staging_id: number
+    fund_id: number
+    symbol: string
+    fiscal_year_id: number
+    bonus_percent: Decimal
+    quantity: number
+    bookclose_date: Date
+    effective_rate: Decimal
+    sub_id: number | null
+    remarks: string
+    recorded_at: Date
+    added_at: Date | null
+    _count: Bonus_records_stagingCountAggregateOutputType | null
+    _avg: Bonus_records_stagingAvgAggregateOutputType | null
+    _sum: Bonus_records_stagingSumAggregateOutputType | null
+    _min: Bonus_records_stagingMinAggregateOutputType | null
+    _max: Bonus_records_stagingMaxAggregateOutputType | null
+  }
+
+  type GetBonus_records_stagingGroupByPayload<T extends bonus_records_stagingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Bonus_records_stagingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Bonus_records_stagingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Bonus_records_stagingGroupByOutputType[P]>
+            : GetScalarType<T[P], Bonus_records_stagingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type bonus_records_stagingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    bonus_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    bonus_percent?: boolean
+    quantity?: boolean
+    bookclose_date?: boolean
+    effective_rate?: boolean
+    sub_id?: boolean
+    remarks?: boolean
+    recorded_at?: boolean
+    added_at?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | bonus_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bonus_records_staging"]>
+
+  export type bonus_records_stagingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    bonus_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    bonus_percent?: boolean
+    quantity?: boolean
+    bookclose_date?: boolean
+    effective_rate?: boolean
+    sub_id?: boolean
+    remarks?: boolean
+    recorded_at?: boolean
+    added_at?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | bonus_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bonus_records_staging"]>
+
+  export type bonus_records_stagingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    bonus_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    bonus_percent?: boolean
+    quantity?: boolean
+    bookclose_date?: boolean
+    effective_rate?: boolean
+    sub_id?: boolean
+    remarks?: boolean
+    recorded_at?: boolean
+    added_at?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | bonus_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bonus_records_staging"]>
+
+  export type bonus_records_stagingSelectScalar = {
+    bonus_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    bonus_percent?: boolean
+    quantity?: boolean
+    bookclose_date?: boolean
+    effective_rate?: boolean
+    sub_id?: boolean
+    remarks?: boolean
+    recorded_at?: boolean
+    added_at?: boolean
+  }
+
+  export type bonus_records_stagingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"bonus_staging_id" | "fund_id" | "symbol" | "fiscal_year_id" | "bonus_percent" | "quantity" | "bookclose_date" | "effective_rate" | "sub_id" | "remarks" | "recorded_at" | "added_at", ExtArgs["result"]["bonus_records_staging"]>
+  export type bonus_records_stagingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | bonus_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+  export type bonus_records_stagingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | bonus_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+  export type bonus_records_stagingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | bonus_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+
+  export type $bonus_records_stagingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "bonus_records_staging"
+    objects: {
+      fiscal_years: Prisma.$fiscal_yearsPayload<ExtArgs>
+      funds: Prisma.$fundsPayload<ExtArgs>
+      sub_classes: Prisma.$sub_classesPayload<ExtArgs> | null
+      stock_fulls: Prisma.$stock_fullsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      bonus_staging_id: number
+      fund_id: number
+      symbol: string
+      fiscal_year_id: number
+      bonus_percent: Prisma.Decimal
+      quantity: number
+      bookclose_date: Date
+      effective_rate: Prisma.Decimal
+      sub_id: number | null
+      remarks: string
+      recorded_at: Date
+      added_at: Date | null
+    }, ExtArgs["result"]["bonus_records_staging"]>
+    composites: {}
+  }
+
+  type bonus_records_stagingGetPayload<S extends boolean | null | undefined | bonus_records_stagingDefaultArgs> = $Result.GetResult<Prisma.$bonus_records_stagingPayload, S>
+
+  type bonus_records_stagingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<bonus_records_stagingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Bonus_records_stagingCountAggregateInputType | true
+    }
+
+  export interface bonus_records_stagingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['bonus_records_staging'], meta: { name: 'bonus_records_staging' } }
+    /**
+     * Find zero or one Bonus_records_staging that matches the filter.
+     * @param {bonus_records_stagingFindUniqueArgs} args - Arguments to find a Bonus_records_staging
+     * @example
+     * // Get one Bonus_records_staging
+     * const bonus_records_staging = await prisma.bonus_records_staging.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends bonus_records_stagingFindUniqueArgs>(args: SelectSubset<T, bonus_records_stagingFindUniqueArgs<ExtArgs>>): Prisma__bonus_records_stagingClient<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Bonus_records_staging that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {bonus_records_stagingFindUniqueOrThrowArgs} args - Arguments to find a Bonus_records_staging
+     * @example
+     * // Get one Bonus_records_staging
+     * const bonus_records_staging = await prisma.bonus_records_staging.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends bonus_records_stagingFindUniqueOrThrowArgs>(args: SelectSubset<T, bonus_records_stagingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__bonus_records_stagingClient<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Bonus_records_staging that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {bonus_records_stagingFindFirstArgs} args - Arguments to find a Bonus_records_staging
+     * @example
+     * // Get one Bonus_records_staging
+     * const bonus_records_staging = await prisma.bonus_records_staging.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends bonus_records_stagingFindFirstArgs>(args?: SelectSubset<T, bonus_records_stagingFindFirstArgs<ExtArgs>>): Prisma__bonus_records_stagingClient<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Bonus_records_staging that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {bonus_records_stagingFindFirstOrThrowArgs} args - Arguments to find a Bonus_records_staging
+     * @example
+     * // Get one Bonus_records_staging
+     * const bonus_records_staging = await prisma.bonus_records_staging.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends bonus_records_stagingFindFirstOrThrowArgs>(args?: SelectSubset<T, bonus_records_stagingFindFirstOrThrowArgs<ExtArgs>>): Prisma__bonus_records_stagingClient<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Bonus_records_stagings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {bonus_records_stagingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Bonus_records_stagings
+     * const bonus_records_stagings = await prisma.bonus_records_staging.findMany()
+     * 
+     * // Get first 10 Bonus_records_stagings
+     * const bonus_records_stagings = await prisma.bonus_records_staging.findMany({ take: 10 })
+     * 
+     * // Only select the `bonus_staging_id`
+     * const bonus_records_stagingWithBonus_staging_idOnly = await prisma.bonus_records_staging.findMany({ select: { bonus_staging_id: true } })
+     * 
+     */
+    findMany<T extends bonus_records_stagingFindManyArgs>(args?: SelectSubset<T, bonus_records_stagingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Bonus_records_staging.
+     * @param {bonus_records_stagingCreateArgs} args - Arguments to create a Bonus_records_staging.
+     * @example
+     * // Create one Bonus_records_staging
+     * const Bonus_records_staging = await prisma.bonus_records_staging.create({
+     *   data: {
+     *     // ... data to create a Bonus_records_staging
+     *   }
+     * })
+     * 
+     */
+    create<T extends bonus_records_stagingCreateArgs>(args: SelectSubset<T, bonus_records_stagingCreateArgs<ExtArgs>>): Prisma__bonus_records_stagingClient<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Bonus_records_stagings.
+     * @param {bonus_records_stagingCreateManyArgs} args - Arguments to create many Bonus_records_stagings.
+     * @example
+     * // Create many Bonus_records_stagings
+     * const bonus_records_staging = await prisma.bonus_records_staging.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends bonus_records_stagingCreateManyArgs>(args?: SelectSubset<T, bonus_records_stagingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Bonus_records_stagings and returns the data saved in the database.
+     * @param {bonus_records_stagingCreateManyAndReturnArgs} args - Arguments to create many Bonus_records_stagings.
+     * @example
+     * // Create many Bonus_records_stagings
+     * const bonus_records_staging = await prisma.bonus_records_staging.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Bonus_records_stagings and only return the `bonus_staging_id`
+     * const bonus_records_stagingWithBonus_staging_idOnly = await prisma.bonus_records_staging.createManyAndReturn({
+     *   select: { bonus_staging_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends bonus_records_stagingCreateManyAndReturnArgs>(args?: SelectSubset<T, bonus_records_stagingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Bonus_records_staging.
+     * @param {bonus_records_stagingDeleteArgs} args - Arguments to delete one Bonus_records_staging.
+     * @example
+     * // Delete one Bonus_records_staging
+     * const Bonus_records_staging = await prisma.bonus_records_staging.delete({
+     *   where: {
+     *     // ... filter to delete one Bonus_records_staging
+     *   }
+     * })
+     * 
+     */
+    delete<T extends bonus_records_stagingDeleteArgs>(args: SelectSubset<T, bonus_records_stagingDeleteArgs<ExtArgs>>): Prisma__bonus_records_stagingClient<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Bonus_records_staging.
+     * @param {bonus_records_stagingUpdateArgs} args - Arguments to update one Bonus_records_staging.
+     * @example
+     * // Update one Bonus_records_staging
+     * const bonus_records_staging = await prisma.bonus_records_staging.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends bonus_records_stagingUpdateArgs>(args: SelectSubset<T, bonus_records_stagingUpdateArgs<ExtArgs>>): Prisma__bonus_records_stagingClient<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Bonus_records_stagings.
+     * @param {bonus_records_stagingDeleteManyArgs} args - Arguments to filter Bonus_records_stagings to delete.
+     * @example
+     * // Delete a few Bonus_records_stagings
+     * const { count } = await prisma.bonus_records_staging.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends bonus_records_stagingDeleteManyArgs>(args?: SelectSubset<T, bonus_records_stagingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Bonus_records_stagings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {bonus_records_stagingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Bonus_records_stagings
+     * const bonus_records_staging = await prisma.bonus_records_staging.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends bonus_records_stagingUpdateManyArgs>(args: SelectSubset<T, bonus_records_stagingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Bonus_records_stagings and returns the data updated in the database.
+     * @param {bonus_records_stagingUpdateManyAndReturnArgs} args - Arguments to update many Bonus_records_stagings.
+     * @example
+     * // Update many Bonus_records_stagings
+     * const bonus_records_staging = await prisma.bonus_records_staging.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Bonus_records_stagings and only return the `bonus_staging_id`
+     * const bonus_records_stagingWithBonus_staging_idOnly = await prisma.bonus_records_staging.updateManyAndReturn({
+     *   select: { bonus_staging_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends bonus_records_stagingUpdateManyAndReturnArgs>(args: SelectSubset<T, bonus_records_stagingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Bonus_records_staging.
+     * @param {bonus_records_stagingUpsertArgs} args - Arguments to update or create a Bonus_records_staging.
+     * @example
+     * // Update or create a Bonus_records_staging
+     * const bonus_records_staging = await prisma.bonus_records_staging.upsert({
+     *   create: {
+     *     // ... data to create a Bonus_records_staging
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Bonus_records_staging we want to update
+     *   }
+     * })
+     */
+    upsert<T extends bonus_records_stagingUpsertArgs>(args: SelectSubset<T, bonus_records_stagingUpsertArgs<ExtArgs>>): Prisma__bonus_records_stagingClient<$Result.GetResult<Prisma.$bonus_records_stagingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Bonus_records_stagings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {bonus_records_stagingCountArgs} args - Arguments to filter Bonus_records_stagings to count.
+     * @example
+     * // Count the number of Bonus_records_stagings
+     * const count = await prisma.bonus_records_staging.count({
+     *   where: {
+     *     // ... the filter for the Bonus_records_stagings we want to count
+     *   }
+     * })
+    **/
+    count<T extends bonus_records_stagingCountArgs>(
+      args?: Subset<T, bonus_records_stagingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Bonus_records_stagingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Bonus_records_staging.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Bonus_records_stagingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Bonus_records_stagingAggregateArgs>(args: Subset<T, Bonus_records_stagingAggregateArgs>): Prisma.PrismaPromise<GetBonus_records_stagingAggregateType<T>>
+
+    /**
+     * Group by Bonus_records_staging.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {bonus_records_stagingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends bonus_records_stagingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: bonus_records_stagingGroupByArgs['orderBy'] }
+        : { orderBy?: bonus_records_stagingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, bonus_records_stagingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBonus_records_stagingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the bonus_records_staging model
+   */
+  readonly fields: bonus_records_stagingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for bonus_records_staging.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__bonus_records_stagingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    fiscal_years<T extends fiscal_yearsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_yearsDefaultArgs<ExtArgs>>): Prisma__fiscal_yearsClient<$Result.GetResult<Prisma.$fiscal_yearsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    funds<T extends fundsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fundsDefaultArgs<ExtArgs>>): Prisma__fundsClient<$Result.GetResult<Prisma.$fundsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sub_classes<T extends bonus_records_staging$sub_classesArgs<ExtArgs> = {}>(args?: Subset<T, bonus_records_staging$sub_classesArgs<ExtArgs>>): Prisma__sub_classesClient<$Result.GetResult<Prisma.$sub_classesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    stock_fulls<T extends stock_fullsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, stock_fullsDefaultArgs<ExtArgs>>): Prisma__stock_fullsClient<$Result.GetResult<Prisma.$stock_fullsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the bonus_records_staging model
+   */
+  interface bonus_records_stagingFieldRefs {
+    readonly bonus_staging_id: FieldRef<"bonus_records_staging", 'Int'>
+    readonly fund_id: FieldRef<"bonus_records_staging", 'Int'>
+    readonly symbol: FieldRef<"bonus_records_staging", 'String'>
+    readonly fiscal_year_id: FieldRef<"bonus_records_staging", 'Int'>
+    readonly bonus_percent: FieldRef<"bonus_records_staging", 'Decimal'>
+    readonly quantity: FieldRef<"bonus_records_staging", 'Int'>
+    readonly bookclose_date: FieldRef<"bonus_records_staging", 'DateTime'>
+    readonly effective_rate: FieldRef<"bonus_records_staging", 'Decimal'>
+    readonly sub_id: FieldRef<"bonus_records_staging", 'Int'>
+    readonly remarks: FieldRef<"bonus_records_staging", 'String'>
+    readonly recorded_at: FieldRef<"bonus_records_staging", 'DateTime'>
+    readonly added_at: FieldRef<"bonus_records_staging", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * bonus_records_staging findUnique
+   */
+  export type bonus_records_stagingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which bonus_records_staging to fetch.
+     */
+    where: bonus_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * bonus_records_staging findUniqueOrThrow
+   */
+  export type bonus_records_stagingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which bonus_records_staging to fetch.
+     */
+    where: bonus_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * bonus_records_staging findFirst
+   */
+  export type bonus_records_stagingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which bonus_records_staging to fetch.
+     */
+    where?: bonus_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of bonus_records_stagings to fetch.
+     */
+    orderBy?: bonus_records_stagingOrderByWithRelationInput | bonus_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for bonus_records_stagings.
+     */
+    cursor?: bonus_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` bonus_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` bonus_records_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of bonus_records_stagings.
+     */
+    distinct?: Bonus_records_stagingScalarFieldEnum | Bonus_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * bonus_records_staging findFirstOrThrow
+   */
+  export type bonus_records_stagingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which bonus_records_staging to fetch.
+     */
+    where?: bonus_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of bonus_records_stagings to fetch.
+     */
+    orderBy?: bonus_records_stagingOrderByWithRelationInput | bonus_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for bonus_records_stagings.
+     */
+    cursor?: bonus_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` bonus_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` bonus_records_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of bonus_records_stagings.
+     */
+    distinct?: Bonus_records_stagingScalarFieldEnum | Bonus_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * bonus_records_staging findMany
+   */
+  export type bonus_records_stagingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which bonus_records_stagings to fetch.
+     */
+    where?: bonus_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of bonus_records_stagings to fetch.
+     */
+    orderBy?: bonus_records_stagingOrderByWithRelationInput | bonus_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing bonus_records_stagings.
+     */
+    cursor?: bonus_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` bonus_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` bonus_records_stagings.
+     */
+    skip?: number
+    distinct?: Bonus_records_stagingScalarFieldEnum | Bonus_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * bonus_records_staging create
+   */
+  export type bonus_records_stagingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a bonus_records_staging.
+     */
+    data: XOR<bonus_records_stagingCreateInput, bonus_records_stagingUncheckedCreateInput>
+  }
+
+  /**
+   * bonus_records_staging createMany
+   */
+  export type bonus_records_stagingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many bonus_records_stagings.
+     */
+    data: bonus_records_stagingCreateManyInput | bonus_records_stagingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * bonus_records_staging createManyAndReturn
+   */
+  export type bonus_records_stagingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * The data used to create many bonus_records_stagings.
+     */
+    data: bonus_records_stagingCreateManyInput | bonus_records_stagingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * bonus_records_staging update
+   */
+  export type bonus_records_stagingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a bonus_records_staging.
+     */
+    data: XOR<bonus_records_stagingUpdateInput, bonus_records_stagingUncheckedUpdateInput>
+    /**
+     * Choose, which bonus_records_staging to update.
+     */
+    where: bonus_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * bonus_records_staging updateMany
+   */
+  export type bonus_records_stagingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update bonus_records_stagings.
+     */
+    data: XOR<bonus_records_stagingUpdateManyMutationInput, bonus_records_stagingUncheckedUpdateManyInput>
+    /**
+     * Filter which bonus_records_stagings to update
+     */
+    where?: bonus_records_stagingWhereInput
+    /**
+     * Limit how many bonus_records_stagings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * bonus_records_staging updateManyAndReturn
+   */
+  export type bonus_records_stagingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * The data used to update bonus_records_stagings.
+     */
+    data: XOR<bonus_records_stagingUpdateManyMutationInput, bonus_records_stagingUncheckedUpdateManyInput>
+    /**
+     * Filter which bonus_records_stagings to update
+     */
+    where?: bonus_records_stagingWhereInput
+    /**
+     * Limit how many bonus_records_stagings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * bonus_records_staging upsert
+   */
+  export type bonus_records_stagingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the bonus_records_staging to update in case it exists.
+     */
+    where: bonus_records_stagingWhereUniqueInput
+    /**
+     * In case the bonus_records_staging found by the `where` argument doesn't exist, create a new bonus_records_staging with this data.
+     */
+    create: XOR<bonus_records_stagingCreateInput, bonus_records_stagingUncheckedCreateInput>
+    /**
+     * In case the bonus_records_staging was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<bonus_records_stagingUpdateInput, bonus_records_stagingUncheckedUpdateInput>
+  }
+
+  /**
+   * bonus_records_staging delete
+   */
+  export type bonus_records_stagingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter which bonus_records_staging to delete.
+     */
+    where: bonus_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * bonus_records_staging deleteMany
+   */
+  export type bonus_records_stagingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which bonus_records_stagings to delete
+     */
+    where?: bonus_records_stagingWhereInput
+    /**
+     * Limit how many bonus_records_stagings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * bonus_records_staging.sub_classes
+   */
+  export type bonus_records_staging$sub_classesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the sub_classes
+     */
+    select?: sub_classesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the sub_classes
+     */
+    omit?: sub_classesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: sub_classesInclude<ExtArgs> | null
+    where?: sub_classesWhereInput
+  }
+
+  /**
+   * bonus_records_staging without action
+   */
+  export type bonus_records_stagingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the bonus_records_staging
+     */
+    select?: bonus_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the bonus_records_staging
+     */
+    omit?: bonus_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: bonus_records_stagingInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model cash_records_staging
+   */
+
+  export type AggregateCash_records_staging = {
+    _count: Cash_records_stagingCountAggregateOutputType | null
+    _avg: Cash_records_stagingAvgAggregateOutputType | null
+    _sum: Cash_records_stagingSumAggregateOutputType | null
+    _min: Cash_records_stagingMinAggregateOutputType | null
+    _max: Cash_records_stagingMaxAggregateOutputType | null
+  }
+
+  export type Cash_records_stagingAvgAggregateOutputType = {
+    cash_staging_id: number | null
+    fund_id: number | null
+    amount: Decimal | null
+    fiscal_year_id: number | null
+    sub_id: number | null
+  }
+
+  export type Cash_records_stagingSumAggregateOutputType = {
+    cash_staging_id: number | null
+    fund_id: number | null
+    amount: Decimal | null
+    fiscal_year_id: number | null
+    sub_id: number | null
+  }
+
+  export type Cash_records_stagingMinAggregateOutputType = {
+    cash_staging_id: number | null
+    fund_id: number | null
+    symbol: string | null
+    amount: Decimal | null
+    bookclose_date: Date | null
+    fiscal_year_id: number | null
+    recorded_at: Date | null
+    remarks: string | null
+    sub_id: number | null
+  }
+
+  export type Cash_records_stagingMaxAggregateOutputType = {
+    cash_staging_id: number | null
+    fund_id: number | null
+    symbol: string | null
+    amount: Decimal | null
+    bookclose_date: Date | null
+    fiscal_year_id: number | null
+    recorded_at: Date | null
+    remarks: string | null
+    sub_id: number | null
+  }
+
+  export type Cash_records_stagingCountAggregateOutputType = {
+    cash_staging_id: number
+    fund_id: number
+    symbol: number
+    amount: number
+    bookclose_date: number
+    fiscal_year_id: number
+    recorded_at: number
+    remarks: number
+    sub_id: number
+    _all: number
+  }
+
+
+  export type Cash_records_stagingAvgAggregateInputType = {
+    cash_staging_id?: true
+    fund_id?: true
+    amount?: true
+    fiscal_year_id?: true
+    sub_id?: true
+  }
+
+  export type Cash_records_stagingSumAggregateInputType = {
+    cash_staging_id?: true
+    fund_id?: true
+    amount?: true
+    fiscal_year_id?: true
+    sub_id?: true
+  }
+
+  export type Cash_records_stagingMinAggregateInputType = {
+    cash_staging_id?: true
+    fund_id?: true
+    symbol?: true
+    amount?: true
+    bookclose_date?: true
+    fiscal_year_id?: true
+    recorded_at?: true
+    remarks?: true
+    sub_id?: true
+  }
+
+  export type Cash_records_stagingMaxAggregateInputType = {
+    cash_staging_id?: true
+    fund_id?: true
+    symbol?: true
+    amount?: true
+    bookclose_date?: true
+    fiscal_year_id?: true
+    recorded_at?: true
+    remarks?: true
+    sub_id?: true
+  }
+
+  export type Cash_records_stagingCountAggregateInputType = {
+    cash_staging_id?: true
+    fund_id?: true
+    symbol?: true
+    amount?: true
+    bookclose_date?: true
+    fiscal_year_id?: true
+    recorded_at?: true
+    remarks?: true
+    sub_id?: true
+    _all?: true
+  }
+
+  export type Cash_records_stagingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which cash_records_staging to aggregate.
+     */
+    where?: cash_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of cash_records_stagings to fetch.
+     */
+    orderBy?: cash_records_stagingOrderByWithRelationInput | cash_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: cash_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` cash_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` cash_records_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned cash_records_stagings
+    **/
+    _count?: true | Cash_records_stagingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Cash_records_stagingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Cash_records_stagingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Cash_records_stagingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Cash_records_stagingMaxAggregateInputType
+  }
+
+  export type GetCash_records_stagingAggregateType<T extends Cash_records_stagingAggregateArgs> = {
+        [P in keyof T & keyof AggregateCash_records_staging]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCash_records_staging[P]>
+      : GetScalarType<T[P], AggregateCash_records_staging[P]>
+  }
+
+
+
+
+  export type cash_records_stagingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: cash_records_stagingWhereInput
+    orderBy?: cash_records_stagingOrderByWithAggregationInput | cash_records_stagingOrderByWithAggregationInput[]
+    by: Cash_records_stagingScalarFieldEnum[] | Cash_records_stagingScalarFieldEnum
+    having?: cash_records_stagingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Cash_records_stagingCountAggregateInputType | true
+    _avg?: Cash_records_stagingAvgAggregateInputType
+    _sum?: Cash_records_stagingSumAggregateInputType
+    _min?: Cash_records_stagingMinAggregateInputType
+    _max?: Cash_records_stagingMaxAggregateInputType
+  }
+
+  export type Cash_records_stagingGroupByOutputType = {
+    cash_staging_id: number
+    fund_id: number
+    symbol: string
+    amount: Decimal
+    bookclose_date: Date
+    fiscal_year_id: number
+    recorded_at: Date
+    remarks: string
+    sub_id: number | null
+    _count: Cash_records_stagingCountAggregateOutputType | null
+    _avg: Cash_records_stagingAvgAggregateOutputType | null
+    _sum: Cash_records_stagingSumAggregateOutputType | null
+    _min: Cash_records_stagingMinAggregateOutputType | null
+    _max: Cash_records_stagingMaxAggregateOutputType | null
+  }
+
+  type GetCash_records_stagingGroupByPayload<T extends cash_records_stagingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Cash_records_stagingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Cash_records_stagingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Cash_records_stagingGroupByOutputType[P]>
+            : GetScalarType<T[P], Cash_records_stagingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type cash_records_stagingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    cash_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    amount?: boolean
+    bookclose_date?: boolean
+    fiscal_year_id?: boolean
+    recorded_at?: boolean
+    remarks?: boolean
+    sub_id?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | cash_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cash_records_staging"]>
+
+  export type cash_records_stagingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    cash_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    amount?: boolean
+    bookclose_date?: boolean
+    fiscal_year_id?: boolean
+    recorded_at?: boolean
+    remarks?: boolean
+    sub_id?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | cash_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cash_records_staging"]>
+
+  export type cash_records_stagingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    cash_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    amount?: boolean
+    bookclose_date?: boolean
+    fiscal_year_id?: boolean
+    recorded_at?: boolean
+    remarks?: boolean
+    sub_id?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | cash_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cash_records_staging"]>
+
+  export type cash_records_stagingSelectScalar = {
+    cash_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    amount?: boolean
+    bookclose_date?: boolean
+    fiscal_year_id?: boolean
+    recorded_at?: boolean
+    remarks?: boolean
+    sub_id?: boolean
+  }
+
+  export type cash_records_stagingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"cash_staging_id" | "fund_id" | "symbol" | "amount" | "bookclose_date" | "fiscal_year_id" | "recorded_at" | "remarks" | "sub_id", ExtArgs["result"]["cash_records_staging"]>
+  export type cash_records_stagingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | cash_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+  export type cash_records_stagingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | cash_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+  export type cash_records_stagingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | cash_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+
+  export type $cash_records_stagingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "cash_records_staging"
+    objects: {
+      fiscal_years: Prisma.$fiscal_yearsPayload<ExtArgs>
+      funds: Prisma.$fundsPayload<ExtArgs>
+      sub_classes: Prisma.$sub_classesPayload<ExtArgs> | null
+      stock_fulls: Prisma.$stock_fullsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      cash_staging_id: number
+      fund_id: number
+      symbol: string
+      amount: Prisma.Decimal
+      bookclose_date: Date
+      fiscal_year_id: number
+      recorded_at: Date
+      remarks: string
+      sub_id: number | null
+    }, ExtArgs["result"]["cash_records_staging"]>
+    composites: {}
+  }
+
+  type cash_records_stagingGetPayload<S extends boolean | null | undefined | cash_records_stagingDefaultArgs> = $Result.GetResult<Prisma.$cash_records_stagingPayload, S>
+
+  type cash_records_stagingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<cash_records_stagingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Cash_records_stagingCountAggregateInputType | true
+    }
+
+  export interface cash_records_stagingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['cash_records_staging'], meta: { name: 'cash_records_staging' } }
+    /**
+     * Find zero or one Cash_records_staging that matches the filter.
+     * @param {cash_records_stagingFindUniqueArgs} args - Arguments to find a Cash_records_staging
+     * @example
+     * // Get one Cash_records_staging
+     * const cash_records_staging = await prisma.cash_records_staging.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends cash_records_stagingFindUniqueArgs>(args: SelectSubset<T, cash_records_stagingFindUniqueArgs<ExtArgs>>): Prisma__cash_records_stagingClient<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Cash_records_staging that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {cash_records_stagingFindUniqueOrThrowArgs} args - Arguments to find a Cash_records_staging
+     * @example
+     * // Get one Cash_records_staging
+     * const cash_records_staging = await prisma.cash_records_staging.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends cash_records_stagingFindUniqueOrThrowArgs>(args: SelectSubset<T, cash_records_stagingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__cash_records_stagingClient<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Cash_records_staging that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cash_records_stagingFindFirstArgs} args - Arguments to find a Cash_records_staging
+     * @example
+     * // Get one Cash_records_staging
+     * const cash_records_staging = await prisma.cash_records_staging.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends cash_records_stagingFindFirstArgs>(args?: SelectSubset<T, cash_records_stagingFindFirstArgs<ExtArgs>>): Prisma__cash_records_stagingClient<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Cash_records_staging that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cash_records_stagingFindFirstOrThrowArgs} args - Arguments to find a Cash_records_staging
+     * @example
+     * // Get one Cash_records_staging
+     * const cash_records_staging = await prisma.cash_records_staging.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends cash_records_stagingFindFirstOrThrowArgs>(args?: SelectSubset<T, cash_records_stagingFindFirstOrThrowArgs<ExtArgs>>): Prisma__cash_records_stagingClient<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Cash_records_stagings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cash_records_stagingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cash_records_stagings
+     * const cash_records_stagings = await prisma.cash_records_staging.findMany()
+     * 
+     * // Get first 10 Cash_records_stagings
+     * const cash_records_stagings = await prisma.cash_records_staging.findMany({ take: 10 })
+     * 
+     * // Only select the `cash_staging_id`
+     * const cash_records_stagingWithCash_staging_idOnly = await prisma.cash_records_staging.findMany({ select: { cash_staging_id: true } })
+     * 
+     */
+    findMany<T extends cash_records_stagingFindManyArgs>(args?: SelectSubset<T, cash_records_stagingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Cash_records_staging.
+     * @param {cash_records_stagingCreateArgs} args - Arguments to create a Cash_records_staging.
+     * @example
+     * // Create one Cash_records_staging
+     * const Cash_records_staging = await prisma.cash_records_staging.create({
+     *   data: {
+     *     // ... data to create a Cash_records_staging
+     *   }
+     * })
+     * 
+     */
+    create<T extends cash_records_stagingCreateArgs>(args: SelectSubset<T, cash_records_stagingCreateArgs<ExtArgs>>): Prisma__cash_records_stagingClient<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Cash_records_stagings.
+     * @param {cash_records_stagingCreateManyArgs} args - Arguments to create many Cash_records_stagings.
+     * @example
+     * // Create many Cash_records_stagings
+     * const cash_records_staging = await prisma.cash_records_staging.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends cash_records_stagingCreateManyArgs>(args?: SelectSubset<T, cash_records_stagingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cash_records_stagings and returns the data saved in the database.
+     * @param {cash_records_stagingCreateManyAndReturnArgs} args - Arguments to create many Cash_records_stagings.
+     * @example
+     * // Create many Cash_records_stagings
+     * const cash_records_staging = await prisma.cash_records_staging.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cash_records_stagings and only return the `cash_staging_id`
+     * const cash_records_stagingWithCash_staging_idOnly = await prisma.cash_records_staging.createManyAndReturn({
+     *   select: { cash_staging_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends cash_records_stagingCreateManyAndReturnArgs>(args?: SelectSubset<T, cash_records_stagingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Cash_records_staging.
+     * @param {cash_records_stagingDeleteArgs} args - Arguments to delete one Cash_records_staging.
+     * @example
+     * // Delete one Cash_records_staging
+     * const Cash_records_staging = await prisma.cash_records_staging.delete({
+     *   where: {
+     *     // ... filter to delete one Cash_records_staging
+     *   }
+     * })
+     * 
+     */
+    delete<T extends cash_records_stagingDeleteArgs>(args: SelectSubset<T, cash_records_stagingDeleteArgs<ExtArgs>>): Prisma__cash_records_stagingClient<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Cash_records_staging.
+     * @param {cash_records_stagingUpdateArgs} args - Arguments to update one Cash_records_staging.
+     * @example
+     * // Update one Cash_records_staging
+     * const cash_records_staging = await prisma.cash_records_staging.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends cash_records_stagingUpdateArgs>(args: SelectSubset<T, cash_records_stagingUpdateArgs<ExtArgs>>): Prisma__cash_records_stagingClient<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Cash_records_stagings.
+     * @param {cash_records_stagingDeleteManyArgs} args - Arguments to filter Cash_records_stagings to delete.
+     * @example
+     * // Delete a few Cash_records_stagings
+     * const { count } = await prisma.cash_records_staging.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends cash_records_stagingDeleteManyArgs>(args?: SelectSubset<T, cash_records_stagingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cash_records_stagings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cash_records_stagingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cash_records_stagings
+     * const cash_records_staging = await prisma.cash_records_staging.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends cash_records_stagingUpdateManyArgs>(args: SelectSubset<T, cash_records_stagingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cash_records_stagings and returns the data updated in the database.
+     * @param {cash_records_stagingUpdateManyAndReturnArgs} args - Arguments to update many Cash_records_stagings.
+     * @example
+     * // Update many Cash_records_stagings
+     * const cash_records_staging = await prisma.cash_records_staging.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Cash_records_stagings and only return the `cash_staging_id`
+     * const cash_records_stagingWithCash_staging_idOnly = await prisma.cash_records_staging.updateManyAndReturn({
+     *   select: { cash_staging_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends cash_records_stagingUpdateManyAndReturnArgs>(args: SelectSubset<T, cash_records_stagingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Cash_records_staging.
+     * @param {cash_records_stagingUpsertArgs} args - Arguments to update or create a Cash_records_staging.
+     * @example
+     * // Update or create a Cash_records_staging
+     * const cash_records_staging = await prisma.cash_records_staging.upsert({
+     *   create: {
+     *     // ... data to create a Cash_records_staging
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cash_records_staging we want to update
+     *   }
+     * })
+     */
+    upsert<T extends cash_records_stagingUpsertArgs>(args: SelectSubset<T, cash_records_stagingUpsertArgs<ExtArgs>>): Prisma__cash_records_stagingClient<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Cash_records_stagings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cash_records_stagingCountArgs} args - Arguments to filter Cash_records_stagings to count.
+     * @example
+     * // Count the number of Cash_records_stagings
+     * const count = await prisma.cash_records_staging.count({
+     *   where: {
+     *     // ... the filter for the Cash_records_stagings we want to count
+     *   }
+     * })
+    **/
+    count<T extends cash_records_stagingCountArgs>(
+      args?: Subset<T, cash_records_stagingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Cash_records_stagingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cash_records_staging.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cash_records_stagingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Cash_records_stagingAggregateArgs>(args: Subset<T, Cash_records_stagingAggregateArgs>): Prisma.PrismaPromise<GetCash_records_stagingAggregateType<T>>
+
+    /**
+     * Group by Cash_records_staging.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cash_records_stagingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends cash_records_stagingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: cash_records_stagingGroupByArgs['orderBy'] }
+        : { orderBy?: cash_records_stagingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, cash_records_stagingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCash_records_stagingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the cash_records_staging model
+   */
+  readonly fields: cash_records_stagingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for cash_records_staging.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__cash_records_stagingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    fiscal_years<T extends fiscal_yearsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_yearsDefaultArgs<ExtArgs>>): Prisma__fiscal_yearsClient<$Result.GetResult<Prisma.$fiscal_yearsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    funds<T extends fundsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fundsDefaultArgs<ExtArgs>>): Prisma__fundsClient<$Result.GetResult<Prisma.$fundsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sub_classes<T extends cash_records_staging$sub_classesArgs<ExtArgs> = {}>(args?: Subset<T, cash_records_staging$sub_classesArgs<ExtArgs>>): Prisma__sub_classesClient<$Result.GetResult<Prisma.$sub_classesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    stock_fulls<T extends stock_fullsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, stock_fullsDefaultArgs<ExtArgs>>): Prisma__stock_fullsClient<$Result.GetResult<Prisma.$stock_fullsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the cash_records_staging model
+   */
+  interface cash_records_stagingFieldRefs {
+    readonly cash_staging_id: FieldRef<"cash_records_staging", 'Int'>
+    readonly fund_id: FieldRef<"cash_records_staging", 'Int'>
+    readonly symbol: FieldRef<"cash_records_staging", 'String'>
+    readonly amount: FieldRef<"cash_records_staging", 'Decimal'>
+    readonly bookclose_date: FieldRef<"cash_records_staging", 'DateTime'>
+    readonly fiscal_year_id: FieldRef<"cash_records_staging", 'Int'>
+    readonly recorded_at: FieldRef<"cash_records_staging", 'DateTime'>
+    readonly remarks: FieldRef<"cash_records_staging", 'String'>
+    readonly sub_id: FieldRef<"cash_records_staging", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * cash_records_staging findUnique
+   */
+  export type cash_records_stagingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which cash_records_staging to fetch.
+     */
+    where: cash_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * cash_records_staging findUniqueOrThrow
+   */
+  export type cash_records_stagingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which cash_records_staging to fetch.
+     */
+    where: cash_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * cash_records_staging findFirst
+   */
+  export type cash_records_stagingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which cash_records_staging to fetch.
+     */
+    where?: cash_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of cash_records_stagings to fetch.
+     */
+    orderBy?: cash_records_stagingOrderByWithRelationInput | cash_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for cash_records_stagings.
+     */
+    cursor?: cash_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` cash_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` cash_records_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of cash_records_stagings.
+     */
+    distinct?: Cash_records_stagingScalarFieldEnum | Cash_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * cash_records_staging findFirstOrThrow
+   */
+  export type cash_records_stagingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which cash_records_staging to fetch.
+     */
+    where?: cash_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of cash_records_stagings to fetch.
+     */
+    orderBy?: cash_records_stagingOrderByWithRelationInput | cash_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for cash_records_stagings.
+     */
+    cursor?: cash_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` cash_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` cash_records_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of cash_records_stagings.
+     */
+    distinct?: Cash_records_stagingScalarFieldEnum | Cash_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * cash_records_staging findMany
+   */
+  export type cash_records_stagingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which cash_records_stagings to fetch.
+     */
+    where?: cash_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of cash_records_stagings to fetch.
+     */
+    orderBy?: cash_records_stagingOrderByWithRelationInput | cash_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing cash_records_stagings.
+     */
+    cursor?: cash_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` cash_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` cash_records_stagings.
+     */
+    skip?: number
+    distinct?: Cash_records_stagingScalarFieldEnum | Cash_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * cash_records_staging create
+   */
+  export type cash_records_stagingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a cash_records_staging.
+     */
+    data: XOR<cash_records_stagingCreateInput, cash_records_stagingUncheckedCreateInput>
+  }
+
+  /**
+   * cash_records_staging createMany
+   */
+  export type cash_records_stagingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many cash_records_stagings.
+     */
+    data: cash_records_stagingCreateManyInput | cash_records_stagingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * cash_records_staging createManyAndReturn
+   */
+  export type cash_records_stagingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * The data used to create many cash_records_stagings.
+     */
+    data: cash_records_stagingCreateManyInput | cash_records_stagingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * cash_records_staging update
+   */
+  export type cash_records_stagingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a cash_records_staging.
+     */
+    data: XOR<cash_records_stagingUpdateInput, cash_records_stagingUncheckedUpdateInput>
+    /**
+     * Choose, which cash_records_staging to update.
+     */
+    where: cash_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * cash_records_staging updateMany
+   */
+  export type cash_records_stagingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update cash_records_stagings.
+     */
+    data: XOR<cash_records_stagingUpdateManyMutationInput, cash_records_stagingUncheckedUpdateManyInput>
+    /**
+     * Filter which cash_records_stagings to update
+     */
+    where?: cash_records_stagingWhereInput
+    /**
+     * Limit how many cash_records_stagings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * cash_records_staging updateManyAndReturn
+   */
+  export type cash_records_stagingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * The data used to update cash_records_stagings.
+     */
+    data: XOR<cash_records_stagingUpdateManyMutationInput, cash_records_stagingUncheckedUpdateManyInput>
+    /**
+     * Filter which cash_records_stagings to update
+     */
+    where?: cash_records_stagingWhereInput
+    /**
+     * Limit how many cash_records_stagings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * cash_records_staging upsert
+   */
+  export type cash_records_stagingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the cash_records_staging to update in case it exists.
+     */
+    where: cash_records_stagingWhereUniqueInput
+    /**
+     * In case the cash_records_staging found by the `where` argument doesn't exist, create a new cash_records_staging with this data.
+     */
+    create: XOR<cash_records_stagingCreateInput, cash_records_stagingUncheckedCreateInput>
+    /**
+     * In case the cash_records_staging was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<cash_records_stagingUpdateInput, cash_records_stagingUncheckedUpdateInput>
+  }
+
+  /**
+   * cash_records_staging delete
+   */
+  export type cash_records_stagingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter which cash_records_staging to delete.
+     */
+    where: cash_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * cash_records_staging deleteMany
+   */
+  export type cash_records_stagingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which cash_records_stagings to delete
+     */
+    where?: cash_records_stagingWhereInput
+    /**
+     * Limit how many cash_records_stagings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * cash_records_staging.sub_classes
+   */
+  export type cash_records_staging$sub_classesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the sub_classes
+     */
+    select?: sub_classesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the sub_classes
+     */
+    omit?: sub_classesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: sub_classesInclude<ExtArgs> | null
+    where?: sub_classesWhereInput
+  }
+
+  /**
+   * cash_records_staging without action
+   */
+  export type cash_records_stagingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cash_records_staging
+     */
+    select?: cash_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cash_records_staging
+     */
+    omit?: cash_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cash_records_stagingInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model right_records_staging
+   */
+
+  export type AggregateRight_records_staging = {
+    _count: Right_records_stagingCountAggregateOutputType | null
+    _avg: Right_records_stagingAvgAggregateOutputType | null
+    _sum: Right_records_stagingSumAggregateOutputType | null
+    _min: Right_records_stagingMinAggregateOutputType | null
+    _max: Right_records_stagingMaxAggregateOutputType | null
+  }
+
+  export type Right_records_stagingAvgAggregateOutputType = {
+    right_staging_id: number | null
+    fund_id: number | null
+    fiscal_year_id: number | null
+    quantity: number | null
+    effective_rate: Decimal | null
+    total_value: Decimal | null
+    sub_id: number | null
+  }
+
+  export type Right_records_stagingSumAggregateOutputType = {
+    right_staging_id: number | null
+    fund_id: number | null
+    fiscal_year_id: number | null
+    quantity: number | null
+    effective_rate: Decimal | null
+    total_value: Decimal | null
+    sub_id: number | null
+  }
+
+  export type Right_records_stagingMinAggregateOutputType = {
+    right_staging_id: number | null
+    fund_id: number | null
+    symbol: string | null
+    fiscal_year_id: number | null
+    right_ratio: string | null
+    quantity: number | null
+    bookclose_date: Date | null
+    effective_rate: Decimal | null
+    total_value: Decimal | null
+    sub_id: number | null
+    remarks: string | null
+    recorded_at: Date | null
+    added_at: Date | null
+  }
+
+  export type Right_records_stagingMaxAggregateOutputType = {
+    right_staging_id: number | null
+    fund_id: number | null
+    symbol: string | null
+    fiscal_year_id: number | null
+    right_ratio: string | null
+    quantity: number | null
+    bookclose_date: Date | null
+    effective_rate: Decimal | null
+    total_value: Decimal | null
+    sub_id: number | null
+    remarks: string | null
+    recorded_at: Date | null
+    added_at: Date | null
+  }
+
+  export type Right_records_stagingCountAggregateOutputType = {
+    right_staging_id: number
+    fund_id: number
+    symbol: number
+    fiscal_year_id: number
+    right_ratio: number
+    quantity: number
+    bookclose_date: number
+    effective_rate: number
+    total_value: number
+    sub_id: number
+    remarks: number
+    recorded_at: number
+    added_at: number
+    _all: number
+  }
+
+
+  export type Right_records_stagingAvgAggregateInputType = {
+    right_staging_id?: true
+    fund_id?: true
+    fiscal_year_id?: true
+    quantity?: true
+    effective_rate?: true
+    total_value?: true
+    sub_id?: true
+  }
+
+  export type Right_records_stagingSumAggregateInputType = {
+    right_staging_id?: true
+    fund_id?: true
+    fiscal_year_id?: true
+    quantity?: true
+    effective_rate?: true
+    total_value?: true
+    sub_id?: true
+  }
+
+  export type Right_records_stagingMinAggregateInputType = {
+    right_staging_id?: true
+    fund_id?: true
+    symbol?: true
+    fiscal_year_id?: true
+    right_ratio?: true
+    quantity?: true
+    bookclose_date?: true
+    effective_rate?: true
+    total_value?: true
+    sub_id?: true
+    remarks?: true
+    recorded_at?: true
+    added_at?: true
+  }
+
+  export type Right_records_stagingMaxAggregateInputType = {
+    right_staging_id?: true
+    fund_id?: true
+    symbol?: true
+    fiscal_year_id?: true
+    right_ratio?: true
+    quantity?: true
+    bookclose_date?: true
+    effective_rate?: true
+    total_value?: true
+    sub_id?: true
+    remarks?: true
+    recorded_at?: true
+    added_at?: true
+  }
+
+  export type Right_records_stagingCountAggregateInputType = {
+    right_staging_id?: true
+    fund_id?: true
+    symbol?: true
+    fiscal_year_id?: true
+    right_ratio?: true
+    quantity?: true
+    bookclose_date?: true
+    effective_rate?: true
+    total_value?: true
+    sub_id?: true
+    remarks?: true
+    recorded_at?: true
+    added_at?: true
+    _all?: true
+  }
+
+  export type Right_records_stagingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which right_records_staging to aggregate.
+     */
+    where?: right_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of right_records_stagings to fetch.
+     */
+    orderBy?: right_records_stagingOrderByWithRelationInput | right_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: right_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` right_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` right_records_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned right_records_stagings
+    **/
+    _count?: true | Right_records_stagingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Right_records_stagingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Right_records_stagingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Right_records_stagingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Right_records_stagingMaxAggregateInputType
+  }
+
+  export type GetRight_records_stagingAggregateType<T extends Right_records_stagingAggregateArgs> = {
+        [P in keyof T & keyof AggregateRight_records_staging]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRight_records_staging[P]>
+      : GetScalarType<T[P], AggregateRight_records_staging[P]>
+  }
+
+
+
+
+  export type right_records_stagingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: right_records_stagingWhereInput
+    orderBy?: right_records_stagingOrderByWithAggregationInput | right_records_stagingOrderByWithAggregationInput[]
+    by: Right_records_stagingScalarFieldEnum[] | Right_records_stagingScalarFieldEnum
+    having?: right_records_stagingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Right_records_stagingCountAggregateInputType | true
+    _avg?: Right_records_stagingAvgAggregateInputType
+    _sum?: Right_records_stagingSumAggregateInputType
+    _min?: Right_records_stagingMinAggregateInputType
+    _max?: Right_records_stagingMaxAggregateInputType
+  }
+
+  export type Right_records_stagingGroupByOutputType = {
+    right_staging_id: number
+    fund_id: number
+    symbol: string
+    fiscal_year_id: number
+    right_ratio: string
+    quantity: number
+    bookclose_date: Date
+    effective_rate: Decimal
+    total_value: Decimal | null
+    sub_id: number | null
+    remarks: string
+    recorded_at: Date
+    added_at: Date | null
+    _count: Right_records_stagingCountAggregateOutputType | null
+    _avg: Right_records_stagingAvgAggregateOutputType | null
+    _sum: Right_records_stagingSumAggregateOutputType | null
+    _min: Right_records_stagingMinAggregateOutputType | null
+    _max: Right_records_stagingMaxAggregateOutputType | null
+  }
+
+  type GetRight_records_stagingGroupByPayload<T extends right_records_stagingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Right_records_stagingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Right_records_stagingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Right_records_stagingGroupByOutputType[P]>
+            : GetScalarType<T[P], Right_records_stagingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type right_records_stagingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    right_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    right_ratio?: boolean
+    quantity?: boolean
+    bookclose_date?: boolean
+    effective_rate?: boolean
+    total_value?: boolean
+    sub_id?: boolean
+    remarks?: boolean
+    recorded_at?: boolean
+    added_at?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | right_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["right_records_staging"]>
+
+  export type right_records_stagingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    right_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    right_ratio?: boolean
+    quantity?: boolean
+    bookclose_date?: boolean
+    effective_rate?: boolean
+    total_value?: boolean
+    sub_id?: boolean
+    remarks?: boolean
+    recorded_at?: boolean
+    added_at?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | right_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["right_records_staging"]>
+
+  export type right_records_stagingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    right_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    right_ratio?: boolean
+    quantity?: boolean
+    bookclose_date?: boolean
+    effective_rate?: boolean
+    total_value?: boolean
+    sub_id?: boolean
+    remarks?: boolean
+    recorded_at?: boolean
+    added_at?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | right_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["right_records_staging"]>
+
+  export type right_records_stagingSelectScalar = {
+    right_staging_id?: boolean
+    fund_id?: boolean
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    right_ratio?: boolean
+    quantity?: boolean
+    bookclose_date?: boolean
+    effective_rate?: boolean
+    total_value?: boolean
+    sub_id?: boolean
+    remarks?: boolean
+    recorded_at?: boolean
+    added_at?: boolean
+  }
+
+  export type right_records_stagingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"right_staging_id" | "fund_id" | "symbol" | "fiscal_year_id" | "right_ratio" | "quantity" | "bookclose_date" | "effective_rate" | "total_value" | "sub_id" | "remarks" | "recorded_at" | "added_at", ExtArgs["result"]["right_records_staging"]>
+  export type right_records_stagingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | right_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+  export type right_records_stagingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | right_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+  export type right_records_stagingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    sub_classes?: boolean | right_records_staging$sub_classesArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+
+  export type $right_records_stagingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "right_records_staging"
+    objects: {
+      fiscal_years: Prisma.$fiscal_yearsPayload<ExtArgs>
+      funds: Prisma.$fundsPayload<ExtArgs>
+      sub_classes: Prisma.$sub_classesPayload<ExtArgs> | null
+      stock_fulls: Prisma.$stock_fullsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      right_staging_id: number
+      fund_id: number
+      symbol: string
+      fiscal_year_id: number
+      right_ratio: string
+      quantity: number
+      bookclose_date: Date
+      effective_rate: Prisma.Decimal
+      total_value: Prisma.Decimal | null
+      sub_id: number | null
+      remarks: string
+      recorded_at: Date
+      added_at: Date | null
+    }, ExtArgs["result"]["right_records_staging"]>
+    composites: {}
+  }
+
+  type right_records_stagingGetPayload<S extends boolean | null | undefined | right_records_stagingDefaultArgs> = $Result.GetResult<Prisma.$right_records_stagingPayload, S>
+
+  type right_records_stagingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<right_records_stagingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Right_records_stagingCountAggregateInputType | true
+    }
+
+  export interface right_records_stagingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['right_records_staging'], meta: { name: 'right_records_staging' } }
+    /**
+     * Find zero or one Right_records_staging that matches the filter.
+     * @param {right_records_stagingFindUniqueArgs} args - Arguments to find a Right_records_staging
+     * @example
+     * // Get one Right_records_staging
+     * const right_records_staging = await prisma.right_records_staging.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends right_records_stagingFindUniqueArgs>(args: SelectSubset<T, right_records_stagingFindUniqueArgs<ExtArgs>>): Prisma__right_records_stagingClient<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Right_records_staging that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {right_records_stagingFindUniqueOrThrowArgs} args - Arguments to find a Right_records_staging
+     * @example
+     * // Get one Right_records_staging
+     * const right_records_staging = await prisma.right_records_staging.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends right_records_stagingFindUniqueOrThrowArgs>(args: SelectSubset<T, right_records_stagingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__right_records_stagingClient<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Right_records_staging that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {right_records_stagingFindFirstArgs} args - Arguments to find a Right_records_staging
+     * @example
+     * // Get one Right_records_staging
+     * const right_records_staging = await prisma.right_records_staging.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends right_records_stagingFindFirstArgs>(args?: SelectSubset<T, right_records_stagingFindFirstArgs<ExtArgs>>): Prisma__right_records_stagingClient<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Right_records_staging that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {right_records_stagingFindFirstOrThrowArgs} args - Arguments to find a Right_records_staging
+     * @example
+     * // Get one Right_records_staging
+     * const right_records_staging = await prisma.right_records_staging.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends right_records_stagingFindFirstOrThrowArgs>(args?: SelectSubset<T, right_records_stagingFindFirstOrThrowArgs<ExtArgs>>): Prisma__right_records_stagingClient<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Right_records_stagings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {right_records_stagingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Right_records_stagings
+     * const right_records_stagings = await prisma.right_records_staging.findMany()
+     * 
+     * // Get first 10 Right_records_stagings
+     * const right_records_stagings = await prisma.right_records_staging.findMany({ take: 10 })
+     * 
+     * // Only select the `right_staging_id`
+     * const right_records_stagingWithRight_staging_idOnly = await prisma.right_records_staging.findMany({ select: { right_staging_id: true } })
+     * 
+     */
+    findMany<T extends right_records_stagingFindManyArgs>(args?: SelectSubset<T, right_records_stagingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Right_records_staging.
+     * @param {right_records_stagingCreateArgs} args - Arguments to create a Right_records_staging.
+     * @example
+     * // Create one Right_records_staging
+     * const Right_records_staging = await prisma.right_records_staging.create({
+     *   data: {
+     *     // ... data to create a Right_records_staging
+     *   }
+     * })
+     * 
+     */
+    create<T extends right_records_stagingCreateArgs>(args: SelectSubset<T, right_records_stagingCreateArgs<ExtArgs>>): Prisma__right_records_stagingClient<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Right_records_stagings.
+     * @param {right_records_stagingCreateManyArgs} args - Arguments to create many Right_records_stagings.
+     * @example
+     * // Create many Right_records_stagings
+     * const right_records_staging = await prisma.right_records_staging.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends right_records_stagingCreateManyArgs>(args?: SelectSubset<T, right_records_stagingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Right_records_stagings and returns the data saved in the database.
+     * @param {right_records_stagingCreateManyAndReturnArgs} args - Arguments to create many Right_records_stagings.
+     * @example
+     * // Create many Right_records_stagings
+     * const right_records_staging = await prisma.right_records_staging.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Right_records_stagings and only return the `right_staging_id`
+     * const right_records_stagingWithRight_staging_idOnly = await prisma.right_records_staging.createManyAndReturn({
+     *   select: { right_staging_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends right_records_stagingCreateManyAndReturnArgs>(args?: SelectSubset<T, right_records_stagingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Right_records_staging.
+     * @param {right_records_stagingDeleteArgs} args - Arguments to delete one Right_records_staging.
+     * @example
+     * // Delete one Right_records_staging
+     * const Right_records_staging = await prisma.right_records_staging.delete({
+     *   where: {
+     *     // ... filter to delete one Right_records_staging
+     *   }
+     * })
+     * 
+     */
+    delete<T extends right_records_stagingDeleteArgs>(args: SelectSubset<T, right_records_stagingDeleteArgs<ExtArgs>>): Prisma__right_records_stagingClient<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Right_records_staging.
+     * @param {right_records_stagingUpdateArgs} args - Arguments to update one Right_records_staging.
+     * @example
+     * // Update one Right_records_staging
+     * const right_records_staging = await prisma.right_records_staging.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends right_records_stagingUpdateArgs>(args: SelectSubset<T, right_records_stagingUpdateArgs<ExtArgs>>): Prisma__right_records_stagingClient<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Right_records_stagings.
+     * @param {right_records_stagingDeleteManyArgs} args - Arguments to filter Right_records_stagings to delete.
+     * @example
+     * // Delete a few Right_records_stagings
+     * const { count } = await prisma.right_records_staging.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends right_records_stagingDeleteManyArgs>(args?: SelectSubset<T, right_records_stagingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Right_records_stagings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {right_records_stagingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Right_records_stagings
+     * const right_records_staging = await prisma.right_records_staging.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends right_records_stagingUpdateManyArgs>(args: SelectSubset<T, right_records_stagingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Right_records_stagings and returns the data updated in the database.
+     * @param {right_records_stagingUpdateManyAndReturnArgs} args - Arguments to update many Right_records_stagings.
+     * @example
+     * // Update many Right_records_stagings
+     * const right_records_staging = await prisma.right_records_staging.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Right_records_stagings and only return the `right_staging_id`
+     * const right_records_stagingWithRight_staging_idOnly = await prisma.right_records_staging.updateManyAndReturn({
+     *   select: { right_staging_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends right_records_stagingUpdateManyAndReturnArgs>(args: SelectSubset<T, right_records_stagingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Right_records_staging.
+     * @param {right_records_stagingUpsertArgs} args - Arguments to update or create a Right_records_staging.
+     * @example
+     * // Update or create a Right_records_staging
+     * const right_records_staging = await prisma.right_records_staging.upsert({
+     *   create: {
+     *     // ... data to create a Right_records_staging
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Right_records_staging we want to update
+     *   }
+     * })
+     */
+    upsert<T extends right_records_stagingUpsertArgs>(args: SelectSubset<T, right_records_stagingUpsertArgs<ExtArgs>>): Prisma__right_records_stagingClient<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Right_records_stagings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {right_records_stagingCountArgs} args - Arguments to filter Right_records_stagings to count.
+     * @example
+     * // Count the number of Right_records_stagings
+     * const count = await prisma.right_records_staging.count({
+     *   where: {
+     *     // ... the filter for the Right_records_stagings we want to count
+     *   }
+     * })
+    **/
+    count<T extends right_records_stagingCountArgs>(
+      args?: Subset<T, right_records_stagingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Right_records_stagingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Right_records_staging.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Right_records_stagingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Right_records_stagingAggregateArgs>(args: Subset<T, Right_records_stagingAggregateArgs>): Prisma.PrismaPromise<GetRight_records_stagingAggregateType<T>>
+
+    /**
+     * Group by Right_records_staging.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {right_records_stagingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends right_records_stagingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: right_records_stagingGroupByArgs['orderBy'] }
+        : { orderBy?: right_records_stagingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, right_records_stagingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRight_records_stagingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the right_records_staging model
+   */
+  readonly fields: right_records_stagingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for right_records_staging.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__right_records_stagingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    fiscal_years<T extends fiscal_yearsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_yearsDefaultArgs<ExtArgs>>): Prisma__fiscal_yearsClient<$Result.GetResult<Prisma.$fiscal_yearsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    funds<T extends fundsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fundsDefaultArgs<ExtArgs>>): Prisma__fundsClient<$Result.GetResult<Prisma.$fundsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sub_classes<T extends right_records_staging$sub_classesArgs<ExtArgs> = {}>(args?: Subset<T, right_records_staging$sub_classesArgs<ExtArgs>>): Prisma__sub_classesClient<$Result.GetResult<Prisma.$sub_classesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    stock_fulls<T extends stock_fullsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, stock_fullsDefaultArgs<ExtArgs>>): Prisma__stock_fullsClient<$Result.GetResult<Prisma.$stock_fullsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the right_records_staging model
+   */
+  interface right_records_stagingFieldRefs {
+    readonly right_staging_id: FieldRef<"right_records_staging", 'Int'>
+    readonly fund_id: FieldRef<"right_records_staging", 'Int'>
+    readonly symbol: FieldRef<"right_records_staging", 'String'>
+    readonly fiscal_year_id: FieldRef<"right_records_staging", 'Int'>
+    readonly right_ratio: FieldRef<"right_records_staging", 'String'>
+    readonly quantity: FieldRef<"right_records_staging", 'Int'>
+    readonly bookclose_date: FieldRef<"right_records_staging", 'DateTime'>
+    readonly effective_rate: FieldRef<"right_records_staging", 'Decimal'>
+    readonly total_value: FieldRef<"right_records_staging", 'Decimal'>
+    readonly sub_id: FieldRef<"right_records_staging", 'Int'>
+    readonly remarks: FieldRef<"right_records_staging", 'String'>
+    readonly recorded_at: FieldRef<"right_records_staging", 'DateTime'>
+    readonly added_at: FieldRef<"right_records_staging", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * right_records_staging findUnique
+   */
+  export type right_records_stagingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which right_records_staging to fetch.
+     */
+    where: right_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * right_records_staging findUniqueOrThrow
+   */
+  export type right_records_stagingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which right_records_staging to fetch.
+     */
+    where: right_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * right_records_staging findFirst
+   */
+  export type right_records_stagingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which right_records_staging to fetch.
+     */
+    where?: right_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of right_records_stagings to fetch.
+     */
+    orderBy?: right_records_stagingOrderByWithRelationInput | right_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for right_records_stagings.
+     */
+    cursor?: right_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` right_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` right_records_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of right_records_stagings.
+     */
+    distinct?: Right_records_stagingScalarFieldEnum | Right_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * right_records_staging findFirstOrThrow
+   */
+  export type right_records_stagingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which right_records_staging to fetch.
+     */
+    where?: right_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of right_records_stagings to fetch.
+     */
+    orderBy?: right_records_stagingOrderByWithRelationInput | right_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for right_records_stagings.
+     */
+    cursor?: right_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` right_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` right_records_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of right_records_stagings.
+     */
+    distinct?: Right_records_stagingScalarFieldEnum | Right_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * right_records_staging findMany
+   */
+  export type right_records_stagingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter, which right_records_stagings to fetch.
+     */
+    where?: right_records_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of right_records_stagings to fetch.
+     */
+    orderBy?: right_records_stagingOrderByWithRelationInput | right_records_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing right_records_stagings.
+     */
+    cursor?: right_records_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` right_records_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` right_records_stagings.
+     */
+    skip?: number
+    distinct?: Right_records_stagingScalarFieldEnum | Right_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * right_records_staging create
+   */
+  export type right_records_stagingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a right_records_staging.
+     */
+    data: XOR<right_records_stagingCreateInput, right_records_stagingUncheckedCreateInput>
+  }
+
+  /**
+   * right_records_staging createMany
+   */
+  export type right_records_stagingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many right_records_stagings.
+     */
+    data: right_records_stagingCreateManyInput | right_records_stagingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * right_records_staging createManyAndReturn
+   */
+  export type right_records_stagingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * The data used to create many right_records_stagings.
+     */
+    data: right_records_stagingCreateManyInput | right_records_stagingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * right_records_staging update
+   */
+  export type right_records_stagingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a right_records_staging.
+     */
+    data: XOR<right_records_stagingUpdateInput, right_records_stagingUncheckedUpdateInput>
+    /**
+     * Choose, which right_records_staging to update.
+     */
+    where: right_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * right_records_staging updateMany
+   */
+  export type right_records_stagingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update right_records_stagings.
+     */
+    data: XOR<right_records_stagingUpdateManyMutationInput, right_records_stagingUncheckedUpdateManyInput>
+    /**
+     * Filter which right_records_stagings to update
+     */
+    where?: right_records_stagingWhereInput
+    /**
+     * Limit how many right_records_stagings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * right_records_staging updateManyAndReturn
+   */
+  export type right_records_stagingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * The data used to update right_records_stagings.
+     */
+    data: XOR<right_records_stagingUpdateManyMutationInput, right_records_stagingUncheckedUpdateManyInput>
+    /**
+     * Filter which right_records_stagings to update
+     */
+    where?: right_records_stagingWhereInput
+    /**
+     * Limit how many right_records_stagings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * right_records_staging upsert
+   */
+  export type right_records_stagingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the right_records_staging to update in case it exists.
+     */
+    where: right_records_stagingWhereUniqueInput
+    /**
+     * In case the right_records_staging found by the `where` argument doesn't exist, create a new right_records_staging with this data.
+     */
+    create: XOR<right_records_stagingCreateInput, right_records_stagingUncheckedCreateInput>
+    /**
+     * In case the right_records_staging was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<right_records_stagingUpdateInput, right_records_stagingUncheckedUpdateInput>
+  }
+
+  /**
+   * right_records_staging delete
+   */
+  export type right_records_stagingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+    /**
+     * Filter which right_records_staging to delete.
+     */
+    where: right_records_stagingWhereUniqueInput
+  }
+
+  /**
+   * right_records_staging deleteMany
+   */
+  export type right_records_stagingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which right_records_stagings to delete
+     */
+    where?: right_records_stagingWhereInput
+    /**
+     * Limit how many right_records_stagings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * right_records_staging.sub_classes
+   */
+  export type right_records_staging$sub_classesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the sub_classes
+     */
+    select?: sub_classesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the sub_classes
+     */
+    omit?: sub_classesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: sub_classesInclude<ExtArgs> | null
+    where?: sub_classesWhereInput
+  }
+
+  /**
+   * right_records_staging without action
+   */
+  export type right_records_stagingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the right_records_staging
+     */
+    select?: right_records_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the right_records_staging
+     */
+    omit?: right_records_stagingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: right_records_stagingInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model fiscal_year_balance_staging
+   */
+
+  export type AggregateFiscal_year_balance_staging = {
+    _count: Fiscal_year_balance_stagingCountAggregateOutputType | null
+    _avg: Fiscal_year_balance_stagingAvgAggregateOutputType | null
+    _sum: Fiscal_year_balance_stagingSumAggregateOutputType | null
+    _min: Fiscal_year_balance_stagingMinAggregateOutputType | null
+    _max: Fiscal_year_balance_stagingMaxAggregateOutputType | null
+  }
+
+  export type Fiscal_year_balance_stagingAvgAggregateOutputType = {
+    fiscal_year_id: number | null
+    opening_quantity: number | null
+    added_quantity: number | null
+    closing_quantity: number | null
+    effective_rate: Decimal | null
+    opening_rate: Decimal | null
+    demat: number | null
+    non_demat: number | null
+    fund_id: number | null
+    sub_id: number | null
+    staging_id: number | null
+  }
+
+  export type Fiscal_year_balance_stagingSumAggregateOutputType = {
+    fiscal_year_id: number | null
+    opening_quantity: number | null
+    added_quantity: number | null
+    closing_quantity: number | null
+    effective_rate: Decimal | null
+    opening_rate: Decimal | null
+    demat: number | null
+    non_demat: number | null
+    fund_id: number | null
+    sub_id: number | null
+    staging_id: number | null
+  }
+
+  export type Fiscal_year_balance_stagingMinAggregateOutputType = {
+    symbol: string | null
+    fiscal_year_id: number | null
+    opening_quantity: number | null
+    added_quantity: number | null
+    closing_quantity: number | null
+    effective_rate: Decimal | null
+    remarks: string | null
+    opening_rate: Decimal | null
+    demat: number | null
+    non_demat: number | null
+    fund_id: number | null
+    source_type: string | null
+    sub_id: number | null
+    staging_id: number | null
+  }
+
+  export type Fiscal_year_balance_stagingMaxAggregateOutputType = {
+    symbol: string | null
+    fiscal_year_id: number | null
+    opening_quantity: number | null
+    added_quantity: number | null
+    closing_quantity: number | null
+    effective_rate: Decimal | null
+    remarks: string | null
+    opening_rate: Decimal | null
+    demat: number | null
+    non_demat: number | null
+    fund_id: number | null
+    source_type: string | null
+    sub_id: number | null
+    staging_id: number | null
+  }
+
+  export type Fiscal_year_balance_stagingCountAggregateOutputType = {
+    symbol: number
+    fiscal_year_id: number
+    opening_quantity: number
+    added_quantity: number
+    closing_quantity: number
+    effective_rate: number
+    remarks: number
+    opening_rate: number
+    demat: number
+    non_demat: number
+    fund_id: number
+    source_type: number
+    sub_id: number
+    staging_id: number
+    _all: number
+  }
+
+
+  export type Fiscal_year_balance_stagingAvgAggregateInputType = {
+    fiscal_year_id?: true
+    opening_quantity?: true
+    added_quantity?: true
+    closing_quantity?: true
+    effective_rate?: true
+    opening_rate?: true
+    demat?: true
+    non_demat?: true
+    fund_id?: true
+    sub_id?: true
+    staging_id?: true
+  }
+
+  export type Fiscal_year_balance_stagingSumAggregateInputType = {
+    fiscal_year_id?: true
+    opening_quantity?: true
+    added_quantity?: true
+    closing_quantity?: true
+    effective_rate?: true
+    opening_rate?: true
+    demat?: true
+    non_demat?: true
+    fund_id?: true
+    sub_id?: true
+    staging_id?: true
+  }
+
+  export type Fiscal_year_balance_stagingMinAggregateInputType = {
+    symbol?: true
+    fiscal_year_id?: true
+    opening_quantity?: true
+    added_quantity?: true
+    closing_quantity?: true
+    effective_rate?: true
+    remarks?: true
+    opening_rate?: true
+    demat?: true
+    non_demat?: true
+    fund_id?: true
+    source_type?: true
+    sub_id?: true
+    staging_id?: true
+  }
+
+  export type Fiscal_year_balance_stagingMaxAggregateInputType = {
+    symbol?: true
+    fiscal_year_id?: true
+    opening_quantity?: true
+    added_quantity?: true
+    closing_quantity?: true
+    effective_rate?: true
+    remarks?: true
+    opening_rate?: true
+    demat?: true
+    non_demat?: true
+    fund_id?: true
+    source_type?: true
+    sub_id?: true
+    staging_id?: true
+  }
+
+  export type Fiscal_year_balance_stagingCountAggregateInputType = {
+    symbol?: true
+    fiscal_year_id?: true
+    opening_quantity?: true
+    added_quantity?: true
+    closing_quantity?: true
+    effective_rate?: true
+    remarks?: true
+    opening_rate?: true
+    demat?: true
+    non_demat?: true
+    fund_id?: true
+    source_type?: true
+    sub_id?: true
+    staging_id?: true
+    _all?: true
+  }
+
+  export type Fiscal_year_balance_stagingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which fiscal_year_balance_staging to aggregate.
+     */
+    where?: fiscal_year_balance_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of fiscal_year_balance_stagings to fetch.
+     */
+    orderBy?: fiscal_year_balance_stagingOrderByWithRelationInput | fiscal_year_balance_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: fiscal_year_balance_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` fiscal_year_balance_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` fiscal_year_balance_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned fiscal_year_balance_stagings
+    **/
+    _count?: true | Fiscal_year_balance_stagingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Fiscal_year_balance_stagingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Fiscal_year_balance_stagingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Fiscal_year_balance_stagingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Fiscal_year_balance_stagingMaxAggregateInputType
+  }
+
+  export type GetFiscal_year_balance_stagingAggregateType<T extends Fiscal_year_balance_stagingAggregateArgs> = {
+        [P in keyof T & keyof AggregateFiscal_year_balance_staging]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFiscal_year_balance_staging[P]>
+      : GetScalarType<T[P], AggregateFiscal_year_balance_staging[P]>
+  }
+
+
+
+
+  export type fiscal_year_balance_stagingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: fiscal_year_balance_stagingWhereInput
+    orderBy?: fiscal_year_balance_stagingOrderByWithAggregationInput | fiscal_year_balance_stagingOrderByWithAggregationInput[]
+    by: Fiscal_year_balance_stagingScalarFieldEnum[] | Fiscal_year_balance_stagingScalarFieldEnum
+    having?: fiscal_year_balance_stagingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Fiscal_year_balance_stagingCountAggregateInputType | true
+    _avg?: Fiscal_year_balance_stagingAvgAggregateInputType
+    _sum?: Fiscal_year_balance_stagingSumAggregateInputType
+    _min?: Fiscal_year_balance_stagingMinAggregateInputType
+    _max?: Fiscal_year_balance_stagingMaxAggregateInputType
+  }
+
+  export type Fiscal_year_balance_stagingGroupByOutputType = {
+    symbol: string
+    fiscal_year_id: number
+    opening_quantity: number | null
+    added_quantity: number | null
+    closing_quantity: number | null
+    effective_rate: Decimal | null
+    remarks: string | null
+    opening_rate: Decimal | null
+    demat: number | null
+    non_demat: number | null
+    fund_id: number
+    source_type: string | null
+    sub_id: number | null
+    staging_id: number
+    _count: Fiscal_year_balance_stagingCountAggregateOutputType | null
+    _avg: Fiscal_year_balance_stagingAvgAggregateOutputType | null
+    _sum: Fiscal_year_balance_stagingSumAggregateOutputType | null
+    _min: Fiscal_year_balance_stagingMinAggregateOutputType | null
+    _max: Fiscal_year_balance_stagingMaxAggregateOutputType | null
+  }
+
+  type GetFiscal_year_balance_stagingGroupByPayload<T extends fiscal_year_balance_stagingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Fiscal_year_balance_stagingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Fiscal_year_balance_stagingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Fiscal_year_balance_stagingGroupByOutputType[P]>
+            : GetScalarType<T[P], Fiscal_year_balance_stagingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type fiscal_year_balance_stagingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    opening_quantity?: boolean
+    added_quantity?: boolean
+    closing_quantity?: boolean
+    effective_rate?: boolean
+    remarks?: boolean
+    opening_rate?: boolean
+    demat?: boolean
+    non_demat?: boolean
+    fund_id?: boolean
+    source_type?: boolean
+    sub_id?: boolean
+    staging_id?: boolean
+  }, ExtArgs["result"]["fiscal_year_balance_staging"]>
+
+  export type fiscal_year_balance_stagingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    opening_quantity?: boolean
+    added_quantity?: boolean
+    closing_quantity?: boolean
+    effective_rate?: boolean
+    remarks?: boolean
+    opening_rate?: boolean
+    demat?: boolean
+    non_demat?: boolean
+    fund_id?: boolean
+    source_type?: boolean
+    sub_id?: boolean
+    staging_id?: boolean
+  }, ExtArgs["result"]["fiscal_year_balance_staging"]>
+
+  export type fiscal_year_balance_stagingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    opening_quantity?: boolean
+    added_quantity?: boolean
+    closing_quantity?: boolean
+    effective_rate?: boolean
+    remarks?: boolean
+    opening_rate?: boolean
+    demat?: boolean
+    non_demat?: boolean
+    fund_id?: boolean
+    source_type?: boolean
+    sub_id?: boolean
+    staging_id?: boolean
+  }, ExtArgs["result"]["fiscal_year_balance_staging"]>
+
+  export type fiscal_year_balance_stagingSelectScalar = {
+    symbol?: boolean
+    fiscal_year_id?: boolean
+    opening_quantity?: boolean
+    added_quantity?: boolean
+    closing_quantity?: boolean
+    effective_rate?: boolean
+    remarks?: boolean
+    opening_rate?: boolean
+    demat?: boolean
+    non_demat?: boolean
+    fund_id?: boolean
+    source_type?: boolean
+    sub_id?: boolean
+    staging_id?: boolean
+  }
+
+  export type fiscal_year_balance_stagingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"symbol" | "fiscal_year_id" | "opening_quantity" | "added_quantity" | "closing_quantity" | "effective_rate" | "remarks" | "opening_rate" | "demat" | "non_demat" | "fund_id" | "source_type" | "sub_id" | "staging_id", ExtArgs["result"]["fiscal_year_balance_staging"]>
+
+  export type $fiscal_year_balance_stagingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "fiscal_year_balance_staging"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      symbol: string
+      fiscal_year_id: number
+      opening_quantity: number | null
+      added_quantity: number | null
+      closing_quantity: number | null
+      effective_rate: Prisma.Decimal | null
+      remarks: string | null
+      opening_rate: Prisma.Decimal | null
+      demat: number | null
+      non_demat: number | null
+      fund_id: number
+      source_type: string | null
+      sub_id: number | null
+      staging_id: number
+    }, ExtArgs["result"]["fiscal_year_balance_staging"]>
+    composites: {}
+  }
+
+  type fiscal_year_balance_stagingGetPayload<S extends boolean | null | undefined | fiscal_year_balance_stagingDefaultArgs> = $Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload, S>
+
+  type fiscal_year_balance_stagingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<fiscal_year_balance_stagingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Fiscal_year_balance_stagingCountAggregateInputType | true
+    }
+
+  export interface fiscal_year_balance_stagingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['fiscal_year_balance_staging'], meta: { name: 'fiscal_year_balance_staging' } }
+    /**
+     * Find zero or one Fiscal_year_balance_staging that matches the filter.
+     * @param {fiscal_year_balance_stagingFindUniqueArgs} args - Arguments to find a Fiscal_year_balance_staging
+     * @example
+     * // Get one Fiscal_year_balance_staging
+     * const fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends fiscal_year_balance_stagingFindUniqueArgs>(args: SelectSubset<T, fiscal_year_balance_stagingFindUniqueArgs<ExtArgs>>): Prisma__fiscal_year_balance_stagingClient<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Fiscal_year_balance_staging that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {fiscal_year_balance_stagingFindUniqueOrThrowArgs} args - Arguments to find a Fiscal_year_balance_staging
+     * @example
+     * // Get one Fiscal_year_balance_staging
+     * const fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends fiscal_year_balance_stagingFindUniqueOrThrowArgs>(args: SelectSubset<T, fiscal_year_balance_stagingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__fiscal_year_balance_stagingClient<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Fiscal_year_balance_staging that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {fiscal_year_balance_stagingFindFirstArgs} args - Arguments to find a Fiscal_year_balance_staging
+     * @example
+     * // Get one Fiscal_year_balance_staging
+     * const fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends fiscal_year_balance_stagingFindFirstArgs>(args?: SelectSubset<T, fiscal_year_balance_stagingFindFirstArgs<ExtArgs>>): Prisma__fiscal_year_balance_stagingClient<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Fiscal_year_balance_staging that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {fiscal_year_balance_stagingFindFirstOrThrowArgs} args - Arguments to find a Fiscal_year_balance_staging
+     * @example
+     * // Get one Fiscal_year_balance_staging
+     * const fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends fiscal_year_balance_stagingFindFirstOrThrowArgs>(args?: SelectSubset<T, fiscal_year_balance_stagingFindFirstOrThrowArgs<ExtArgs>>): Prisma__fiscal_year_balance_stagingClient<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Fiscal_year_balance_stagings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {fiscal_year_balance_stagingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Fiscal_year_balance_stagings
+     * const fiscal_year_balance_stagings = await prisma.fiscal_year_balance_staging.findMany()
+     * 
+     * // Get first 10 Fiscal_year_balance_stagings
+     * const fiscal_year_balance_stagings = await prisma.fiscal_year_balance_staging.findMany({ take: 10 })
+     * 
+     * // Only select the `symbol`
+     * const fiscal_year_balance_stagingWithSymbolOnly = await prisma.fiscal_year_balance_staging.findMany({ select: { symbol: true } })
+     * 
+     */
+    findMany<T extends fiscal_year_balance_stagingFindManyArgs>(args?: SelectSubset<T, fiscal_year_balance_stagingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Fiscal_year_balance_staging.
+     * @param {fiscal_year_balance_stagingCreateArgs} args - Arguments to create a Fiscal_year_balance_staging.
+     * @example
+     * // Create one Fiscal_year_balance_staging
+     * const Fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.create({
+     *   data: {
+     *     // ... data to create a Fiscal_year_balance_staging
+     *   }
+     * })
+     * 
+     */
+    create<T extends fiscal_year_balance_stagingCreateArgs>(args: SelectSubset<T, fiscal_year_balance_stagingCreateArgs<ExtArgs>>): Prisma__fiscal_year_balance_stagingClient<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Fiscal_year_balance_stagings.
+     * @param {fiscal_year_balance_stagingCreateManyArgs} args - Arguments to create many Fiscal_year_balance_stagings.
+     * @example
+     * // Create many Fiscal_year_balance_stagings
+     * const fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends fiscal_year_balance_stagingCreateManyArgs>(args?: SelectSubset<T, fiscal_year_balance_stagingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Fiscal_year_balance_stagings and returns the data saved in the database.
+     * @param {fiscal_year_balance_stagingCreateManyAndReturnArgs} args - Arguments to create many Fiscal_year_balance_stagings.
+     * @example
+     * // Create many Fiscal_year_balance_stagings
+     * const fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Fiscal_year_balance_stagings and only return the `symbol`
+     * const fiscal_year_balance_stagingWithSymbolOnly = await prisma.fiscal_year_balance_staging.createManyAndReturn({
+     *   select: { symbol: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends fiscal_year_balance_stagingCreateManyAndReturnArgs>(args?: SelectSubset<T, fiscal_year_balance_stagingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Fiscal_year_balance_staging.
+     * @param {fiscal_year_balance_stagingDeleteArgs} args - Arguments to delete one Fiscal_year_balance_staging.
+     * @example
+     * // Delete one Fiscal_year_balance_staging
+     * const Fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.delete({
+     *   where: {
+     *     // ... filter to delete one Fiscal_year_balance_staging
+     *   }
+     * })
+     * 
+     */
+    delete<T extends fiscal_year_balance_stagingDeleteArgs>(args: SelectSubset<T, fiscal_year_balance_stagingDeleteArgs<ExtArgs>>): Prisma__fiscal_year_balance_stagingClient<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Fiscal_year_balance_staging.
+     * @param {fiscal_year_balance_stagingUpdateArgs} args - Arguments to update one Fiscal_year_balance_staging.
+     * @example
+     * // Update one Fiscal_year_balance_staging
+     * const fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends fiscal_year_balance_stagingUpdateArgs>(args: SelectSubset<T, fiscal_year_balance_stagingUpdateArgs<ExtArgs>>): Prisma__fiscal_year_balance_stagingClient<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Fiscal_year_balance_stagings.
+     * @param {fiscal_year_balance_stagingDeleteManyArgs} args - Arguments to filter Fiscal_year_balance_stagings to delete.
+     * @example
+     * // Delete a few Fiscal_year_balance_stagings
+     * const { count } = await prisma.fiscal_year_balance_staging.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends fiscal_year_balance_stagingDeleteManyArgs>(args?: SelectSubset<T, fiscal_year_balance_stagingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Fiscal_year_balance_stagings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {fiscal_year_balance_stagingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Fiscal_year_balance_stagings
+     * const fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends fiscal_year_balance_stagingUpdateManyArgs>(args: SelectSubset<T, fiscal_year_balance_stagingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Fiscal_year_balance_stagings and returns the data updated in the database.
+     * @param {fiscal_year_balance_stagingUpdateManyAndReturnArgs} args - Arguments to update many Fiscal_year_balance_stagings.
+     * @example
+     * // Update many Fiscal_year_balance_stagings
+     * const fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Fiscal_year_balance_stagings and only return the `symbol`
+     * const fiscal_year_balance_stagingWithSymbolOnly = await prisma.fiscal_year_balance_staging.updateManyAndReturn({
+     *   select: { symbol: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends fiscal_year_balance_stagingUpdateManyAndReturnArgs>(args: SelectSubset<T, fiscal_year_balance_stagingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Fiscal_year_balance_staging.
+     * @param {fiscal_year_balance_stagingUpsertArgs} args - Arguments to update or create a Fiscal_year_balance_staging.
+     * @example
+     * // Update or create a Fiscal_year_balance_staging
+     * const fiscal_year_balance_staging = await prisma.fiscal_year_balance_staging.upsert({
+     *   create: {
+     *     // ... data to create a Fiscal_year_balance_staging
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Fiscal_year_balance_staging we want to update
+     *   }
+     * })
+     */
+    upsert<T extends fiscal_year_balance_stagingUpsertArgs>(args: SelectSubset<T, fiscal_year_balance_stagingUpsertArgs<ExtArgs>>): Prisma__fiscal_year_balance_stagingClient<$Result.GetResult<Prisma.$fiscal_year_balance_stagingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Fiscal_year_balance_stagings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {fiscal_year_balance_stagingCountArgs} args - Arguments to filter Fiscal_year_balance_stagings to count.
+     * @example
+     * // Count the number of Fiscal_year_balance_stagings
+     * const count = await prisma.fiscal_year_balance_staging.count({
+     *   where: {
+     *     // ... the filter for the Fiscal_year_balance_stagings we want to count
+     *   }
+     * })
+    **/
+    count<T extends fiscal_year_balance_stagingCountArgs>(
+      args?: Subset<T, fiscal_year_balance_stagingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Fiscal_year_balance_stagingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Fiscal_year_balance_staging.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Fiscal_year_balance_stagingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Fiscal_year_balance_stagingAggregateArgs>(args: Subset<T, Fiscal_year_balance_stagingAggregateArgs>): Prisma.PrismaPromise<GetFiscal_year_balance_stagingAggregateType<T>>
+
+    /**
+     * Group by Fiscal_year_balance_staging.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {fiscal_year_balance_stagingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends fiscal_year_balance_stagingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: fiscal_year_balance_stagingGroupByArgs['orderBy'] }
+        : { orderBy?: fiscal_year_balance_stagingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, fiscal_year_balance_stagingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFiscal_year_balance_stagingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the fiscal_year_balance_staging model
+   */
+  readonly fields: fiscal_year_balance_stagingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for fiscal_year_balance_staging.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__fiscal_year_balance_stagingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the fiscal_year_balance_staging model
+   */
+  interface fiscal_year_balance_stagingFieldRefs {
+    readonly symbol: FieldRef<"fiscal_year_balance_staging", 'String'>
+    readonly fiscal_year_id: FieldRef<"fiscal_year_balance_staging", 'Int'>
+    readonly opening_quantity: FieldRef<"fiscal_year_balance_staging", 'Int'>
+    readonly added_quantity: FieldRef<"fiscal_year_balance_staging", 'Int'>
+    readonly closing_quantity: FieldRef<"fiscal_year_balance_staging", 'Int'>
+    readonly effective_rate: FieldRef<"fiscal_year_balance_staging", 'Decimal'>
+    readonly remarks: FieldRef<"fiscal_year_balance_staging", 'String'>
+    readonly opening_rate: FieldRef<"fiscal_year_balance_staging", 'Decimal'>
+    readonly demat: FieldRef<"fiscal_year_balance_staging", 'Int'>
+    readonly non_demat: FieldRef<"fiscal_year_balance_staging", 'Int'>
+    readonly fund_id: FieldRef<"fiscal_year_balance_staging", 'Int'>
+    readonly source_type: FieldRef<"fiscal_year_balance_staging", 'String'>
+    readonly sub_id: FieldRef<"fiscal_year_balance_staging", 'Int'>
+    readonly staging_id: FieldRef<"fiscal_year_balance_staging", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * fiscal_year_balance_staging findUnique
+   */
+  export type fiscal_year_balance_stagingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * Filter, which fiscal_year_balance_staging to fetch.
+     */
+    where: fiscal_year_balance_stagingWhereUniqueInput
+  }
+
+  /**
+   * fiscal_year_balance_staging findUniqueOrThrow
+   */
+  export type fiscal_year_balance_stagingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * Filter, which fiscal_year_balance_staging to fetch.
+     */
+    where: fiscal_year_balance_stagingWhereUniqueInput
+  }
+
+  /**
+   * fiscal_year_balance_staging findFirst
+   */
+  export type fiscal_year_balance_stagingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * Filter, which fiscal_year_balance_staging to fetch.
+     */
+    where?: fiscal_year_balance_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of fiscal_year_balance_stagings to fetch.
+     */
+    orderBy?: fiscal_year_balance_stagingOrderByWithRelationInput | fiscal_year_balance_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for fiscal_year_balance_stagings.
+     */
+    cursor?: fiscal_year_balance_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` fiscal_year_balance_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` fiscal_year_balance_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of fiscal_year_balance_stagings.
+     */
+    distinct?: Fiscal_year_balance_stagingScalarFieldEnum | Fiscal_year_balance_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * fiscal_year_balance_staging findFirstOrThrow
+   */
+  export type fiscal_year_balance_stagingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * Filter, which fiscal_year_balance_staging to fetch.
+     */
+    where?: fiscal_year_balance_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of fiscal_year_balance_stagings to fetch.
+     */
+    orderBy?: fiscal_year_balance_stagingOrderByWithRelationInput | fiscal_year_balance_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for fiscal_year_balance_stagings.
+     */
+    cursor?: fiscal_year_balance_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` fiscal_year_balance_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` fiscal_year_balance_stagings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of fiscal_year_balance_stagings.
+     */
+    distinct?: Fiscal_year_balance_stagingScalarFieldEnum | Fiscal_year_balance_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * fiscal_year_balance_staging findMany
+   */
+  export type fiscal_year_balance_stagingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * Filter, which fiscal_year_balance_stagings to fetch.
+     */
+    where?: fiscal_year_balance_stagingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of fiscal_year_balance_stagings to fetch.
+     */
+    orderBy?: fiscal_year_balance_stagingOrderByWithRelationInput | fiscal_year_balance_stagingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing fiscal_year_balance_stagings.
+     */
+    cursor?: fiscal_year_balance_stagingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` fiscal_year_balance_stagings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` fiscal_year_balance_stagings.
+     */
+    skip?: number
+    distinct?: Fiscal_year_balance_stagingScalarFieldEnum | Fiscal_year_balance_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * fiscal_year_balance_staging create
+   */
+  export type fiscal_year_balance_stagingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * The data needed to create a fiscal_year_balance_staging.
+     */
+    data: XOR<fiscal_year_balance_stagingCreateInput, fiscal_year_balance_stagingUncheckedCreateInput>
+  }
+
+  /**
+   * fiscal_year_balance_staging createMany
+   */
+  export type fiscal_year_balance_stagingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many fiscal_year_balance_stagings.
+     */
+    data: fiscal_year_balance_stagingCreateManyInput | fiscal_year_balance_stagingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * fiscal_year_balance_staging createManyAndReturn
+   */
+  export type fiscal_year_balance_stagingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * The data used to create many fiscal_year_balance_stagings.
+     */
+    data: fiscal_year_balance_stagingCreateManyInput | fiscal_year_balance_stagingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * fiscal_year_balance_staging update
+   */
+  export type fiscal_year_balance_stagingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * The data needed to update a fiscal_year_balance_staging.
+     */
+    data: XOR<fiscal_year_balance_stagingUpdateInput, fiscal_year_balance_stagingUncheckedUpdateInput>
+    /**
+     * Choose, which fiscal_year_balance_staging to update.
+     */
+    where: fiscal_year_balance_stagingWhereUniqueInput
+  }
+
+  /**
+   * fiscal_year_balance_staging updateMany
+   */
+  export type fiscal_year_balance_stagingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update fiscal_year_balance_stagings.
+     */
+    data: XOR<fiscal_year_balance_stagingUpdateManyMutationInput, fiscal_year_balance_stagingUncheckedUpdateManyInput>
+    /**
+     * Filter which fiscal_year_balance_stagings to update
+     */
+    where?: fiscal_year_balance_stagingWhereInput
+    /**
+     * Limit how many fiscal_year_balance_stagings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * fiscal_year_balance_staging updateManyAndReturn
+   */
+  export type fiscal_year_balance_stagingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * The data used to update fiscal_year_balance_stagings.
+     */
+    data: XOR<fiscal_year_balance_stagingUpdateManyMutationInput, fiscal_year_balance_stagingUncheckedUpdateManyInput>
+    /**
+     * Filter which fiscal_year_balance_stagings to update
+     */
+    where?: fiscal_year_balance_stagingWhereInput
+    /**
+     * Limit how many fiscal_year_balance_stagings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * fiscal_year_balance_staging upsert
+   */
+  export type fiscal_year_balance_stagingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * The filter to search for the fiscal_year_balance_staging to update in case it exists.
+     */
+    where: fiscal_year_balance_stagingWhereUniqueInput
+    /**
+     * In case the fiscal_year_balance_staging found by the `where` argument doesn't exist, create a new fiscal_year_balance_staging with this data.
+     */
+    create: XOR<fiscal_year_balance_stagingCreateInput, fiscal_year_balance_stagingUncheckedCreateInput>
+    /**
+     * In case the fiscal_year_balance_staging was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<fiscal_year_balance_stagingUpdateInput, fiscal_year_balance_stagingUncheckedUpdateInput>
+  }
+
+  /**
+   * fiscal_year_balance_staging delete
+   */
+  export type fiscal_year_balance_stagingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+    /**
+     * Filter which fiscal_year_balance_staging to delete.
+     */
+    where: fiscal_year_balance_stagingWhereUniqueInput
+  }
+
+  /**
+   * fiscal_year_balance_staging deleteMany
+   */
+  export type fiscal_year_balance_stagingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which fiscal_year_balance_stagings to delete
+     */
+    where?: fiscal_year_balance_stagingWhereInput
+    /**
+     * Limit how many fiscal_year_balance_stagings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * fiscal_year_balance_staging without action
+   */
+  export type fiscal_year_balance_stagingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the fiscal_year_balance_staging
+     */
+    select?: fiscal_year_balance_stagingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the fiscal_year_balance_staging
+     */
+    omit?: fiscal_year_balance_stagingOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -36802,8 +42495,7 @@ export namespace Prisma {
     sub_id: 'sub_id',
     total_txn_value: 'total_txn_value',
     total_with_commission: 'total_with_commission',
-    wacc_tax_base: 'wacc_tax_base',
-    wacc: 'wacc'
+    wacc_tax_base: 'wacc_tax_base'
   };
 
   export type Symbol_holdingsScalarFieldEnum = (typeof Symbol_holdingsScalarFieldEnum)[keyof typeof Symbol_holdingsScalarFieldEnum]
@@ -36834,6 +42526,78 @@ export namespace Prisma {
   };
 
   export type Ipo_allotment_stagingScalarFieldEnum = (typeof Ipo_allotment_stagingScalarFieldEnum)[keyof typeof Ipo_allotment_stagingScalarFieldEnum]
+
+
+  export const Bonus_records_stagingScalarFieldEnum: {
+    bonus_staging_id: 'bonus_staging_id',
+    fund_id: 'fund_id',
+    symbol: 'symbol',
+    fiscal_year_id: 'fiscal_year_id',
+    bonus_percent: 'bonus_percent',
+    quantity: 'quantity',
+    bookclose_date: 'bookclose_date',
+    effective_rate: 'effective_rate',
+    sub_id: 'sub_id',
+    remarks: 'remarks',
+    recorded_at: 'recorded_at',
+    added_at: 'added_at'
+  };
+
+  export type Bonus_records_stagingScalarFieldEnum = (typeof Bonus_records_stagingScalarFieldEnum)[keyof typeof Bonus_records_stagingScalarFieldEnum]
+
+
+  export const Cash_records_stagingScalarFieldEnum: {
+    cash_staging_id: 'cash_staging_id',
+    fund_id: 'fund_id',
+    symbol: 'symbol',
+    amount: 'amount',
+    bookclose_date: 'bookclose_date',
+    fiscal_year_id: 'fiscal_year_id',
+    recorded_at: 'recorded_at',
+    remarks: 'remarks',
+    sub_id: 'sub_id'
+  };
+
+  export type Cash_records_stagingScalarFieldEnum = (typeof Cash_records_stagingScalarFieldEnum)[keyof typeof Cash_records_stagingScalarFieldEnum]
+
+
+  export const Right_records_stagingScalarFieldEnum: {
+    right_staging_id: 'right_staging_id',
+    fund_id: 'fund_id',
+    symbol: 'symbol',
+    fiscal_year_id: 'fiscal_year_id',
+    right_ratio: 'right_ratio',
+    quantity: 'quantity',
+    bookclose_date: 'bookclose_date',
+    effective_rate: 'effective_rate',
+    total_value: 'total_value',
+    sub_id: 'sub_id',
+    remarks: 'remarks',
+    recorded_at: 'recorded_at',
+    added_at: 'added_at'
+  };
+
+  export type Right_records_stagingScalarFieldEnum = (typeof Right_records_stagingScalarFieldEnum)[keyof typeof Right_records_stagingScalarFieldEnum]
+
+
+  export const Fiscal_year_balance_stagingScalarFieldEnum: {
+    symbol: 'symbol',
+    fiscal_year_id: 'fiscal_year_id',
+    opening_quantity: 'opening_quantity',
+    added_quantity: 'added_quantity',
+    closing_quantity: 'closing_quantity',
+    effective_rate: 'effective_rate',
+    remarks: 'remarks',
+    opening_rate: 'opening_rate',
+    demat: 'demat',
+    non_demat: 'non_demat',
+    fund_id: 'fund_id',
+    source_type: 'source_type',
+    sub_id: 'sub_id',
+    staging_id: 'staging_id'
+  };
+
+  export type Fiscal_year_balance_stagingScalarFieldEnum = (typeof Fiscal_year_balance_stagingScalarFieldEnum)[keyof typeof Fiscal_year_balance_stagingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -37814,9 +43578,11 @@ export namespace Prisma {
     end_date?: DateTimeFilter<"fiscal_years"> | Date | string
     initial_balance_synced?: BoolNullableFilter<"fiscal_years"> | boolean | null
     bonus_records?: Bonus_recordsListRelationFilter
+    bonus_records_staging?: Bonus_records_stagingListRelationFilter
     buy_records?: Buy_recordsListRelationFilter
     buy_records_staging?: Buy_records_stagingListRelationFilter
     cash_records?: Cash_recordsListRelationFilter
+    cash_records_staging?: Cash_records_stagingListRelationFilter
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
@@ -37825,6 +43591,7 @@ export namespace Prisma {
     order_book?: Order_bookListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records?: Right_recordsListRelationFilter
+    right_records_staging?: Right_records_stagingListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
     symbol_holdings?: Symbol_holdingsListRelationFilter
@@ -37837,9 +43604,11 @@ export namespace Prisma {
     end_date?: SortOrder
     initial_balance_synced?: SortOrderInput | SortOrder
     bonus_records?: bonus_recordsOrderByRelationAggregateInput
+    bonus_records_staging?: bonus_records_stagingOrderByRelationAggregateInput
     buy_records?: buy_recordsOrderByRelationAggregateInput
     buy_records_staging?: buy_records_stagingOrderByRelationAggregateInput
     cash_records?: cash_recordsOrderByRelationAggregateInput
+    cash_records_staging?: cash_records_stagingOrderByRelationAggregateInput
     closeout_records?: closeout_recordsOrderByRelationAggregateInput
     fiscal_year_balance?: fiscal_year_balanceOrderByRelationAggregateInput
     ipo_allotment_records?: ipo_allotment_recordsOrderByRelationAggregateInput
@@ -37848,6 +43617,7 @@ export namespace Prisma {
     order_book?: order_bookOrderByRelationAggregateInput
     promoter_records?: promoter_recordsOrderByRelationAggregateInput
     right_records?: right_recordsOrderByRelationAggregateInput
+    right_records_staging?: right_records_stagingOrderByRelationAggregateInput
     sell_records?: sell_recordsOrderByRelationAggregateInput
     sell_records_staging?: sell_records_stagingOrderByRelationAggregateInput
     symbol_holdings?: symbol_holdingsOrderByRelationAggregateInput
@@ -37863,9 +43633,11 @@ export namespace Prisma {
     end_date?: DateTimeFilter<"fiscal_years"> | Date | string
     initial_balance_synced?: BoolNullableFilter<"fiscal_years"> | boolean | null
     bonus_records?: Bonus_recordsListRelationFilter
+    bonus_records_staging?: Bonus_records_stagingListRelationFilter
     buy_records?: Buy_recordsListRelationFilter
     buy_records_staging?: Buy_records_stagingListRelationFilter
     cash_records?: Cash_recordsListRelationFilter
+    cash_records_staging?: Cash_records_stagingListRelationFilter
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
@@ -37874,6 +43646,7 @@ export namespace Prisma {
     order_book?: Order_bookListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records?: Right_recordsListRelationFilter
+    right_records_staging?: Right_records_stagingListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
     symbol_holdings?: Symbol_holdingsListRelationFilter
@@ -37911,9 +43684,11 @@ export namespace Prisma {
     fund_name?: StringFilter<"funds"> | string
     uploaded_at?: DateTimeNullableFilter<"funds"> | Date | string | null
     bonus_records?: Bonus_recordsListRelationFilter
+    bonus_records_staging?: Bonus_records_stagingListRelationFilter
     buy_records?: Buy_recordsListRelationFilter
     buy_records_staging?: Buy_records_stagingListRelationFilter
     cash_records?: Cash_recordsListRelationFilter
+    cash_records_staging?: Cash_records_stagingListRelationFilter
     client_broker_mapping?: Client_broker_mappingListRelationFilter
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
@@ -37921,6 +43696,7 @@ export namespace Prisma {
     ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records?: Right_recordsListRelationFilter
+    right_records_staging?: Right_records_stagingListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
     sub_classes?: Sub_classesListRelationFilter
@@ -37932,9 +43708,11 @@ export namespace Prisma {
     fund_name?: SortOrder
     uploaded_at?: SortOrderInput | SortOrder
     bonus_records?: bonus_recordsOrderByRelationAggregateInput
+    bonus_records_staging?: bonus_records_stagingOrderByRelationAggregateInput
     buy_records?: buy_recordsOrderByRelationAggregateInput
     buy_records_staging?: buy_records_stagingOrderByRelationAggregateInput
     cash_records?: cash_recordsOrderByRelationAggregateInput
+    cash_records_staging?: cash_records_stagingOrderByRelationAggregateInput
     client_broker_mapping?: client_broker_mappingOrderByRelationAggregateInput
     closeout_records?: closeout_recordsOrderByRelationAggregateInput
     fiscal_year_balance?: fiscal_year_balanceOrderByRelationAggregateInput
@@ -37942,6 +43720,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingOrderByRelationAggregateInput
     promoter_records?: promoter_recordsOrderByRelationAggregateInput
     right_records?: right_recordsOrderByRelationAggregateInput
+    right_records_staging?: right_records_stagingOrderByRelationAggregateInput
     sell_records?: sell_recordsOrderByRelationAggregateInput
     sell_records_staging?: sell_records_stagingOrderByRelationAggregateInput
     sub_classes?: sub_classesOrderByRelationAggregateInput
@@ -37956,9 +43735,11 @@ export namespace Prisma {
     fund_name?: StringFilter<"funds"> | string
     uploaded_at?: DateTimeNullableFilter<"funds"> | Date | string | null
     bonus_records?: Bonus_recordsListRelationFilter
+    bonus_records_staging?: Bonus_records_stagingListRelationFilter
     buy_records?: Buy_recordsListRelationFilter
     buy_records_staging?: Buy_records_stagingListRelationFilter
     cash_records?: Cash_recordsListRelationFilter
+    cash_records_staging?: Cash_records_stagingListRelationFilter
     client_broker_mapping?: Client_broker_mappingListRelationFilter
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
@@ -37966,6 +43747,7 @@ export namespace Prisma {
     ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records?: Right_recordsListRelationFilter
+    right_records_staging?: Right_records_stagingListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
     sub_classes?: Sub_classesListRelationFilter
@@ -38141,9 +43923,11 @@ export namespace Prisma {
     is_auto_generated?: BoolNullableFilter<"stock_fulls"> | boolean | null
     promoter_sector_id?: IntNullableFilter<"stock_fulls"> | number | null
     bonus_records?: Bonus_recordsListRelationFilter
+    bonus_records_staging?: Bonus_records_stagingListRelationFilter
     buy_records?: Buy_recordsListRelationFilter
     buy_records_staging?: Buy_records_stagingListRelationFilter
     cash_records?: Cash_recordsListRelationFilter
+    cash_records_staging?: Cash_records_stagingListRelationFilter
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
@@ -38151,6 +43935,7 @@ export namespace Prisma {
     order_book?: Order_bookListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records?: Right_recordsListRelationFilter
+    right_records_staging?: Right_records_stagingListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
     sectors?: XOR<SectorsScalarRelationFilter, sectorsWhereInput>
@@ -38164,9 +43949,11 @@ export namespace Prisma {
     is_auto_generated?: SortOrderInput | SortOrder
     promoter_sector_id?: SortOrderInput | SortOrder
     bonus_records?: bonus_recordsOrderByRelationAggregateInput
+    bonus_records_staging?: bonus_records_stagingOrderByRelationAggregateInput
     buy_records?: buy_recordsOrderByRelationAggregateInput
     buy_records_staging?: buy_records_stagingOrderByRelationAggregateInput
     cash_records?: cash_recordsOrderByRelationAggregateInput
+    cash_records_staging?: cash_records_stagingOrderByRelationAggregateInput
     closeout_records?: closeout_recordsOrderByRelationAggregateInput
     fiscal_year_balance?: fiscal_year_balanceOrderByRelationAggregateInput
     ipo_allotment_records?: ipo_allotment_recordsOrderByRelationAggregateInput
@@ -38174,6 +43961,7 @@ export namespace Prisma {
     order_book?: order_bookOrderByRelationAggregateInput
     promoter_records?: promoter_recordsOrderByRelationAggregateInput
     right_records?: right_recordsOrderByRelationAggregateInput
+    right_records_staging?: right_records_stagingOrderByRelationAggregateInput
     sell_records?: sell_recordsOrderByRelationAggregateInput
     sell_records_staging?: sell_records_stagingOrderByRelationAggregateInput
     sectors?: sectorsOrderByWithRelationInput
@@ -38190,9 +43978,11 @@ export namespace Prisma {
     is_auto_generated?: BoolNullableFilter<"stock_fulls"> | boolean | null
     promoter_sector_id?: IntNullableFilter<"stock_fulls"> | number | null
     bonus_records?: Bonus_recordsListRelationFilter
+    bonus_records_staging?: Bonus_records_stagingListRelationFilter
     buy_records?: Buy_recordsListRelationFilter
     buy_records_staging?: Buy_records_stagingListRelationFilter
     cash_records?: Cash_recordsListRelationFilter
+    cash_records_staging?: Cash_records_stagingListRelationFilter
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
@@ -38200,6 +43990,7 @@ export namespace Prisma {
     order_book?: Order_bookListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records?: Right_recordsListRelationFilter
+    right_records_staging?: Right_records_stagingListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
     sectors?: XOR<SectorsScalarRelationFilter, sectorsWhereInput>
@@ -39023,7 +44814,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
-    wacc?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
     funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
     sub_classes?: XOR<Sub_classesNullableScalarRelationFilter, sub_classesWhereInput> | null
@@ -39041,7 +44831,6 @@ export namespace Prisma {
     total_txn_value?: SortOrder
     total_with_commission?: SortOrder
     wacc_tax_base?: SortOrderInput | SortOrder
-    wacc?: SortOrderInput | SortOrder
     fiscal_years?: fiscal_yearsOrderByWithRelationInput
     funds?: fundsOrderByWithRelationInput
     sub_classes?: sub_classesOrderByWithRelationInput
@@ -39063,7 +44852,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
-    wacc?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
     funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
     sub_classes?: XOR<Sub_classesNullableScalarRelationFilter, sub_classesWhereInput> | null
@@ -39081,7 +44869,6 @@ export namespace Prisma {
     total_txn_value?: SortOrder
     total_with_commission?: SortOrder
     wacc_tax_base?: SortOrderInput | SortOrder
-    wacc?: SortOrderInput | SortOrder
     _count?: symbol_holdingsCountOrderByAggregateInput
     _avg?: symbol_holdingsAvgOrderByAggregateInput
     _max?: symbol_holdingsMaxOrderByAggregateInput
@@ -39103,7 +44890,6 @@ export namespace Prisma {
     total_txn_value?: DecimalWithAggregatesFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalWithAggregatesFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: DecimalNullableWithAggregatesFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
-    wacc?: DecimalNullableWithAggregatesFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sub_classesWhereInput = {
@@ -39114,10 +44900,13 @@ export namespace Prisma {
     fund_id?: IntFilter<"sub_classes"> | number
     sub_name?: StringFilter<"sub_classes"> | string
     added_at?: DateTimeNullableFilter<"sub_classes"> | Date | string | null
+    bonus_records_staging?: Bonus_records_stagingListRelationFilter
+    cash_records_staging?: Cash_records_stagingListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
     ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
+    right_records_staging?: Right_records_stagingListRelationFilter
     funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
     symbol_holdings?: Symbol_holdingsListRelationFilter
   }
@@ -39127,10 +44916,13 @@ export namespace Prisma {
     fund_id?: SortOrder
     sub_name?: SortOrder
     added_at?: SortOrderInput | SortOrder
+    bonus_records_staging?: bonus_records_stagingOrderByRelationAggregateInput
+    cash_records_staging?: cash_records_stagingOrderByRelationAggregateInput
     fiscal_year_balance?: fiscal_year_balanceOrderByRelationAggregateInput
     ipo_allotment_records?: ipo_allotment_recordsOrderByRelationAggregateInput
     ipo_allotment_staging?: ipo_allotment_stagingOrderByRelationAggregateInput
     promoter_records?: promoter_recordsOrderByRelationAggregateInput
+    right_records_staging?: right_records_stagingOrderByRelationAggregateInput
     funds?: fundsOrderByWithRelationInput
     symbol_holdings?: symbol_holdingsOrderByRelationAggregateInput
   }
@@ -39143,10 +44935,13 @@ export namespace Prisma {
     fund_id?: IntFilter<"sub_classes"> | number
     sub_name?: StringFilter<"sub_classes"> | string
     added_at?: DateTimeNullableFilter<"sub_classes"> | Date | string | null
+    bonus_records_staging?: Bonus_records_stagingListRelationFilter
+    cash_records_staging?: Cash_records_stagingListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
     ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
+    right_records_staging?: Right_records_stagingListRelationFilter
     funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
     symbol_holdings?: Symbol_holdingsListRelationFilter
   }, "sub_id">
@@ -39267,6 +45062,398 @@ export namespace Prisma {
     remarks?: StringNullableWithAggregatesFilter<"ipo_allotment_staging"> | string | null
     symbol?: StringWithAggregatesFilter<"ipo_allotment_staging"> | string
     sub_id?: IntWithAggregatesFilter<"ipo_allotment_staging"> | number
+  }
+
+  export type bonus_records_stagingWhereInput = {
+    AND?: bonus_records_stagingWhereInput | bonus_records_stagingWhereInput[]
+    OR?: bonus_records_stagingWhereInput[]
+    NOT?: bonus_records_stagingWhereInput | bonus_records_stagingWhereInput[]
+    bonus_staging_id?: IntFilter<"bonus_records_staging"> | number
+    fund_id?: IntFilter<"bonus_records_staging"> | number
+    symbol?: StringFilter<"bonus_records_staging"> | string
+    fiscal_year_id?: IntFilter<"bonus_records_staging"> | number
+    bonus_percent?: DecimalFilter<"bonus_records_staging"> | Decimal | DecimalJsLike | number | string
+    quantity?: IntFilter<"bonus_records_staging"> | number
+    bookclose_date?: DateTimeFilter<"bonus_records_staging"> | Date | string
+    effective_rate?: DecimalFilter<"bonus_records_staging"> | Decimal | DecimalJsLike | number | string
+    sub_id?: IntNullableFilter<"bonus_records_staging"> | number | null
+    remarks?: StringFilter<"bonus_records_staging"> | string
+    recorded_at?: DateTimeFilter<"bonus_records_staging"> | Date | string
+    added_at?: DateTimeNullableFilter<"bonus_records_staging"> | Date | string | null
+    fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
+    funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
+    sub_classes?: XOR<Sub_classesNullableScalarRelationFilter, sub_classesWhereInput> | null
+    stock_fulls?: XOR<Stock_fullsScalarRelationFilter, stock_fullsWhereInput>
+  }
+
+  export type bonus_records_stagingOrderByWithRelationInput = {
+    bonus_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    bonus_percent?: SortOrder
+    quantity?: SortOrder
+    bookclose_date?: SortOrder
+    effective_rate?: SortOrder
+    sub_id?: SortOrderInput | SortOrder
+    remarks?: SortOrder
+    recorded_at?: SortOrder
+    added_at?: SortOrderInput | SortOrder
+    fiscal_years?: fiscal_yearsOrderByWithRelationInput
+    funds?: fundsOrderByWithRelationInput
+    sub_classes?: sub_classesOrderByWithRelationInput
+    stock_fulls?: stock_fullsOrderByWithRelationInput
+  }
+
+  export type bonus_records_stagingWhereUniqueInput = Prisma.AtLeast<{
+    bonus_staging_id?: number
+    AND?: bonus_records_stagingWhereInput | bonus_records_stagingWhereInput[]
+    OR?: bonus_records_stagingWhereInput[]
+    NOT?: bonus_records_stagingWhereInput | bonus_records_stagingWhereInput[]
+    fund_id?: IntFilter<"bonus_records_staging"> | number
+    symbol?: StringFilter<"bonus_records_staging"> | string
+    fiscal_year_id?: IntFilter<"bonus_records_staging"> | number
+    bonus_percent?: DecimalFilter<"bonus_records_staging"> | Decimal | DecimalJsLike | number | string
+    quantity?: IntFilter<"bonus_records_staging"> | number
+    bookclose_date?: DateTimeFilter<"bonus_records_staging"> | Date | string
+    effective_rate?: DecimalFilter<"bonus_records_staging"> | Decimal | DecimalJsLike | number | string
+    sub_id?: IntNullableFilter<"bonus_records_staging"> | number | null
+    remarks?: StringFilter<"bonus_records_staging"> | string
+    recorded_at?: DateTimeFilter<"bonus_records_staging"> | Date | string
+    added_at?: DateTimeNullableFilter<"bonus_records_staging"> | Date | string | null
+    fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
+    funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
+    sub_classes?: XOR<Sub_classesNullableScalarRelationFilter, sub_classesWhereInput> | null
+    stock_fulls?: XOR<Stock_fullsScalarRelationFilter, stock_fullsWhereInput>
+  }, "bonus_staging_id">
+
+  export type bonus_records_stagingOrderByWithAggregationInput = {
+    bonus_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    bonus_percent?: SortOrder
+    quantity?: SortOrder
+    bookclose_date?: SortOrder
+    effective_rate?: SortOrder
+    sub_id?: SortOrderInput | SortOrder
+    remarks?: SortOrder
+    recorded_at?: SortOrder
+    added_at?: SortOrderInput | SortOrder
+    _count?: bonus_records_stagingCountOrderByAggregateInput
+    _avg?: bonus_records_stagingAvgOrderByAggregateInput
+    _max?: bonus_records_stagingMaxOrderByAggregateInput
+    _min?: bonus_records_stagingMinOrderByAggregateInput
+    _sum?: bonus_records_stagingSumOrderByAggregateInput
+  }
+
+  export type bonus_records_stagingScalarWhereWithAggregatesInput = {
+    AND?: bonus_records_stagingScalarWhereWithAggregatesInput | bonus_records_stagingScalarWhereWithAggregatesInput[]
+    OR?: bonus_records_stagingScalarWhereWithAggregatesInput[]
+    NOT?: bonus_records_stagingScalarWhereWithAggregatesInput | bonus_records_stagingScalarWhereWithAggregatesInput[]
+    bonus_staging_id?: IntWithAggregatesFilter<"bonus_records_staging"> | number
+    fund_id?: IntWithAggregatesFilter<"bonus_records_staging"> | number
+    symbol?: StringWithAggregatesFilter<"bonus_records_staging"> | string
+    fiscal_year_id?: IntWithAggregatesFilter<"bonus_records_staging"> | number
+    bonus_percent?: DecimalWithAggregatesFilter<"bonus_records_staging"> | Decimal | DecimalJsLike | number | string
+    quantity?: IntWithAggregatesFilter<"bonus_records_staging"> | number
+    bookclose_date?: DateTimeWithAggregatesFilter<"bonus_records_staging"> | Date | string
+    effective_rate?: DecimalWithAggregatesFilter<"bonus_records_staging"> | Decimal | DecimalJsLike | number | string
+    sub_id?: IntNullableWithAggregatesFilter<"bonus_records_staging"> | number | null
+    remarks?: StringWithAggregatesFilter<"bonus_records_staging"> | string
+    recorded_at?: DateTimeWithAggregatesFilter<"bonus_records_staging"> | Date | string
+    added_at?: DateTimeNullableWithAggregatesFilter<"bonus_records_staging"> | Date | string | null
+  }
+
+  export type cash_records_stagingWhereInput = {
+    AND?: cash_records_stagingWhereInput | cash_records_stagingWhereInput[]
+    OR?: cash_records_stagingWhereInput[]
+    NOT?: cash_records_stagingWhereInput | cash_records_stagingWhereInput[]
+    cash_staging_id?: IntFilter<"cash_records_staging"> | number
+    fund_id?: IntFilter<"cash_records_staging"> | number
+    symbol?: StringFilter<"cash_records_staging"> | string
+    amount?: DecimalFilter<"cash_records_staging"> | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFilter<"cash_records_staging"> | Date | string
+    fiscal_year_id?: IntFilter<"cash_records_staging"> | number
+    recorded_at?: DateTimeFilter<"cash_records_staging"> | Date | string
+    remarks?: StringFilter<"cash_records_staging"> | string
+    sub_id?: IntNullableFilter<"cash_records_staging"> | number | null
+    fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
+    funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
+    sub_classes?: XOR<Sub_classesNullableScalarRelationFilter, sub_classesWhereInput> | null
+    stock_fulls?: XOR<Stock_fullsScalarRelationFilter, stock_fullsWhereInput>
+  }
+
+  export type cash_records_stagingOrderByWithRelationInput = {
+    cash_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    amount?: SortOrder
+    bookclose_date?: SortOrder
+    fiscal_year_id?: SortOrder
+    recorded_at?: SortOrder
+    remarks?: SortOrder
+    sub_id?: SortOrderInput | SortOrder
+    fiscal_years?: fiscal_yearsOrderByWithRelationInput
+    funds?: fundsOrderByWithRelationInput
+    sub_classes?: sub_classesOrderByWithRelationInput
+    stock_fulls?: stock_fullsOrderByWithRelationInput
+  }
+
+  export type cash_records_stagingWhereUniqueInput = Prisma.AtLeast<{
+    cash_staging_id?: number
+    AND?: cash_records_stagingWhereInput | cash_records_stagingWhereInput[]
+    OR?: cash_records_stagingWhereInput[]
+    NOT?: cash_records_stagingWhereInput | cash_records_stagingWhereInput[]
+    fund_id?: IntFilter<"cash_records_staging"> | number
+    symbol?: StringFilter<"cash_records_staging"> | string
+    amount?: DecimalFilter<"cash_records_staging"> | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFilter<"cash_records_staging"> | Date | string
+    fiscal_year_id?: IntFilter<"cash_records_staging"> | number
+    recorded_at?: DateTimeFilter<"cash_records_staging"> | Date | string
+    remarks?: StringFilter<"cash_records_staging"> | string
+    sub_id?: IntNullableFilter<"cash_records_staging"> | number | null
+    fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
+    funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
+    sub_classes?: XOR<Sub_classesNullableScalarRelationFilter, sub_classesWhereInput> | null
+    stock_fulls?: XOR<Stock_fullsScalarRelationFilter, stock_fullsWhereInput>
+  }, "cash_staging_id">
+
+  export type cash_records_stagingOrderByWithAggregationInput = {
+    cash_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    amount?: SortOrder
+    bookclose_date?: SortOrder
+    fiscal_year_id?: SortOrder
+    recorded_at?: SortOrder
+    remarks?: SortOrder
+    sub_id?: SortOrderInput | SortOrder
+    _count?: cash_records_stagingCountOrderByAggregateInput
+    _avg?: cash_records_stagingAvgOrderByAggregateInput
+    _max?: cash_records_stagingMaxOrderByAggregateInput
+    _min?: cash_records_stagingMinOrderByAggregateInput
+    _sum?: cash_records_stagingSumOrderByAggregateInput
+  }
+
+  export type cash_records_stagingScalarWhereWithAggregatesInput = {
+    AND?: cash_records_stagingScalarWhereWithAggregatesInput | cash_records_stagingScalarWhereWithAggregatesInput[]
+    OR?: cash_records_stagingScalarWhereWithAggregatesInput[]
+    NOT?: cash_records_stagingScalarWhereWithAggregatesInput | cash_records_stagingScalarWhereWithAggregatesInput[]
+    cash_staging_id?: IntWithAggregatesFilter<"cash_records_staging"> | number
+    fund_id?: IntWithAggregatesFilter<"cash_records_staging"> | number
+    symbol?: StringWithAggregatesFilter<"cash_records_staging"> | string
+    amount?: DecimalWithAggregatesFilter<"cash_records_staging"> | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeWithAggregatesFilter<"cash_records_staging"> | Date | string
+    fiscal_year_id?: IntWithAggregatesFilter<"cash_records_staging"> | number
+    recorded_at?: DateTimeWithAggregatesFilter<"cash_records_staging"> | Date | string
+    remarks?: StringWithAggregatesFilter<"cash_records_staging"> | string
+    sub_id?: IntNullableWithAggregatesFilter<"cash_records_staging"> | number | null
+  }
+
+  export type right_records_stagingWhereInput = {
+    AND?: right_records_stagingWhereInput | right_records_stagingWhereInput[]
+    OR?: right_records_stagingWhereInput[]
+    NOT?: right_records_stagingWhereInput | right_records_stagingWhereInput[]
+    right_staging_id?: IntFilter<"right_records_staging"> | number
+    fund_id?: IntFilter<"right_records_staging"> | number
+    symbol?: StringFilter<"right_records_staging"> | string
+    fiscal_year_id?: IntFilter<"right_records_staging"> | number
+    right_ratio?: StringFilter<"right_records_staging"> | string
+    quantity?: IntFilter<"right_records_staging"> | number
+    bookclose_date?: DateTimeFilter<"right_records_staging"> | Date | string
+    effective_rate?: DecimalFilter<"right_records_staging"> | Decimal | DecimalJsLike | number | string
+    total_value?: DecimalNullableFilter<"right_records_staging"> | Decimal | DecimalJsLike | number | string | null
+    sub_id?: IntNullableFilter<"right_records_staging"> | number | null
+    remarks?: StringFilter<"right_records_staging"> | string
+    recorded_at?: DateTimeFilter<"right_records_staging"> | Date | string
+    added_at?: DateTimeNullableFilter<"right_records_staging"> | Date | string | null
+    fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
+    funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
+    sub_classes?: XOR<Sub_classesNullableScalarRelationFilter, sub_classesWhereInput> | null
+    stock_fulls?: XOR<Stock_fullsScalarRelationFilter, stock_fullsWhereInput>
+  }
+
+  export type right_records_stagingOrderByWithRelationInput = {
+    right_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    right_ratio?: SortOrder
+    quantity?: SortOrder
+    bookclose_date?: SortOrder
+    effective_rate?: SortOrder
+    total_value?: SortOrderInput | SortOrder
+    sub_id?: SortOrderInput | SortOrder
+    remarks?: SortOrder
+    recorded_at?: SortOrder
+    added_at?: SortOrderInput | SortOrder
+    fiscal_years?: fiscal_yearsOrderByWithRelationInput
+    funds?: fundsOrderByWithRelationInput
+    sub_classes?: sub_classesOrderByWithRelationInput
+    stock_fulls?: stock_fullsOrderByWithRelationInput
+  }
+
+  export type right_records_stagingWhereUniqueInput = Prisma.AtLeast<{
+    right_staging_id?: number
+    AND?: right_records_stagingWhereInput | right_records_stagingWhereInput[]
+    OR?: right_records_stagingWhereInput[]
+    NOT?: right_records_stagingWhereInput | right_records_stagingWhereInput[]
+    fund_id?: IntFilter<"right_records_staging"> | number
+    symbol?: StringFilter<"right_records_staging"> | string
+    fiscal_year_id?: IntFilter<"right_records_staging"> | number
+    right_ratio?: StringFilter<"right_records_staging"> | string
+    quantity?: IntFilter<"right_records_staging"> | number
+    bookclose_date?: DateTimeFilter<"right_records_staging"> | Date | string
+    effective_rate?: DecimalFilter<"right_records_staging"> | Decimal | DecimalJsLike | number | string
+    total_value?: DecimalNullableFilter<"right_records_staging"> | Decimal | DecimalJsLike | number | string | null
+    sub_id?: IntNullableFilter<"right_records_staging"> | number | null
+    remarks?: StringFilter<"right_records_staging"> | string
+    recorded_at?: DateTimeFilter<"right_records_staging"> | Date | string
+    added_at?: DateTimeNullableFilter<"right_records_staging"> | Date | string | null
+    fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
+    funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
+    sub_classes?: XOR<Sub_classesNullableScalarRelationFilter, sub_classesWhereInput> | null
+    stock_fulls?: XOR<Stock_fullsScalarRelationFilter, stock_fullsWhereInput>
+  }, "right_staging_id">
+
+  export type right_records_stagingOrderByWithAggregationInput = {
+    right_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    right_ratio?: SortOrder
+    quantity?: SortOrder
+    bookclose_date?: SortOrder
+    effective_rate?: SortOrder
+    total_value?: SortOrderInput | SortOrder
+    sub_id?: SortOrderInput | SortOrder
+    remarks?: SortOrder
+    recorded_at?: SortOrder
+    added_at?: SortOrderInput | SortOrder
+    _count?: right_records_stagingCountOrderByAggregateInput
+    _avg?: right_records_stagingAvgOrderByAggregateInput
+    _max?: right_records_stagingMaxOrderByAggregateInput
+    _min?: right_records_stagingMinOrderByAggregateInput
+    _sum?: right_records_stagingSumOrderByAggregateInput
+  }
+
+  export type right_records_stagingScalarWhereWithAggregatesInput = {
+    AND?: right_records_stagingScalarWhereWithAggregatesInput | right_records_stagingScalarWhereWithAggregatesInput[]
+    OR?: right_records_stagingScalarWhereWithAggregatesInput[]
+    NOT?: right_records_stagingScalarWhereWithAggregatesInput | right_records_stagingScalarWhereWithAggregatesInput[]
+    right_staging_id?: IntWithAggregatesFilter<"right_records_staging"> | number
+    fund_id?: IntWithAggregatesFilter<"right_records_staging"> | number
+    symbol?: StringWithAggregatesFilter<"right_records_staging"> | string
+    fiscal_year_id?: IntWithAggregatesFilter<"right_records_staging"> | number
+    right_ratio?: StringWithAggregatesFilter<"right_records_staging"> | string
+    quantity?: IntWithAggregatesFilter<"right_records_staging"> | number
+    bookclose_date?: DateTimeWithAggregatesFilter<"right_records_staging"> | Date | string
+    effective_rate?: DecimalWithAggregatesFilter<"right_records_staging"> | Decimal | DecimalJsLike | number | string
+    total_value?: DecimalNullableWithAggregatesFilter<"right_records_staging"> | Decimal | DecimalJsLike | number | string | null
+    sub_id?: IntNullableWithAggregatesFilter<"right_records_staging"> | number | null
+    remarks?: StringWithAggregatesFilter<"right_records_staging"> | string
+    recorded_at?: DateTimeWithAggregatesFilter<"right_records_staging"> | Date | string
+    added_at?: DateTimeNullableWithAggregatesFilter<"right_records_staging"> | Date | string | null
+  }
+
+  export type fiscal_year_balance_stagingWhereInput = {
+    AND?: fiscal_year_balance_stagingWhereInput | fiscal_year_balance_stagingWhereInput[]
+    OR?: fiscal_year_balance_stagingWhereInput[]
+    NOT?: fiscal_year_balance_stagingWhereInput | fiscal_year_balance_stagingWhereInput[]
+    symbol?: StringFilter<"fiscal_year_balance_staging"> | string
+    fiscal_year_id?: IntFilter<"fiscal_year_balance_staging"> | number
+    opening_quantity?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    added_quantity?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    closing_quantity?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    effective_rate?: DecimalNullableFilter<"fiscal_year_balance_staging"> | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringNullableFilter<"fiscal_year_balance_staging"> | string | null
+    opening_rate?: DecimalNullableFilter<"fiscal_year_balance_staging"> | Decimal | DecimalJsLike | number | string | null
+    demat?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    non_demat?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    fund_id?: IntFilter<"fiscal_year_balance_staging"> | number
+    source_type?: StringNullableFilter<"fiscal_year_balance_staging"> | string | null
+    sub_id?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    staging_id?: IntFilter<"fiscal_year_balance_staging"> | number
+  }
+
+  export type fiscal_year_balance_stagingOrderByWithRelationInput = {
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    opening_quantity?: SortOrderInput | SortOrder
+    added_quantity?: SortOrderInput | SortOrder
+    closing_quantity?: SortOrderInput | SortOrder
+    effective_rate?: SortOrderInput | SortOrder
+    remarks?: SortOrderInput | SortOrder
+    opening_rate?: SortOrderInput | SortOrder
+    demat?: SortOrderInput | SortOrder
+    non_demat?: SortOrderInput | SortOrder
+    fund_id?: SortOrder
+    source_type?: SortOrderInput | SortOrder
+    sub_id?: SortOrderInput | SortOrder
+    staging_id?: SortOrder
+  }
+
+  export type fiscal_year_balance_stagingWhereUniqueInput = Prisma.AtLeast<{
+    staging_id?: number
+    AND?: fiscal_year_balance_stagingWhereInput | fiscal_year_balance_stagingWhereInput[]
+    OR?: fiscal_year_balance_stagingWhereInput[]
+    NOT?: fiscal_year_balance_stagingWhereInput | fiscal_year_balance_stagingWhereInput[]
+    symbol?: StringFilter<"fiscal_year_balance_staging"> | string
+    fiscal_year_id?: IntFilter<"fiscal_year_balance_staging"> | number
+    opening_quantity?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    added_quantity?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    closing_quantity?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    effective_rate?: DecimalNullableFilter<"fiscal_year_balance_staging"> | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringNullableFilter<"fiscal_year_balance_staging"> | string | null
+    opening_rate?: DecimalNullableFilter<"fiscal_year_balance_staging"> | Decimal | DecimalJsLike | number | string | null
+    demat?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    non_demat?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+    fund_id?: IntFilter<"fiscal_year_balance_staging"> | number
+    source_type?: StringNullableFilter<"fiscal_year_balance_staging"> | string | null
+    sub_id?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
+  }, "staging_id">
+
+  export type fiscal_year_balance_stagingOrderByWithAggregationInput = {
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    opening_quantity?: SortOrderInput | SortOrder
+    added_quantity?: SortOrderInput | SortOrder
+    closing_quantity?: SortOrderInput | SortOrder
+    effective_rate?: SortOrderInput | SortOrder
+    remarks?: SortOrderInput | SortOrder
+    opening_rate?: SortOrderInput | SortOrder
+    demat?: SortOrderInput | SortOrder
+    non_demat?: SortOrderInput | SortOrder
+    fund_id?: SortOrder
+    source_type?: SortOrderInput | SortOrder
+    sub_id?: SortOrderInput | SortOrder
+    staging_id?: SortOrder
+    _count?: fiscal_year_balance_stagingCountOrderByAggregateInput
+    _avg?: fiscal_year_balance_stagingAvgOrderByAggregateInput
+    _max?: fiscal_year_balance_stagingMaxOrderByAggregateInput
+    _min?: fiscal_year_balance_stagingMinOrderByAggregateInput
+    _sum?: fiscal_year_balance_stagingSumOrderByAggregateInput
+  }
+
+  export type fiscal_year_balance_stagingScalarWhereWithAggregatesInput = {
+    AND?: fiscal_year_balance_stagingScalarWhereWithAggregatesInput | fiscal_year_balance_stagingScalarWhereWithAggregatesInput[]
+    OR?: fiscal_year_balance_stagingScalarWhereWithAggregatesInput[]
+    NOT?: fiscal_year_balance_stagingScalarWhereWithAggregatesInput | fiscal_year_balance_stagingScalarWhereWithAggregatesInput[]
+    symbol?: StringWithAggregatesFilter<"fiscal_year_balance_staging"> | string
+    fiscal_year_id?: IntWithAggregatesFilter<"fiscal_year_balance_staging"> | number
+    opening_quantity?: IntNullableWithAggregatesFilter<"fiscal_year_balance_staging"> | number | null
+    added_quantity?: IntNullableWithAggregatesFilter<"fiscal_year_balance_staging"> | number | null
+    closing_quantity?: IntNullableWithAggregatesFilter<"fiscal_year_balance_staging"> | number | null
+    effective_rate?: DecimalNullableWithAggregatesFilter<"fiscal_year_balance_staging"> | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringNullableWithAggregatesFilter<"fiscal_year_balance_staging"> | string | null
+    opening_rate?: DecimalNullableWithAggregatesFilter<"fiscal_year_balance_staging"> | Decimal | DecimalJsLike | number | string | null
+    demat?: IntNullableWithAggregatesFilter<"fiscal_year_balance_staging"> | number | null
+    non_demat?: IntNullableWithAggregatesFilter<"fiscal_year_balance_staging"> | number | null
+    fund_id?: IntWithAggregatesFilter<"fiscal_year_balance_staging"> | number
+    source_type?: StringNullableWithAggregatesFilter<"fiscal_year_balance_staging"> | string | null
+    sub_id?: IntNullableWithAggregatesFilter<"fiscal_year_balance_staging"> | number | null
+    staging_id?: IntWithAggregatesFilter<"fiscal_year_balance_staging"> | number
   }
 
   export type audit_logCreateInput = {
@@ -40155,9 +46342,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -40166,6 +46355,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -40178,9 +46368,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -40189,6 +46381,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -40200,9 +46393,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -40211,6 +46406,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -40223,9 +46419,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -40234,6 +46432,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -40266,9 +46465,11 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
@@ -40276,6 +46477,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -40287,9 +46489,11 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
@@ -40297,6 +46501,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -40307,9 +46512,11 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
@@ -40317,6 +46524,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -40328,9 +46536,11 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
@@ -40338,6 +46548,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -40516,9 +46727,11 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
@@ -40526,6 +46739,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -40539,9 +46753,11 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -40549,6 +46765,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -40560,9 +46777,11 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -40570,6 +46789,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -40583,9 +46803,11 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -40593,6 +46815,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -41354,7 +47577,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
     fiscal_years: fiscal_yearsCreateNestedOneWithoutSymbol_holdingsInput
     funds: fundsCreateNestedOneWithoutSymbol_holdingsInput
     sub_classes?: sub_classesCreateNestedOneWithoutSymbol_holdingsInput
@@ -41372,7 +47594,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUpdateInput = {
@@ -41382,7 +47603,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     sub_classes?: sub_classesUpdateOneWithoutSymbol_holdingsNestedInput
@@ -41400,7 +47620,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsCreateManyInput = {
@@ -41414,7 +47633,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUpdateManyMutationInput = {
@@ -41424,7 +47642,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUncheckedUpdateManyInput = {
@@ -41438,16 +47655,18 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sub_classesCreateInput = {
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
   }
@@ -41457,20 +47676,26 @@ export namespace Prisma {
     fund_id: number
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
   }
 
   export type sub_classesUpdateInput = {
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
   }
@@ -41480,10 +47705,13 @@ export namespace Prisma {
     fund_id?: IntFieldUpdateOperationsInput | number
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
   }
 
@@ -41595,6 +47823,402 @@ export namespace Prisma {
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     symbol?: StringFieldUpdateOperationsInput | string
     sub_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type bonus_records_stagingCreateInput = {
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutBonus_records_stagingInput
+    funds: fundsCreateNestedOneWithoutBonus_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutBonus_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutBonus_records_stagingInput
+  }
+
+  export type bonus_records_stagingUncheckedCreateInput = {
+    bonus_staging_id?: number
+    fund_id: number
+    symbol: string
+    fiscal_year_id: number
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type bonus_records_stagingUpdateInput = {
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+    funds?: fundsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutBonus_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+  }
+
+  export type bonus_records_stagingUncheckedUpdateInput = {
+    bonus_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type bonus_records_stagingCreateManyInput = {
+    bonus_staging_id?: number
+    fund_id: number
+    symbol: string
+    fiscal_year_id: number
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type bonus_records_stagingUpdateManyMutationInput = {
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type bonus_records_stagingUncheckedUpdateManyInput = {
+    bonus_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type cash_records_stagingCreateInput = {
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    recorded_at?: Date | string
+    remarks?: string
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutCash_records_stagingInput
+    funds: fundsCreateNestedOneWithoutCash_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutCash_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutCash_records_stagingInput
+  }
+
+  export type cash_records_stagingUncheckedCreateInput = {
+    cash_staging_id?: number
+    fund_id: number
+    symbol: string
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    fiscal_year_id: number
+    recorded_at?: Date | string
+    remarks?: string
+    sub_id?: number | null
+  }
+
+  export type cash_records_stagingUpdateInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+    funds?: fundsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutCash_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+  }
+
+  export type cash_records_stagingUncheckedUpdateInput = {
+    cash_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type cash_records_stagingCreateManyInput = {
+    cash_staging_id?: number
+    fund_id: number
+    symbol: string
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    fiscal_year_id: number
+    recorded_at?: Date | string
+    remarks?: string
+    sub_id?: number | null
+  }
+
+  export type cash_records_stagingUpdateManyMutationInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type cash_records_stagingUncheckedUpdateManyInput = {
+    cash_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type right_records_stagingCreateInput = {
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutRight_records_stagingInput
+    funds: fundsCreateNestedOneWithoutRight_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutRight_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutRight_records_stagingInput
+  }
+
+  export type right_records_stagingUncheckedCreateInput = {
+    right_staging_id?: number
+    fund_id: number
+    symbol: string
+    fiscal_year_id: number
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type right_records_stagingUpdateInput = {
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+    funds?: fundsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutRight_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+  }
+
+  export type right_records_stagingUncheckedUpdateInput = {
+    right_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type right_records_stagingCreateManyInput = {
+    right_staging_id?: number
+    fund_id: number
+    symbol: string
+    fiscal_year_id: number
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type right_records_stagingUpdateManyMutationInput = {
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type right_records_stagingUncheckedUpdateManyInput = {
+    right_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type fiscal_year_balance_stagingCreateInput = {
+    symbol: string
+    fiscal_year_id: number
+    opening_quantity?: number | null
+    added_quantity?: number | null
+    closing_quantity?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    remarks?: string | null
+    opening_rate?: Decimal | DecimalJsLike | number | string | null
+    demat?: number | null
+    non_demat?: number | null
+    fund_id: number
+    source_type?: string | null
+    sub_id?: number | null
+  }
+
+  export type fiscal_year_balance_stagingUncheckedCreateInput = {
+    symbol: string
+    fiscal_year_id: number
+    opening_quantity?: number | null
+    added_quantity?: number | null
+    closing_quantity?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    remarks?: string | null
+    opening_rate?: Decimal | DecimalJsLike | number | string | null
+    demat?: number | null
+    non_demat?: number | null
+    fund_id: number
+    source_type?: string | null
+    sub_id?: number | null
+    staging_id?: number
+  }
+
+  export type fiscal_year_balance_stagingUpdateInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    opening_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    added_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    closing_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    opening_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    demat?: NullableIntFieldUpdateOperationsInput | number | null
+    non_demat?: NullableIntFieldUpdateOperationsInput | number | null
+    fund_id?: IntFieldUpdateOperationsInput | number
+    source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type fiscal_year_balance_stagingUncheckedUpdateInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    opening_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    added_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    closing_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    opening_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    demat?: NullableIntFieldUpdateOperationsInput | number | null
+    non_demat?: NullableIntFieldUpdateOperationsInput | number | null
+    fund_id?: IntFieldUpdateOperationsInput | number
+    source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    staging_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type fiscal_year_balance_stagingCreateManyInput = {
+    symbol: string
+    fiscal_year_id: number
+    opening_quantity?: number | null
+    added_quantity?: number | null
+    closing_quantity?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    remarks?: string | null
+    opening_rate?: Decimal | DecimalJsLike | number | string | null
+    demat?: number | null
+    non_demat?: number | null
+    fund_id: number
+    source_type?: string | null
+    sub_id?: number | null
+    staging_id?: number
+  }
+
+  export type fiscal_year_balance_stagingUpdateManyMutationInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    opening_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    added_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    closing_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    opening_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    demat?: NullableIntFieldUpdateOperationsInput | number | null
+    non_demat?: NullableIntFieldUpdateOperationsInput | number | null
+    fund_id?: IntFieldUpdateOperationsInput | number
+    source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type fiscal_year_balance_stagingUncheckedUpdateManyInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    opening_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    added_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    closing_quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    opening_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    demat?: NullableIntFieldUpdateOperationsInput | number | null
+    non_demat?: NullableIntFieldUpdateOperationsInput | number | null
+    fund_id?: IntFieldUpdateOperationsInput | number
+    source_type?: NullableStringFieldUpdateOperationsInput | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    staging_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -42548,6 +49172,18 @@ export namespace Prisma {
     fiscal_year_id?: SortOrder
   }
 
+  export type Bonus_records_stagingListRelationFilter = {
+    every?: bonus_records_stagingWhereInput
+    some?: bonus_records_stagingWhereInput
+    none?: bonus_records_stagingWhereInput
+  }
+
+  export type Cash_records_stagingListRelationFilter = {
+    every?: cash_records_stagingWhereInput
+    some?: cash_records_stagingWhereInput
+    none?: cash_records_stagingWhereInput
+  }
+
   export type Ipo_allotment_stagingListRelationFilter = {
     every?: ipo_allotment_stagingWhereInput
     some?: ipo_allotment_stagingWhereInput
@@ -42560,10 +49196,24 @@ export namespace Prisma {
     none?: market_snapshotsWhereInput
   }
 
+  export type Right_records_stagingListRelationFilter = {
+    every?: right_records_stagingWhereInput
+    some?: right_records_stagingWhereInput
+    none?: right_records_stagingWhereInput
+  }
+
   export type Symbol_holdingsListRelationFilter = {
     every?: symbol_holdingsWhereInput
     some?: symbol_holdingsWhereInput
     none?: symbol_holdingsWhereInput
+  }
+
+  export type bonus_records_stagingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type cash_records_stagingOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ipo_allotment_stagingOrderByRelationAggregateInput = {
@@ -42571,6 +49221,10 @@ export namespace Prisma {
   }
 
   export type market_snapshotsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type right_records_stagingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -43293,7 +49947,6 @@ export namespace Prisma {
     total_txn_value?: SortOrder
     total_with_commission?: SortOrder
     wacc_tax_base?: SortOrder
-    wacc?: SortOrder
   }
 
   export type symbol_holdingsAvgOrderByAggregateInput = {
@@ -43304,7 +49957,6 @@ export namespace Prisma {
     total_txn_value?: SortOrder
     total_with_commission?: SortOrder
     wacc_tax_base?: SortOrder
-    wacc?: SortOrder
   }
 
   export type symbol_holdingsMaxOrderByAggregateInput = {
@@ -43318,7 +49970,6 @@ export namespace Prisma {
     total_txn_value?: SortOrder
     total_with_commission?: SortOrder
     wacc_tax_base?: SortOrder
-    wacc?: SortOrder
   }
 
   export type symbol_holdingsMinOrderByAggregateInput = {
@@ -43332,7 +49983,6 @@ export namespace Prisma {
     total_txn_value?: SortOrder
     total_with_commission?: SortOrder
     wacc_tax_base?: SortOrder
-    wacc?: SortOrder
   }
 
   export type symbol_holdingsSumOrderByAggregateInput = {
@@ -43343,7 +49993,6 @@ export namespace Prisma {
     total_txn_value?: SortOrder
     total_with_commission?: SortOrder
     wacc_tax_base?: SortOrder
-    wacc?: SortOrder
   }
 
   export type sub_classesCountOrderByAggregateInput = {
@@ -43442,6 +50091,270 @@ export namespace Prisma {
     total_value?: SortOrder
     fiscal_year_id?: SortOrder
     sub_id?: SortOrder
+  }
+
+  export type bonus_records_stagingCountOrderByAggregateInput = {
+    bonus_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    bonus_percent?: SortOrder
+    quantity?: SortOrder
+    bookclose_date?: SortOrder
+    effective_rate?: SortOrder
+    sub_id?: SortOrder
+    remarks?: SortOrder
+    recorded_at?: SortOrder
+    added_at?: SortOrder
+  }
+
+  export type bonus_records_stagingAvgOrderByAggregateInput = {
+    bonus_staging_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    bonus_percent?: SortOrder
+    quantity?: SortOrder
+    effective_rate?: SortOrder
+    sub_id?: SortOrder
+  }
+
+  export type bonus_records_stagingMaxOrderByAggregateInput = {
+    bonus_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    bonus_percent?: SortOrder
+    quantity?: SortOrder
+    bookclose_date?: SortOrder
+    effective_rate?: SortOrder
+    sub_id?: SortOrder
+    remarks?: SortOrder
+    recorded_at?: SortOrder
+    added_at?: SortOrder
+  }
+
+  export type bonus_records_stagingMinOrderByAggregateInput = {
+    bonus_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    bonus_percent?: SortOrder
+    quantity?: SortOrder
+    bookclose_date?: SortOrder
+    effective_rate?: SortOrder
+    sub_id?: SortOrder
+    remarks?: SortOrder
+    recorded_at?: SortOrder
+    added_at?: SortOrder
+  }
+
+  export type bonus_records_stagingSumOrderByAggregateInput = {
+    bonus_staging_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    bonus_percent?: SortOrder
+    quantity?: SortOrder
+    effective_rate?: SortOrder
+    sub_id?: SortOrder
+  }
+
+  export type cash_records_stagingCountOrderByAggregateInput = {
+    cash_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    amount?: SortOrder
+    bookclose_date?: SortOrder
+    fiscal_year_id?: SortOrder
+    recorded_at?: SortOrder
+    remarks?: SortOrder
+    sub_id?: SortOrder
+  }
+
+  export type cash_records_stagingAvgOrderByAggregateInput = {
+    cash_staging_id?: SortOrder
+    fund_id?: SortOrder
+    amount?: SortOrder
+    fiscal_year_id?: SortOrder
+    sub_id?: SortOrder
+  }
+
+  export type cash_records_stagingMaxOrderByAggregateInput = {
+    cash_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    amount?: SortOrder
+    bookclose_date?: SortOrder
+    fiscal_year_id?: SortOrder
+    recorded_at?: SortOrder
+    remarks?: SortOrder
+    sub_id?: SortOrder
+  }
+
+  export type cash_records_stagingMinOrderByAggregateInput = {
+    cash_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    amount?: SortOrder
+    bookclose_date?: SortOrder
+    fiscal_year_id?: SortOrder
+    recorded_at?: SortOrder
+    remarks?: SortOrder
+    sub_id?: SortOrder
+  }
+
+  export type cash_records_stagingSumOrderByAggregateInput = {
+    cash_staging_id?: SortOrder
+    fund_id?: SortOrder
+    amount?: SortOrder
+    fiscal_year_id?: SortOrder
+    sub_id?: SortOrder
+  }
+
+  export type right_records_stagingCountOrderByAggregateInput = {
+    right_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    right_ratio?: SortOrder
+    quantity?: SortOrder
+    bookclose_date?: SortOrder
+    effective_rate?: SortOrder
+    total_value?: SortOrder
+    sub_id?: SortOrder
+    remarks?: SortOrder
+    recorded_at?: SortOrder
+    added_at?: SortOrder
+  }
+
+  export type right_records_stagingAvgOrderByAggregateInput = {
+    right_staging_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    quantity?: SortOrder
+    effective_rate?: SortOrder
+    total_value?: SortOrder
+    sub_id?: SortOrder
+  }
+
+  export type right_records_stagingMaxOrderByAggregateInput = {
+    right_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    right_ratio?: SortOrder
+    quantity?: SortOrder
+    bookclose_date?: SortOrder
+    effective_rate?: SortOrder
+    total_value?: SortOrder
+    sub_id?: SortOrder
+    remarks?: SortOrder
+    recorded_at?: SortOrder
+    added_at?: SortOrder
+  }
+
+  export type right_records_stagingMinOrderByAggregateInput = {
+    right_staging_id?: SortOrder
+    fund_id?: SortOrder
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    right_ratio?: SortOrder
+    quantity?: SortOrder
+    bookclose_date?: SortOrder
+    effective_rate?: SortOrder
+    total_value?: SortOrder
+    sub_id?: SortOrder
+    remarks?: SortOrder
+    recorded_at?: SortOrder
+    added_at?: SortOrder
+  }
+
+  export type right_records_stagingSumOrderByAggregateInput = {
+    right_staging_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    quantity?: SortOrder
+    effective_rate?: SortOrder
+    total_value?: SortOrder
+    sub_id?: SortOrder
+  }
+
+  export type fiscal_year_balance_stagingCountOrderByAggregateInput = {
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    opening_quantity?: SortOrder
+    added_quantity?: SortOrder
+    closing_quantity?: SortOrder
+    effective_rate?: SortOrder
+    remarks?: SortOrder
+    opening_rate?: SortOrder
+    demat?: SortOrder
+    non_demat?: SortOrder
+    fund_id?: SortOrder
+    source_type?: SortOrder
+    sub_id?: SortOrder
+    staging_id?: SortOrder
+  }
+
+  export type fiscal_year_balance_stagingAvgOrderByAggregateInput = {
+    fiscal_year_id?: SortOrder
+    opening_quantity?: SortOrder
+    added_quantity?: SortOrder
+    closing_quantity?: SortOrder
+    effective_rate?: SortOrder
+    opening_rate?: SortOrder
+    demat?: SortOrder
+    non_demat?: SortOrder
+    fund_id?: SortOrder
+    sub_id?: SortOrder
+    staging_id?: SortOrder
+  }
+
+  export type fiscal_year_balance_stagingMaxOrderByAggregateInput = {
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    opening_quantity?: SortOrder
+    added_quantity?: SortOrder
+    closing_quantity?: SortOrder
+    effective_rate?: SortOrder
+    remarks?: SortOrder
+    opening_rate?: SortOrder
+    demat?: SortOrder
+    non_demat?: SortOrder
+    fund_id?: SortOrder
+    source_type?: SortOrder
+    sub_id?: SortOrder
+    staging_id?: SortOrder
+  }
+
+  export type fiscal_year_balance_stagingMinOrderByAggregateInput = {
+    symbol?: SortOrder
+    fiscal_year_id?: SortOrder
+    opening_quantity?: SortOrder
+    added_quantity?: SortOrder
+    closing_quantity?: SortOrder
+    effective_rate?: SortOrder
+    remarks?: SortOrder
+    opening_rate?: SortOrder
+    demat?: SortOrder
+    non_demat?: SortOrder
+    fund_id?: SortOrder
+    source_type?: SortOrder
+    sub_id?: SortOrder
+    staging_id?: SortOrder
+  }
+
+  export type fiscal_year_balance_stagingSumOrderByAggregateInput = {
+    fiscal_year_id?: SortOrder
+    opening_quantity?: SortOrder
+    added_quantity?: SortOrder
+    closing_quantity?: SortOrder
+    effective_rate?: SortOrder
+    opening_rate?: SortOrder
+    demat?: SortOrder
+    non_demat?: SortOrder
+    fund_id?: SortOrder
+    sub_id?: SortOrder
+    staging_id?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -44639,6 +51552,13 @@ export namespace Prisma {
     connect?: bonus_recordsWhereUniqueInput | bonus_recordsWhereUniqueInput[]
   }
 
+  export type bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutFiscal_yearsInput, bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | bonus_records_stagingCreateWithoutFiscal_yearsInput[] | bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutFiscal_yearsInput | bonus_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    createMany?: bonus_records_stagingCreateManyFiscal_yearsInputEnvelope
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+  }
+
   export type buy_recordsCreateNestedManyWithoutFiscal_yearsInput = {
     create?: XOR<buy_recordsCreateWithoutFiscal_yearsInput, buy_recordsUncheckedCreateWithoutFiscal_yearsInput> | buy_recordsCreateWithoutFiscal_yearsInput[] | buy_recordsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: buy_recordsCreateOrConnectWithoutFiscal_yearsInput | buy_recordsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -44658,6 +51578,13 @@ export namespace Prisma {
     connectOrCreate?: cash_recordsCreateOrConnectWithoutFiscal_yearsInput | cash_recordsCreateOrConnectWithoutFiscal_yearsInput[]
     createMany?: cash_recordsCreateManyFiscal_yearsInputEnvelope
     connect?: cash_recordsWhereUniqueInput | cash_recordsWhereUniqueInput[]
+  }
+
+  export type cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput = {
+    create?: XOR<cash_records_stagingCreateWithoutFiscal_yearsInput, cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | cash_records_stagingCreateWithoutFiscal_yearsInput[] | cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutFiscal_yearsInput | cash_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    createMany?: cash_records_stagingCreateManyFiscal_yearsInputEnvelope
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
   }
 
   export type closeout_recordsCreateNestedManyWithoutFiscal_yearsInput = {
@@ -44716,6 +51643,13 @@ export namespace Prisma {
     connect?: right_recordsWhereUniqueInput | right_recordsWhereUniqueInput[]
   }
 
+  export type right_records_stagingCreateNestedManyWithoutFiscal_yearsInput = {
+    create?: XOR<right_records_stagingCreateWithoutFiscal_yearsInput, right_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | right_records_stagingCreateWithoutFiscal_yearsInput[] | right_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutFiscal_yearsInput | right_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    createMany?: right_records_stagingCreateManyFiscal_yearsInputEnvelope
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+  }
+
   export type sell_recordsCreateNestedManyWithoutFiscal_yearsInput = {
     create?: XOR<sell_recordsCreateWithoutFiscal_yearsInput, sell_recordsUncheckedCreateWithoutFiscal_yearsInput> | sell_recordsCreateWithoutFiscal_yearsInput[] | sell_recordsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: sell_recordsCreateOrConnectWithoutFiscal_yearsInput | sell_recordsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -44744,6 +51678,13 @@ export namespace Prisma {
     connect?: bonus_recordsWhereUniqueInput | bonus_recordsWhereUniqueInput[]
   }
 
+  export type bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutFiscal_yearsInput, bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | bonus_records_stagingCreateWithoutFiscal_yearsInput[] | bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutFiscal_yearsInput | bonus_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    createMany?: bonus_records_stagingCreateManyFiscal_yearsInputEnvelope
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+  }
+
   export type buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput = {
     create?: XOR<buy_recordsCreateWithoutFiscal_yearsInput, buy_recordsUncheckedCreateWithoutFiscal_yearsInput> | buy_recordsCreateWithoutFiscal_yearsInput[] | buy_recordsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: buy_recordsCreateOrConnectWithoutFiscal_yearsInput | buy_recordsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -44763,6 +51704,13 @@ export namespace Prisma {
     connectOrCreate?: cash_recordsCreateOrConnectWithoutFiscal_yearsInput | cash_recordsCreateOrConnectWithoutFiscal_yearsInput[]
     createMany?: cash_recordsCreateManyFiscal_yearsInputEnvelope
     connect?: cash_recordsWhereUniqueInput | cash_recordsWhereUniqueInput[]
+  }
+
+  export type cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput = {
+    create?: XOR<cash_records_stagingCreateWithoutFiscal_yearsInput, cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | cash_records_stagingCreateWithoutFiscal_yearsInput[] | cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutFiscal_yearsInput | cash_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    createMany?: cash_records_stagingCreateManyFiscal_yearsInputEnvelope
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
   }
 
   export type closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput = {
@@ -44821,6 +51769,13 @@ export namespace Prisma {
     connect?: right_recordsWhereUniqueInput | right_recordsWhereUniqueInput[]
   }
 
+  export type right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput = {
+    create?: XOR<right_records_stagingCreateWithoutFiscal_yearsInput, right_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | right_records_stagingCreateWithoutFiscal_yearsInput[] | right_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutFiscal_yearsInput | right_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    createMany?: right_records_stagingCreateManyFiscal_yearsInputEnvelope
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+  }
+
   export type sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput = {
     create?: XOR<sell_recordsCreateWithoutFiscal_yearsInput, sell_recordsUncheckedCreateWithoutFiscal_yearsInput> | sell_recordsCreateWithoutFiscal_yearsInput[] | sell_recordsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: sell_recordsCreateOrConnectWithoutFiscal_yearsInput | sell_recordsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -44854,6 +51809,20 @@ export namespace Prisma {
     update?: bonus_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput | bonus_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
     updateMany?: bonus_recordsUpdateManyWithWhereWithoutFiscal_yearsInput | bonus_recordsUpdateManyWithWhereWithoutFiscal_yearsInput[]
     deleteMany?: bonus_recordsScalarWhereInput | bonus_recordsScalarWhereInput[]
+  }
+
+  export type bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutFiscal_yearsInput, bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | bonus_records_stagingCreateWithoutFiscal_yearsInput[] | bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutFiscal_yearsInput | bonus_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    upsert?: bonus_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput | bonus_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput[]
+    createMany?: bonus_records_stagingCreateManyFiscal_yearsInputEnvelope
+    set?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    disconnect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    delete?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    update?: bonus_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput | bonus_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
+    updateMany?: bonus_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput | bonus_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput[]
+    deleteMany?: bonus_records_stagingScalarWhereInput | bonus_records_stagingScalarWhereInput[]
   }
 
   export type buy_recordsUpdateManyWithoutFiscal_yearsNestedInput = {
@@ -44896,6 +51865,20 @@ export namespace Prisma {
     update?: cash_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput | cash_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
     updateMany?: cash_recordsUpdateManyWithWhereWithoutFiscal_yearsInput | cash_recordsUpdateManyWithWhereWithoutFiscal_yearsInput[]
     deleteMany?: cash_recordsScalarWhereInput | cash_recordsScalarWhereInput[]
+  }
+
+  export type cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput = {
+    create?: XOR<cash_records_stagingCreateWithoutFiscal_yearsInput, cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | cash_records_stagingCreateWithoutFiscal_yearsInput[] | cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutFiscal_yearsInput | cash_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    upsert?: cash_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput | cash_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput[]
+    createMany?: cash_records_stagingCreateManyFiscal_yearsInputEnvelope
+    set?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    disconnect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    delete?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    update?: cash_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput | cash_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
+    updateMany?: cash_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput | cash_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput[]
+    deleteMany?: cash_records_stagingScalarWhereInput | cash_records_stagingScalarWhereInput[]
   }
 
   export type closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput = {
@@ -45010,6 +51993,20 @@ export namespace Prisma {
     deleteMany?: right_recordsScalarWhereInput | right_recordsScalarWhereInput[]
   }
 
+  export type right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput = {
+    create?: XOR<right_records_stagingCreateWithoutFiscal_yearsInput, right_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | right_records_stagingCreateWithoutFiscal_yearsInput[] | right_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutFiscal_yearsInput | right_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    upsert?: right_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput | right_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput[]
+    createMany?: right_records_stagingCreateManyFiscal_yearsInputEnvelope
+    set?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    disconnect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    delete?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    update?: right_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput | right_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
+    updateMany?: right_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput | right_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput[]
+    deleteMany?: right_records_stagingScalarWhereInput | right_records_stagingScalarWhereInput[]
+  }
+
   export type sell_recordsUpdateManyWithoutFiscal_yearsNestedInput = {
     create?: XOR<sell_recordsCreateWithoutFiscal_yearsInput, sell_recordsUncheckedCreateWithoutFiscal_yearsInput> | sell_recordsCreateWithoutFiscal_yearsInput[] | sell_recordsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: sell_recordsCreateOrConnectWithoutFiscal_yearsInput | sell_recordsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -45066,6 +52063,20 @@ export namespace Prisma {
     deleteMany?: bonus_recordsScalarWhereInput | bonus_recordsScalarWhereInput[]
   }
 
+  export type bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutFiscal_yearsInput, bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | bonus_records_stagingCreateWithoutFiscal_yearsInput[] | bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutFiscal_yearsInput | bonus_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    upsert?: bonus_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput | bonus_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput[]
+    createMany?: bonus_records_stagingCreateManyFiscal_yearsInputEnvelope
+    set?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    disconnect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    delete?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    update?: bonus_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput | bonus_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
+    updateMany?: bonus_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput | bonus_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput[]
+    deleteMany?: bonus_records_stagingScalarWhereInput | bonus_records_stagingScalarWhereInput[]
+  }
+
   export type buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput = {
     create?: XOR<buy_recordsCreateWithoutFiscal_yearsInput, buy_recordsUncheckedCreateWithoutFiscal_yearsInput> | buy_recordsCreateWithoutFiscal_yearsInput[] | buy_recordsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: buy_recordsCreateOrConnectWithoutFiscal_yearsInput | buy_recordsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -45106,6 +52117,20 @@ export namespace Prisma {
     update?: cash_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput | cash_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
     updateMany?: cash_recordsUpdateManyWithWhereWithoutFiscal_yearsInput | cash_recordsUpdateManyWithWhereWithoutFiscal_yearsInput[]
     deleteMany?: cash_recordsScalarWhereInput | cash_recordsScalarWhereInput[]
+  }
+
+  export type cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput = {
+    create?: XOR<cash_records_stagingCreateWithoutFiscal_yearsInput, cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | cash_records_stagingCreateWithoutFiscal_yearsInput[] | cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutFiscal_yearsInput | cash_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    upsert?: cash_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput | cash_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput[]
+    createMany?: cash_records_stagingCreateManyFiscal_yearsInputEnvelope
+    set?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    disconnect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    delete?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    update?: cash_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput | cash_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
+    updateMany?: cash_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput | cash_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput[]
+    deleteMany?: cash_records_stagingScalarWhereInput | cash_records_stagingScalarWhereInput[]
   }
 
   export type closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput = {
@@ -45220,6 +52245,20 @@ export namespace Prisma {
     deleteMany?: right_recordsScalarWhereInput | right_recordsScalarWhereInput[]
   }
 
+  export type right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput = {
+    create?: XOR<right_records_stagingCreateWithoutFiscal_yearsInput, right_records_stagingUncheckedCreateWithoutFiscal_yearsInput> | right_records_stagingCreateWithoutFiscal_yearsInput[] | right_records_stagingUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutFiscal_yearsInput | right_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
+    upsert?: right_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput | right_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput[]
+    createMany?: right_records_stagingCreateManyFiscal_yearsInputEnvelope
+    set?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    disconnect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    delete?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    update?: right_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput | right_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
+    updateMany?: right_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput | right_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput[]
+    deleteMany?: right_records_stagingScalarWhereInput | right_records_stagingScalarWhereInput[]
+  }
+
   export type sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput = {
     create?: XOR<sell_recordsCreateWithoutFiscal_yearsInput, sell_recordsUncheckedCreateWithoutFiscal_yearsInput> | sell_recordsCreateWithoutFiscal_yearsInput[] | sell_recordsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: sell_recordsCreateOrConnectWithoutFiscal_yearsInput | sell_recordsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -45269,6 +52308,13 @@ export namespace Prisma {
     connect?: bonus_recordsWhereUniqueInput | bonus_recordsWhereUniqueInput[]
   }
 
+  export type bonus_records_stagingCreateNestedManyWithoutFundsInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutFundsInput, bonus_records_stagingUncheckedCreateWithoutFundsInput> | bonus_records_stagingCreateWithoutFundsInput[] | bonus_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutFundsInput | bonus_records_stagingCreateOrConnectWithoutFundsInput[]
+    createMany?: bonus_records_stagingCreateManyFundsInputEnvelope
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+  }
+
   export type buy_recordsCreateNestedManyWithoutFundsInput = {
     create?: XOR<buy_recordsCreateWithoutFundsInput, buy_recordsUncheckedCreateWithoutFundsInput> | buy_recordsCreateWithoutFundsInput[] | buy_recordsUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: buy_recordsCreateOrConnectWithoutFundsInput | buy_recordsCreateOrConnectWithoutFundsInput[]
@@ -45288,6 +52334,13 @@ export namespace Prisma {
     connectOrCreate?: cash_recordsCreateOrConnectWithoutFundsInput | cash_recordsCreateOrConnectWithoutFundsInput[]
     createMany?: cash_recordsCreateManyFundsInputEnvelope
     connect?: cash_recordsWhereUniqueInput | cash_recordsWhereUniqueInput[]
+  }
+
+  export type cash_records_stagingCreateNestedManyWithoutFundsInput = {
+    create?: XOR<cash_records_stagingCreateWithoutFundsInput, cash_records_stagingUncheckedCreateWithoutFundsInput> | cash_records_stagingCreateWithoutFundsInput[] | cash_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutFundsInput | cash_records_stagingCreateOrConnectWithoutFundsInput[]
+    createMany?: cash_records_stagingCreateManyFundsInputEnvelope
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
   }
 
   export type client_broker_mappingCreateNestedManyWithoutFundsInput = {
@@ -45339,6 +52392,13 @@ export namespace Prisma {
     connect?: right_recordsWhereUniqueInput | right_recordsWhereUniqueInput[]
   }
 
+  export type right_records_stagingCreateNestedManyWithoutFundsInput = {
+    create?: XOR<right_records_stagingCreateWithoutFundsInput, right_records_stagingUncheckedCreateWithoutFundsInput> | right_records_stagingCreateWithoutFundsInput[] | right_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutFundsInput | right_records_stagingCreateOrConnectWithoutFundsInput[]
+    createMany?: right_records_stagingCreateManyFundsInputEnvelope
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+  }
+
   export type sell_recordsCreateNestedManyWithoutFundsInput = {
     create?: XOR<sell_recordsCreateWithoutFundsInput, sell_recordsUncheckedCreateWithoutFundsInput> | sell_recordsCreateWithoutFundsInput[] | sell_recordsUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: sell_recordsCreateOrConnectWithoutFundsInput | sell_recordsCreateOrConnectWithoutFundsInput[]
@@ -45374,6 +52434,13 @@ export namespace Prisma {
     connect?: bonus_recordsWhereUniqueInput | bonus_recordsWhereUniqueInput[]
   }
 
+  export type bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutFundsInput, bonus_records_stagingUncheckedCreateWithoutFundsInput> | bonus_records_stagingCreateWithoutFundsInput[] | bonus_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutFundsInput | bonus_records_stagingCreateOrConnectWithoutFundsInput[]
+    createMany?: bonus_records_stagingCreateManyFundsInputEnvelope
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+  }
+
   export type buy_recordsUncheckedCreateNestedManyWithoutFundsInput = {
     create?: XOR<buy_recordsCreateWithoutFundsInput, buy_recordsUncheckedCreateWithoutFundsInput> | buy_recordsCreateWithoutFundsInput[] | buy_recordsUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: buy_recordsCreateOrConnectWithoutFundsInput | buy_recordsCreateOrConnectWithoutFundsInput[]
@@ -45393,6 +52460,13 @@ export namespace Prisma {
     connectOrCreate?: cash_recordsCreateOrConnectWithoutFundsInput | cash_recordsCreateOrConnectWithoutFundsInput[]
     createMany?: cash_recordsCreateManyFundsInputEnvelope
     connect?: cash_recordsWhereUniqueInput | cash_recordsWhereUniqueInput[]
+  }
+
+  export type cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput = {
+    create?: XOR<cash_records_stagingCreateWithoutFundsInput, cash_records_stagingUncheckedCreateWithoutFundsInput> | cash_records_stagingCreateWithoutFundsInput[] | cash_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutFundsInput | cash_records_stagingCreateOrConnectWithoutFundsInput[]
+    createMany?: cash_records_stagingCreateManyFundsInputEnvelope
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
   }
 
   export type client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput = {
@@ -45444,6 +52518,13 @@ export namespace Prisma {
     connect?: right_recordsWhereUniqueInput | right_recordsWhereUniqueInput[]
   }
 
+  export type right_records_stagingUncheckedCreateNestedManyWithoutFundsInput = {
+    create?: XOR<right_records_stagingCreateWithoutFundsInput, right_records_stagingUncheckedCreateWithoutFundsInput> | right_records_stagingCreateWithoutFundsInput[] | right_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutFundsInput | right_records_stagingCreateOrConnectWithoutFundsInput[]
+    createMany?: right_records_stagingCreateManyFundsInputEnvelope
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+  }
+
   export type sell_recordsUncheckedCreateNestedManyWithoutFundsInput = {
     create?: XOR<sell_recordsCreateWithoutFundsInput, sell_recordsUncheckedCreateWithoutFundsInput> | sell_recordsCreateWithoutFundsInput[] | sell_recordsUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: sell_recordsCreateOrConnectWithoutFundsInput | sell_recordsCreateOrConnectWithoutFundsInput[]
@@ -45486,6 +52567,20 @@ export namespace Prisma {
     deleteMany?: bonus_recordsScalarWhereInput | bonus_recordsScalarWhereInput[]
   }
 
+  export type bonus_records_stagingUpdateManyWithoutFundsNestedInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutFundsInput, bonus_records_stagingUncheckedCreateWithoutFundsInput> | bonus_records_stagingCreateWithoutFundsInput[] | bonus_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutFundsInput | bonus_records_stagingCreateOrConnectWithoutFundsInput[]
+    upsert?: bonus_records_stagingUpsertWithWhereUniqueWithoutFundsInput | bonus_records_stagingUpsertWithWhereUniqueWithoutFundsInput[]
+    createMany?: bonus_records_stagingCreateManyFundsInputEnvelope
+    set?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    disconnect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    delete?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    update?: bonus_records_stagingUpdateWithWhereUniqueWithoutFundsInput | bonus_records_stagingUpdateWithWhereUniqueWithoutFundsInput[]
+    updateMany?: bonus_records_stagingUpdateManyWithWhereWithoutFundsInput | bonus_records_stagingUpdateManyWithWhereWithoutFundsInput[]
+    deleteMany?: bonus_records_stagingScalarWhereInput | bonus_records_stagingScalarWhereInput[]
+  }
+
   export type buy_recordsUpdateManyWithoutFundsNestedInput = {
     create?: XOR<buy_recordsCreateWithoutFundsInput, buy_recordsUncheckedCreateWithoutFundsInput> | buy_recordsCreateWithoutFundsInput[] | buy_recordsUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: buy_recordsCreateOrConnectWithoutFundsInput | buy_recordsCreateOrConnectWithoutFundsInput[]
@@ -45526,6 +52621,20 @@ export namespace Prisma {
     update?: cash_recordsUpdateWithWhereUniqueWithoutFundsInput | cash_recordsUpdateWithWhereUniqueWithoutFundsInput[]
     updateMany?: cash_recordsUpdateManyWithWhereWithoutFundsInput | cash_recordsUpdateManyWithWhereWithoutFundsInput[]
     deleteMany?: cash_recordsScalarWhereInput | cash_recordsScalarWhereInput[]
+  }
+
+  export type cash_records_stagingUpdateManyWithoutFundsNestedInput = {
+    create?: XOR<cash_records_stagingCreateWithoutFundsInput, cash_records_stagingUncheckedCreateWithoutFundsInput> | cash_records_stagingCreateWithoutFundsInput[] | cash_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutFundsInput | cash_records_stagingCreateOrConnectWithoutFundsInput[]
+    upsert?: cash_records_stagingUpsertWithWhereUniqueWithoutFundsInput | cash_records_stagingUpsertWithWhereUniqueWithoutFundsInput[]
+    createMany?: cash_records_stagingCreateManyFundsInputEnvelope
+    set?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    disconnect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    delete?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    update?: cash_records_stagingUpdateWithWhereUniqueWithoutFundsInput | cash_records_stagingUpdateWithWhereUniqueWithoutFundsInput[]
+    updateMany?: cash_records_stagingUpdateManyWithWhereWithoutFundsInput | cash_records_stagingUpdateManyWithWhereWithoutFundsInput[]
+    deleteMany?: cash_records_stagingScalarWhereInput | cash_records_stagingScalarWhereInput[]
   }
 
   export type client_broker_mappingUpdateManyWithoutFundsNestedInput = {
@@ -45626,6 +52735,20 @@ export namespace Prisma {
     deleteMany?: right_recordsScalarWhereInput | right_recordsScalarWhereInput[]
   }
 
+  export type right_records_stagingUpdateManyWithoutFundsNestedInput = {
+    create?: XOR<right_records_stagingCreateWithoutFundsInput, right_records_stagingUncheckedCreateWithoutFundsInput> | right_records_stagingCreateWithoutFundsInput[] | right_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutFundsInput | right_records_stagingCreateOrConnectWithoutFundsInput[]
+    upsert?: right_records_stagingUpsertWithWhereUniqueWithoutFundsInput | right_records_stagingUpsertWithWhereUniqueWithoutFundsInput[]
+    createMany?: right_records_stagingCreateManyFundsInputEnvelope
+    set?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    disconnect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    delete?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    update?: right_records_stagingUpdateWithWhereUniqueWithoutFundsInput | right_records_stagingUpdateWithWhereUniqueWithoutFundsInput[]
+    updateMany?: right_records_stagingUpdateManyWithWhereWithoutFundsInput | right_records_stagingUpdateManyWithWhereWithoutFundsInput[]
+    deleteMany?: right_records_stagingScalarWhereInput | right_records_stagingScalarWhereInput[]
+  }
+
   export type sell_recordsUpdateManyWithoutFundsNestedInput = {
     create?: XOR<sell_recordsCreateWithoutFundsInput, sell_recordsUncheckedCreateWithoutFundsInput> | sell_recordsCreateWithoutFundsInput[] | sell_recordsUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: sell_recordsCreateOrConnectWithoutFundsInput | sell_recordsCreateOrConnectWithoutFundsInput[]
@@ -45696,6 +52819,20 @@ export namespace Prisma {
     deleteMany?: bonus_recordsScalarWhereInput | bonus_recordsScalarWhereInput[]
   }
 
+  export type bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutFundsInput, bonus_records_stagingUncheckedCreateWithoutFundsInput> | bonus_records_stagingCreateWithoutFundsInput[] | bonus_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutFundsInput | bonus_records_stagingCreateOrConnectWithoutFundsInput[]
+    upsert?: bonus_records_stagingUpsertWithWhereUniqueWithoutFundsInput | bonus_records_stagingUpsertWithWhereUniqueWithoutFundsInput[]
+    createMany?: bonus_records_stagingCreateManyFundsInputEnvelope
+    set?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    disconnect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    delete?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    update?: bonus_records_stagingUpdateWithWhereUniqueWithoutFundsInput | bonus_records_stagingUpdateWithWhereUniqueWithoutFundsInput[]
+    updateMany?: bonus_records_stagingUpdateManyWithWhereWithoutFundsInput | bonus_records_stagingUpdateManyWithWhereWithoutFundsInput[]
+    deleteMany?: bonus_records_stagingScalarWhereInput | bonus_records_stagingScalarWhereInput[]
+  }
+
   export type buy_recordsUncheckedUpdateManyWithoutFundsNestedInput = {
     create?: XOR<buy_recordsCreateWithoutFundsInput, buy_recordsUncheckedCreateWithoutFundsInput> | buy_recordsCreateWithoutFundsInput[] | buy_recordsUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: buy_recordsCreateOrConnectWithoutFundsInput | buy_recordsCreateOrConnectWithoutFundsInput[]
@@ -45736,6 +52873,20 @@ export namespace Prisma {
     update?: cash_recordsUpdateWithWhereUniqueWithoutFundsInput | cash_recordsUpdateWithWhereUniqueWithoutFundsInput[]
     updateMany?: cash_recordsUpdateManyWithWhereWithoutFundsInput | cash_recordsUpdateManyWithWhereWithoutFundsInput[]
     deleteMany?: cash_recordsScalarWhereInput | cash_recordsScalarWhereInput[]
+  }
+
+  export type cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput = {
+    create?: XOR<cash_records_stagingCreateWithoutFundsInput, cash_records_stagingUncheckedCreateWithoutFundsInput> | cash_records_stagingCreateWithoutFundsInput[] | cash_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutFundsInput | cash_records_stagingCreateOrConnectWithoutFundsInput[]
+    upsert?: cash_records_stagingUpsertWithWhereUniqueWithoutFundsInput | cash_records_stagingUpsertWithWhereUniqueWithoutFundsInput[]
+    createMany?: cash_records_stagingCreateManyFundsInputEnvelope
+    set?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    disconnect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    delete?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    update?: cash_records_stagingUpdateWithWhereUniqueWithoutFundsInput | cash_records_stagingUpdateWithWhereUniqueWithoutFundsInput[]
+    updateMany?: cash_records_stagingUpdateManyWithWhereWithoutFundsInput | cash_records_stagingUpdateManyWithWhereWithoutFundsInput[]
+    deleteMany?: cash_records_stagingScalarWhereInput | cash_records_stagingScalarWhereInput[]
   }
 
   export type client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput = {
@@ -45834,6 +52985,20 @@ export namespace Prisma {
     update?: right_recordsUpdateWithWhereUniqueWithoutFundsInput | right_recordsUpdateWithWhereUniqueWithoutFundsInput[]
     updateMany?: right_recordsUpdateManyWithWhereWithoutFundsInput | right_recordsUpdateManyWithWhereWithoutFundsInput[]
     deleteMany?: right_recordsScalarWhereInput | right_recordsScalarWhereInput[]
+  }
+
+  export type right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput = {
+    create?: XOR<right_records_stagingCreateWithoutFundsInput, right_records_stagingUncheckedCreateWithoutFundsInput> | right_records_stagingCreateWithoutFundsInput[] | right_records_stagingUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutFundsInput | right_records_stagingCreateOrConnectWithoutFundsInput[]
+    upsert?: right_records_stagingUpsertWithWhereUniqueWithoutFundsInput | right_records_stagingUpsertWithWhereUniqueWithoutFundsInput[]
+    createMany?: right_records_stagingCreateManyFundsInputEnvelope
+    set?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    disconnect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    delete?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    update?: right_records_stagingUpdateWithWhereUniqueWithoutFundsInput | right_records_stagingUpdateWithWhereUniqueWithoutFundsInput[]
+    updateMany?: right_records_stagingUpdateManyWithWhereWithoutFundsInput | right_records_stagingUpdateManyWithWhereWithoutFundsInput[]
+    deleteMany?: right_records_stagingScalarWhereInput | right_records_stagingScalarWhereInput[]
   }
 
   export type sell_recordsUncheckedUpdateManyWithoutFundsNestedInput = {
@@ -45971,6 +53136,13 @@ export namespace Prisma {
     connect?: bonus_recordsWhereUniqueInput | bonus_recordsWhereUniqueInput[]
   }
 
+  export type bonus_records_stagingCreateNestedManyWithoutStock_fullsInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutStock_fullsInput, bonus_records_stagingUncheckedCreateWithoutStock_fullsInput> | bonus_records_stagingCreateWithoutStock_fullsInput[] | bonus_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutStock_fullsInput | bonus_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    createMany?: bonus_records_stagingCreateManyStock_fullsInputEnvelope
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+  }
+
   export type buy_recordsCreateNestedManyWithoutStock_fullsInput = {
     create?: XOR<buy_recordsCreateWithoutStock_fullsInput, buy_recordsUncheckedCreateWithoutStock_fullsInput> | buy_recordsCreateWithoutStock_fullsInput[] | buy_recordsUncheckedCreateWithoutStock_fullsInput[]
     connectOrCreate?: buy_recordsCreateOrConnectWithoutStock_fullsInput | buy_recordsCreateOrConnectWithoutStock_fullsInput[]
@@ -45990,6 +53162,13 @@ export namespace Prisma {
     connectOrCreate?: cash_recordsCreateOrConnectWithoutStock_fullsInput | cash_recordsCreateOrConnectWithoutStock_fullsInput[]
     createMany?: cash_recordsCreateManyStock_fullsInputEnvelope
     connect?: cash_recordsWhereUniqueInput | cash_recordsWhereUniqueInput[]
+  }
+
+  export type cash_records_stagingCreateNestedManyWithoutStock_fullsInput = {
+    create?: XOR<cash_records_stagingCreateWithoutStock_fullsInput, cash_records_stagingUncheckedCreateWithoutStock_fullsInput> | cash_records_stagingCreateWithoutStock_fullsInput[] | cash_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutStock_fullsInput | cash_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    createMany?: cash_records_stagingCreateManyStock_fullsInputEnvelope
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
   }
 
   export type closeout_recordsCreateNestedManyWithoutStock_fullsInput = {
@@ -46041,6 +53220,13 @@ export namespace Prisma {
     connect?: right_recordsWhereUniqueInput | right_recordsWhereUniqueInput[]
   }
 
+  export type right_records_stagingCreateNestedManyWithoutStock_fullsInput = {
+    create?: XOR<right_records_stagingCreateWithoutStock_fullsInput, right_records_stagingUncheckedCreateWithoutStock_fullsInput> | right_records_stagingCreateWithoutStock_fullsInput[] | right_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutStock_fullsInput | right_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    createMany?: right_records_stagingCreateManyStock_fullsInputEnvelope
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+  }
+
   export type sell_recordsCreateNestedManyWithoutStock_fullsInput = {
     create?: XOR<sell_recordsCreateWithoutStock_fullsInput, sell_recordsUncheckedCreateWithoutStock_fullsInput> | sell_recordsCreateWithoutStock_fullsInput[] | sell_recordsUncheckedCreateWithoutStock_fullsInput[]
     connectOrCreate?: sell_recordsCreateOrConnectWithoutStock_fullsInput | sell_recordsCreateOrConnectWithoutStock_fullsInput[]
@@ -46075,6 +53261,13 @@ export namespace Prisma {
     connect?: bonus_recordsWhereUniqueInput | bonus_recordsWhereUniqueInput[]
   }
 
+  export type bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutStock_fullsInput, bonus_records_stagingUncheckedCreateWithoutStock_fullsInput> | bonus_records_stagingCreateWithoutStock_fullsInput[] | bonus_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutStock_fullsInput | bonus_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    createMany?: bonus_records_stagingCreateManyStock_fullsInputEnvelope
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+  }
+
   export type buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput = {
     create?: XOR<buy_recordsCreateWithoutStock_fullsInput, buy_recordsUncheckedCreateWithoutStock_fullsInput> | buy_recordsCreateWithoutStock_fullsInput[] | buy_recordsUncheckedCreateWithoutStock_fullsInput[]
     connectOrCreate?: buy_recordsCreateOrConnectWithoutStock_fullsInput | buy_recordsCreateOrConnectWithoutStock_fullsInput[]
@@ -46094,6 +53287,13 @@ export namespace Prisma {
     connectOrCreate?: cash_recordsCreateOrConnectWithoutStock_fullsInput | cash_recordsCreateOrConnectWithoutStock_fullsInput[]
     createMany?: cash_recordsCreateManyStock_fullsInputEnvelope
     connect?: cash_recordsWhereUniqueInput | cash_recordsWhereUniqueInput[]
+  }
+
+  export type cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput = {
+    create?: XOR<cash_records_stagingCreateWithoutStock_fullsInput, cash_records_stagingUncheckedCreateWithoutStock_fullsInput> | cash_records_stagingCreateWithoutStock_fullsInput[] | cash_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutStock_fullsInput | cash_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    createMany?: cash_records_stagingCreateManyStock_fullsInputEnvelope
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
   }
 
   export type closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput = {
@@ -46145,6 +53345,13 @@ export namespace Prisma {
     connect?: right_recordsWhereUniqueInput | right_recordsWhereUniqueInput[]
   }
 
+  export type right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput = {
+    create?: XOR<right_records_stagingCreateWithoutStock_fullsInput, right_records_stagingUncheckedCreateWithoutStock_fullsInput> | right_records_stagingCreateWithoutStock_fullsInput[] | right_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutStock_fullsInput | right_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    createMany?: right_records_stagingCreateManyStock_fullsInputEnvelope
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+  }
+
   export type sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput = {
     create?: XOR<sell_recordsCreateWithoutStock_fullsInput, sell_recordsUncheckedCreateWithoutStock_fullsInput> | sell_recordsCreateWithoutStock_fullsInput[] | sell_recordsUncheckedCreateWithoutStock_fullsInput[]
     connectOrCreate?: sell_recordsCreateOrConnectWithoutStock_fullsInput | sell_recordsCreateOrConnectWithoutStock_fullsInput[]
@@ -46178,6 +53385,20 @@ export namespace Prisma {
     update?: bonus_recordsUpdateWithWhereUniqueWithoutStock_fullsInput | bonus_recordsUpdateWithWhereUniqueWithoutStock_fullsInput[]
     updateMany?: bonus_recordsUpdateManyWithWhereWithoutStock_fullsInput | bonus_recordsUpdateManyWithWhereWithoutStock_fullsInput[]
     deleteMany?: bonus_recordsScalarWhereInput | bonus_recordsScalarWhereInput[]
+  }
+
+  export type bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutStock_fullsInput, bonus_records_stagingUncheckedCreateWithoutStock_fullsInput> | bonus_records_stagingCreateWithoutStock_fullsInput[] | bonus_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutStock_fullsInput | bonus_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    upsert?: bonus_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput | bonus_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput[]
+    createMany?: bonus_records_stagingCreateManyStock_fullsInputEnvelope
+    set?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    disconnect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    delete?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    update?: bonus_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput | bonus_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput[]
+    updateMany?: bonus_records_stagingUpdateManyWithWhereWithoutStock_fullsInput | bonus_records_stagingUpdateManyWithWhereWithoutStock_fullsInput[]
+    deleteMany?: bonus_records_stagingScalarWhereInput | bonus_records_stagingScalarWhereInput[]
   }
 
   export type buy_recordsUpdateManyWithoutStock_fullsNestedInput = {
@@ -46220,6 +53441,20 @@ export namespace Prisma {
     update?: cash_recordsUpdateWithWhereUniqueWithoutStock_fullsInput | cash_recordsUpdateWithWhereUniqueWithoutStock_fullsInput[]
     updateMany?: cash_recordsUpdateManyWithWhereWithoutStock_fullsInput | cash_recordsUpdateManyWithWhereWithoutStock_fullsInput[]
     deleteMany?: cash_recordsScalarWhereInput | cash_recordsScalarWhereInput[]
+  }
+
+  export type cash_records_stagingUpdateManyWithoutStock_fullsNestedInput = {
+    create?: XOR<cash_records_stagingCreateWithoutStock_fullsInput, cash_records_stagingUncheckedCreateWithoutStock_fullsInput> | cash_records_stagingCreateWithoutStock_fullsInput[] | cash_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutStock_fullsInput | cash_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    upsert?: cash_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput | cash_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput[]
+    createMany?: cash_records_stagingCreateManyStock_fullsInputEnvelope
+    set?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    disconnect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    delete?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    update?: cash_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput | cash_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput[]
+    updateMany?: cash_records_stagingUpdateManyWithWhereWithoutStock_fullsInput | cash_records_stagingUpdateManyWithWhereWithoutStock_fullsInput[]
+    deleteMany?: cash_records_stagingScalarWhereInput | cash_records_stagingScalarWhereInput[]
   }
 
   export type closeout_recordsUpdateManyWithoutStock_fullsNestedInput = {
@@ -46320,6 +53555,20 @@ export namespace Prisma {
     deleteMany?: right_recordsScalarWhereInput | right_recordsScalarWhereInput[]
   }
 
+  export type right_records_stagingUpdateManyWithoutStock_fullsNestedInput = {
+    create?: XOR<right_records_stagingCreateWithoutStock_fullsInput, right_records_stagingUncheckedCreateWithoutStock_fullsInput> | right_records_stagingCreateWithoutStock_fullsInput[] | right_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutStock_fullsInput | right_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    upsert?: right_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput | right_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput[]
+    createMany?: right_records_stagingCreateManyStock_fullsInputEnvelope
+    set?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    disconnect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    delete?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    update?: right_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput | right_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput[]
+    updateMany?: right_records_stagingUpdateManyWithWhereWithoutStock_fullsInput | right_records_stagingUpdateManyWithWhereWithoutStock_fullsInput[]
+    deleteMany?: right_records_stagingScalarWhereInput | right_records_stagingScalarWhereInput[]
+  }
+
   export type sell_recordsUpdateManyWithoutStock_fullsNestedInput = {
     create?: XOR<sell_recordsCreateWithoutStock_fullsInput, sell_recordsUncheckedCreateWithoutStock_fullsInput> | sell_recordsCreateWithoutStock_fullsInput[] | sell_recordsUncheckedCreateWithoutStock_fullsInput[]
     connectOrCreate?: sell_recordsCreateOrConnectWithoutStock_fullsInput | sell_recordsCreateOrConnectWithoutStock_fullsInput[]
@@ -46384,6 +53633,20 @@ export namespace Prisma {
     deleteMany?: bonus_recordsScalarWhereInput | bonus_recordsScalarWhereInput[]
   }
 
+  export type bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutStock_fullsInput, bonus_records_stagingUncheckedCreateWithoutStock_fullsInput> | bonus_records_stagingCreateWithoutStock_fullsInput[] | bonus_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutStock_fullsInput | bonus_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    upsert?: bonus_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput | bonus_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput[]
+    createMany?: bonus_records_stagingCreateManyStock_fullsInputEnvelope
+    set?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    disconnect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    delete?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    update?: bonus_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput | bonus_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput[]
+    updateMany?: bonus_records_stagingUpdateManyWithWhereWithoutStock_fullsInput | bonus_records_stagingUpdateManyWithWhereWithoutStock_fullsInput[]
+    deleteMany?: bonus_records_stagingScalarWhereInput | bonus_records_stagingScalarWhereInput[]
+  }
+
   export type buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput = {
     create?: XOR<buy_recordsCreateWithoutStock_fullsInput, buy_recordsUncheckedCreateWithoutStock_fullsInput> | buy_recordsCreateWithoutStock_fullsInput[] | buy_recordsUncheckedCreateWithoutStock_fullsInput[]
     connectOrCreate?: buy_recordsCreateOrConnectWithoutStock_fullsInput | buy_recordsCreateOrConnectWithoutStock_fullsInput[]
@@ -46424,6 +53687,20 @@ export namespace Prisma {
     update?: cash_recordsUpdateWithWhereUniqueWithoutStock_fullsInput | cash_recordsUpdateWithWhereUniqueWithoutStock_fullsInput[]
     updateMany?: cash_recordsUpdateManyWithWhereWithoutStock_fullsInput | cash_recordsUpdateManyWithWhereWithoutStock_fullsInput[]
     deleteMany?: cash_recordsScalarWhereInput | cash_recordsScalarWhereInput[]
+  }
+
+  export type cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput = {
+    create?: XOR<cash_records_stagingCreateWithoutStock_fullsInput, cash_records_stagingUncheckedCreateWithoutStock_fullsInput> | cash_records_stagingCreateWithoutStock_fullsInput[] | cash_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutStock_fullsInput | cash_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    upsert?: cash_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput | cash_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput[]
+    createMany?: cash_records_stagingCreateManyStock_fullsInputEnvelope
+    set?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    disconnect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    delete?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    update?: cash_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput | cash_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput[]
+    updateMany?: cash_records_stagingUpdateManyWithWhereWithoutStock_fullsInput | cash_records_stagingUpdateManyWithWhereWithoutStock_fullsInput[]
+    deleteMany?: cash_records_stagingScalarWhereInput | cash_records_stagingScalarWhereInput[]
   }
 
   export type closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput = {
@@ -46522,6 +53799,20 @@ export namespace Prisma {
     update?: right_recordsUpdateWithWhereUniqueWithoutStock_fullsInput | right_recordsUpdateWithWhereUniqueWithoutStock_fullsInput[]
     updateMany?: right_recordsUpdateManyWithWhereWithoutStock_fullsInput | right_recordsUpdateManyWithWhereWithoutStock_fullsInput[]
     deleteMany?: right_recordsScalarWhereInput | right_recordsScalarWhereInput[]
+  }
+
+  export type right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput = {
+    create?: XOR<right_records_stagingCreateWithoutStock_fullsInput, right_records_stagingUncheckedCreateWithoutStock_fullsInput> | right_records_stagingCreateWithoutStock_fullsInput[] | right_records_stagingUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutStock_fullsInput | right_records_stagingCreateOrConnectWithoutStock_fullsInput[]
+    upsert?: right_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput | right_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput[]
+    createMany?: right_records_stagingCreateManyStock_fullsInputEnvelope
+    set?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    disconnect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    delete?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    update?: right_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput | right_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput[]
+    updateMany?: right_records_stagingUpdateManyWithWhereWithoutStock_fullsInput | right_records_stagingUpdateManyWithWhereWithoutStock_fullsInput[]
+    deleteMany?: right_records_stagingScalarWhereInput | right_records_stagingScalarWhereInput[]
   }
 
   export type sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput = {
@@ -47114,6 +54405,20 @@ export namespace Prisma {
     update?: XOR<XOR<stock_fullsUpdateToOneWithWhereWithoutSymbol_holdingsInput, stock_fullsUpdateWithoutSymbol_holdingsInput>, stock_fullsUncheckedUpdateWithoutSymbol_holdingsInput>
   }
 
+  export type bonus_records_stagingCreateNestedManyWithoutSub_classesInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutSub_classesInput, bonus_records_stagingUncheckedCreateWithoutSub_classesInput> | bonus_records_stagingCreateWithoutSub_classesInput[] | bonus_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutSub_classesInput | bonus_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    createMany?: bonus_records_stagingCreateManySub_classesInputEnvelope
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+  }
+
+  export type cash_records_stagingCreateNestedManyWithoutSub_classesInput = {
+    create?: XOR<cash_records_stagingCreateWithoutSub_classesInput, cash_records_stagingUncheckedCreateWithoutSub_classesInput> | cash_records_stagingCreateWithoutSub_classesInput[] | cash_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutSub_classesInput | cash_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    createMany?: cash_records_stagingCreateManySub_classesInputEnvelope
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+  }
+
   export type fiscal_year_balanceCreateNestedManyWithoutSub_classesInput = {
     create?: XOR<fiscal_year_balanceCreateWithoutSub_classesInput, fiscal_year_balanceUncheckedCreateWithoutSub_classesInput> | fiscal_year_balanceCreateWithoutSub_classesInput[] | fiscal_year_balanceUncheckedCreateWithoutSub_classesInput[]
     connectOrCreate?: fiscal_year_balanceCreateOrConnectWithoutSub_classesInput | fiscal_year_balanceCreateOrConnectWithoutSub_classesInput[]
@@ -47142,6 +54447,13 @@ export namespace Prisma {
     connect?: promoter_recordsWhereUniqueInput | promoter_recordsWhereUniqueInput[]
   }
 
+  export type right_records_stagingCreateNestedManyWithoutSub_classesInput = {
+    create?: XOR<right_records_stagingCreateWithoutSub_classesInput, right_records_stagingUncheckedCreateWithoutSub_classesInput> | right_records_stagingCreateWithoutSub_classesInput[] | right_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutSub_classesInput | right_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    createMany?: right_records_stagingCreateManySub_classesInputEnvelope
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+  }
+
   export type fundsCreateNestedOneWithoutSub_classesInput = {
     create?: XOR<fundsCreateWithoutSub_classesInput, fundsUncheckedCreateWithoutSub_classesInput>
     connectOrCreate?: fundsCreateOrConnectWithoutSub_classesInput
@@ -47153,6 +54465,20 @@ export namespace Prisma {
     connectOrCreate?: symbol_holdingsCreateOrConnectWithoutSub_classesInput | symbol_holdingsCreateOrConnectWithoutSub_classesInput[]
     createMany?: symbol_holdingsCreateManySub_classesInputEnvelope
     connect?: symbol_holdingsWhereUniqueInput | symbol_holdingsWhereUniqueInput[]
+  }
+
+  export type bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutSub_classesInput, bonus_records_stagingUncheckedCreateWithoutSub_classesInput> | bonus_records_stagingCreateWithoutSub_classesInput[] | bonus_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutSub_classesInput | bonus_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    createMany?: bonus_records_stagingCreateManySub_classesInputEnvelope
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+  }
+
+  export type cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput = {
+    create?: XOR<cash_records_stagingCreateWithoutSub_classesInput, cash_records_stagingUncheckedCreateWithoutSub_classesInput> | cash_records_stagingCreateWithoutSub_classesInput[] | cash_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutSub_classesInput | cash_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    createMany?: cash_records_stagingCreateManySub_classesInputEnvelope
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
   }
 
   export type fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput = {
@@ -47183,11 +54509,46 @@ export namespace Prisma {
     connect?: promoter_recordsWhereUniqueInput | promoter_recordsWhereUniqueInput[]
   }
 
+  export type right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput = {
+    create?: XOR<right_records_stagingCreateWithoutSub_classesInput, right_records_stagingUncheckedCreateWithoutSub_classesInput> | right_records_stagingCreateWithoutSub_classesInput[] | right_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutSub_classesInput | right_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    createMany?: right_records_stagingCreateManySub_classesInputEnvelope
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+  }
+
   export type symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput = {
     create?: XOR<symbol_holdingsCreateWithoutSub_classesInput, symbol_holdingsUncheckedCreateWithoutSub_classesInput> | symbol_holdingsCreateWithoutSub_classesInput[] | symbol_holdingsUncheckedCreateWithoutSub_classesInput[]
     connectOrCreate?: symbol_holdingsCreateOrConnectWithoutSub_classesInput | symbol_holdingsCreateOrConnectWithoutSub_classesInput[]
     createMany?: symbol_holdingsCreateManySub_classesInputEnvelope
     connect?: symbol_holdingsWhereUniqueInput | symbol_holdingsWhereUniqueInput[]
+  }
+
+  export type bonus_records_stagingUpdateManyWithoutSub_classesNestedInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutSub_classesInput, bonus_records_stagingUncheckedCreateWithoutSub_classesInput> | bonus_records_stagingCreateWithoutSub_classesInput[] | bonus_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutSub_classesInput | bonus_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    upsert?: bonus_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput | bonus_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput[]
+    createMany?: bonus_records_stagingCreateManySub_classesInputEnvelope
+    set?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    disconnect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    delete?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    update?: bonus_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput | bonus_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput[]
+    updateMany?: bonus_records_stagingUpdateManyWithWhereWithoutSub_classesInput | bonus_records_stagingUpdateManyWithWhereWithoutSub_classesInput[]
+    deleteMany?: bonus_records_stagingScalarWhereInput | bonus_records_stagingScalarWhereInput[]
+  }
+
+  export type cash_records_stagingUpdateManyWithoutSub_classesNestedInput = {
+    create?: XOR<cash_records_stagingCreateWithoutSub_classesInput, cash_records_stagingUncheckedCreateWithoutSub_classesInput> | cash_records_stagingCreateWithoutSub_classesInput[] | cash_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutSub_classesInput | cash_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    upsert?: cash_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput | cash_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput[]
+    createMany?: cash_records_stagingCreateManySub_classesInputEnvelope
+    set?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    disconnect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    delete?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    update?: cash_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput | cash_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput[]
+    updateMany?: cash_records_stagingUpdateManyWithWhereWithoutSub_classesInput | cash_records_stagingUpdateManyWithWhereWithoutSub_classesInput[]
+    deleteMany?: cash_records_stagingScalarWhereInput | cash_records_stagingScalarWhereInput[]
   }
 
   export type fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput = {
@@ -47246,6 +54607,20 @@ export namespace Prisma {
     deleteMany?: promoter_recordsScalarWhereInput | promoter_recordsScalarWhereInput[]
   }
 
+  export type right_records_stagingUpdateManyWithoutSub_classesNestedInput = {
+    create?: XOR<right_records_stagingCreateWithoutSub_classesInput, right_records_stagingUncheckedCreateWithoutSub_classesInput> | right_records_stagingCreateWithoutSub_classesInput[] | right_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutSub_classesInput | right_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    upsert?: right_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput | right_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput[]
+    createMany?: right_records_stagingCreateManySub_classesInputEnvelope
+    set?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    disconnect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    delete?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    update?: right_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput | right_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput[]
+    updateMany?: right_records_stagingUpdateManyWithWhereWithoutSub_classesInput | right_records_stagingUpdateManyWithWhereWithoutSub_classesInput[]
+    deleteMany?: right_records_stagingScalarWhereInput | right_records_stagingScalarWhereInput[]
+  }
+
   export type fundsUpdateOneRequiredWithoutSub_classesNestedInput = {
     create?: XOR<fundsCreateWithoutSub_classesInput, fundsUncheckedCreateWithoutSub_classesInput>
     connectOrCreate?: fundsCreateOrConnectWithoutSub_classesInput
@@ -47266,6 +54641,34 @@ export namespace Prisma {
     update?: symbol_holdingsUpdateWithWhereUniqueWithoutSub_classesInput | symbol_holdingsUpdateWithWhereUniqueWithoutSub_classesInput[]
     updateMany?: symbol_holdingsUpdateManyWithWhereWithoutSub_classesInput | symbol_holdingsUpdateManyWithWhereWithoutSub_classesInput[]
     deleteMany?: symbol_holdingsScalarWhereInput | symbol_holdingsScalarWhereInput[]
+  }
+
+  export type bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput = {
+    create?: XOR<bonus_records_stagingCreateWithoutSub_classesInput, bonus_records_stagingUncheckedCreateWithoutSub_classesInput> | bonus_records_stagingCreateWithoutSub_classesInput[] | bonus_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: bonus_records_stagingCreateOrConnectWithoutSub_classesInput | bonus_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    upsert?: bonus_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput | bonus_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput[]
+    createMany?: bonus_records_stagingCreateManySub_classesInputEnvelope
+    set?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    disconnect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    delete?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    connect?: bonus_records_stagingWhereUniqueInput | bonus_records_stagingWhereUniqueInput[]
+    update?: bonus_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput | bonus_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput[]
+    updateMany?: bonus_records_stagingUpdateManyWithWhereWithoutSub_classesInput | bonus_records_stagingUpdateManyWithWhereWithoutSub_classesInput[]
+    deleteMany?: bonus_records_stagingScalarWhereInput | bonus_records_stagingScalarWhereInput[]
+  }
+
+  export type cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput = {
+    create?: XOR<cash_records_stagingCreateWithoutSub_classesInput, cash_records_stagingUncheckedCreateWithoutSub_classesInput> | cash_records_stagingCreateWithoutSub_classesInput[] | cash_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: cash_records_stagingCreateOrConnectWithoutSub_classesInput | cash_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    upsert?: cash_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput | cash_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput[]
+    createMany?: cash_records_stagingCreateManySub_classesInputEnvelope
+    set?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    disconnect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    delete?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    connect?: cash_records_stagingWhereUniqueInput | cash_records_stagingWhereUniqueInput[]
+    update?: cash_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput | cash_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput[]
+    updateMany?: cash_records_stagingUpdateManyWithWhereWithoutSub_classesInput | cash_records_stagingUpdateManyWithWhereWithoutSub_classesInput[]
+    deleteMany?: cash_records_stagingScalarWhereInput | cash_records_stagingScalarWhereInput[]
   }
 
   export type fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput = {
@@ -47322,6 +54725,20 @@ export namespace Prisma {
     update?: promoter_recordsUpdateWithWhereUniqueWithoutSub_classesInput | promoter_recordsUpdateWithWhereUniqueWithoutSub_classesInput[]
     updateMany?: promoter_recordsUpdateManyWithWhereWithoutSub_classesInput | promoter_recordsUpdateManyWithWhereWithoutSub_classesInput[]
     deleteMany?: promoter_recordsScalarWhereInput | promoter_recordsScalarWhereInput[]
+  }
+
+  export type right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput = {
+    create?: XOR<right_records_stagingCreateWithoutSub_classesInput, right_records_stagingUncheckedCreateWithoutSub_classesInput> | right_records_stagingCreateWithoutSub_classesInput[] | right_records_stagingUncheckedCreateWithoutSub_classesInput[]
+    connectOrCreate?: right_records_stagingCreateOrConnectWithoutSub_classesInput | right_records_stagingCreateOrConnectWithoutSub_classesInput[]
+    upsert?: right_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput | right_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput[]
+    createMany?: right_records_stagingCreateManySub_classesInputEnvelope
+    set?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    disconnect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    delete?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    connect?: right_records_stagingWhereUniqueInput | right_records_stagingWhereUniqueInput[]
+    update?: right_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput | right_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput[]
+    updateMany?: right_records_stagingUpdateManyWithWhereWithoutSub_classesInput | right_records_stagingUpdateManyWithWhereWithoutSub_classesInput[]
+    deleteMany?: right_records_stagingScalarWhereInput | right_records_stagingScalarWhereInput[]
   }
 
   export type symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput = {
@@ -47392,6 +54809,180 @@ export namespace Prisma {
     upsert?: stock_fullsUpsertWithoutIpo_allotment_stagingInput
     connect?: stock_fullsWhereUniqueInput
     update?: XOR<XOR<stock_fullsUpdateToOneWithWhereWithoutIpo_allotment_stagingInput, stock_fullsUpdateWithoutIpo_allotment_stagingInput>, stock_fullsUncheckedUpdateWithoutIpo_allotment_stagingInput>
+  }
+
+  export type fiscal_yearsCreateNestedOneWithoutBonus_records_stagingInput = {
+    create?: XOR<fiscal_yearsCreateWithoutBonus_records_stagingInput, fiscal_yearsUncheckedCreateWithoutBonus_records_stagingInput>
+    connectOrCreate?: fiscal_yearsCreateOrConnectWithoutBonus_records_stagingInput
+    connect?: fiscal_yearsWhereUniqueInput
+  }
+
+  export type fundsCreateNestedOneWithoutBonus_records_stagingInput = {
+    create?: XOR<fundsCreateWithoutBonus_records_stagingInput, fundsUncheckedCreateWithoutBonus_records_stagingInput>
+    connectOrCreate?: fundsCreateOrConnectWithoutBonus_records_stagingInput
+    connect?: fundsWhereUniqueInput
+  }
+
+  export type sub_classesCreateNestedOneWithoutBonus_records_stagingInput = {
+    create?: XOR<sub_classesCreateWithoutBonus_records_stagingInput, sub_classesUncheckedCreateWithoutBonus_records_stagingInput>
+    connectOrCreate?: sub_classesCreateOrConnectWithoutBonus_records_stagingInput
+    connect?: sub_classesWhereUniqueInput
+  }
+
+  export type stock_fullsCreateNestedOneWithoutBonus_records_stagingInput = {
+    create?: XOR<stock_fullsCreateWithoutBonus_records_stagingInput, stock_fullsUncheckedCreateWithoutBonus_records_stagingInput>
+    connectOrCreate?: stock_fullsCreateOrConnectWithoutBonus_records_stagingInput
+    connect?: stock_fullsWhereUniqueInput
+  }
+
+  export type fiscal_yearsUpdateOneRequiredWithoutBonus_records_stagingNestedInput = {
+    create?: XOR<fiscal_yearsCreateWithoutBonus_records_stagingInput, fiscal_yearsUncheckedCreateWithoutBonus_records_stagingInput>
+    connectOrCreate?: fiscal_yearsCreateOrConnectWithoutBonus_records_stagingInput
+    upsert?: fiscal_yearsUpsertWithoutBonus_records_stagingInput
+    connect?: fiscal_yearsWhereUniqueInput
+    update?: XOR<XOR<fiscal_yearsUpdateToOneWithWhereWithoutBonus_records_stagingInput, fiscal_yearsUpdateWithoutBonus_records_stagingInput>, fiscal_yearsUncheckedUpdateWithoutBonus_records_stagingInput>
+  }
+
+  export type fundsUpdateOneRequiredWithoutBonus_records_stagingNestedInput = {
+    create?: XOR<fundsCreateWithoutBonus_records_stagingInput, fundsUncheckedCreateWithoutBonus_records_stagingInput>
+    connectOrCreate?: fundsCreateOrConnectWithoutBonus_records_stagingInput
+    upsert?: fundsUpsertWithoutBonus_records_stagingInput
+    connect?: fundsWhereUniqueInput
+    update?: XOR<XOR<fundsUpdateToOneWithWhereWithoutBonus_records_stagingInput, fundsUpdateWithoutBonus_records_stagingInput>, fundsUncheckedUpdateWithoutBonus_records_stagingInput>
+  }
+
+  export type sub_classesUpdateOneWithoutBonus_records_stagingNestedInput = {
+    create?: XOR<sub_classesCreateWithoutBonus_records_stagingInput, sub_classesUncheckedCreateWithoutBonus_records_stagingInput>
+    connectOrCreate?: sub_classesCreateOrConnectWithoutBonus_records_stagingInput
+    upsert?: sub_classesUpsertWithoutBonus_records_stagingInput
+    disconnect?: sub_classesWhereInput | boolean
+    delete?: sub_classesWhereInput | boolean
+    connect?: sub_classesWhereUniqueInput
+    update?: XOR<XOR<sub_classesUpdateToOneWithWhereWithoutBonus_records_stagingInput, sub_classesUpdateWithoutBonus_records_stagingInput>, sub_classesUncheckedUpdateWithoutBonus_records_stagingInput>
+  }
+
+  export type stock_fullsUpdateOneRequiredWithoutBonus_records_stagingNestedInput = {
+    create?: XOR<stock_fullsCreateWithoutBonus_records_stagingInput, stock_fullsUncheckedCreateWithoutBonus_records_stagingInput>
+    connectOrCreate?: stock_fullsCreateOrConnectWithoutBonus_records_stagingInput
+    upsert?: stock_fullsUpsertWithoutBonus_records_stagingInput
+    connect?: stock_fullsWhereUniqueInput
+    update?: XOR<XOR<stock_fullsUpdateToOneWithWhereWithoutBonus_records_stagingInput, stock_fullsUpdateWithoutBonus_records_stagingInput>, stock_fullsUncheckedUpdateWithoutBonus_records_stagingInput>
+  }
+
+  export type fiscal_yearsCreateNestedOneWithoutCash_records_stagingInput = {
+    create?: XOR<fiscal_yearsCreateWithoutCash_records_stagingInput, fiscal_yearsUncheckedCreateWithoutCash_records_stagingInput>
+    connectOrCreate?: fiscal_yearsCreateOrConnectWithoutCash_records_stagingInput
+    connect?: fiscal_yearsWhereUniqueInput
+  }
+
+  export type fundsCreateNestedOneWithoutCash_records_stagingInput = {
+    create?: XOR<fundsCreateWithoutCash_records_stagingInput, fundsUncheckedCreateWithoutCash_records_stagingInput>
+    connectOrCreate?: fundsCreateOrConnectWithoutCash_records_stagingInput
+    connect?: fundsWhereUniqueInput
+  }
+
+  export type sub_classesCreateNestedOneWithoutCash_records_stagingInput = {
+    create?: XOR<sub_classesCreateWithoutCash_records_stagingInput, sub_classesUncheckedCreateWithoutCash_records_stagingInput>
+    connectOrCreate?: sub_classesCreateOrConnectWithoutCash_records_stagingInput
+    connect?: sub_classesWhereUniqueInput
+  }
+
+  export type stock_fullsCreateNestedOneWithoutCash_records_stagingInput = {
+    create?: XOR<stock_fullsCreateWithoutCash_records_stagingInput, stock_fullsUncheckedCreateWithoutCash_records_stagingInput>
+    connectOrCreate?: stock_fullsCreateOrConnectWithoutCash_records_stagingInput
+    connect?: stock_fullsWhereUniqueInput
+  }
+
+  export type fiscal_yearsUpdateOneRequiredWithoutCash_records_stagingNestedInput = {
+    create?: XOR<fiscal_yearsCreateWithoutCash_records_stagingInput, fiscal_yearsUncheckedCreateWithoutCash_records_stagingInput>
+    connectOrCreate?: fiscal_yearsCreateOrConnectWithoutCash_records_stagingInput
+    upsert?: fiscal_yearsUpsertWithoutCash_records_stagingInput
+    connect?: fiscal_yearsWhereUniqueInput
+    update?: XOR<XOR<fiscal_yearsUpdateToOneWithWhereWithoutCash_records_stagingInput, fiscal_yearsUpdateWithoutCash_records_stagingInput>, fiscal_yearsUncheckedUpdateWithoutCash_records_stagingInput>
+  }
+
+  export type fundsUpdateOneRequiredWithoutCash_records_stagingNestedInput = {
+    create?: XOR<fundsCreateWithoutCash_records_stagingInput, fundsUncheckedCreateWithoutCash_records_stagingInput>
+    connectOrCreate?: fundsCreateOrConnectWithoutCash_records_stagingInput
+    upsert?: fundsUpsertWithoutCash_records_stagingInput
+    connect?: fundsWhereUniqueInput
+    update?: XOR<XOR<fundsUpdateToOneWithWhereWithoutCash_records_stagingInput, fundsUpdateWithoutCash_records_stagingInput>, fundsUncheckedUpdateWithoutCash_records_stagingInput>
+  }
+
+  export type sub_classesUpdateOneWithoutCash_records_stagingNestedInput = {
+    create?: XOR<sub_classesCreateWithoutCash_records_stagingInput, sub_classesUncheckedCreateWithoutCash_records_stagingInput>
+    connectOrCreate?: sub_classesCreateOrConnectWithoutCash_records_stagingInput
+    upsert?: sub_classesUpsertWithoutCash_records_stagingInput
+    disconnect?: sub_classesWhereInput | boolean
+    delete?: sub_classesWhereInput | boolean
+    connect?: sub_classesWhereUniqueInput
+    update?: XOR<XOR<sub_classesUpdateToOneWithWhereWithoutCash_records_stagingInput, sub_classesUpdateWithoutCash_records_stagingInput>, sub_classesUncheckedUpdateWithoutCash_records_stagingInput>
+  }
+
+  export type stock_fullsUpdateOneRequiredWithoutCash_records_stagingNestedInput = {
+    create?: XOR<stock_fullsCreateWithoutCash_records_stagingInput, stock_fullsUncheckedCreateWithoutCash_records_stagingInput>
+    connectOrCreate?: stock_fullsCreateOrConnectWithoutCash_records_stagingInput
+    upsert?: stock_fullsUpsertWithoutCash_records_stagingInput
+    connect?: stock_fullsWhereUniqueInput
+    update?: XOR<XOR<stock_fullsUpdateToOneWithWhereWithoutCash_records_stagingInput, stock_fullsUpdateWithoutCash_records_stagingInput>, stock_fullsUncheckedUpdateWithoutCash_records_stagingInput>
+  }
+
+  export type fiscal_yearsCreateNestedOneWithoutRight_records_stagingInput = {
+    create?: XOR<fiscal_yearsCreateWithoutRight_records_stagingInput, fiscal_yearsUncheckedCreateWithoutRight_records_stagingInput>
+    connectOrCreate?: fiscal_yearsCreateOrConnectWithoutRight_records_stagingInput
+    connect?: fiscal_yearsWhereUniqueInput
+  }
+
+  export type fundsCreateNestedOneWithoutRight_records_stagingInput = {
+    create?: XOR<fundsCreateWithoutRight_records_stagingInput, fundsUncheckedCreateWithoutRight_records_stagingInput>
+    connectOrCreate?: fundsCreateOrConnectWithoutRight_records_stagingInput
+    connect?: fundsWhereUniqueInput
+  }
+
+  export type sub_classesCreateNestedOneWithoutRight_records_stagingInput = {
+    create?: XOR<sub_classesCreateWithoutRight_records_stagingInput, sub_classesUncheckedCreateWithoutRight_records_stagingInput>
+    connectOrCreate?: sub_classesCreateOrConnectWithoutRight_records_stagingInput
+    connect?: sub_classesWhereUniqueInput
+  }
+
+  export type stock_fullsCreateNestedOneWithoutRight_records_stagingInput = {
+    create?: XOR<stock_fullsCreateWithoutRight_records_stagingInput, stock_fullsUncheckedCreateWithoutRight_records_stagingInput>
+    connectOrCreate?: stock_fullsCreateOrConnectWithoutRight_records_stagingInput
+    connect?: stock_fullsWhereUniqueInput
+  }
+
+  export type fiscal_yearsUpdateOneRequiredWithoutRight_records_stagingNestedInput = {
+    create?: XOR<fiscal_yearsCreateWithoutRight_records_stagingInput, fiscal_yearsUncheckedCreateWithoutRight_records_stagingInput>
+    connectOrCreate?: fiscal_yearsCreateOrConnectWithoutRight_records_stagingInput
+    upsert?: fiscal_yearsUpsertWithoutRight_records_stagingInput
+    connect?: fiscal_yearsWhereUniqueInput
+    update?: XOR<XOR<fiscal_yearsUpdateToOneWithWhereWithoutRight_records_stagingInput, fiscal_yearsUpdateWithoutRight_records_stagingInput>, fiscal_yearsUncheckedUpdateWithoutRight_records_stagingInput>
+  }
+
+  export type fundsUpdateOneRequiredWithoutRight_records_stagingNestedInput = {
+    create?: XOR<fundsCreateWithoutRight_records_stagingInput, fundsUncheckedCreateWithoutRight_records_stagingInput>
+    connectOrCreate?: fundsCreateOrConnectWithoutRight_records_stagingInput
+    upsert?: fundsUpsertWithoutRight_records_stagingInput
+    connect?: fundsWhereUniqueInput
+    update?: XOR<XOR<fundsUpdateToOneWithWhereWithoutRight_records_stagingInput, fundsUpdateWithoutRight_records_stagingInput>, fundsUncheckedUpdateWithoutRight_records_stagingInput>
+  }
+
+  export type sub_classesUpdateOneWithoutRight_records_stagingNestedInput = {
+    create?: XOR<sub_classesCreateWithoutRight_records_stagingInput, sub_classesUncheckedCreateWithoutRight_records_stagingInput>
+    connectOrCreate?: sub_classesCreateOrConnectWithoutRight_records_stagingInput
+    upsert?: sub_classesUpsertWithoutRight_records_stagingInput
+    disconnect?: sub_classesWhereInput | boolean
+    delete?: sub_classesWhereInput | boolean
+    connect?: sub_classesWhereUniqueInput
+    update?: XOR<XOR<sub_classesUpdateToOneWithWhereWithoutRight_records_stagingInput, sub_classesUpdateWithoutRight_records_stagingInput>, sub_classesUncheckedUpdateWithoutRight_records_stagingInput>
+  }
+
+  export type stock_fullsUpdateOneRequiredWithoutRight_records_stagingNestedInput = {
+    create?: XOR<stock_fullsCreateWithoutRight_records_stagingInput, stock_fullsUncheckedCreateWithoutRight_records_stagingInput>
+    connectOrCreate?: stock_fullsCreateOrConnectWithoutRight_records_stagingInput
+    upsert?: stock_fullsUpsertWithoutRight_records_stagingInput
+    connect?: stock_fullsWhereUniqueInput
+    update?: XOR<XOR<stock_fullsUpdateToOneWithWhereWithoutRight_records_stagingInput, stock_fullsUpdateWithoutRight_records_stagingInput>, stock_fullsUncheckedUpdateWithoutRight_records_stagingInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -47713,8 +55304,10 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -47723,6 +55316,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -47735,8 +55329,10 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -47745,6 +55341,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -47759,8 +55356,10 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
@@ -47768,6 +55367,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -47779,8 +55379,10 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
@@ -47788,6 +55390,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -47805,8 +55408,10 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
@@ -47814,6 +55419,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -47827,8 +55433,10 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -47836,6 +55444,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -47942,8 +55551,10 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -47952,6 +55563,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -47964,8 +55576,10 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -47974,6 +55588,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -47994,8 +55609,10 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
@@ -48003,6 +55620,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -48014,8 +55632,10 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
@@ -48023,6 +55643,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -48046,8 +55667,10 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -48055,6 +55678,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -48068,8 +55692,10 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -48077,6 +55703,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -48293,15 +55920,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -48313,15 +55943,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -48834,15 +56467,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -48854,15 +56490,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -49204,9 +56843,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -49214,6 +56855,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -49226,9 +56868,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -49236,6 +56880,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -49252,15 +56897,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -49274,15 +56922,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -49389,9 +57040,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -49399,6 +57052,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -49411,9 +57065,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -49421,6 +57077,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -49443,15 +57100,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -49465,15 +57125,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -49564,9 +57227,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -49575,6 +57240,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
@@ -49586,9 +57252,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -49597,6 +57265,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
@@ -49610,9 +57279,11 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
@@ -49620,6 +57291,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
@@ -49630,9 +57302,11 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
@@ -49640,6 +57314,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
@@ -49656,9 +57331,11 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
@@ -49666,6 +57343,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
@@ -49678,9 +57356,11 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -49688,6 +57368,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
@@ -49793,9 +57474,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -49804,6 +57487,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
@@ -49815,9 +57499,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -49826,6 +57512,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
@@ -49845,9 +57532,11 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
@@ -49855,6 +57544,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
@@ -49865,9 +57555,11 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
@@ -49875,6 +57567,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
@@ -49897,9 +57590,11 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -49907,6 +57602,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
@@ -49919,9 +57615,11 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -49929,6 +57627,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
@@ -50377,9 +58076,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
@@ -50387,6 +58088,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -50399,9 +58101,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -50409,6 +58113,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -50423,15 +58128,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -50443,15 +58151,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -50466,9 +58177,12 @@ export namespace Prisma {
   export type sub_classesCreateWithoutFiscal_year_balanceInput = {
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
   }
@@ -50478,9 +58192,12 @@ export namespace Prisma {
     fund_id: number
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
   }
 
@@ -50495,15 +58212,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -50517,15 +58237,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -50604,9 +58327,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
@@ -50614,6 +58339,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -50626,9 +58352,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -50636,6 +58364,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -50656,15 +58385,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -50676,15 +58408,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -50705,9 +58440,12 @@ export namespace Prisma {
   export type sub_classesUpdateWithoutFiscal_year_balanceInput = {
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
   }
@@ -50717,9 +58455,12 @@ export namespace Prisma {
     fund_id?: IntFieldUpdateOperationsInput | number
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
   }
 
@@ -50740,15 +58481,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -50762,15 +58506,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -50827,8 +58574,10 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -50837,6 +58586,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -50849,8 +58599,10 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -50859,6 +58611,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -50873,8 +58626,10 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
@@ -50882,6 +58637,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -50893,8 +58649,10 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
@@ -50902,6 +58660,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -50919,8 +58678,10 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
@@ -50928,6 +58689,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -50941,8 +58703,10 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -50950,6 +58714,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -51056,8 +58821,10 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -51066,6 +58833,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -51078,8 +58846,10 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -51088,6 +58858,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -51108,8 +58879,10 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
@@ -51117,6 +58890,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -51128,8 +58902,10 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
@@ -51137,6 +58913,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -51160,8 +58937,10 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -51169,6 +58948,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -51182,8 +58962,10 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -51191,6 +58973,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -51260,6 +59043,43 @@ export namespace Prisma {
 
   export type bonus_recordsCreateManyFiscal_yearsInputEnvelope = {
     data: bonus_recordsCreateManyFiscal_yearsInput | bonus_recordsCreateManyFiscal_yearsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type bonus_records_stagingCreateWithoutFiscal_yearsInput = {
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+    funds: fundsCreateNestedOneWithoutBonus_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutBonus_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutBonus_records_stagingInput
+  }
+
+  export type bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput = {
+    bonus_staging_id?: number
+    fund_id: number
+    symbol: string
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type bonus_records_stagingCreateOrConnectWithoutFiscal_yearsInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    create: XOR<bonus_records_stagingCreateWithoutFiscal_yearsInput, bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput>
+  }
+
+  export type bonus_records_stagingCreateManyFiscal_yearsInputEnvelope = {
+    data: bonus_records_stagingCreateManyFiscal_yearsInput | bonus_records_stagingCreateManyFiscal_yearsInput[]
     skipDuplicates?: boolean
   }
 
@@ -51383,6 +59203,37 @@ export namespace Prisma {
 
   export type cash_recordsCreateManyFiscal_yearsInputEnvelope = {
     data: cash_recordsCreateManyFiscal_yearsInput | cash_recordsCreateManyFiscal_yearsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type cash_records_stagingCreateWithoutFiscal_yearsInput = {
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    recorded_at?: Date | string
+    remarks?: string
+    funds: fundsCreateNestedOneWithoutCash_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutCash_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutCash_records_stagingInput
+  }
+
+  export type cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput = {
+    cash_staging_id?: number
+    fund_id: number
+    symbol: string
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    recorded_at?: Date | string
+    remarks?: string
+    sub_id?: number | null
+  }
+
+  export type cash_records_stagingCreateOrConnectWithoutFiscal_yearsInput = {
+    where: cash_records_stagingWhereUniqueInput
+    create: XOR<cash_records_stagingCreateWithoutFiscal_yearsInput, cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput>
+  }
+
+  export type cash_records_stagingCreateManyFiscal_yearsInputEnvelope = {
+    data: cash_records_stagingCreateManyFiscal_yearsInput | cash_records_stagingCreateManyFiscal_yearsInput[]
     skipDuplicates?: boolean
   }
 
@@ -51666,6 +59517,45 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type right_records_stagingCreateWithoutFiscal_yearsInput = {
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+    funds: fundsCreateNestedOneWithoutRight_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutRight_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutRight_records_stagingInput
+  }
+
+  export type right_records_stagingUncheckedCreateWithoutFiscal_yearsInput = {
+    right_staging_id?: number
+    fund_id: number
+    symbol: string
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type right_records_stagingCreateOrConnectWithoutFiscal_yearsInput = {
+    where: right_records_stagingWhereUniqueInput
+    create: XOR<right_records_stagingCreateWithoutFiscal_yearsInput, right_records_stagingUncheckedCreateWithoutFiscal_yearsInput>
+  }
+
+  export type right_records_stagingCreateManyFiscal_yearsInputEnvelope = {
+    data: right_records_stagingCreateManyFiscal_yearsInput | right_records_stagingCreateManyFiscal_yearsInput[]
+    skipDuplicates?: boolean
+  }
+
   export type sell_recordsCreateWithoutFiscal_yearsInput = {
     quantity: number
     price: Decimal | DecimalJsLike | number | string
@@ -51777,7 +59667,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
     funds: fundsCreateNestedOneWithoutSymbol_holdingsInput
     sub_classes?: sub_classesCreateNestedOneWithoutSymbol_holdingsInput
     stock_fulls: stock_fullsCreateNestedOneWithoutSymbol_holdingsInput
@@ -51793,7 +59682,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsCreateOrConnectWithoutFiscal_yearsInput = {
@@ -51820,6 +59708,40 @@ export namespace Prisma {
   export type bonus_recordsUpdateManyWithWhereWithoutFiscal_yearsInput = {
     where: bonus_recordsScalarWhereInput
     data: XOR<bonus_recordsUpdateManyMutationInput, bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsInput>
+  }
+
+  export type bonus_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    update: XOR<bonus_records_stagingUpdateWithoutFiscal_yearsInput, bonus_records_stagingUncheckedUpdateWithoutFiscal_yearsInput>
+    create: XOR<bonus_records_stagingCreateWithoutFiscal_yearsInput, bonus_records_stagingUncheckedCreateWithoutFiscal_yearsInput>
+  }
+
+  export type bonus_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    data: XOR<bonus_records_stagingUpdateWithoutFiscal_yearsInput, bonus_records_stagingUncheckedUpdateWithoutFiscal_yearsInput>
+  }
+
+  export type bonus_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput = {
+    where: bonus_records_stagingScalarWhereInput
+    data: XOR<bonus_records_stagingUpdateManyMutationInput, bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsInput>
+  }
+
+  export type bonus_records_stagingScalarWhereInput = {
+    AND?: bonus_records_stagingScalarWhereInput | bonus_records_stagingScalarWhereInput[]
+    OR?: bonus_records_stagingScalarWhereInput[]
+    NOT?: bonus_records_stagingScalarWhereInput | bonus_records_stagingScalarWhereInput[]
+    bonus_staging_id?: IntFilter<"bonus_records_staging"> | number
+    fund_id?: IntFilter<"bonus_records_staging"> | number
+    symbol?: StringFilter<"bonus_records_staging"> | string
+    fiscal_year_id?: IntFilter<"bonus_records_staging"> | number
+    bonus_percent?: DecimalFilter<"bonus_records_staging"> | Decimal | DecimalJsLike | number | string
+    quantity?: IntFilter<"bonus_records_staging"> | number
+    bookclose_date?: DateTimeFilter<"bonus_records_staging"> | Date | string
+    effective_rate?: DecimalFilter<"bonus_records_staging"> | Decimal | DecimalJsLike | number | string
+    sub_id?: IntNullableFilter<"bonus_records_staging"> | number | null
+    remarks?: StringFilter<"bonus_records_staging"> | string
+    recorded_at?: DateTimeFilter<"bonus_records_staging"> | Date | string
+    added_at?: DateTimeNullableFilter<"bonus_records_staging"> | Date | string | null
   }
 
   export type buy_recordsUpsertWithWhereUniqueWithoutFiscal_yearsInput = {
@@ -51868,6 +59790,37 @@ export namespace Prisma {
   export type cash_recordsUpdateManyWithWhereWithoutFiscal_yearsInput = {
     where: cash_recordsScalarWhereInput
     data: XOR<cash_recordsUpdateManyMutationInput, cash_recordsUncheckedUpdateManyWithoutFiscal_yearsInput>
+  }
+
+  export type cash_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput = {
+    where: cash_records_stagingWhereUniqueInput
+    update: XOR<cash_records_stagingUpdateWithoutFiscal_yearsInput, cash_records_stagingUncheckedUpdateWithoutFiscal_yearsInput>
+    create: XOR<cash_records_stagingCreateWithoutFiscal_yearsInput, cash_records_stagingUncheckedCreateWithoutFiscal_yearsInput>
+  }
+
+  export type cash_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput = {
+    where: cash_records_stagingWhereUniqueInput
+    data: XOR<cash_records_stagingUpdateWithoutFiscal_yearsInput, cash_records_stagingUncheckedUpdateWithoutFiscal_yearsInput>
+  }
+
+  export type cash_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput = {
+    where: cash_records_stagingScalarWhereInput
+    data: XOR<cash_records_stagingUpdateManyMutationInput, cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsInput>
+  }
+
+  export type cash_records_stagingScalarWhereInput = {
+    AND?: cash_records_stagingScalarWhereInput | cash_records_stagingScalarWhereInput[]
+    OR?: cash_records_stagingScalarWhereInput[]
+    NOT?: cash_records_stagingScalarWhereInput | cash_records_stagingScalarWhereInput[]
+    cash_staging_id?: IntFilter<"cash_records_staging"> | number
+    fund_id?: IntFilter<"cash_records_staging"> | number
+    symbol?: StringFilter<"cash_records_staging"> | string
+    amount?: DecimalFilter<"cash_records_staging"> | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFilter<"cash_records_staging"> | Date | string
+    fiscal_year_id?: IntFilter<"cash_records_staging"> | number
+    recorded_at?: DateTimeFilter<"cash_records_staging"> | Date | string
+    remarks?: StringFilter<"cash_records_staging"> | string
+    sub_id?: IntNullableFilter<"cash_records_staging"> | number | null
   }
 
   export type closeout_recordsUpsertWithWhereUniqueWithoutFiscal_yearsInput = {
@@ -52027,6 +59980,41 @@ export namespace Prisma {
     data: XOR<right_recordsUpdateManyMutationInput, right_recordsUncheckedUpdateManyWithoutFiscal_yearsInput>
   }
 
+  export type right_records_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput = {
+    where: right_records_stagingWhereUniqueInput
+    update: XOR<right_records_stagingUpdateWithoutFiscal_yearsInput, right_records_stagingUncheckedUpdateWithoutFiscal_yearsInput>
+    create: XOR<right_records_stagingCreateWithoutFiscal_yearsInput, right_records_stagingUncheckedCreateWithoutFiscal_yearsInput>
+  }
+
+  export type right_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput = {
+    where: right_records_stagingWhereUniqueInput
+    data: XOR<right_records_stagingUpdateWithoutFiscal_yearsInput, right_records_stagingUncheckedUpdateWithoutFiscal_yearsInput>
+  }
+
+  export type right_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput = {
+    where: right_records_stagingScalarWhereInput
+    data: XOR<right_records_stagingUpdateManyMutationInput, right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsInput>
+  }
+
+  export type right_records_stagingScalarWhereInput = {
+    AND?: right_records_stagingScalarWhereInput | right_records_stagingScalarWhereInput[]
+    OR?: right_records_stagingScalarWhereInput[]
+    NOT?: right_records_stagingScalarWhereInput | right_records_stagingScalarWhereInput[]
+    right_staging_id?: IntFilter<"right_records_staging"> | number
+    fund_id?: IntFilter<"right_records_staging"> | number
+    symbol?: StringFilter<"right_records_staging"> | string
+    fiscal_year_id?: IntFilter<"right_records_staging"> | number
+    right_ratio?: StringFilter<"right_records_staging"> | string
+    quantity?: IntFilter<"right_records_staging"> | number
+    bookclose_date?: DateTimeFilter<"right_records_staging"> | Date | string
+    effective_rate?: DecimalFilter<"right_records_staging"> | Decimal | DecimalJsLike | number | string
+    total_value?: DecimalNullableFilter<"right_records_staging"> | Decimal | DecimalJsLike | number | string | null
+    sub_id?: IntNullableFilter<"right_records_staging"> | number | null
+    remarks?: StringFilter<"right_records_staging"> | string
+    recorded_at?: DateTimeFilter<"right_records_staging"> | Date | string
+    added_at?: DateTimeNullableFilter<"right_records_staging"> | Date | string | null
+  }
+
   export type sell_recordsUpsertWithWhereUniqueWithoutFiscal_yearsInput = {
     where: sell_recordsWhereUniqueInput
     update: XOR<sell_recordsUpdateWithoutFiscal_yearsInput, sell_recordsUncheckedUpdateWithoutFiscal_yearsInput>
@@ -52089,7 +60077,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
-    wacc?: DecimalNullableFilter<"symbol_holdings"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsCreateWithoutFundsInput = {
@@ -52122,6 +60109,43 @@ export namespace Prisma {
 
   export type bonus_recordsCreateManyFundsInputEnvelope = {
     data: bonus_recordsCreateManyFundsInput | bonus_recordsCreateManyFundsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type bonus_records_stagingCreateWithoutFundsInput = {
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutBonus_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutBonus_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutBonus_records_stagingInput
+  }
+
+  export type bonus_records_stagingUncheckedCreateWithoutFundsInput = {
+    bonus_staging_id?: number
+    symbol: string
+    fiscal_year_id: number
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type bonus_records_stagingCreateOrConnectWithoutFundsInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    create: XOR<bonus_records_stagingCreateWithoutFundsInput, bonus_records_stagingUncheckedCreateWithoutFundsInput>
+  }
+
+  export type bonus_records_stagingCreateManyFundsInputEnvelope = {
+    data: bonus_records_stagingCreateManyFundsInput | bonus_records_stagingCreateManyFundsInput[]
     skipDuplicates?: boolean
   }
 
@@ -52245,6 +60269,37 @@ export namespace Prisma {
 
   export type cash_recordsCreateManyFundsInputEnvelope = {
     data: cash_recordsCreateManyFundsInput | cash_recordsCreateManyFundsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type cash_records_stagingCreateWithoutFundsInput = {
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    recorded_at?: Date | string
+    remarks?: string
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutCash_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutCash_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutCash_records_stagingInput
+  }
+
+  export type cash_records_stagingUncheckedCreateWithoutFundsInput = {
+    cash_staging_id?: number
+    symbol: string
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    fiscal_year_id: number
+    recorded_at?: Date | string
+    remarks?: string
+    sub_id?: number | null
+  }
+
+  export type cash_records_stagingCreateOrConnectWithoutFundsInput = {
+    where: cash_records_stagingWhereUniqueInput
+    create: XOR<cash_records_stagingCreateWithoutFundsInput, cash_records_stagingUncheckedCreateWithoutFundsInput>
+  }
+
+  export type cash_records_stagingCreateManyFundsInputEnvelope = {
+    data: cash_records_stagingCreateManyFundsInput | cash_records_stagingCreateManyFundsInput[]
     skipDuplicates?: boolean
   }
 
@@ -52517,6 +60572,45 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type right_records_stagingCreateWithoutFundsInput = {
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutRight_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutRight_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutRight_records_stagingInput
+  }
+
+  export type right_records_stagingUncheckedCreateWithoutFundsInput = {
+    right_staging_id?: number
+    symbol: string
+    fiscal_year_id: number
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type right_records_stagingCreateOrConnectWithoutFundsInput = {
+    where: right_records_stagingWhereUniqueInput
+    create: XOR<right_records_stagingCreateWithoutFundsInput, right_records_stagingUncheckedCreateWithoutFundsInput>
+  }
+
+  export type right_records_stagingCreateManyFundsInputEnvelope = {
+    data: right_records_stagingCreateManyFundsInput | right_records_stagingCreateManyFundsInput[]
+    skipDuplicates?: boolean
+  }
+
   export type sell_recordsCreateWithoutFundsInput = {
     quantity: number
     price: Decimal | DecimalJsLike | number | string
@@ -52624,10 +60718,13 @@ export namespace Prisma {
   export type sub_classesCreateWithoutFundsInput = {
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
   }
 
@@ -52635,10 +60732,13 @@ export namespace Prisma {
     sub_id?: number
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
   }
 
@@ -52659,7 +60759,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
     fiscal_years: fiscal_yearsCreateNestedOneWithoutSymbol_holdingsInput
     sub_classes?: sub_classesCreateNestedOneWithoutSymbol_holdingsInput
     stock_fulls: stock_fullsCreateNestedOneWithoutSymbol_holdingsInput
@@ -52675,7 +60774,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsCreateOrConnectWithoutFundsInput = {
@@ -52702,6 +60800,22 @@ export namespace Prisma {
   export type bonus_recordsUpdateManyWithWhereWithoutFundsInput = {
     where: bonus_recordsScalarWhereInput
     data: XOR<bonus_recordsUpdateManyMutationInput, bonus_recordsUncheckedUpdateManyWithoutFundsInput>
+  }
+
+  export type bonus_records_stagingUpsertWithWhereUniqueWithoutFundsInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    update: XOR<bonus_records_stagingUpdateWithoutFundsInput, bonus_records_stagingUncheckedUpdateWithoutFundsInput>
+    create: XOR<bonus_records_stagingCreateWithoutFundsInput, bonus_records_stagingUncheckedCreateWithoutFundsInput>
+  }
+
+  export type bonus_records_stagingUpdateWithWhereUniqueWithoutFundsInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    data: XOR<bonus_records_stagingUpdateWithoutFundsInput, bonus_records_stagingUncheckedUpdateWithoutFundsInput>
+  }
+
+  export type bonus_records_stagingUpdateManyWithWhereWithoutFundsInput = {
+    where: bonus_records_stagingScalarWhereInput
+    data: XOR<bonus_records_stagingUpdateManyMutationInput, bonus_records_stagingUncheckedUpdateManyWithoutFundsInput>
   }
 
   export type buy_recordsUpsertWithWhereUniqueWithoutFundsInput = {
@@ -52750,6 +60864,22 @@ export namespace Prisma {
   export type cash_recordsUpdateManyWithWhereWithoutFundsInput = {
     where: cash_recordsScalarWhereInput
     data: XOR<cash_recordsUpdateManyMutationInput, cash_recordsUncheckedUpdateManyWithoutFundsInput>
+  }
+
+  export type cash_records_stagingUpsertWithWhereUniqueWithoutFundsInput = {
+    where: cash_records_stagingWhereUniqueInput
+    update: XOR<cash_records_stagingUpdateWithoutFundsInput, cash_records_stagingUncheckedUpdateWithoutFundsInput>
+    create: XOR<cash_records_stagingCreateWithoutFundsInput, cash_records_stagingUncheckedCreateWithoutFundsInput>
+  }
+
+  export type cash_records_stagingUpdateWithWhereUniqueWithoutFundsInput = {
+    where: cash_records_stagingWhereUniqueInput
+    data: XOR<cash_records_stagingUpdateWithoutFundsInput, cash_records_stagingUncheckedUpdateWithoutFundsInput>
+  }
+
+  export type cash_records_stagingUpdateManyWithWhereWithoutFundsInput = {
+    where: cash_records_stagingScalarWhereInput
+    data: XOR<cash_records_stagingUpdateManyMutationInput, cash_records_stagingUncheckedUpdateManyWithoutFundsInput>
   }
 
   export type client_broker_mappingUpsertWithWhereUniqueWithoutFundsInput = {
@@ -52874,6 +61004,22 @@ export namespace Prisma {
   export type right_recordsUpdateManyWithWhereWithoutFundsInput = {
     where: right_recordsScalarWhereInput
     data: XOR<right_recordsUpdateManyMutationInput, right_recordsUncheckedUpdateManyWithoutFundsInput>
+  }
+
+  export type right_records_stagingUpsertWithWhereUniqueWithoutFundsInput = {
+    where: right_records_stagingWhereUniqueInput
+    update: XOR<right_records_stagingUpdateWithoutFundsInput, right_records_stagingUncheckedUpdateWithoutFundsInput>
+    create: XOR<right_records_stagingCreateWithoutFundsInput, right_records_stagingUncheckedCreateWithoutFundsInput>
+  }
+
+  export type right_records_stagingUpdateWithWhereUniqueWithoutFundsInput = {
+    where: right_records_stagingWhereUniqueInput
+    data: XOR<right_records_stagingUpdateWithoutFundsInput, right_records_stagingUncheckedUpdateWithoutFundsInput>
+  }
+
+  export type right_records_stagingUpdateManyWithWhereWithoutFundsInput = {
+    where: right_records_stagingScalarWhereInput
+    data: XOR<right_records_stagingUpdateManyMutationInput, right_records_stagingUncheckedUpdateManyWithoutFundsInput>
   }
 
   export type sell_recordsUpsertWithWhereUniqueWithoutFundsInput = {
@@ -53001,9 +61147,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -53012,6 +61160,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
@@ -53023,9 +61172,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -53034,6 +61185,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
@@ -53047,9 +61199,11 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
@@ -53057,6 +61211,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
@@ -53067,9 +61222,11 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
@@ -53077,6 +61234,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
@@ -53093,9 +61251,11 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
@@ -53103,6 +61263,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
@@ -53115,9 +61276,11 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -53125,6 +61288,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
@@ -53230,9 +61394,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -53241,6 +61407,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
@@ -53252,9 +61419,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -53263,6 +61432,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
@@ -53282,9 +61452,11 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
@@ -53292,6 +61464,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
@@ -53302,9 +61475,11 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
@@ -53312,6 +61487,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
@@ -53334,9 +61510,11 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -53344,6 +61522,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
@@ -53356,9 +61535,11 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -53366,6 +61547,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
@@ -53434,6 +61616,43 @@ export namespace Prisma {
 
   export type bonus_recordsCreateManyStock_fullsInputEnvelope = {
     data: bonus_recordsCreateManyStock_fullsInput | bonus_recordsCreateManyStock_fullsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type bonus_records_stagingCreateWithoutStock_fullsInput = {
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutBonus_records_stagingInput
+    funds: fundsCreateNestedOneWithoutBonus_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutBonus_records_stagingInput
+  }
+
+  export type bonus_records_stagingUncheckedCreateWithoutStock_fullsInput = {
+    bonus_staging_id?: number
+    fund_id: number
+    fiscal_year_id: number
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type bonus_records_stagingCreateOrConnectWithoutStock_fullsInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    create: XOR<bonus_records_stagingCreateWithoutStock_fullsInput, bonus_records_stagingUncheckedCreateWithoutStock_fullsInput>
+  }
+
+  export type bonus_records_stagingCreateManyStock_fullsInputEnvelope = {
+    data: bonus_records_stagingCreateManyStock_fullsInput | bonus_records_stagingCreateManyStock_fullsInput[]
     skipDuplicates?: boolean
   }
 
@@ -53557,6 +61776,37 @@ export namespace Prisma {
 
   export type cash_recordsCreateManyStock_fullsInputEnvelope = {
     data: cash_recordsCreateManyStock_fullsInput | cash_recordsCreateManyStock_fullsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type cash_records_stagingCreateWithoutStock_fullsInput = {
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    recorded_at?: Date | string
+    remarks?: string
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutCash_records_stagingInput
+    funds: fundsCreateNestedOneWithoutCash_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutCash_records_stagingInput
+  }
+
+  export type cash_records_stagingUncheckedCreateWithoutStock_fullsInput = {
+    cash_staging_id?: number
+    fund_id: number
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    fiscal_year_id: number
+    recorded_at?: Date | string
+    remarks?: string
+    sub_id?: number | null
+  }
+
+  export type cash_records_stagingCreateOrConnectWithoutStock_fullsInput = {
+    where: cash_records_stagingWhereUniqueInput
+    create: XOR<cash_records_stagingCreateWithoutStock_fullsInput, cash_records_stagingUncheckedCreateWithoutStock_fullsInput>
+  }
+
+  export type cash_records_stagingCreateManyStock_fullsInputEnvelope = {
+    data: cash_records_stagingCreateManyStock_fullsInput | cash_records_stagingCreateManyStock_fullsInput[]
     skipDuplicates?: boolean
   }
 
@@ -53815,6 +62065,45 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type right_records_stagingCreateWithoutStock_fullsInput = {
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutRight_records_stagingInput
+    funds: fundsCreateNestedOneWithoutRight_records_stagingInput
+    sub_classes?: sub_classesCreateNestedOneWithoutRight_records_stagingInput
+  }
+
+  export type right_records_stagingUncheckedCreateWithoutStock_fullsInput = {
+    right_staging_id?: number
+    fund_id: number
+    fiscal_year_id: number
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type right_records_stagingCreateOrConnectWithoutStock_fullsInput = {
+    where: right_records_stagingWhereUniqueInput
+    create: XOR<right_records_stagingCreateWithoutStock_fullsInput, right_records_stagingUncheckedCreateWithoutStock_fullsInput>
+  }
+
+  export type right_records_stagingCreateManyStock_fullsInputEnvelope = {
+    data: right_records_stagingCreateManyStock_fullsInput | right_records_stagingCreateManyStock_fullsInput[]
+    skipDuplicates?: boolean
+  }
+
   export type sell_recordsCreateWithoutStock_fullsInput = {
     quantity: number
     price: Decimal | DecimalJsLike | number | string
@@ -53943,7 +62232,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
     fiscal_years: fiscal_yearsCreateNestedOneWithoutSymbol_holdingsInput
     funds: fundsCreateNestedOneWithoutSymbol_holdingsInput
     sub_classes?: sub_classesCreateNestedOneWithoutSymbol_holdingsInput
@@ -53959,7 +62247,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsCreateOrConnectWithoutStock_fullsInput = {
@@ -53986,6 +62273,22 @@ export namespace Prisma {
   export type bonus_recordsUpdateManyWithWhereWithoutStock_fullsInput = {
     where: bonus_recordsScalarWhereInput
     data: XOR<bonus_recordsUpdateManyMutationInput, bonus_recordsUncheckedUpdateManyWithoutStock_fullsInput>
+  }
+
+  export type bonus_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    update: XOR<bonus_records_stagingUpdateWithoutStock_fullsInput, bonus_records_stagingUncheckedUpdateWithoutStock_fullsInput>
+    create: XOR<bonus_records_stagingCreateWithoutStock_fullsInput, bonus_records_stagingUncheckedCreateWithoutStock_fullsInput>
+  }
+
+  export type bonus_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    data: XOR<bonus_records_stagingUpdateWithoutStock_fullsInput, bonus_records_stagingUncheckedUpdateWithoutStock_fullsInput>
+  }
+
+  export type bonus_records_stagingUpdateManyWithWhereWithoutStock_fullsInput = {
+    where: bonus_records_stagingScalarWhereInput
+    data: XOR<bonus_records_stagingUpdateManyMutationInput, bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsInput>
   }
 
   export type buy_recordsUpsertWithWhereUniqueWithoutStock_fullsInput = {
@@ -54034,6 +62337,22 @@ export namespace Prisma {
   export type cash_recordsUpdateManyWithWhereWithoutStock_fullsInput = {
     where: cash_recordsScalarWhereInput
     data: XOR<cash_recordsUpdateManyMutationInput, cash_recordsUncheckedUpdateManyWithoutStock_fullsInput>
+  }
+
+  export type cash_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput = {
+    where: cash_records_stagingWhereUniqueInput
+    update: XOR<cash_records_stagingUpdateWithoutStock_fullsInput, cash_records_stagingUncheckedUpdateWithoutStock_fullsInput>
+    create: XOR<cash_records_stagingCreateWithoutStock_fullsInput, cash_records_stagingUncheckedCreateWithoutStock_fullsInput>
+  }
+
+  export type cash_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput = {
+    where: cash_records_stagingWhereUniqueInput
+    data: XOR<cash_records_stagingUpdateWithoutStock_fullsInput, cash_records_stagingUncheckedUpdateWithoutStock_fullsInput>
+  }
+
+  export type cash_records_stagingUpdateManyWithWhereWithoutStock_fullsInput = {
+    where: cash_records_stagingScalarWhereInput
+    data: XOR<cash_records_stagingUpdateManyMutationInput, cash_records_stagingUncheckedUpdateManyWithoutStock_fullsInput>
   }
 
   export type closeout_recordsUpsertWithWhereUniqueWithoutStock_fullsInput = {
@@ -54146,6 +62465,22 @@ export namespace Prisma {
   export type right_recordsUpdateManyWithWhereWithoutStock_fullsInput = {
     where: right_recordsScalarWhereInput
     data: XOR<right_recordsUpdateManyMutationInput, right_recordsUncheckedUpdateManyWithoutStock_fullsInput>
+  }
+
+  export type right_records_stagingUpsertWithWhereUniqueWithoutStock_fullsInput = {
+    where: right_records_stagingWhereUniqueInput
+    update: XOR<right_records_stagingUpdateWithoutStock_fullsInput, right_records_stagingUncheckedUpdateWithoutStock_fullsInput>
+    create: XOR<right_records_stagingCreateWithoutStock_fullsInput, right_records_stagingUncheckedCreateWithoutStock_fullsInput>
+  }
+
+  export type right_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput = {
+    where: right_records_stagingWhereUniqueInput
+    data: XOR<right_records_stagingUpdateWithoutStock_fullsInput, right_records_stagingUncheckedUpdateWithoutStock_fullsInput>
+  }
+
+  export type right_records_stagingUpdateManyWithWhereWithoutStock_fullsInput = {
+    where: right_records_stagingScalarWhereInput
+    data: XOR<right_records_stagingUpdateManyMutationInput, right_records_stagingUncheckedUpdateManyWithoutStock_fullsInput>
   }
 
   export type sell_recordsUpsertWithWhereUniqueWithoutStock_fullsInput = {
@@ -54269,9 +62604,11 @@ export namespace Prisma {
     start_date: Date | string
     end_date: Date | string
     initial_balance_synced?: boolean | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -54280,6 +62617,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -54291,9 +62629,11 @@ export namespace Prisma {
     start_date: Date | string
     end_date: Date | string
     initial_balance_synced?: boolean | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -54302,6 +62642,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -54315,9 +62656,11 @@ export namespace Prisma {
   export type fundsCreateWithoutBonus_recordsInput = {
     fund_name: string
     uploaded_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
@@ -54325,6 +62668,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -54335,9 +62679,11 @@ export namespace Prisma {
     fund_id?: number
     fund_name: string
     uploaded_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
@@ -54345,6 +62691,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -54361,9 +62708,11 @@ export namespace Prisma {
     full_form: string
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
@@ -54371,6 +62720,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -54383,9 +62733,11 @@ export namespace Prisma {
     sector_id: number
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -54393,6 +62745,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -54470,9 +62823,11 @@ export namespace Prisma {
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -54481,6 +62836,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -54492,9 +62848,11 @@ export namespace Prisma {
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -54503,6 +62861,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -54522,9 +62881,11 @@ export namespace Prisma {
   export type fundsUpdateWithoutBonus_recordsInput = {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
@@ -54532,6 +62893,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -54542,9 +62904,11 @@ export namespace Prisma {
     fund_id?: IntFieldUpdateOperationsInput | number
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
@@ -54552,6 +62916,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -54574,9 +62939,11 @@ export namespace Prisma {
     full_form?: StringFieldUpdateOperationsInput | string
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -54584,6 +62951,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -54596,9 +62964,11 @@ export namespace Prisma {
     sector_id?: IntFieldUpdateOperationsInput | number
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -54606,6 +62976,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -54662,8 +63033,10 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -54672,6 +63045,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -54684,8 +63058,10 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -54694,6 +63070,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -54708,8 +63085,10 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
@@ -54717,6 +63096,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -54728,8 +63108,10 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
@@ -54737,6 +63119,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -54754,8 +63137,10 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
@@ -54763,6 +63148,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -54776,8 +63162,10 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -54785,6 +63173,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -54863,8 +63252,10 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -54873,6 +63264,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -54885,8 +63277,10 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -54895,6 +63289,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -54915,8 +63310,10 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
@@ -54924,6 +63321,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -54935,8 +63333,10 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
@@ -54944,6 +63344,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -54967,8 +63368,10 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -54976,6 +63379,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -54989,8 +63393,10 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -54998,6 +63404,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -55054,9 +63461,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -55064,6 +63473,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -55076,9 +63486,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -55086,6 +63498,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -55100,15 +63513,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -55120,15 +63536,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -55143,9 +63562,12 @@ export namespace Prisma {
   export type sub_classesCreateWithoutPromoter_recordsInput = {
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
   }
@@ -55155,9 +63577,12 @@ export namespace Prisma {
     fund_id: number
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
   }
 
@@ -55172,15 +63597,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -55194,15 +63622,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -55281,9 +63712,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -55291,6 +63724,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -55303,9 +63737,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -55313,6 +63749,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -55333,15 +63770,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -55353,15 +63793,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -55382,9 +63825,12 @@ export namespace Prisma {
   export type sub_classesUpdateWithoutPromoter_recordsInput = {
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
   }
@@ -55394,9 +63840,12 @@ export namespace Prisma {
     fund_id?: IntFieldUpdateOperationsInput | number
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
   }
 
@@ -55417,15 +63866,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -55439,15 +63891,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -55504,9 +63959,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -55514,6 +63971,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -55526,9 +63984,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -55536,6 +63996,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -55550,15 +64011,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -55570,15 +64034,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -55596,15 +64063,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -55618,15 +64088,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -55705,9 +64178,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -55715,6 +64190,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -55727,9 +64203,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -55737,6 +64215,7 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -55757,15 +64236,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -55777,15 +64259,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -55809,15 +64294,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -55831,15 +64319,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -55851,9 +64342,11 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
@@ -55861,6 +64354,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
@@ -55872,9 +64366,11 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -55882,6 +64378,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -56103,9 +64600,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
@@ -56113,6 +64612,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -56125,9 +64625,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -56135,6 +64637,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -56149,15 +64652,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -56169,15 +64675,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -56195,15 +64704,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -56217,15 +64729,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -56304,9 +64819,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
@@ -56314,6 +64831,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -56326,9 +64844,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -56336,6 +64856,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -56356,15 +64877,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -56376,15 +64900,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -56408,15 +64935,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -56430,15 +64960,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -56495,9 +65028,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
@@ -56505,6 +65040,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -56517,9 +65053,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -56527,6 +65065,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -56541,15 +65080,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -56561,15 +65103,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -56584,9 +65129,12 @@ export namespace Prisma {
   export type sub_classesCreateWithoutIpo_allotment_recordsInput = {
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
   }
@@ -56596,9 +65144,12 @@ export namespace Prisma {
     fund_id: number
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
   }
 
@@ -56613,15 +65164,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -56635,15 +65189,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -56722,9 +65279,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
@@ -56732,6 +65291,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -56744,9 +65304,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -56754,6 +65316,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -56774,15 +65337,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -56794,15 +65360,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -56823,9 +65392,12 @@ export namespace Prisma {
   export type sub_classesUpdateWithoutIpo_allotment_recordsInput = {
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
   }
@@ -56835,9 +65407,12 @@ export namespace Prisma {
     fund_id?: IntFieldUpdateOperationsInput | number
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
   }
 
@@ -56858,15 +65433,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -56880,15 +65458,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -56900,9 +65481,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -56910,6 +65493,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -56922,9 +65506,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -56932,6 +65518,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -56959,9 +65546,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -56969,6 +65558,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -56981,9 +65571,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -56991,6 +65583,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -57002,9 +65595,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -57013,6 +65608,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
   }
@@ -57024,9 +65620,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -57035,6 +65633,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
@@ -57048,9 +65647,11 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
@@ -57058,6 +65659,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -57068,9 +65670,11 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
@@ -57078,6 +65682,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -57091,10 +65696,13 @@ export namespace Prisma {
   export type sub_classesCreateWithoutSymbol_holdingsInput = {
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
   }
 
@@ -57103,10 +65711,13 @@ export namespace Prisma {
     fund_id: number
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
   }
 
   export type sub_classesCreateOrConnectWithoutSymbol_holdingsInput = {
@@ -57120,9 +65731,11 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
@@ -57130,6 +65743,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -57142,9 +65756,11 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -57152,6 +65768,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
   }
@@ -57178,9 +65795,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -57189,6 +65808,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
   }
@@ -57200,9 +65820,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -57211,6 +65833,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
@@ -57230,9 +65853,11 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
@@ -57240,6 +65865,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -57250,9 +65876,11 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
@@ -57260,6 +65888,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -57279,10 +65908,13 @@ export namespace Prisma {
   export type sub_classesUpdateWithoutSymbol_holdingsInput = {
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
   }
 
@@ -57291,10 +65923,13 @@ export namespace Prisma {
     fund_id?: IntFieldUpdateOperationsInput | number
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
   }
 
   export type stock_fullsUpsertWithoutSymbol_holdingsInput = {
@@ -57314,9 +65949,11 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -57324,6 +65961,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -57336,9 +65974,11 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -57346,8 +65986,77 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+  }
+
+  export type bonus_records_stagingCreateWithoutSub_classesInput = {
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutBonus_records_stagingInput
+    funds: fundsCreateNestedOneWithoutBonus_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutBonus_records_stagingInput
+  }
+
+  export type bonus_records_stagingUncheckedCreateWithoutSub_classesInput = {
+    bonus_staging_id?: number
+    fund_id: number
+    symbol: string
+    fiscal_year_id: number
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type bonus_records_stagingCreateOrConnectWithoutSub_classesInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    create: XOR<bonus_records_stagingCreateWithoutSub_classesInput, bonus_records_stagingUncheckedCreateWithoutSub_classesInput>
+  }
+
+  export type bonus_records_stagingCreateManySub_classesInputEnvelope = {
+    data: bonus_records_stagingCreateManySub_classesInput | bonus_records_stagingCreateManySub_classesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type cash_records_stagingCreateWithoutSub_classesInput = {
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    recorded_at?: Date | string
+    remarks?: string
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutCash_records_stagingInput
+    funds: fundsCreateNestedOneWithoutCash_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutCash_records_stagingInput
+  }
+
+  export type cash_records_stagingUncheckedCreateWithoutSub_classesInput = {
+    cash_staging_id?: number
+    fund_id: number
+    symbol: string
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    fiscal_year_id: number
+    recorded_at?: Date | string
+    remarks?: string
+  }
+
+  export type cash_records_stagingCreateOrConnectWithoutSub_classesInput = {
+    where: cash_records_stagingWhereUniqueInput
+    create: XOR<cash_records_stagingCreateWithoutSub_classesInput, cash_records_stagingUncheckedCreateWithoutSub_classesInput>
+  }
+
+  export type cash_records_stagingCreateManySub_classesInputEnvelope = {
+    data: cash_records_stagingCreateManySub_classesInput | cash_records_stagingCreateManySub_classesInput[]
+    skipDuplicates?: boolean
   }
 
   export type fiscal_year_balanceCreateWithoutSub_classesInput = {
@@ -57501,13 +66210,54 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type right_records_stagingCreateWithoutSub_classesInput = {
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutRight_records_stagingInput
+    funds: fundsCreateNestedOneWithoutRight_records_stagingInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutRight_records_stagingInput
+  }
+
+  export type right_records_stagingUncheckedCreateWithoutSub_classesInput = {
+    right_staging_id?: number
+    fund_id: number
+    symbol: string
+    fiscal_year_id: number
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type right_records_stagingCreateOrConnectWithoutSub_classesInput = {
+    where: right_records_stagingWhereUniqueInput
+    create: XOR<right_records_stagingCreateWithoutSub_classesInput, right_records_stagingUncheckedCreateWithoutSub_classesInput>
+  }
+
+  export type right_records_stagingCreateManySub_classesInputEnvelope = {
+    data: right_records_stagingCreateManySub_classesInput | right_records_stagingCreateManySub_classesInput[]
+    skipDuplicates?: boolean
+  }
+
   export type fundsCreateWithoutSub_classesInput = {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
@@ -57515,6 +66265,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
@@ -57525,9 +66276,11 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
@@ -57535,6 +66288,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
@@ -57552,7 +66306,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
     fiscal_years: fiscal_yearsCreateNestedOneWithoutSymbol_holdingsInput
     funds: fundsCreateNestedOneWithoutSymbol_holdingsInput
     stock_fulls: stock_fullsCreateNestedOneWithoutSymbol_holdingsInput
@@ -57568,7 +66321,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsCreateOrConnectWithoutSub_classesInput = {
@@ -57579,6 +66331,38 @@ export namespace Prisma {
   export type symbol_holdingsCreateManySub_classesInputEnvelope = {
     data: symbol_holdingsCreateManySub_classesInput | symbol_holdingsCreateManySub_classesInput[]
     skipDuplicates?: boolean
+  }
+
+  export type bonus_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    update: XOR<bonus_records_stagingUpdateWithoutSub_classesInput, bonus_records_stagingUncheckedUpdateWithoutSub_classesInput>
+    create: XOR<bonus_records_stagingCreateWithoutSub_classesInput, bonus_records_stagingUncheckedCreateWithoutSub_classesInput>
+  }
+
+  export type bonus_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput = {
+    where: bonus_records_stagingWhereUniqueInput
+    data: XOR<bonus_records_stagingUpdateWithoutSub_classesInput, bonus_records_stagingUncheckedUpdateWithoutSub_classesInput>
+  }
+
+  export type bonus_records_stagingUpdateManyWithWhereWithoutSub_classesInput = {
+    where: bonus_records_stagingScalarWhereInput
+    data: XOR<bonus_records_stagingUpdateManyMutationInput, bonus_records_stagingUncheckedUpdateManyWithoutSub_classesInput>
+  }
+
+  export type cash_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput = {
+    where: cash_records_stagingWhereUniqueInput
+    update: XOR<cash_records_stagingUpdateWithoutSub_classesInput, cash_records_stagingUncheckedUpdateWithoutSub_classesInput>
+    create: XOR<cash_records_stagingCreateWithoutSub_classesInput, cash_records_stagingUncheckedCreateWithoutSub_classesInput>
+  }
+
+  export type cash_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput = {
+    where: cash_records_stagingWhereUniqueInput
+    data: XOR<cash_records_stagingUpdateWithoutSub_classesInput, cash_records_stagingUncheckedUpdateWithoutSub_classesInput>
+  }
+
+  export type cash_records_stagingUpdateManyWithWhereWithoutSub_classesInput = {
+    where: cash_records_stagingScalarWhereInput
+    data: XOR<cash_records_stagingUpdateManyMutationInput, cash_records_stagingUncheckedUpdateManyWithoutSub_classesInput>
   }
 
   export type fiscal_year_balanceUpsertWithWhereUniqueWithoutSub_classesInput = {
@@ -57645,6 +66429,22 @@ export namespace Prisma {
     data: XOR<promoter_recordsUpdateManyMutationInput, promoter_recordsUncheckedUpdateManyWithoutSub_classesInput>
   }
 
+  export type right_records_stagingUpsertWithWhereUniqueWithoutSub_classesInput = {
+    where: right_records_stagingWhereUniqueInput
+    update: XOR<right_records_stagingUpdateWithoutSub_classesInput, right_records_stagingUncheckedUpdateWithoutSub_classesInput>
+    create: XOR<right_records_stagingCreateWithoutSub_classesInput, right_records_stagingUncheckedCreateWithoutSub_classesInput>
+  }
+
+  export type right_records_stagingUpdateWithWhereUniqueWithoutSub_classesInput = {
+    where: right_records_stagingWhereUniqueInput
+    data: XOR<right_records_stagingUpdateWithoutSub_classesInput, right_records_stagingUncheckedUpdateWithoutSub_classesInput>
+  }
+
+  export type right_records_stagingUpdateManyWithWhereWithoutSub_classesInput = {
+    where: right_records_stagingScalarWhereInput
+    data: XOR<right_records_stagingUpdateManyMutationInput, right_records_stagingUncheckedUpdateManyWithoutSub_classesInput>
+  }
+
   export type fundsUpsertWithoutSub_classesInput = {
     update: XOR<fundsUpdateWithoutSub_classesInput, fundsUncheckedUpdateWithoutSub_classesInput>
     create: XOR<fundsCreateWithoutSub_classesInput, fundsUncheckedCreateWithoutSub_classesInput>
@@ -57660,9 +66460,11 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
@@ -57670,6 +66472,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
@@ -57680,9 +66483,11 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
@@ -57690,6 +66495,7 @@ export namespace Prisma {
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
@@ -57717,9 +66523,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -57727,6 +66535,7 @@ export namespace Prisma {
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
@@ -57739,9 +66548,11 @@ export namespace Prisma {
     end_date: Date | string
     initial_balance_synced?: boolean | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -57749,6 +66560,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -57763,15 +66575,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
@@ -57783,15 +66598,18 @@ export namespace Prisma {
     fund_name: string
     uploaded_at?: Date | string | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
@@ -57806,9 +66624,12 @@ export namespace Prisma {
   export type sub_classesCreateWithoutIpo_allotment_stagingInput = {
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
   }
@@ -57818,9 +66639,12 @@ export namespace Prisma {
     fund_id: number
     sub_name: string
     added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
   }
 
@@ -57835,15 +66659,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
@@ -57857,15 +66684,18 @@ export namespace Prisma {
     is_auto_generated?: boolean | null
     promoter_sector_id?: number | null
     bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -57893,9 +66723,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -57903,6 +66735,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
@@ -57915,9 +66748,11 @@ export namespace Prisma {
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -57925,6 +66760,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -57945,15 +66781,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
@@ -57965,15 +66804,18 @@ export namespace Prisma {
     fund_name?: StringFieldUpdateOperationsInput | string
     uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
@@ -57994,9 +66836,12 @@ export namespace Prisma {
   export type sub_classesUpdateWithoutIpo_allotment_stagingInput = {
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
   }
@@ -58006,9 +66851,12 @@ export namespace Prisma {
     fund_id?: IntFieldUpdateOperationsInput | number
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
   }
 
@@ -58029,15 +66877,18 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
@@ -58051,12 +66902,1221 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
+  }
+
+  export type fiscal_yearsCreateWithoutBonus_records_stagingInput = {
+    year_label: string
+    start_date: Date | string
+    end_date: Date | string
+    initial_balance_synced?: boolean | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
+    market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
+    order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
+  }
+
+  export type fiscal_yearsUncheckedCreateWithoutBonus_records_stagingInput = {
+    fiscal_year_id?: number
+    year_label: string
+    start_date: Date | string
+    end_date: Date | string
+    initial_balance_synced?: boolean | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+  }
+
+  export type fiscal_yearsCreateOrConnectWithoutBonus_records_stagingInput = {
+    where: fiscal_yearsWhereUniqueInput
+    create: XOR<fiscal_yearsCreateWithoutBonus_records_stagingInput, fiscal_yearsUncheckedCreateWithoutBonus_records_stagingInput>
+  }
+
+  export type fundsCreateWithoutBonus_records_stagingInput = {
+    fund_name: string
+    uploaded_at?: Date | string | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
+    client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
+    right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
+  }
+
+  export type fundsUncheckedCreateWithoutBonus_records_stagingInput = {
+    fund_id?: number
+    fund_name: string
+    uploaded_at?: Date | string | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
+  }
+
+  export type fundsCreateOrConnectWithoutBonus_records_stagingInput = {
+    where: fundsWhereUniqueInput
+    create: XOR<fundsCreateWithoutBonus_records_stagingInput, fundsUncheckedCreateWithoutBonus_records_stagingInput>
+  }
+
+  export type sub_classesCreateWithoutBonus_records_stagingInput = {
+    sub_name: string
+    added_at?: Date | string | null
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
+    funds: fundsCreateNestedOneWithoutSub_classesInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
+  }
+
+  export type sub_classesUncheckedCreateWithoutBonus_records_stagingInput = {
+    sub_id?: number
+    fund_id: number
+    sub_name: string
+    added_at?: Date | string | null
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
+  }
+
+  export type sub_classesCreateOrConnectWithoutBonus_records_stagingInput = {
+    where: sub_classesWhereUniqueInput
+    create: XOR<sub_classesCreateWithoutBonus_records_stagingInput, sub_classesUncheckedCreateWithoutBonus_records_stagingInput>
+  }
+
+  export type stock_fullsCreateWithoutBonus_records_stagingInput = {
+    symbol: string
+    full_form: string
+    is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
+    order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
+    sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
+  }
+
+  export type stock_fullsUncheckedCreateWithoutBonus_records_stagingInput = {
+    symbol: string
+    full_form: string
+    sector_id: number
+    is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
+  }
+
+  export type stock_fullsCreateOrConnectWithoutBonus_records_stagingInput = {
+    where: stock_fullsWhereUniqueInput
+    create: XOR<stock_fullsCreateWithoutBonus_records_stagingInput, stock_fullsUncheckedCreateWithoutBonus_records_stagingInput>
+  }
+
+  export type fiscal_yearsUpsertWithoutBonus_records_stagingInput = {
+    update: XOR<fiscal_yearsUpdateWithoutBonus_records_stagingInput, fiscal_yearsUncheckedUpdateWithoutBonus_records_stagingInput>
+    create: XOR<fiscal_yearsCreateWithoutBonus_records_stagingInput, fiscal_yearsUncheckedCreateWithoutBonus_records_stagingInput>
+    where?: fiscal_yearsWhereInput
+  }
+
+  export type fiscal_yearsUpdateToOneWithWhereWithoutBonus_records_stagingInput = {
+    where?: fiscal_yearsWhereInput
+    data: XOR<fiscal_yearsUpdateWithoutBonus_records_stagingInput, fiscal_yearsUncheckedUpdateWithoutBonus_records_stagingInput>
+  }
+
+  export type fiscal_yearsUpdateWithoutBonus_records_stagingInput = {
+    year_label?: StringFieldUpdateOperationsInput | string
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
+    order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
+  }
+
+  export type fiscal_yearsUncheckedUpdateWithoutBonus_records_stagingInput = {
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    year_label?: StringFieldUpdateOperationsInput | string
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+  }
+
+  export type fundsUpsertWithoutBonus_records_stagingInput = {
+    update: XOR<fundsUpdateWithoutBonus_records_stagingInput, fundsUncheckedUpdateWithoutBonus_records_stagingInput>
+    create: XOR<fundsCreateWithoutBonus_records_stagingInput, fundsUncheckedCreateWithoutBonus_records_stagingInput>
+    where?: fundsWhereInput
+  }
+
+  export type fundsUpdateToOneWithWhereWithoutBonus_records_stagingInput = {
+    where?: fundsWhereInput
+    data: XOR<fundsUpdateWithoutBonus_records_stagingInput, fundsUncheckedUpdateWithoutBonus_records_stagingInput>
+  }
+
+  export type fundsUpdateWithoutBonus_records_stagingInput = {
+    fund_name?: StringFieldUpdateOperationsInput | string
+    uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
+    client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
+    right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
+  }
+
+  export type fundsUncheckedUpdateWithoutBonus_records_stagingInput = {
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fund_name?: StringFieldUpdateOperationsInput | string
+    uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
+  }
+
+  export type sub_classesUpsertWithoutBonus_records_stagingInput = {
+    update: XOR<sub_classesUpdateWithoutBonus_records_stagingInput, sub_classesUncheckedUpdateWithoutBonus_records_stagingInput>
+    create: XOR<sub_classesCreateWithoutBonus_records_stagingInput, sub_classesUncheckedCreateWithoutBonus_records_stagingInput>
+    where?: sub_classesWhereInput
+  }
+
+  export type sub_classesUpdateToOneWithWhereWithoutBonus_records_stagingInput = {
+    where?: sub_classesWhereInput
+    data: XOR<sub_classesUpdateWithoutBonus_records_stagingInput, sub_classesUncheckedUpdateWithoutBonus_records_stagingInput>
+  }
+
+  export type sub_classesUpdateWithoutBonus_records_stagingInput = {
+    sub_name?: StringFieldUpdateOperationsInput | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
+    funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
+  }
+
+  export type sub_classesUncheckedUpdateWithoutBonus_records_stagingInput = {
+    sub_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    sub_name?: StringFieldUpdateOperationsInput | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
+  }
+
+  export type stock_fullsUpsertWithoutBonus_records_stagingInput = {
+    update: XOR<stock_fullsUpdateWithoutBonus_records_stagingInput, stock_fullsUncheckedUpdateWithoutBonus_records_stagingInput>
+    create: XOR<stock_fullsCreateWithoutBonus_records_stagingInput, stock_fullsUncheckedCreateWithoutBonus_records_stagingInput>
+    where?: stock_fullsWhereInput
+  }
+
+  export type stock_fullsUpdateToOneWithWhereWithoutBonus_records_stagingInput = {
+    where?: stock_fullsWhereInput
+    data: XOR<stock_fullsUpdateWithoutBonus_records_stagingInput, stock_fullsUncheckedUpdateWithoutBonus_records_stagingInput>
+  }
+
+  export type stock_fullsUpdateWithoutBonus_records_stagingInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    full_form?: StringFieldUpdateOperationsInput | string
+    is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
+    order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
+  }
+
+  export type stock_fullsUncheckedUpdateWithoutBonus_records_stagingInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    full_form?: StringFieldUpdateOperationsInput | string
+    sector_id?: IntFieldUpdateOperationsInput | number
+    is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
+  }
+
+  export type fiscal_yearsCreateWithoutCash_records_stagingInput = {
+    year_label: string
+    start_date: Date | string
+    end_date: Date | string
+    initial_balance_synced?: boolean | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
+    market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
+    order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
+  }
+
+  export type fiscal_yearsUncheckedCreateWithoutCash_records_stagingInput = {
+    fiscal_year_id?: number
+    year_label: string
+    start_date: Date | string
+    end_date: Date | string
+    initial_balance_synced?: boolean | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+  }
+
+  export type fiscal_yearsCreateOrConnectWithoutCash_records_stagingInput = {
+    where: fiscal_yearsWhereUniqueInput
+    create: XOR<fiscal_yearsCreateWithoutCash_records_stagingInput, fiscal_yearsUncheckedCreateWithoutCash_records_stagingInput>
+  }
+
+  export type fundsCreateWithoutCash_records_stagingInput = {
+    fund_name: string
+    uploaded_at?: Date | string | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
+    right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
+  }
+
+  export type fundsUncheckedCreateWithoutCash_records_stagingInput = {
+    fund_id?: number
+    fund_name: string
+    uploaded_at?: Date | string | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
+  }
+
+  export type fundsCreateOrConnectWithoutCash_records_stagingInput = {
+    where: fundsWhereUniqueInput
+    create: XOR<fundsCreateWithoutCash_records_stagingInput, fundsUncheckedCreateWithoutCash_records_stagingInput>
+  }
+
+  export type sub_classesCreateWithoutCash_records_stagingInput = {
+    sub_name: string
+    added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
+    funds: fundsCreateNestedOneWithoutSub_classesInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
+  }
+
+  export type sub_classesUncheckedCreateWithoutCash_records_stagingInput = {
+    sub_id?: number
+    fund_id: number
+    sub_name: string
+    added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
+  }
+
+  export type sub_classesCreateOrConnectWithoutCash_records_stagingInput = {
+    where: sub_classesWhereUniqueInput
+    create: XOR<sub_classesCreateWithoutCash_records_stagingInput, sub_classesUncheckedCreateWithoutCash_records_stagingInput>
+  }
+
+  export type stock_fullsCreateWithoutCash_records_stagingInput = {
+    symbol: string
+    full_form: string
+    is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
+    order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
+    sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
+  }
+
+  export type stock_fullsUncheckedCreateWithoutCash_records_stagingInput = {
+    symbol: string
+    full_form: string
+    sector_id: number
+    is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
+  }
+
+  export type stock_fullsCreateOrConnectWithoutCash_records_stagingInput = {
+    where: stock_fullsWhereUniqueInput
+    create: XOR<stock_fullsCreateWithoutCash_records_stagingInput, stock_fullsUncheckedCreateWithoutCash_records_stagingInput>
+  }
+
+  export type fiscal_yearsUpsertWithoutCash_records_stagingInput = {
+    update: XOR<fiscal_yearsUpdateWithoutCash_records_stagingInput, fiscal_yearsUncheckedUpdateWithoutCash_records_stagingInput>
+    create: XOR<fiscal_yearsCreateWithoutCash_records_stagingInput, fiscal_yearsUncheckedCreateWithoutCash_records_stagingInput>
+    where?: fiscal_yearsWhereInput
+  }
+
+  export type fiscal_yearsUpdateToOneWithWhereWithoutCash_records_stagingInput = {
+    where?: fiscal_yearsWhereInput
+    data: XOR<fiscal_yearsUpdateWithoutCash_records_stagingInput, fiscal_yearsUncheckedUpdateWithoutCash_records_stagingInput>
+  }
+
+  export type fiscal_yearsUpdateWithoutCash_records_stagingInput = {
+    year_label?: StringFieldUpdateOperationsInput | string
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
+    order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
+  }
+
+  export type fiscal_yearsUncheckedUpdateWithoutCash_records_stagingInput = {
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    year_label?: StringFieldUpdateOperationsInput | string
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+  }
+
+  export type fundsUpsertWithoutCash_records_stagingInput = {
+    update: XOR<fundsUpdateWithoutCash_records_stagingInput, fundsUncheckedUpdateWithoutCash_records_stagingInput>
+    create: XOR<fundsCreateWithoutCash_records_stagingInput, fundsUncheckedCreateWithoutCash_records_stagingInput>
+    where?: fundsWhereInput
+  }
+
+  export type fundsUpdateToOneWithWhereWithoutCash_records_stagingInput = {
+    where?: fundsWhereInput
+    data: XOR<fundsUpdateWithoutCash_records_stagingInput, fundsUncheckedUpdateWithoutCash_records_stagingInput>
+  }
+
+  export type fundsUpdateWithoutCash_records_stagingInput = {
+    fund_name?: StringFieldUpdateOperationsInput | string
+    uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
+    right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
+  }
+
+  export type fundsUncheckedUpdateWithoutCash_records_stagingInput = {
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fund_name?: StringFieldUpdateOperationsInput | string
+    uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
+  }
+
+  export type sub_classesUpsertWithoutCash_records_stagingInput = {
+    update: XOR<sub_classesUpdateWithoutCash_records_stagingInput, sub_classesUncheckedUpdateWithoutCash_records_stagingInput>
+    create: XOR<sub_classesCreateWithoutCash_records_stagingInput, sub_classesUncheckedCreateWithoutCash_records_stagingInput>
+    where?: sub_classesWhereInput
+  }
+
+  export type sub_classesUpdateToOneWithWhereWithoutCash_records_stagingInput = {
+    where?: sub_classesWhereInput
+    data: XOR<sub_classesUpdateWithoutCash_records_stagingInput, sub_classesUncheckedUpdateWithoutCash_records_stagingInput>
+  }
+
+  export type sub_classesUpdateWithoutCash_records_stagingInput = {
+    sub_name?: StringFieldUpdateOperationsInput | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
+    funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
+  }
+
+  export type sub_classesUncheckedUpdateWithoutCash_records_stagingInput = {
+    sub_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    sub_name?: StringFieldUpdateOperationsInput | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
+  }
+
+  export type stock_fullsUpsertWithoutCash_records_stagingInput = {
+    update: XOR<stock_fullsUpdateWithoutCash_records_stagingInput, stock_fullsUncheckedUpdateWithoutCash_records_stagingInput>
+    create: XOR<stock_fullsCreateWithoutCash_records_stagingInput, stock_fullsUncheckedCreateWithoutCash_records_stagingInput>
+    where?: stock_fullsWhereInput
+  }
+
+  export type stock_fullsUpdateToOneWithWhereWithoutCash_records_stagingInput = {
+    where?: stock_fullsWhereInput
+    data: XOR<stock_fullsUpdateWithoutCash_records_stagingInput, stock_fullsUncheckedUpdateWithoutCash_records_stagingInput>
+  }
+
+  export type stock_fullsUpdateWithoutCash_records_stagingInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    full_form?: StringFieldUpdateOperationsInput | string
+    is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
+    order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
+  }
+
+  export type stock_fullsUncheckedUpdateWithoutCash_records_stagingInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    full_form?: StringFieldUpdateOperationsInput | string
+    sector_id?: IntFieldUpdateOperationsInput | number
+    is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
+  }
+
+  export type fiscal_yearsCreateWithoutRight_records_stagingInput = {
+    year_label: string
+    start_date: Date | string
+    end_date: Date | string
+    initial_balance_synced?: boolean | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
+    market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
+    order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
+  }
+
+  export type fiscal_yearsUncheckedCreateWithoutRight_records_stagingInput = {
+    fiscal_year_id?: number
+    year_label: string
+    start_date: Date | string
+    end_date: Date | string
+    initial_balance_synced?: boolean | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+  }
+
+  export type fiscal_yearsCreateOrConnectWithoutRight_records_stagingInput = {
+    where: fiscal_yearsWhereUniqueInput
+    create: XOR<fiscal_yearsCreateWithoutRight_records_stagingInput, fiscal_yearsUncheckedCreateWithoutRight_records_stagingInput>
+  }
+
+  export type fundsCreateWithoutRight_records_stagingInput = {
+    fund_name: string
+    uploaded_at?: Date | string | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
+    client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
+    right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
+  }
+
+  export type fundsUncheckedCreateWithoutRight_records_stagingInput = {
+    fund_id?: number
+    fund_name: string
+    uploaded_at?: Date | string | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
+  }
+
+  export type fundsCreateOrConnectWithoutRight_records_stagingInput = {
+    where: fundsWhereUniqueInput
+    create: XOR<fundsCreateWithoutRight_records_stagingInput, fundsUncheckedCreateWithoutRight_records_stagingInput>
+  }
+
+  export type sub_classesCreateWithoutRight_records_stagingInput = {
+    sub_name: string
+    added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
+    funds: fundsCreateNestedOneWithoutSub_classesInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
+  }
+
+  export type sub_classesUncheckedCreateWithoutRight_records_stagingInput = {
+    sub_id?: number
+    fund_id: number
+    sub_name: string
+    added_at?: Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
+  }
+
+  export type sub_classesCreateOrConnectWithoutRight_records_stagingInput = {
+    where: sub_classesWhereUniqueInput
+    create: XOR<sub_classesCreateWithoutRight_records_stagingInput, sub_classesUncheckedCreateWithoutRight_records_stagingInput>
+  }
+
+  export type stock_fullsCreateWithoutRight_records_stagingInput = {
+    symbol: string
+    full_form: string
+    is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
+    order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
+    sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
+  }
+
+  export type stock_fullsUncheckedCreateWithoutRight_records_stagingInput = {
+    symbol: string
+    full_form: string
+    sector_id: number
+    is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
+  }
+
+  export type stock_fullsCreateOrConnectWithoutRight_records_stagingInput = {
+    where: stock_fullsWhereUniqueInput
+    create: XOR<stock_fullsCreateWithoutRight_records_stagingInput, stock_fullsUncheckedCreateWithoutRight_records_stagingInput>
+  }
+
+  export type fiscal_yearsUpsertWithoutRight_records_stagingInput = {
+    update: XOR<fiscal_yearsUpdateWithoutRight_records_stagingInput, fiscal_yearsUncheckedUpdateWithoutRight_records_stagingInput>
+    create: XOR<fiscal_yearsCreateWithoutRight_records_stagingInput, fiscal_yearsUncheckedCreateWithoutRight_records_stagingInput>
+    where?: fiscal_yearsWhereInput
+  }
+
+  export type fiscal_yearsUpdateToOneWithWhereWithoutRight_records_stagingInput = {
+    where?: fiscal_yearsWhereInput
+    data: XOR<fiscal_yearsUpdateWithoutRight_records_stagingInput, fiscal_yearsUncheckedUpdateWithoutRight_records_stagingInput>
+  }
+
+  export type fiscal_yearsUpdateWithoutRight_records_stagingInput = {
+    year_label?: StringFieldUpdateOperationsInput | string
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
+    order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
+  }
+
+  export type fiscal_yearsUncheckedUpdateWithoutRight_records_stagingInput = {
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    year_label?: StringFieldUpdateOperationsInput | string
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+  }
+
+  export type fundsUpsertWithoutRight_records_stagingInput = {
+    update: XOR<fundsUpdateWithoutRight_records_stagingInput, fundsUncheckedUpdateWithoutRight_records_stagingInput>
+    create: XOR<fundsCreateWithoutRight_records_stagingInput, fundsUncheckedCreateWithoutRight_records_stagingInput>
+    where?: fundsWhereInput
+  }
+
+  export type fundsUpdateToOneWithWhereWithoutRight_records_stagingInput = {
+    where?: fundsWhereInput
+    data: XOR<fundsUpdateWithoutRight_records_stagingInput, fundsUncheckedUpdateWithoutRight_records_stagingInput>
+  }
+
+  export type fundsUpdateWithoutRight_records_stagingInput = {
+    fund_name?: StringFieldUpdateOperationsInput | string
+    uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
+    client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
+    right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
+  }
+
+  export type fundsUncheckedUpdateWithoutRight_records_stagingInput = {
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fund_name?: StringFieldUpdateOperationsInput | string
+    uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
+  }
+
+  export type sub_classesUpsertWithoutRight_records_stagingInput = {
+    update: XOR<sub_classesUpdateWithoutRight_records_stagingInput, sub_classesUncheckedUpdateWithoutRight_records_stagingInput>
+    create: XOR<sub_classesCreateWithoutRight_records_stagingInput, sub_classesUncheckedCreateWithoutRight_records_stagingInput>
+    where?: sub_classesWhereInput
+  }
+
+  export type sub_classesUpdateToOneWithWhereWithoutRight_records_stagingInput = {
+    where?: sub_classesWhereInput
+    data: XOR<sub_classesUpdateWithoutRight_records_stagingInput, sub_classesUncheckedUpdateWithoutRight_records_stagingInput>
+  }
+
+  export type sub_classesUpdateWithoutRight_records_stagingInput = {
+    sub_name?: StringFieldUpdateOperationsInput | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
+    funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
+  }
+
+  export type sub_classesUncheckedUpdateWithoutRight_records_stagingInput = {
+    sub_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    sub_name?: StringFieldUpdateOperationsInput | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
+  }
+
+  export type stock_fullsUpsertWithoutRight_records_stagingInput = {
+    update: XOR<stock_fullsUpdateWithoutRight_records_stagingInput, stock_fullsUncheckedUpdateWithoutRight_records_stagingInput>
+    create: XOR<stock_fullsCreateWithoutRight_records_stagingInput, stock_fullsUncheckedCreateWithoutRight_records_stagingInput>
+    where?: stock_fullsWhereInput
+  }
+
+  export type stock_fullsUpdateToOneWithWhereWithoutRight_records_stagingInput = {
+    where?: stock_fullsWhereInput
+    data: XOR<stock_fullsUpdateWithoutRight_records_stagingInput, stock_fullsUncheckedUpdateWithoutRight_records_stagingInput>
+  }
+
+  export type stock_fullsUpdateWithoutRight_records_stagingInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    full_form?: StringFieldUpdateOperationsInput | string
+    is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
+    order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
+  }
+
+  export type stock_fullsUncheckedUpdateWithoutRight_records_stagingInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    full_form?: StringFieldUpdateOperationsInput | string
+    sector_id?: IntFieldUpdateOperationsInput | number
+    is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -59190,6 +69250,20 @@ export namespace Prisma {
     remarks?: string | null
   }
 
+  export type bonus_records_stagingCreateManyFiscal_yearsInput = {
+    bonus_staging_id?: number
+    fund_id: number
+    symbol: string
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
   export type buy_recordsCreateManyFiscal_yearsInput = {
     fund_id: number
     upload_id: number
@@ -59235,6 +69309,17 @@ export namespace Prisma {
     bookclose_date: Date | string
     recorded_at?: Date | string | null
     remarks?: string | null
+  }
+
+  export type cash_records_stagingCreateManyFiscal_yearsInput = {
+    cash_staging_id?: number
+    fund_id: number
+    symbol: string
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    recorded_at?: Date | string
+    remarks?: string
+    sub_id?: number | null
   }
 
   export type closeout_recordsCreateManyFiscal_yearsInput = {
@@ -59340,6 +69425,21 @@ export namespace Prisma {
     remarks?: string | null
   }
 
+  export type right_records_stagingCreateManyFiscal_yearsInput = {
+    right_staging_id?: number
+    fund_id: number
+    symbol: string
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
   export type sell_recordsCreateManyFiscal_yearsInput = {
     fund_id: number
     upload_id: number
@@ -59392,7 +69492,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsUpdateWithoutFiscal_yearsInput = {
@@ -59428,6 +69527,47 @@ export namespace Prisma {
     bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
     effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type bonus_records_stagingUpdateWithoutFiscal_yearsInput = {
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    funds?: fundsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutBonus_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+  }
+
+  export type bonus_records_stagingUncheckedUpdateWithoutFiscal_yearsInput = {
+    bonus_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsInput = {
+    bonus_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type buy_recordsUpdateWithoutFiscal_yearsInput = {
@@ -59568,6 +69708,38 @@ export namespace Prisma {
     bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type cash_records_stagingUpdateWithoutFiscal_yearsInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    funds?: fundsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutCash_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+  }
+
+  export type cash_records_stagingUncheckedUpdateWithoutFiscal_yearsInput = {
+    cash_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsInput = {
+    cash_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type closeout_recordsUpdateWithoutFiscal_yearsInput = {
@@ -59873,6 +70045,50 @@ export namespace Prisma {
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type right_records_stagingUpdateWithoutFiscal_yearsInput = {
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    funds?: fundsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutRight_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+  }
+
+  export type right_records_stagingUncheckedUpdateWithoutFiscal_yearsInput = {
+    right_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsInput = {
+    right_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type sell_recordsUpdateWithoutFiscal_yearsInput = {
     quantity?: IntFieldUpdateOperationsInput | number
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -60006,7 +70222,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     funds?: fundsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     sub_classes?: sub_classesUpdateOneWithoutSymbol_holdingsNestedInput
     stock_fulls?: stock_fullsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
@@ -60022,7 +70237,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsInput = {
@@ -60035,7 +70249,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsCreateManyFundsInput = {
@@ -60048,6 +70261,20 @@ export namespace Prisma {
     effective_rate?: Decimal | DecimalJsLike | number | string
     fiscal_year_id?: number | null
     remarks?: string | null
+  }
+
+  export type bonus_records_stagingCreateManyFundsInput = {
+    bonus_staging_id?: number
+    symbol: string
+    fiscal_year_id: number
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
   }
 
   export type buy_recordsCreateManyFundsInput = {
@@ -60095,6 +70322,17 @@ export namespace Prisma {
     fiscal_year_id?: number | null
     recorded_at?: Date | string | null
     remarks?: string | null
+  }
+
+  export type cash_records_stagingCreateManyFundsInput = {
+    cash_staging_id?: number
+    symbol: string
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    fiscal_year_id: number
+    recorded_at?: Date | string
+    remarks?: string
+    sub_id?: number | null
   }
 
   export type client_broker_mappingCreateManyFundsInput = {
@@ -60187,6 +70425,21 @@ export namespace Prisma {
     remarks?: string | null
   }
 
+  export type right_records_stagingCreateManyFundsInput = {
+    right_staging_id?: number
+    symbol: string
+    fiscal_year_id: number
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
   export type sell_recordsCreateManyFundsInput = {
     upload_id: number
     client_id: string
@@ -60245,7 +70498,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsUpdateWithoutFundsInput = {
@@ -60281,6 +70533,47 @@ export namespace Prisma {
     effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type bonus_records_stagingUpdateWithoutFundsInput = {
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutBonus_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+  }
+
+  export type bonus_records_stagingUncheckedUpdateWithoutFundsInput = {
+    bonus_staging_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type bonus_records_stagingUncheckedUpdateManyWithoutFundsInput = {
+    bonus_staging_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type buy_recordsUpdateWithoutFundsInput = {
@@ -60421,6 +70714,38 @@ export namespace Prisma {
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type cash_records_stagingUpdateWithoutFundsInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutCash_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+  }
+
+  export type cash_records_stagingUncheckedUpdateWithoutFundsInput = {
+    cash_staging_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type cash_records_stagingUncheckedUpdateManyWithoutFundsInput = {
+    cash_staging_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type client_broker_mappingUpdateWithoutFundsInput = {
@@ -60712,6 +71037,50 @@ export namespace Prisma {
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type right_records_stagingUpdateWithoutFundsInput = {
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutRight_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+  }
+
+  export type right_records_stagingUncheckedUpdateWithoutFundsInput = {
+    right_staging_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type right_records_stagingUncheckedUpdateManyWithoutFundsInput = {
+    right_staging_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type sell_recordsUpdateWithoutFundsInput = {
     quantity?: IntFieldUpdateOperationsInput | number
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -60841,10 +71210,13 @@ export namespace Prisma {
   export type sub_classesUpdateWithoutFundsInput = {
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
   }
 
@@ -60852,10 +71224,13 @@ export namespace Prisma {
     sub_id?: IntFieldUpdateOperationsInput | number
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
   }
 
@@ -60872,7 +71247,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     sub_classes?: sub_classesUpdateOneWithoutSymbol_holdingsNestedInput
     stock_fulls?: stock_fullsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
@@ -60888,7 +71262,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUncheckedUpdateManyWithoutFundsInput = {
@@ -60901,7 +71274,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsCreateManyStock_fullsInput = {
@@ -60914,6 +71286,20 @@ export namespace Prisma {
     effective_rate?: Decimal | DecimalJsLike | number | string
     fiscal_year_id?: number | null
     remarks?: string | null
+  }
+
+  export type bonus_records_stagingCreateManyStock_fullsInput = {
+    bonus_staging_id?: number
+    fund_id: number
+    fiscal_year_id: number
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
   }
 
   export type buy_recordsCreateManyStock_fullsInput = {
@@ -60961,6 +71347,17 @@ export namespace Prisma {
     fiscal_year_id?: number | null
     recorded_at?: Date | string | null
     remarks?: string | null
+  }
+
+  export type cash_records_stagingCreateManyStock_fullsInput = {
+    cash_staging_id?: number
+    fund_id: number
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    fiscal_year_id: number
+    recorded_at?: Date | string
+    remarks?: string
+    sub_id?: number | null
   }
 
   export type closeout_recordsCreateManyStock_fullsInput = {
@@ -61058,6 +71455,21 @@ export namespace Prisma {
     remarks?: string | null
   }
 
+  export type right_records_stagingCreateManyStock_fullsInput = {
+    right_staging_id?: number
+    fund_id: number
+    fiscal_year_id: number
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    sub_id?: number | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
   export type sell_recordsCreateManyStock_fullsInput = {
     fund_id: number
     upload_id: number
@@ -61110,7 +71522,6 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type bonus_recordsUpdateWithoutStock_fullsInput = {
@@ -61146,6 +71557,47 @@ export namespace Prisma {
     effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type bonus_records_stagingUpdateWithoutStock_fullsInput = {
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+    funds?: fundsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutBonus_records_stagingNestedInput
+  }
+
+  export type bonus_records_stagingUncheckedUpdateWithoutStock_fullsInput = {
+    bonus_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsInput = {
+    bonus_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type buy_recordsUpdateWithoutStock_fullsInput = {
@@ -61286,6 +71738,38 @@ export namespace Prisma {
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type cash_records_stagingUpdateWithoutStock_fullsInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+    funds?: fundsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutCash_records_stagingNestedInput
+  }
+
+  export type cash_records_stagingUncheckedUpdateWithoutStock_fullsInput = {
+    cash_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type cash_records_stagingUncheckedUpdateManyWithoutStock_fullsInput = {
+    cash_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type closeout_recordsUpdateWithoutStock_fullsInput = {
@@ -61568,6 +72052,50 @@ export namespace Prisma {
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type right_records_stagingUpdateWithoutStock_fullsInput = {
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+    funds?: fundsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+    sub_classes?: sub_classesUpdateOneWithoutRight_records_stagingNestedInput
+  }
+
+  export type right_records_stagingUncheckedUpdateWithoutStock_fullsInput = {
+    right_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type right_records_stagingUncheckedUpdateManyWithoutStock_fullsInput = {
+    right_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    sub_id?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type sell_recordsUpdateWithoutStock_fullsInput = {
     quantity?: IntFieldUpdateOperationsInput | number
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -61701,7 +72229,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     sub_classes?: sub_classesUpdateOneWithoutSymbol_holdingsNestedInput
@@ -61717,7 +72244,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUncheckedUpdateManyWithoutStock_fullsInput = {
@@ -61730,7 +72256,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type stock_fullsCreateManySectorsInput = {
@@ -61746,9 +72271,11 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -61756,6 +72283,7 @@ export namespace Prisma {
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
@@ -61767,9 +72295,11 @@ export namespace Prisma {
     is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
     promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
     bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -61777,6 +72307,7 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -61845,6 +72376,31 @@ export namespace Prisma {
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type bonus_records_stagingCreateManySub_classesInput = {
+    bonus_staging_id?: number
+    fund_id: number
+    symbol: string
+    fiscal_year_id: number
+    bonus_percent: Decimal | DecimalJsLike | number | string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
+  export type cash_records_stagingCreateManySub_classesInput = {
+    cash_staging_id?: number
+    fund_id: number
+    symbol: string
+    amount: Decimal | DecimalJsLike | number | string
+    bookclose_date: Date | string
+    fiscal_year_id: number
+    recorded_at?: Date | string
+    remarks?: string
+  }
+
   export type fiscal_year_balanceCreateManySub_classesInput = {
     client_id: string
     symbol: string
@@ -61902,6 +72458,21 @@ export namespace Prisma {
     remarks?: string | null
   }
 
+  export type right_records_stagingCreateManySub_classesInput = {
+    right_staging_id?: number
+    fund_id: number
+    symbol: string
+    fiscal_year_id: number
+    right_ratio: string
+    quantity?: number
+    bookclose_date: Date | string
+    effective_rate?: Decimal | DecimalJsLike | number | string
+    total_value?: Decimal | DecimalJsLike | number | string | null
+    remarks?: string
+    recorded_at?: Date | string
+    added_at?: Date | string | null
+  }
+
   export type symbol_holdingsCreateManySub_classesInput = {
     symbol: string
     fund_id: number
@@ -61912,7 +72483,79 @@ export namespace Prisma {
     total_txn_value?: Decimal | DecimalJsLike | number | string
     total_with_commission?: Decimal | DecimalJsLike | number | string
     wacc_tax_base?: Decimal | DecimalJsLike | number | string | null
-    wacc?: Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type bonus_records_stagingUpdateWithoutSub_classesInput = {
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+    funds?: fundsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutBonus_records_stagingNestedInput
+  }
+
+  export type bonus_records_stagingUncheckedUpdateWithoutSub_classesInput = {
+    bonus_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type bonus_records_stagingUncheckedUpdateManyWithoutSub_classesInput = {
+    bonus_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    bonus_percent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type cash_records_stagingUpdateWithoutSub_classesInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+    funds?: fundsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutCash_records_stagingNestedInput
+  }
+
+  export type cash_records_stagingUncheckedUpdateWithoutSub_classesInput = {
+    cash_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type cash_records_stagingUncheckedUpdateManyWithoutSub_classesInput = {
+    cash_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: StringFieldUpdateOperationsInput | string
   }
 
   export type fiscal_year_balanceUpdateWithoutSub_classesInput = {
@@ -62083,6 +72726,50 @@ export namespace Prisma {
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type right_records_stagingUpdateWithoutSub_classesInput = {
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+    funds?: fundsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutRight_records_stagingNestedInput
+  }
+
+  export type right_records_stagingUncheckedUpdateWithoutSub_classesInput = {
+    right_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type right_records_stagingUncheckedUpdateManyWithoutSub_classesInput = {
+    right_staging_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    right_ratio?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    bookclose_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    remarks?: StringFieldUpdateOperationsInput | string
+    recorded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type symbol_holdingsUpdateWithoutSub_classesInput = {
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
@@ -62090,7 +72777,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
     stock_fulls?: stock_fullsUpdateOneRequiredWithoutSymbol_holdingsNestedInput
@@ -62106,7 +72792,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type symbol_holdingsUncheckedUpdateManyWithoutSub_classesInput = {
@@ -62119,7 +72804,6 @@ export namespace Prisma {
     total_txn_value?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
 

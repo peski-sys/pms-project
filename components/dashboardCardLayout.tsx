@@ -239,7 +239,9 @@ export default function Dashcard() {
   
   // Pagination state for Portfolio Summary table
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 10
+  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [sortField, setSortField] = useState<string | null>(null)
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
 async function handleSelectValueChange(value: string) {
     setselectValue(value)
@@ -303,11 +305,13 @@ const fetchSelect = async () => {
     router.refresh()
   }
 
-  // Memoized data processing
+  // Memoized data processing with sorting
   const processedHoldingsData = useMemo(() => {
+    let data: any[] = [];
+    
     if (useFiscalYearData && unrealizedGains?.holdings) {
       // Use fiscal year data from unrealized gains holdings
-      return unrealizedGains.holdings.map((holding) => ({
+      data = unrealizedGains.holdings.map((holding) => ({
         client_id: holding.client_id || '',
         fund_id: holding.fund_id || 0,
         symbol: holding.symbol || '',
@@ -321,7 +325,7 @@ const fetchSelect = async () => {
       }));
     } else {
       // Use current data from symbol holdings
-      return listOrderData.map((row) => {
+      data = listOrderData.map((row) => {
         const unrealizedData = unrealizedGains?.holdings.find(h => h.symbol === row.symbol);
         return {
           ...row,
@@ -331,7 +335,37 @@ const fetchSelect = async () => {
         };
       });
     }
-  }, [listOrderData, unrealizedGains, useFiscalYearData, selectValue]);
+    
+    // Apply sorting if a sort field is set
+    if (sortField) {
+      data.sort((a, b) => {
+        const aValue = a[sortField as keyof typeof a];
+        const bValue = b[sortField as keyof typeof b];
+        
+        // Handle null/undefined values
+        if (aValue == null && bValue == null) return 0;
+        if (aValue == null) return sortOrder === 'asc' ? 1 : -1;
+        if (bValue == null) return sortOrder === 'asc' ? -1 : 1;
+        
+        // Compare values
+        if (typeof aValue === 'string') {
+          return sortOrder === 'asc' 
+            ? aValue.localeCompare(bValue as string)
+            : (bValue as string).localeCompare(aValue);
+        }
+        
+        if (typeof aValue === 'number') {
+          return sortOrder === 'asc' 
+            ? (aValue as number) - (bValue as number)
+            : (bValue as number) - (aValue as number);
+        }
+        
+        return 0;
+      });
+    }
+    
+    return data;
+  }, [listOrderData, unrealizedGains, useFiscalYearData, selectValue, sortField, sortOrder]);
 
   // Paginated holdings data
   const paginatedHoldingsData = useMemo(() => {
@@ -355,6 +389,26 @@ const fetchSelect = async () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [selectValue, useFiscalYearData, selectedFiscalYear]);
+
+  // Handle column header click for sorting
+  const handleHeaderClick = (field: string) => {
+    if (sortField === field) {
+      // Toggle sort order if same field is clicked
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Set new sort field with ascending order
+      setSortField(field);
+      setSortOrder('asc');
+    }
+    // Reset to first page when sorting
+    setCurrentPage(1);
+  };
+
+  // Helper function to render sort indicator
+  const SortIndicator = ({ field }: { field: string }) => {
+    if (sortField !== field) return <span className="text-gray-400 text-xs">⇅</span>;
+    return sortOrder === 'asc' ? <span className="text-blue-600">↑</span> : <span className="text-blue-600">↓</span>;
+  };
 
   // Optimize changeFetches with useCallback
   const changeFetches = useCallback(async () => {
@@ -742,7 +796,7 @@ const fetchSelect = async () => {
         <span className="text-xl font-bold">Trading Portfolio Summary</span>
         {totalItems > 0 && (
           <span className="text-sm text-gray-500">
-            ({totalItems} holdings{totalItems > itemsPerPage ? `, showing page ${currentPage} of ${totalPages}` : ''})
+            ({totalItems} holdings)
           </span>
         )}
       </div>
@@ -778,12 +832,42 @@ const fetchSelect = async () => {
     <Table className="min-w-full">
   <TableHeader>
     <TableRow>
-      <TableHead className="font-medium">Stock</TableHead>
-      <TableHead className="text-center">Price Per Share</TableHead>
-      <TableHead className="text-center">Quantity</TableHead>
-      <TableHead className="text-right">Value</TableHead>
-      <TableHead className="text-right">Unrealised P&L</TableHead>
-      <TableHead className="text-right">(Unrealised P&L)%</TableHead>
+      <TableHead className="font-medium cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('symbol')}>
+        <div className="flex items-center justify-between gap-2">
+          Stock
+          <SortIndicator field="symbol" />
+        </div>
+      </TableHead>
+      <TableHead className="text-center cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('price_per_share')}>
+        <div className="flex items-center justify-center gap-2">
+          Price Per Share
+          <SortIndicator field="price_per_share" />
+        </div>
+      </TableHead>
+      <TableHead className="text-center cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('quantity')}>
+        <div className="flex items-center justify-center gap-2">
+          Quantity
+          <SortIndicator field="quantity" />
+        </div>
+      </TableHead>
+      <TableHead className="text-right cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('total_value')}>
+        <div className="flex items-center justify-end gap-2">
+          Value
+          <SortIndicator field="total_value" />
+        </div>
+      </TableHead>
+      <TableHead className="text-right cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('unrealizedGain')}>
+        <div className="flex items-center justify-end gap-2">
+          Unrealised P&L
+          <SortIndicator field="unrealizedGain" />
+        </div>
+      </TableHead>
+      <TableHead className="text-right cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('unrealizedGainPercent')}>
+        <div className="flex items-center justify-end gap-2">
+          (Unrealised P&L)%
+          <SortIndicator field="unrealizedGainPercent" />
+        </div>
+      </TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
@@ -839,14 +923,39 @@ const fetchSelect = async () => {
     </TableFooter>
 </Table>
 </div>
-{totalItems > itemsPerPage && (
-  <Pagination
-    currentPage={currentPage}
-    totalPages={totalPages}
-    onPageChange={setCurrentPage}
-    itemsPerPage={itemsPerPage}
-    totalItems={totalItems}
-  />
+{totalItems > 0 && (
+  <div className="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
+    <div className="flex items-center gap-3">
+      <span className="text-sm text-gray-700">Items per page:</span>
+      <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+        setItemsPerPage(parseInt(value));
+        setCurrentPage(1);
+      }}>
+        <SelectTrigger className="w-20">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectItem value="5">5</SelectItem>
+            <SelectItem value="10">10</SelectItem>
+            <SelectItem value="15">15</SelectItem>
+            <SelectItem value="20">20</SelectItem>
+            <SelectItem value="25">25</SelectItem>
+            <SelectItem value="50">50</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+    {totalItems > itemsPerPage && (
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={totalItems}
+      />
+    )}
+  </div>
 )}
 </Card>
 

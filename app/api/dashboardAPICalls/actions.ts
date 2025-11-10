@@ -210,22 +210,25 @@ async function _getTotalInvestment(selectUser: string) {
             promoterTotal = FinancialCalculator.add(promoterTotal, costValue);
         });
 
-        // Get IPO allotment staging records total_value
-        const ipoStagingRecords = await prisma.ipo_allotment_staging.findMany({
+        // Get IPO staging records from fiscal_year_balance_staging (cost value)
+        const ipoStagingRecords = await prisma.fiscal_year_balance_staging.findMany({
             where: {
                 fiscal_year_id: currentFiscalYear.fiscal_year_id,
                 fund_id: clientMapping.fund_id
             },
             select: {
-                total_value: true
+                closing_quantity: true,
+                effective_rate: true
             }
         });
 
-        // Calculate total from IPO staging records
+        // Calculate total from IPO staging records (quantity * effective rate)
         let ipoStagingTotal = 0;
         ipoStagingRecords.forEach(record => {
-            const totalValue = sanitizeNumeric(record.total_value);
-            ipoStagingTotal = FinancialCalculator.add(ipoStagingTotal, totalValue);
+            const quantity = sanitizeNumeric(record.closing_quantity);
+            const rate = sanitizeNumeric(record.effective_rate);
+            const costValue = FinancialCalculator.multiply(quantity, rate);
+            ipoStagingTotal = FinancialCalculator.add(ipoStagingTotal, costValue);
         });
 
         // Total Investment = trading total + promoter total + ipo_allotment_staging total_value
@@ -307,6 +310,20 @@ export async function realisedProfitLoss(selectUser: string) {
             error: error instanceof Error ? error.message : 'Failed to get realised profit/loss'
         };
     }
+}
+
+export async function getClients() {
+
+    const clients = await prisma.client_broker_mapping.findMany({
+        select: {
+            client_name: true,
+            client_broker: true,
+            client_id: true,
+        }
+    })
+
+    return clients
+
 }
 
 
@@ -687,30 +704,42 @@ export async function getInvestmentBreakdown(selectUser: string) {
         }
     });
 
-    // Get IPO allotment staging records for maturity
-    const ipoStagingInvestments = await prisma.ipo_allotment_staging.findMany({
+    // Get IPO staging records from fiscal_year_balance_staging
+    const ipoStagingInvestments = await prisma.fiscal_year_balance_staging.findMany({
         where: {
             fiscal_year_id: currentFiscalYear.fiscal_year_id,
             fund_id: clientMapping.fund_id
         },
         select: {
             symbol: true,
-            quantity: true,
+            closing_quantity: true,
             effective_rate: true,
-            fund_id: true,
-            stock_fulls: {
-                select: {
-                    sector_id: true,
-                    promoter_sector_id: true,
-                    sectors: {
-                        select: {
-                            sector_name: true
-                        }
+            fund_id: true
+        }
+    });
+
+    const ipoSymbols = Array.from(new Set(ipoStagingInvestments.map(record => record.symbol))); 
+    const ipoStockDetails = ipoSymbols.length > 0
+        ? await prisma.stock_fulls.findMany({
+            where: {
+                symbol: {
+                    in: ipoSymbols
+                }
+            },
+            select: {
+                symbol: true,
+                sector_id: true,
+                promoter_sector_id: true,
+                sectors: {
+                    select: {
+                        sector_name: true
                     }
                 }
             }
-        }
-    });
+        })
+        : [];
+
+    const ipoStockMap = new Map(ipoStockDetails.map(detail => [detail.symbol, detail]));
 
     // Combine maturity investments by fund_id, fiscal_year_id, and symbol
     const combinedMaturityInvestments = combineHoldingsByFund(maturityInvestments);
@@ -718,11 +747,15 @@ export async function getInvestmentBreakdown(selectUser: string) {
     // Add IPO staging records to maturity investments
     const ipoStagingMapped = ipoStagingInvestments.map(record => ({
         symbol: record.symbol,
-        closing_quantity: record.quantity,
-        effective_rate: record.effective_rate,
+        closing_quantity: sanitizeNumeric(record.closing_quantity),
+        effective_rate: sanitizeNumeric(record.effective_rate),
         fund_id: record.fund_id,
         fiscal_year_id: currentFiscalYear.fiscal_year_id,
-        stock_fulls: record.stock_fulls
+        stock_fulls: ipoStockMap.get(record.symbol) || {
+            sector_id: 0,
+            promoter_sector_id: null,
+            sectors: { sector_name: "Unclassified" }
+        }
     }));
     
     const combinedMaturityWithIPO = [...combinedMaturityInvestments, ...ipoStagingMapped];
@@ -881,15 +914,15 @@ export async function getStockInvestmentBreakdown(selectUser: string) {
         }
     });
 
-    // Get IPO allotment staging records for maturity
-    const ipoStagingInvestments = await prisma.ipo_allotment_staging.findMany({
+    // Get IPO staging records from fiscal_year_balance_staging
+    const ipoStagingInvestments = await prisma.fiscal_year_balance_staging.findMany({
         where: {
             fiscal_year_id: currentFiscalYear.fiscal_year_id,
             fund_id: clientMapping.fund_id
         },
         select: {
             symbol: true,
-            quantity: true,
+            closing_quantity: true,
             effective_rate: true,
             fund_id: true
         }
@@ -901,8 +934,8 @@ export async function getStockInvestmentBreakdown(selectUser: string) {
     // Add IPO staging records to maturity investments
     const ipoStagingMapped = ipoStagingInvestments.map(record => ({
         symbol: record.symbol,
-        closing_quantity: record.quantity,
-        effective_rate: record.effective_rate,
+        closing_quantity: sanitizeNumeric(record.closing_quantity),
+        effective_rate: sanitizeNumeric(record.effective_rate),
         fund_id: record.fund_id,
         fiscal_year_id: currentFiscalYear.fiscal_year_id
     }));
@@ -1504,22 +1537,25 @@ export async function getInvestmentHighlights(selectUser: string) {
         promoterValue = FinancialCalculator.add(promoterValue, costValue);
     }
 
-    // Get IPO allotment staging records total_value
-    const ipoStagingRecords = await prisma.ipo_allotment_staging.findMany({
+    // Get IPO staging records from fiscal_year_balance_staging (cost value)
+    const ipoStagingRecords = await prisma.fiscal_year_balance_staging.findMany({
         where: {
             fiscal_year_id: currentFiscalYear.fiscal_year_id,
             fund_id: clientMapping.fund_id
         },
         select: {
-            total_value: true
+            closing_quantity: true,
+            effective_rate: true
         }
     });
 
-    // Calculate IPO staging total
+    // Calculate IPO staging total using quantity * effective rate
     let ipoStagingValue = 0;
     for (const record of ipoStagingRecords) {
-        const totalValue = sanitizeNumeric(record.total_value);
-        ipoStagingValue = FinancialCalculator.add(ipoStagingValue, totalValue);
+        const quantity = sanitizeNumeric(record.closing_quantity);
+        const rate = sanitizeNumeric(record.effective_rate);
+        const costValue = FinancialCalculator.multiply(quantity, rate);
+        ipoStagingValue = FinancialCalculator.add(ipoStagingValue, costValue);
     }
 
     // Calculate totals

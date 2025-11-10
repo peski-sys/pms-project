@@ -404,8 +404,7 @@ exports.Prisma.Symbol_holdingsScalarFieldEnum = {
   sub_id: 'sub_id',
   total_txn_value: 'total_txn_value',
   total_with_commission: 'total_with_commission',
-  wacc_tax_base: 'wacc_tax_base',
-  wacc: 'wacc'
+  wacc_tax_base: 'wacc_tax_base'
 };
 
 exports.Prisma.Sub_classesScalarFieldEnum = {
@@ -427,6 +426,66 @@ exports.Prisma.Ipo_allotment_stagingScalarFieldEnum = {
   remarks: 'remarks',
   symbol: 'symbol',
   sub_id: 'sub_id'
+};
+
+exports.Prisma.Bonus_records_stagingScalarFieldEnum = {
+  bonus_staging_id: 'bonus_staging_id',
+  fund_id: 'fund_id',
+  symbol: 'symbol',
+  fiscal_year_id: 'fiscal_year_id',
+  bonus_percent: 'bonus_percent',
+  quantity: 'quantity',
+  bookclose_date: 'bookclose_date',
+  effective_rate: 'effective_rate',
+  sub_id: 'sub_id',
+  remarks: 'remarks',
+  recorded_at: 'recorded_at',
+  added_at: 'added_at'
+};
+
+exports.Prisma.Cash_records_stagingScalarFieldEnum = {
+  cash_staging_id: 'cash_staging_id',
+  fund_id: 'fund_id',
+  symbol: 'symbol',
+  amount: 'amount',
+  bookclose_date: 'bookclose_date',
+  fiscal_year_id: 'fiscal_year_id',
+  recorded_at: 'recorded_at',
+  remarks: 'remarks',
+  sub_id: 'sub_id'
+};
+
+exports.Prisma.Right_records_stagingScalarFieldEnum = {
+  right_staging_id: 'right_staging_id',
+  fund_id: 'fund_id',
+  symbol: 'symbol',
+  fiscal_year_id: 'fiscal_year_id',
+  right_ratio: 'right_ratio',
+  quantity: 'quantity',
+  bookclose_date: 'bookclose_date',
+  effective_rate: 'effective_rate',
+  total_value: 'total_value',
+  sub_id: 'sub_id',
+  remarks: 'remarks',
+  recorded_at: 'recorded_at',
+  added_at: 'added_at'
+};
+
+exports.Prisma.Fiscal_year_balance_stagingScalarFieldEnum = {
+  symbol: 'symbol',
+  fiscal_year_id: 'fiscal_year_id',
+  opening_quantity: 'opening_quantity',
+  added_quantity: 'added_quantity',
+  closing_quantity: 'closing_quantity',
+  effective_rate: 'effective_rate',
+  remarks: 'remarks',
+  opening_rate: 'opening_rate',
+  demat: 'demat',
+  non_demat: 'non_demat',
+  fund_id: 'fund_id',
+  source_type: 'source_type',
+  sub_id: 'sub_id',
+  staging_id: 'staging_id'
 };
 
 exports.Prisma.SortOrder = {
@@ -471,7 +530,11 @@ exports.Prisma.ModelName = {
   market_snapshots: 'market_snapshots',
   symbol_holdings: 'symbol_holdings',
   sub_classes: 'sub_classes',
-  ipo_allotment_staging: 'ipo_allotment_staging'
+  ipo_allotment_staging: 'ipo_allotment_staging',
+  bonus_records_staging: 'bonus_records_staging',
+  cash_records_staging: 'cash_records_staging',
+  right_records_staging: 'right_records_staging',
+  fiscal_year_balance_staging: 'fiscal_year_balance_staging'
 };
 
 /**

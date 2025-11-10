@@ -226,17 +226,26 @@ export async function uploadIPOAllotmentStaging(currentFund: string, symbol: str
         const stock_fiscal_id = get_fiscal[0].fiscal_year_id;
         const stock_fund_id = get_fund_id[0].fund_id;
 
-        // Create IPO allotment staging record (no client_id)
-        await prisma.ipo_allotment_staging.create({
+        const metadata = {
+            note: 'Pending Client Assignment',
+            added_at: stock_added_at
+        }
+
+        // Create IPO allotment staging record inside fiscal_year_balance_staging
+        await prisma.fiscal_year_balance_staging.create({
             data: {
                 fund_id: Number(stock_fund_id),
-                symbol: symbol,
-                quantity: stock_quantity,
-                effective_rate: stock_price,
-                added_at: parsed_date,
+                symbol: symbol.toUpperCase(),
                 fiscal_year_id: stock_fiscal_id,
+                opening_quantity: 0,
+                added_quantity: stock_quantity,
+                closing_quantity: stock_quantity,
+                effective_rate: stock_price,
                 sub_id: sub_id || 1,
-                remarks: "Pending Client Assignment"
+                source_type: 'PROMOTER',
+                demat: 0,
+                non_demat: stock_quantity,
+                remarks: JSON.stringify(metadata)
             }
         });
 
@@ -273,51 +282,124 @@ export async function getIPOAllotmentStagingRecords(fundName?: string, fiscalYea
         const whereConditions: any = {};
         
         if (fundName) {
-            whereConditions.funds = {
-                fund_name: fundName
-            };
+            const fundInfo = await prisma.funds.findFirst({
+                where: { fund_name: fundName },
+                select: { fund_id: true }
+            })
+
+            if (!fundInfo) {
+                return []
+            }
+
+            whereConditions.fund_id = fundInfo.fund_id
         }
         
         if (fiscalYearId) {
             whereConditions.fiscal_year_id = fiscalYearId;
         }
 
-        const records = await prisma.ipo_allotment_staging.findMany({
+        const records = await prisma.fiscal_year_balance_staging.findMany({
             where: whereConditions,
-            include: {
-                funds: {
-                    select: {
-                        fund_name: true
-                    }
-                },
-                fiscal_years: {
-                    select: {
-                        year_label: true
-                    }
-                },
-                stock_fulls: {
-                    select: {
-                        symbol: true,
-                        full_form: true
-                    }
-                },
-                sub_classes: {
-                    select: {
-                        sub_name: true
-                    }
-                }
+            select: {
+                staging_id: true,
+                fund_id: true,
+                symbol: true,
+                fiscal_year_id: true,
+                closing_quantity: true,
+                effective_rate: true,
+                remarks: true,
+                sub_id: true,
+                demat: true,
+                non_demat: true
             },
             orderBy: {
-                recorded_at: 'desc'
+                staging_id: 'desc'
             }
         });
 
-        // Convert Decimal to number for client serialization
-        return records.map(record => ({
-            ...record,
-            effective_rate: Number(record.effective_rate),
-            total_value: record.total_value ? Number(record.total_value) : null
-        }));
+        if (records.length === 0) {
+            return []
+        }
+
+        const fundIds = Array.from(new Set(records.map(record => record.fund_id)))
+        const fiscalYearIds = Array.from(new Set(records.map(record => record.fiscal_year_id)))
+        const symbols = Array.from(new Set(records.map(record => record.symbol)))
+        const subIds = Array.from(new Set(records.map(record => record.sub_id).filter((id): id is number => id !== null && id !== undefined)))
+
+        const [fundsData, fiscalYearsData, stockData, subClassData] = await Promise.all([
+            fundIds.length > 0
+                ? prisma.funds.findMany({
+                    where: { fund_id: { in: fundIds } },
+                    select: { fund_id: true, fund_name: true }
+                })
+                : Promise.resolve([]),
+            fiscalYearIds.length > 0
+                ? prisma.fiscal_years.findMany({
+                    where: { fiscal_year_id: { in: fiscalYearIds } },
+                    select: { fiscal_year_id: true, year_label: true }
+                })
+                : Promise.resolve([]),
+            symbols.length > 0
+                ? prisma.stock_fulls.findMany({
+                    where: { symbol: { in: symbols } },
+                    select: { symbol: true, full_form: true }
+                })
+                : Promise.resolve([]),
+            subIds.length > 0
+                ? prisma.sub_classes.findMany({
+                    where: { sub_id: { in: subIds } },
+                    select: { sub_id: true, sub_name: true }
+                })
+                : Promise.resolve([])
+        ])
+
+        const fundMap = new Map(fundsData.map(fund => [fund.fund_id, fund]))
+        const fiscalYearMap = new Map(fiscalYearsData.map(fiscal => [fiscal.fiscal_year_id, fiscal]))
+        const stockMap = new Map(stockData.map(stock => [stock.symbol, stock]))
+        const subClassMap = new Map(subClassData.map(subClass => [subClass.sub_id, subClass]))
+
+        return records.map(record => {
+            const parsedRemarks = (() => {
+                try {
+                    return record.remarks ? JSON.parse(record.remarks) : null
+                } catch {
+                    return null
+                }
+            })()
+
+            const addedAtRaw = parsedRemarks?.added_at
+            const addedAt = addedAtRaw ? new Date(addedAtRaw) : null
+            const note = typeof parsedRemarks?.note === 'string' ? parsedRemarks.note : (record.remarks ?? '')
+            const quantity = Number(record.closing_quantity ?? 0)
+            const rate = Number(record.effective_rate ?? 0)
+
+            const fundInfo = fundMap.get(record.fund_id)
+            const fiscalInfo = fiscalYearMap.get(record.fiscal_year_id)
+            const stockInfo = stockMap.get(record.symbol)
+            const subClassInfo = record.sub_id ? subClassMap.get(record.sub_id) : undefined
+
+            return {
+                allotment_staging_id: record.staging_id,
+                fund_id: record.fund_id,
+                quantity,
+                effective_rate: rate,
+                total_value: Number((quantity * rate).toFixed(2)),
+                fiscal_year_id: record.fiscal_year_id,
+                recorded_at: addedAt,
+                added_at: addedAt,
+                remarks: note,
+                symbol: record.symbol,
+                sub_id: record.sub_id,
+                funds: fundInfo ? { fund_name: fundInfo.fund_name } : { fund_name: '' },
+                fiscal_years: fiscalInfo ? { year_label: fiscalInfo.year_label } : null,
+                stock_fulls: stockInfo
+                    ? { symbol: stockInfo.symbol, full_form: stockInfo.full_form }
+                    : { symbol: record.symbol, full_form: record.symbol },
+                sub_classes: subClassInfo ? { sub_name: subClassInfo.sub_name } : null,
+                demat: Number(record.demat ?? 0),
+                non_demat: Number(record.non_demat ?? quantity)
+            }
+        });
     } catch (error) {
         console.error('Error fetching IPO allotment staging records:', error);
         return [];
@@ -327,12 +409,13 @@ export async function getIPOAllotmentStagingRecords(fundName?: string, fiscalYea
 export async function deleteIPOAllotmentStaging(stagingId: number) {
     try {
         // First, get the record details for the audit log
-        const record = await prisma.ipo_allotment_staging.findUnique({
-            where: { allotment_staging_id: stagingId },
-            include: {
-                stock_fulls: {
-                    select: { symbol: true, full_form: true }
-                }
+        const record = await prisma.fiscal_year_balance_staging.findUnique({
+            where: { staging_id: stagingId },
+            select: {
+                symbol: true,
+                closing_quantity: true,
+                effective_rate: true,
+                remarks: true
             }
         });
 
@@ -341,14 +424,14 @@ export async function deleteIPOAllotmentStaging(stagingId: number) {
         }
 
         // Delete the record
-        await prisma.ipo_allotment_staging.delete({
-            where: { allotment_staging_id: stagingId }
+        await prisma.fiscal_year_balance_staging.delete({
+            where: { staging_id: stagingId }
         });
 
         // Create audit log
         await prisma.audit_log.create({
             data: {
-                performed_action: `Deleted IPO Allotment Staging Record for ${record.stock_fulls.symbol} (${record.quantity} shares at Rs. ${record.effective_rate})`
+                performed_action: `Deleted IPO Staging Record for ${record.symbol} (${Number(record.closing_quantity ?? 0)} shares at Rs. ${Number(record.effective_rate ?? 0)})`
             }
         });
 
@@ -374,12 +457,16 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
         }
 
         // Get staging record
-        const stagingRecord = await prisma.ipo_allotment_staging.findUnique({
-            where: { allotment_staging_id: stagingId },
-            include: {
-                stock_fulls: {
-                    select: { symbol: true }
-                }
+        const stagingRecord = await prisma.fiscal_year_balance_staging.findUnique({
+            where: { staging_id: stagingId },
+            select: {
+                fund_id: true,
+                symbol: true,
+                closing_quantity: true,
+                effective_rate: true,
+                fiscal_year_id: true,
+                sub_id: true,
+                remarks: true
             }
         });
 
@@ -398,68 +485,66 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
 
         // Transfer to ipo_allotment_records (total_value is auto-generated)
 
-        if (clientTrading == "TRADING") {
-        await prisma.ipo_allotment_records.create({
-            data: {
-                fund_id: stagingRecord.fund_id,
-                client_id: clientId,
-                symbol: stagingRecord.symbol,
-                quantity: stagingRecord.quantity,
-                effective_rate: stagingRecord.effective_rate,
-                added_at: stagingRecord.added_at,
-                fiscal_year_id: stagingRecord.fiscal_year_id,
-                sub_id: stagingRecord.sub_id,
-                remarks: `Dematerialized from staging on ${new Date().toLocaleDateString()}`
+        const parsedRemarks = (() => {
+            try {
+                return stagingRecord.remarks ? JSON.parse(stagingRecord.remarks) : null
+            } catch {
+                return null
             }
-        });
+        })()
 
-        // Delete from staging
-        await prisma.ipo_allotment_staging.delete({
-            where: { allotment_staging_id: stagingId }
-        });
+        const addedAtRaw = parsedRemarks?.added_at
+        const addedAt = addedAtRaw ? new Date(addedAtRaw) : new Date()
+        const remarksBase = `Dematerialized from staging on ${new Date().toLocaleDateString()}`
+
+        if (clientTrading === "TRADING") {
+            await prisma.ipo_allotment_records.create({
+                data: {
+                    fund_id: stagingRecord.fund_id,
+                    client_id: clientId,
+                    symbol: stagingRecord.symbol,
+                    quantity: Number(stagingRecord.closing_quantity ?? 0),
+                    effective_rate: Number(stagingRecord.effective_rate ?? 0),
+                    added_at: addedAt,
+                    fiscal_year_id: stagingRecord.fiscal_year_id,
+                    sub_id: stagingRecord.sub_id ?? 1,
+                    remarks: remarksBase
+                }
+            })
+        } else if (clientTrading === "PROMOTER") {
+            await prisma.promoter_records.create({
+                data: {
+                    fund_id: stagingRecord.fund_id,
+                    client_id: clientId,
+                    symbol: stagingRecord.symbol,
+                    quantity: Number(stagingRecord.closing_quantity ?? 0),
+                    effective_rate: Number(stagingRecord.effective_rate ?? 0),
+                    added_at: addedAt,
+                    fiscal_year_id: stagingRecord.fiscal_year_id,
+                    sub_id: stagingRecord.sub_id ?? 1,
+                    remarks: remarksBase
+                }
+            })
+        }
+
+        // Remove from staging
+        await prisma.fiscal_year_balance_staging.delete({
+            where: { staging_id: stagingId }
+        })
 
         // Create audit log
         await prisma.audit_log.create({
             data: {
-                performed_action: `Dematerialized IPO Allotment: ${stagingRecord.stock_fulls.symbol} (${stagingRecord.quantity} shares) to Client ${clientId}`
+                performed_action: `Dematerialized IPO Staging: ${stagingRecord.symbol} (${Number(stagingRecord.closing_quantity ?? 0)} shares) to Client ${clientId}`
             }
-        });
-    } else if (clientTrading == "PROMOTER") {
-
-        await prisma.promoter_records.create({
-            data: {
-                fund_id: stagingRecord.fund_id,
-                client_id: clientId,
-                symbol: stagingRecord.symbol,
-                quantity: stagingRecord.quantity,
-                effective_rate: stagingRecord.effective_rate,
-                added_at: stagingRecord.added_at,
-                fiscal_year_id: stagingRecord.fiscal_year_id,
-                sub_id: stagingRecord.sub_id,
-                remarks: `Dematerialized from staging on ${new Date().toLocaleDateString()}`
-            }
-        });
-
-        // Delete from staging
-        await prisma.ipo_allotment_staging.delete({
-            where: { allotment_staging_id: stagingId }
-        });
-
-        // Create audit log
-        await prisma.audit_log.create({
-            data: {
-                performed_action: `Dematerialized IPO Allotment: ${stagingRecord.stock_fulls.symbol} (${stagingRecord.quantity} shares) to Client ${clientId}`
-            }
-        });
-
-    }
+        })
 
         return {
             success: true,
             message: 'IPO allotment dematerialized successfully',
             data: {
-                symbol: stagingRecord.stock_fulls.symbol,
-                quantity: stagingRecord.quantity,
+                symbol: stagingRecord.symbol,
+                quantity: Number(stagingRecord.closing_quantity ?? 0),
                 client_id: clientId
             }
         };

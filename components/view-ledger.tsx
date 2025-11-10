@@ -32,7 +32,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { RefreshCw, Download } from "lucide-react"
 
-import { useEffect, useMemo, useState } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { getCurrentSessionUser, getUsers } from "@/app/api/dashboardAPICalls/actions"
 import { getFiscal } from "@/app/api/fiscalAPI/actions"
 import { filterDataGrouped, getSymbolHoldingsEffectiveRate } from "@/app/api/ledgerPageCalls/actions"
@@ -47,6 +47,7 @@ import { RightDialog } from "@/components/dialogs/right-dialog"
 import { CashDialog } from "@/components/dialogs/cash-dialog"
 import { CloseoutDialog } from "@/components/dialogs/closeout-dialog"
 import { IPOAllotmentDialog } from "@/components/dialogs/ipo-allotment-dialog"
+import { Pagination } from "@/components/ui/pagination"
 
 // Type Definitions
 interface PurchaseRecord {
@@ -114,6 +115,8 @@ interface EligibleRecord {
   allotment_id?: number
   staging_id?: number
   sub_id?: number
+  demat?: number
+  non_demat?: number
 }
 
 interface LedgerTotals {
@@ -211,6 +214,24 @@ export default function ViewLedger() {
   const [effectiveRateLoading, setEffectiveRateLoading] = useState(INITIAL_STATE.RATE_LOADING)
   const [isLoadingMain, setIsLoadingMain] = useState(INITIAL_STATE.LOADING)
   const [isAdmin, setIsAdmin] = useState<boolean | null>()
+
+  // Pagination and sorting states for Purchase Records
+  const [purchasePage, setPurchasePage] = useState(1)
+  const [purchaseItemsPerPage, setPurchaseItemsPerPage] = useState(10)
+  const [purchaseSortField, setPurchaseSortField] = useState<string | null>(null)
+  const [purchaseSortOrder, setPurchaseSortOrder] = useState<'asc' | 'desc'>('asc')
+
+  // Pagination and sorting states for Eligible Records
+  const [eligiblePage, setEligiblePage] = useState(1)
+  const [eligibleItemsPerPage, setEligibleItemsPerPage] = useState(10)
+  const [eligibleSortField, setEligibleSortField] = useState<string | null>(null)
+  const [eligibleSortOrder, setEligibleSortOrder] = useState<'asc' | 'desc'>('asc')
+
+  // Pagination and sorting states for Sales Records
+  const [salesPage, setSalesPage] = useState(1)
+  const [salesItemsPerPage, setSalesItemsPerPage] = useState(10)
+  const [salesSortField, setSalesSortField] = useState<string | null>(null)
+  const [salesSortOrder, setSalesSortOrder] = useState<'asc' | 'desc'>('asc')
 
   // Derived: Cost Price = (Eligible Amount + Purchase Total Cost) / (Eligible Shares + Purchase Shares)
   const costPrice = useMemo(() => {
@@ -370,6 +391,196 @@ export default function ViewLedger() {
     initializeData()
   }, [])
 
+  // Helper function to render sort indicator
+  const SortIndicator = ({ field, tableSortField, tableSortOrder }: { field: string, tableSortField: string | null, tableSortOrder: 'asc' | 'desc' }) => {
+    if (tableSortField !== field) return <span className="text-gray-400 text-xs ml-1">⇅</span>;
+    return tableSortOrder === 'asc' ? <span className="text-blue-600 ml-1">↑</span> : <span className="text-blue-600 ml-1">↓</span>;
+  };
+
+  // Handle column header click for sorting - Purchase
+  const handlePurchaseHeaderClick = (field: string) => {
+    if (purchaseSortField === field) {
+      setPurchaseSortOrder(purchaseSortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setPurchaseSortField(field);
+      setPurchaseSortOrder('asc');
+    }
+    setPurchasePage(1);
+  };
+
+  // Handle column header click for sorting - Eligible
+  const handleEligibleHeaderClick = (field: string) => {
+    if (eligibleSortField === field) {
+      setEligibleSortOrder(eligibleSortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setEligibleSortField(field);
+      setEligibleSortOrder('asc');
+    }
+    setEligiblePage(1);
+  };
+
+  // Handle column header click for sorting - Sales
+  const handleSalesHeaderClick = (field: string) => {
+    if (salesSortField === field) {
+      setSalesSortOrder(salesSortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSalesSortField(field);
+      setSalesSortOrder('asc');
+    }
+    setSalesPage(1);
+  };
+
+  // Process and sort Purchase Records
+  const processedPurchaseData = useMemo(() => {
+    if (!ledgerData?.purchased_sanitized) return [];
+    let data = [...ledgerData.purchased_sanitized];
+    
+    if (purchaseSortField) {
+      data.sort((a, b) => {
+        const aValue = a[purchaseSortField as keyof PurchaseRecord];
+        const bValue = b[purchaseSortField as keyof PurchaseRecord];
+        
+        if (aValue == null && bValue == null) return 0;
+        if (aValue == null) return purchaseSortOrder === 'asc' ? 1 : -1;
+        if (bValue == null) return purchaseSortOrder === 'asc' ? -1 : 1;
+        
+        if (aValue instanceof Date && bValue instanceof Date) {
+          return purchaseSortOrder === 'asc' 
+            ? aValue.getTime() - bValue.getTime()
+            : bValue.getTime() - aValue.getTime();
+        }
+        
+        if (typeof aValue === 'string') {
+          return purchaseSortOrder === 'asc' 
+            ? aValue.localeCompare(bValue as string)
+            : (bValue as string).localeCompare(aValue);
+        }
+        
+        if (typeof aValue === 'number') {
+          return purchaseSortOrder === 'asc' 
+            ? (aValue as number) - (bValue as number)
+            : (bValue as number) - (aValue as number);
+        }
+        
+        return 0;
+      });
+    }
+    
+    return data;
+  }, [ledgerData?.purchased_sanitized, purchaseSortField, purchaseSortOrder]);
+
+  // Paginated Purchase Records
+  const paginatedPurchaseData = useMemo(() => {
+    const startIndex = (purchasePage - 1) * purchaseItemsPerPage;
+    return processedPurchaseData.slice(startIndex, startIndex + purchaseItemsPerPage);
+  }, [processedPurchaseData, purchasePage, purchaseItemsPerPage]);
+
+  const purchaseTotalPages = Math.ceil(processedPurchaseData.length / purchaseItemsPerPage);
+  const purchaseTotalItems = processedPurchaseData.length;
+
+  // Process and sort Eligible Records
+  const processedEligibleData = useMemo(() => {
+    if (!ledgerData?.eligible_sanitized) return [];
+    let data = [...ledgerData.eligible_sanitized];
+    
+    if (eligibleSortField) {
+      data.sort((a, b) => {
+        const aValue = a[eligibleSortField as keyof EligibleRecord];
+        const bValue = b[eligibleSortField as keyof EligibleRecord];
+        
+        if (aValue == null && bValue == null) return 0;
+        if (aValue == null) return eligibleSortOrder === 'asc' ? 1 : -1;
+        if (bValue == null) return eligibleSortOrder === 'asc' ? -1 : 1;
+        
+        if (aValue instanceof Date && bValue instanceof Date) {
+          return eligibleSortOrder === 'asc' 
+            ? aValue.getTime() - bValue.getTime()
+            : bValue.getTime() - aValue.getTime();
+        }
+        
+        if (typeof aValue === 'string') {
+          return eligibleSortOrder === 'asc' 
+            ? aValue.localeCompare(bValue as string)
+            : (bValue as string).localeCompare(aValue);
+        }
+        
+        if (typeof aValue === 'number') {
+          return eligibleSortOrder === 'asc' 
+            ? (aValue as number) - (bValue as number)
+            : (bValue as number) - (aValue as number);
+        }
+        
+        return 0;
+      });
+    }
+    
+    return data;
+  }, [ledgerData?.eligible_sanitized, eligibleSortField, eligibleSortOrder]);
+
+  // Paginated Eligible Records
+  const paginatedEligibleData = useMemo(() => {
+    const startIndex = (eligiblePage - 1) * eligibleItemsPerPage;
+    return processedEligibleData.slice(startIndex, startIndex + eligibleItemsPerPage);
+  }, [processedEligibleData, eligiblePage, eligibleItemsPerPage]);
+
+  const eligibleTotalPages = Math.ceil(processedEligibleData.length / eligibleItemsPerPage);
+  const eligibleTotalItems = processedEligibleData.length;
+
+  // Process and sort Sales Records
+  const processedSalesData = useMemo(() => {
+    if (!ledgerData?.sales_sanitized) return [];
+    let data = [...ledgerData.sales_sanitized];
+    
+    if (salesSortField) {
+      data.sort((a, b) => {
+        const aValue = a[salesSortField as keyof SalesRecord];
+        const bValue = b[salesSortField as keyof SalesRecord];
+        
+        if (aValue == null && bValue == null) return 0;
+        if (aValue == null) return salesSortOrder === 'asc' ? 1 : -1;
+        if (bValue == null) return salesSortOrder === 'asc' ? -1 : 1;
+        
+        if (aValue instanceof Date && bValue instanceof Date) {
+          return salesSortOrder === 'asc' 
+            ? aValue.getTime() - bValue.getTime()
+            : bValue.getTime() - aValue.getTime();
+        }
+        
+        if (typeof aValue === 'string') {
+          return salesSortOrder === 'asc' 
+            ? aValue.localeCompare(bValue as string)
+            : (bValue as string).localeCompare(aValue);
+        }
+        
+        if (typeof aValue === 'number') {
+          return salesSortOrder === 'asc' 
+            ? (aValue as number) - (bValue as number)
+            : (bValue as number) - (aValue as number);
+        }
+        
+        return 0;
+      });
+    }
+    
+    return data;
+  }, [ledgerData?.sales_sanitized, salesSortField, salesSortOrder]);
+
+  // Paginated Sales Records
+  const paginatedSalesData = useMemo(() => {
+    const startIndex = (salesPage - 1) * salesItemsPerPage;
+    return processedSalesData.slice(startIndex, startIndex + salesItemsPerPage);
+  }, [processedSalesData, salesPage, salesItemsPerPage]);
+
+  const salesTotalPages = Math.ceil(processedSalesData.length / salesItemsPerPage);
+  const salesTotalItems = processedSalesData.length;
+
+  // Reset pagination when filters change
+  useEffect(() => {
+    setPurchasePage(1);
+    setEligiblePage(1);
+    setSalesPage(1);
+  }, [symbol, fiscalID, currentFund]);
+
 
   return (
     isLoadingMain ? (
@@ -505,28 +716,80 @@ export default function ViewLedger() {
       </Card>
         <Card className="bg-white shadow-sm border border-gray-200 mb-6">
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg font-semibold text-gray-900">Purchase Records</CardTitle>
-            <p className="text-sm text-gray-600 mt-1">Purchase transactions and closeout records</p>
+            <div className="flex justify-between items-center">
+              <div>
+                <CardTitle className="text-lg font-semibold text-gray-900">Purchase Records</CardTitle>
+                <p className="text-sm text-gray-600 mt-1">Purchase transactions and closeout records</p>
+              </div>
+              {purchaseTotalItems > 0 && (
+                <span className="text-sm text-gray-500">({purchaseTotalItems} records)</span>
+              )}
+            </div>
           </CardHeader>
           <CardContent className="p-0">
           <div className="w-full overflow-x-auto">
           <Table className="w-full">
   <TableHeader>
     <TableRow className="bg-gray-50">
-      <TableHead className={TABLE_STYLES.HEADER}>Purchased Date</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Shares</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Average Price Per Share</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Amount</TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('transaction_date')}>
+        <div className="flex items-center justify-between">
+          Purchased Date
+          <SortIndicator field="transaction_date" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('quantity')}>
+        <div className="flex items-center justify-between">
+          Total Shares
+          <SortIndicator field="quantity" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('price')}>
+        <div className="flex items-center justify-between">
+          Average Price Per Share
+          <SortIndicator field="price" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('txn_value')}>
+        <div className="flex items-center justify-between">
+          Total Amount
+          <SortIndicator field="txn_value" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+        </div>
+      </TableHead>
       <TableHead className={TABLE_STYLES.HEADER}>Commission Rate</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Broker Commission</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Sebon Commission</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Effective Rate</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Cost</TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} text-right`}>Client</TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('commission_amount')}>
+        <div className="flex items-center justify-between">
+          Total Broker Commission
+          <SortIndicator field="commission_amount" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('sebon_commission')}>
+        <div className="flex items-center justify-between">
+          Total Sebon Commission
+          <SortIndicator field="sebon_commission" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('effective_rate')}>
+        <div className="flex items-center justify-between">
+          Effective Rate
+          <SortIndicator field="effective_rate" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('net_payable')}>
+        <div className="flex items-center justify-between">
+          Total Cost
+          <SortIndicator field="net_payable" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} text-right cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('client_id')}>
+        <div className="flex items-center justify-end">
+          Client
+          <SortIndicator field="client_id" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+        </div>
+      </TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
-    {ledgerData?.purchased_sanitized.map((record) => (
+    {paginatedPurchaseData.map((record) => (
     <TableRow key={record.contract_number} className={record.is_closeout ? `${TABLE_STYLES.CLOSEOUT_ROW} ${TABLE_STYLES.CLOSEOUT}` : TABLE_STYLES.ROW_HOVER}>
       <TableCell className={`font-medium ${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700' : ''}`}>
         <div className="flex items-center gap-2">
@@ -578,32 +841,103 @@ export default function ViewLedger() {
   )}
 </Table>
           </div>
+          {purchaseTotalItems > 0 && (
+            <div className="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-700">Items per page:</span>
+                <Select value={purchaseItemsPerPage.toString()} onValueChange={(value) => {
+                  setPurchaseItemsPerPage(parseInt(value));
+                  setPurchasePage(1);
+                }}>
+                  <SelectTrigger className="w-20">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="5">5</SelectItem>
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="15">15</SelectItem>
+                      <SelectItem value="20">20</SelectItem>
+                      <SelectItem value="25">25</SelectItem>
+                      <SelectItem value="50">50</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              {purchaseTotalItems > purchaseItemsPerPage && (
+                <Pagination
+                  currentPage={purchasePage}
+                  totalPages={purchaseTotalPages}
+                  onPageChange={setPurchasePage}
+                  itemsPerPage={purchaseItemsPerPage}
+                  totalItems={purchaseTotalItems}
+                />
+              )}
+            </div>
+          )}
           </CardContent>
         </Card>
 
         {/* Eligible Records - Organized by Type */}
         <Card className="bg-white shadow-sm border border-gray-200 mb-6">
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg font-semibold text-gray-900">Eligible Holdings</CardTitle>
-            <p className="text-sm text-gray-600 mt-1">Opening balance, bonus shares, right shares, promoter holdings, and IPO allotments</p>
+            <div className="flex justify-between items-center">
+              <div>
+                <CardTitle className="text-lg font-semibold text-gray-900">Eligible Holdings</CardTitle>
+                <p className="text-sm text-gray-600 mt-1">Opening balance, bonus shares, right shares, promoter holdings, and IPO allotments</p>
+              </div>
+              {eligibleTotalItems > 0 && (
+                <span className="text-sm text-gray-500">({eligibleTotalItems} records)</span>
+              )}
+            </div>
           </CardHeader>
           <CardContent className="p-0">
             <div className="w-full overflow-x-auto">
               <Table className="w-full">
                 <TableHeader>
                   <TableRow className="bg-gray-50">
-                    <TableHead className={TABLE_STYLES.HEADER}>Type</TableHead>
-                    <TableHead className={TABLE_STYLES.HEADER}>Date</TableHead>
-                    <TableHead className={TABLE_STYLES.HEADER}>Shares</TableHead>
-                    <TableHead className={TABLE_STYLES.HEADER}>Rate</TableHead>
-                    <TableHead className={TABLE_STYLES.HEADER}>Amount</TableHead>
+                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('record_type')}>
+                      <div className="flex items-center justify-between">
+                        Type
+                        <SortIndicator field="record_type" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                      </div>
+                    </TableHead>
+                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('date')}>
+                      <div className="flex items-center justify-between">
+                        Date
+                        <SortIndicator field="date" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                      </div>
+                    </TableHead>
+                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('opening_quantity')}>
+                      <div className="flex items-center justify-between">
+                        Shares
+                        <SortIndicator field="opening_quantity" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                      </div>
+                    </TableHead>
+                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('effective_rate')}>
+                      <div className="flex items-center justify-between">
+                        Rate
+                        <SortIndicator field="effective_rate" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                      </div>
+                    </TableHead>
+                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('total_value')}>
+                      <div className="flex items-center justify-between">
+                        Amount
+                        <SortIndicator field="total_value" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                      </div>
+                    </TableHead>
                     <TableHead className={TABLE_STYLES.HEADER}>Details</TableHead>
-                    <TableHead className={TABLE_STYLES.HEADER}>Client</TableHead>
+                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('client_id')}>
+                      <div className="flex items-center justify-between">
+                        Client
+                        <SortIndicator field="client_id" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                      </div>
+                    </TableHead>
                     <TableHead className={`${TABLE_STYLES.HEADER} text-left`}>Remarks</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {ledgerData?.eligible_sanitized?.map((record) => {
+                  {paginatedEligibleData?.map((record) => {
                     const getRecordTypeInfo = () => {
                       switch (record.record_type) {
                         case 'opening':
@@ -640,7 +974,7 @@ export default function ViewLedger() {
                           }
                         case 'ipo_allotment_staging':
                           return { 
-                            label: 'IPO Staging', 
+                            label: 'Not Dematerialized', 
                             color: 'bg-amber-100 text-amber-800', 
                             icon: '⏳'
                           }
@@ -680,9 +1014,7 @@ export default function ViewLedger() {
                         <TableCell className={`${TABLE_STYLES.CELL} text-sm`}>
                           {typeInfo.detail || '-'}
                         </TableCell>
-                        <TableCell className={`${TABLE_STYLES.CELL} text-sm`}>
-                          {record.client_id || '-'}
-                        </TableCell>
+                        <TableCell className={`text-right ${TABLE_STYLES.CELL}`}>{record.client_id}</TableCell>
                         <TableCell className={`${TABLE_STYLES.CELL} text-left`}>
                           <InlineRemarks initial={record.remarks || ''} onSave={async (value) => {
                             await saveEligibleRemarks({
@@ -724,36 +1056,132 @@ export default function ViewLedger() {
                 )}
               </Table>
             </div>
+            {eligibleTotalItems > 0 && (
+              <div className="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-700">Items per page:</span>
+                  <Select value={eligibleItemsPerPage.toString()} onValueChange={(value) => {
+                    setEligibleItemsPerPage(parseInt(value));
+                    setEligiblePage(1);
+                  }}>
+                    <SelectTrigger className="w-20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="5">5</SelectItem>
+                        <SelectItem value="10">10</SelectItem>
+                        <SelectItem value="15">15</SelectItem>
+                        <SelectItem value="20">20</SelectItem>
+                        <SelectItem value="25">25</SelectItem>
+                        <SelectItem value="50">50</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {eligibleTotalItems > eligibleItemsPerPage && (
+                  <Pagination
+                    currentPage={eligiblePage}
+                    totalPages={eligibleTotalPages}
+                    onPageChange={setEligiblePage}
+                    itemsPerPage={eligibleItemsPerPage}
+                    totalItems={eligibleTotalItems}
+                  />
+                )}
+              </div>
+            )}
           </CardContent>
         </Card>
 
   
           <Card className="bg-white shadow-sm border border-gray-200 mb-6">
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg font-semibold text-gray-900">Sales Records</CardTitle>
-            <p className="text-sm text-gray-600 mt-1">Sales transactions with profit/loss calculations</p>
+            <div className="flex justify-between items-center">
+              <div>
+                <CardTitle className="text-lg font-semibold text-gray-900">Sales Records</CardTitle>
+                <p className="text-sm text-gray-600 mt-1">Sales transactions with profit/loss calculations</p>
+              </div>
+              {salesTotalItems > 0 && (
+                <span className="text-sm text-gray-500">({salesTotalItems} records)</span>
+              )}
+            </div>
           </CardHeader>
           <CardContent className="p-0">
           <div className="w-full overflow-x-auto">
           <Table className="w-full">
   <TableHeader>
     <TableRow className="bg-gray-50">
-      <TableHead className={TABLE_STYLES.HEADER}>Sales Date</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Shares</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Average Price Per Share</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Amount</TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('transaction_date')}>
+        <div className="flex items-center justify-between">
+          Sales Date
+          <SortIndicator field="transaction_date" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('quantity')}>
+        <div className="flex items-center justify-between">
+          Total Shares
+          <SortIndicator field="quantity" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('price')}>
+        <div className="flex items-center justify-between">
+          Average Price Per Share
+          <SortIndicator field="price" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('txn_value')}>
+        <div className="flex items-center justify-between">
+          Total Amount
+          <SortIndicator field="txn_value" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
       <TableHead className={TABLE_STYLES.HEADER}>Commission Rate</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Broker Commission</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total CGT</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Sebon Commission</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Effective Rate</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Cost</TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Total Gain/Loss</TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} text-right`}>Client</TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('commission_amount')}>
+        <div className="flex items-center justify-between">
+          Total Broker Commission
+          <SortIndicator field="commission_amount" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('capital_gain_tax')}>
+        <div className="flex items-center justify-between">
+          Total CGT
+          <SortIndicator field="capital_gain_tax" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('sebon_commission')}>
+        <div className="flex items-center justify-between">
+          Total Sebon Commission
+          <SortIndicator field="sebon_commission" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('effective_rate')}>
+        <div className="flex items-center justify-between">
+          Effective Rate
+          <SortIndicator field="effective_rate" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('net_receivable')}>
+        <div className="flex items-center justify-between">
+          Total Cost
+          <SortIndicator field="net_receivable" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('profit_loss')}>
+        <div className="flex items-center justify-between">
+          Total Gain/Loss
+          <SortIndicator field="profit_loss" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
+      <TableHead className={`${TABLE_STYLES.HEADER} text-right cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('client_id')}>
+        <div className="flex items-center justify-end">
+          Client
+          <SortIndicator field="client_id" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+        </div>
+      </TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
-    {ledgerData?.sales_sanitized.map((record) => (
+    {paginatedSalesData.map((record) => (
     <TableRow key={record.contract_number} className={TABLE_STYLES.ROW_HOVER}>
       <TableCell className={`font-medium ${TABLE_STYLES.CELL}`}>
         <div className="flex items-center gap-2">
@@ -803,6 +1231,40 @@ export default function ViewLedger() {
   )}
 </Table>
           </div>
+          {salesTotalItems > 0 && (
+            <div className="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-700">Items per page:</span>
+                <Select value={salesItemsPerPage.toString()} onValueChange={(value) => {
+                  setSalesItemsPerPage(parseInt(value));
+                  setSalesPage(1);
+                }}>
+                  <SelectTrigger className="w-20">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="5">5</SelectItem>
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="15">15</SelectItem>
+                      <SelectItem value="20">20</SelectItem>
+                      <SelectItem value="25">25</SelectItem>
+                      <SelectItem value="50">50</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              {salesTotalItems > salesItemsPerPage && (
+                <Pagination
+                  currentPage={salesPage}
+                  totalPages={salesTotalPages}
+                  onPageChange={setSalesPage}
+                  itemsPerPage={salesItemsPerPage}
+                  totalItems={salesTotalItems}
+                />
+              )}
+            </div>
+          )}
           </CardContent>
         </Card>
     </div>

@@ -52,7 +52,7 @@ import { RightDialog } from "@/components/dialogs/right-dialog"
 import { CashDialog } from "@/components/dialogs/cash-dialog"
 import { CloseoutDialog } from "@/components/dialogs/closeout-dialog"
 import { IPOAllotmentDialog } from "@/components/dialogs/ipo-allotment-dialog"
-import { getCurrentSessionUser, getUsers } from "@/app/api/dashboardAPICalls/actions";
+import { getClients, getCurrentSessionUser, getUsers } from "@/app/api/dashboardAPICalls/actions";
 import { getFiscal } from "@/app/api/fiscalAPI/actions";
 import { RefreshCw } from "lucide-react";
 import {
@@ -191,6 +191,12 @@ type CashRecord = {
   } | null;
 };
 
+type clientHaru = {
+  client_name: string,
+  client_broker: number,
+  client_id: string,
+}[];
+
 type IPOAllotmentRecord = {
   allotment_id: number;
   fund_id: number;
@@ -218,11 +224,13 @@ type IPOAllotmentStagingRecord = {
   fund_id: number;
   quantity: number;
   effective_rate: number;
-  total_value: number | null;
+  total_value: number;
   fiscal_year_id: number;
   recorded_at: Date | null;
-  added_at: Date;
+  added_at: Date | null;
+  remarks: string;
   symbol: string;
+  sub_id: number | null;
   funds: {
     fund_name: string;
   };
@@ -236,7 +244,23 @@ type IPOAllotmentStagingRecord = {
   sub_classes: {
     sub_name: string;
   } | null;
+  demat: number;
+  non_demat: number;
 };
+
+const quantityFormatter = new Intl.NumberFormat('en-IN')
+const amountFormatter = new Intl.NumberFormat('en-IN', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})
+const percentFormatter = new Intl.NumberFormat('en-IN', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})
+
+const formatQuantity = (value: number | null | undefined) => quantityFormatter.format(Number(value ?? 0))
+const formatAmount = (value: number | null | undefined) => amountFormatter.format(Number(value ?? 0))
+const formatPercent = (value: number | null | undefined) => percentFormatter.format(Number(value ?? 0))
 
 export default function ManualHistoryComponent() {
   const [bonusRecords, setBonusRecords] = useState<BonusRecord[]>([]);
@@ -258,6 +282,7 @@ export default function ManualHistoryComponent() {
   const [clientTradingForDemat, setClientTradingForDemat] = useState<string>('');
   const [dematerializeLoading, setDematerializeLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState<boolean | null>()
+  const [clientList, setClientList] = useState<clientHaru>()
   
   // Pagination states for each tab
   const [bonusPage, setBonusPage] = useState(1);
@@ -298,6 +323,9 @@ export default function ManualHistoryComponent() {
     try {
       const usersList = await getUsers();
       setFunds(usersList);
+
+      const fetchClients: clientHaru = await getClients()
+      setClientList(fetchClients)
       
       // Set first fund as selected if funds exist and no fund is currently selected
       if (usersList.length > 0 && !selectedFund) {
@@ -633,7 +661,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">Bonus Shares</span>
             <span className="sm:hidden">Bonus</span>
             <Badge variant="secondary" className="ml-1 bg-emerald-100 text-emerald-800 text-xs">
-              {bonusRecords.length.toLocaleString()}
+              {formatQuantity(bonusRecords.length)}
             </Badge>
           </TabsTrigger>
           <TabsTrigger 
@@ -644,7 +672,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">Promoter Shares</span>
             <span className="sm:hidden">Promoter</span>
             <Badge variant="secondary" className="ml-1 bg-purple-100 text-purple-800 text-xs">
-              {promoterRecords.length.toLocaleString()}
+              {formatQuantity(promoterRecords.length)}
             </Badge>
           </TabsTrigger>
           <TabsTrigger 
@@ -655,7 +683,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">Right Shares</span>
             <span className="sm:hidden">Rights</span>
             <Badge variant="secondary" className="ml-1 bg-blue-100 text-blue-800 text-xs">
-              {rightRecords.length.toLocaleString()}
+              {formatQuantity(rightRecords.length)}
             </Badge>
           </TabsTrigger>
           <TabsTrigger 
@@ -666,7 +694,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">Cash Dividend</span>
             <span className="sm:hidden">Cash</span>
             <Badge variant="secondary" className="ml-1 bg-orange-100 text-orange-800 text-xs">
-              {cashRecords.length.toLocaleString()}
+              {formatQuantity(cashRecords.length)}
             </Badge>
           </TabsTrigger>
           <TabsTrigger 
@@ -677,7 +705,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">IPO Allotment</span>
             <span className="sm:hidden">IPO</span>
             <Badge variant="secondary" className="ml-1 bg-indigo-100 text-indigo-800 text-xs">
-              {ipoAllotmentRecords.length.toLocaleString()}
+              {formatQuantity(ipoAllotmentRecords.length)}
             </Badge>
           </TabsTrigger>
           <TabsTrigger 
@@ -688,7 +716,7 @@ export default function ManualHistoryComponent() {
             <span className="hidden sm:inline">Non DEMAT IPO</span>
             <span className="sm:hidden">Pending</span>
             <Badge variant="secondary" className="ml-1 bg-amber-100 text-amber-800 text-xs">
-              {ipoAllotmentStagingRecords.length.toLocaleString()}
+              {formatQuantity(ipoAllotmentStagingRecords.length)}
             </Badge>
           </TabsTrigger>
         </TabsList>
@@ -751,17 +779,17 @@ export default function ManualHistoryComponent() {
                           <td className="p-4">
                             <div className="flex items-center gap-1">
                               <Percent className="w-3 h-3 text-emerald-600" />
-                              <span className="font-semibold text-emerald-700">{record.bonus_percent.toFixed(2)}%</span>
+                              <span className="font-semibold text-emerald-700">{formatPercent(record.bonus_percent)}%</span>
                             </div>
                           </td>
                           <td className="p-4">
                             <div className="flex items-center gap-1">
                               <Hash className="w-3 h-3 text-gray-600" />
-                              <span className="font-medium">{record.quantity.toLocaleString()}</span>
+                              <span className="font-medium">{formatQuantity(record.quantity)}</span>
                             </div>
                           </td>
                           <td className="p-4">
-                            <span className="font-medium text-gray-900">Rs. {record.effective_rate.toFixed(2)}</span>
+                            <span className="font-medium text-gray-900">Rs. {formatAmount(record.effective_rate)}</span>
                           </td>
                           <td className="p-4">
                             <div className="flex items-center gap-1">
@@ -888,14 +916,14 @@ export default function ManualHistoryComponent() {
                           <td className="p-4">
                             <div className="flex items-center gap-1">
                               <Hash className="w-3 h-3 text-gray-600" />
-                              <span className="font-medium">{record.quantity.toLocaleString()}</span>
+                              <span className="font-medium">{formatQuantity(record.quantity)}</span>
                             </div>
                           </td>
                           <td className="p-4">
-                            <span className="font-medium text-gray-900">Rs. {record.effective_rate.toFixed(2)}</span>
+                            <span className="font-medium text-gray-900">Rs. {formatAmount(record.effective_rate)}</span>
                           </td>
                           <td className="p-4">
-                            <span className="font-semibold text-purple-700">Rs. {(record.total_value || 0).toFixed(2)}</span>
+                            <span className="font-semibold text-purple-700">Rs. {formatAmount(record.total_value)}</span>
                           </td>
                           <td className="p-4">
                             <div className="flex items-center gap-1">
@@ -1030,14 +1058,14 @@ export default function ManualHistoryComponent() {
                           <td className="p-4">
                             <div className="flex items-center gap-1">
                               <Hash className="w-3 h-3 text-gray-600" />
-                              <span className="font-medium">{record.quantity.toLocaleString()}</span>
+                              <span className="font-medium">{formatQuantity(record.quantity)}</span>
                             </div>
                           </td>
                           <td className="p-4">
-                            <span className="font-medium text-gray-900">Rs. {record.effective_rate.toFixed(2)}</span>
+                            <span className="font-medium text-gray-900">Rs. {formatAmount(record.effective_rate)}</span>
                           </td>
                           <td className="p-4">
-                            <span className="font-semibold text-blue-700">Rs. {(record.total_value || 0).toFixed(2)}</span>
+                            <span className="font-semibold text-blue-700">Rs. {formatAmount(record.total_value)}</span>
                           </td>
                           <td className="p-4">
                             <div className="flex items-center gap-1">
@@ -1163,7 +1191,7 @@ export default function ManualHistoryComponent() {
                           <td className="p-4">
                             <div className="flex items-center gap-1">
                               <DollarSign className="w-3 h-3 text-orange-600" />
-                              <span className="font-semibold text-orange-700">Rs. {record.amount.toFixed(2)}</span>
+                              <span className="font-semibold text-orange-700">Rs. {formatAmount(record.amount)}</span>
                             </div>
                           </td>
                           <td className="p-4">
@@ -1292,14 +1320,14 @@ export default function ManualHistoryComponent() {
                           <td className="p-4">
                             <div className="flex items-center gap-1">
                               <Hash className="w-3 h-3 text-gray-600" />
-                              <span className="font-medium">{record.quantity.toLocaleString()}</span>
+                              <span className="font-medium">{formatQuantity(Number(record.quantity))}</span>
                             </div>
                           </td>
                           <td className="p-4">
-                            <span className="font-medium text-gray-900">Rs. {Number(record.effective_rate).toFixed(2)}</span>
+                            <span className="font-medium text-gray-900">Rs. {formatAmount(Number(record.effective_rate))}</span>
                           </td>
                           <td className="p-4">
-                            <span className="font-semibold text-indigo-700">Rs. {Number(record.total_value || 0).toFixed(2)}</span>
+                            <span className="font-semibold text-indigo-700">Rs. {formatAmount(Number(record.total_value ?? 0))}</span>
                           </td>
                           <td className="p-4">
                             <div className="flex items-center gap-1">
@@ -1399,6 +1427,7 @@ export default function ManualHistoryComponent() {
                         <th className="text-left p-4 font-medium text-gray-700">Effective Rate</th>
                         <th className="text-left p-4 font-medium text-gray-700">Total Value</th>
                         <th className="text-left p-4 font-medium text-gray-700">Allotment Date</th>
+                        <th className="text-left p-4 font-medium text-gray-700">Demat / Non-Demat</th>
                         <th className="text-left p-4 font-medium text-gray-700">Fiscal Year</th>
                         <th className="text-center p-4 font-medium text-gray-700">Actions</th>
                       </tr>
@@ -1425,19 +1454,33 @@ export default function ManualHistoryComponent() {
                           <td className="p-4">
                             <div className="flex items-center gap-1">
                               <Hash className="w-3 h-3 text-gray-600" />
-                              <span className="font-medium">{record.quantity.toLocaleString()}</span>
+                              <span className="font-medium">{formatQuantity(record.quantity)}</span>
                             </div>
                           </td>
                           <td className="p-4">
-                            <span className="font-medium text-gray-900">Rs. {Number(record.effective_rate).toFixed(2)}</span>
+                            <span className="font-medium text-gray-900">Rs. {formatAmount(Number(record.effective_rate))}</span>
                           </td>
                           <td className="p-4">
-                            <span className="font-semibold text-amber-700">Rs. {Number(record.total_value || 0).toFixed(2)}</span>
+                            <span className="font-semibold text-amber-700">Rs. {formatAmount(Number(record.total_value ?? 0))}</span>
                           </td>
                           <td className="p-4">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="w-3 h-3 text-gray-600" />
-                              <span className="text-sm">{format(new Date(record.added_at), 'dd MMM yyyy')}</span>
+                            {record.added_at ? (
+                              <div className="flex items-center gap-1">
+                                <Calendar className="w-3 h-3 text-gray-600" />
+                                <span className="text-sm">{format(new Date(record.added_at), 'dd MMM yyyy')}</span>
+                              </div>
+                            ) : (
+                              <span className="text-sm text-gray-500">N/A</span>
+                            )}
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center gap-2">
+                              <Badge variant="outline" className="text-xs">
+                                Demat: {formatQuantity(record.demat)}
+                              </Badge>
+                              <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-800">
+                                Non-Demat: {formatQuantity(record.non_demat)}
+                              </Badge>
                             </div>
                           </td>
                           <td className="p-4">
@@ -1478,7 +1521,10 @@ export default function ManualHistoryComponent() {
                                     <div className="bg-amber-50 border border-amber-200 p-3 rounded-lg">
                                       <p className="text-sm font-medium text-amber-800">IPO Details:</p>
                                       <p className="text-xs text-amber-700 mt-1">
-                                        <strong>{record.stock_fulls.symbol}</strong> - {record.quantity} shares @ Rs. {Number(record.effective_rate).toFixed(2)}
+                                        <strong>{record.stock_fulls.symbol}</strong> - {formatQuantity(record.quantity)} shares @ Rs. {formatAmount(Number(record.effective_rate))}
+                                      </p>
+                                      <p className="text-xs text-amber-600 mt-1">
+                                        Demat: {formatQuantity(record.demat)} | Non-Demat: {formatQuantity(record.non_demat)}
                                       </p>
                                     </div>
                                     <div className="grid gap-2">
@@ -1488,7 +1534,7 @@ export default function ManualHistoryComponent() {
                                           <SelectValue placeholder="Select a client" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                          {funds.map((client) => (
+                                          {clientList?.map((client) => (
                                             <SelectItem key={client.client_id} value={client.client_id}>
                                               {client.client_name} ({client.client_id})
                                             </SelectItem>

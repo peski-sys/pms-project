@@ -23,11 +23,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { uploadCash } from "@/app/api/sidebarAPIs/actions"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { uploadCash, uploadCashStaging } from "@/app/api/sidebarAPIs/actions"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { fetchClientsFor, getFunds } from "@/app/api/fundsAPI/actions"
-import { DollarSign } from "lucide-react"
+import { DollarSign, Star } from "lucide-react"
 
 type response_funds = {
   fund_id: number,
@@ -49,10 +50,17 @@ interface CashDialogProps {
 export function CashDialog({ onSuccess }: CashDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<'demat' | 'non-demat'>('demat')
   const [currentFund, setCurrentFund] = useState<string>('')
   const [listFunds, setListFunds] = useState<response_funds[]>()
   const [currentClient, setCurrentClient] = useState<string>('')
   const [listClients, setListClients] = useState<cbMAP[]>()
+
+  const [cashSymbol, setCashSymbol] = useState<string>('')
+  const [cashAmountPerShare, setCashAmountPerShare] = useState<number>(0)
+  const [calculatedCashAmount, setCalculatedCashAmount] = useState<number>(0)
+  const [cashCurrentHoldings, setCashCurrentHoldings] = useState<number>(0)
+  const [stagingTotalHoldings, setStagingTotalHoldings] = useState<number>(0)
 
   const fetchFunds = async () => {
     const fetch_funds: response_funds[] = await getFunds();
@@ -64,16 +72,96 @@ export function CashDialog({ onSuccess }: CashDialogProps) {
   }
 
   const fetchClients = async () => {
-    const fetch_clients: cbMAP[] = await fetchClientsFor(currentFund)
-    setListClients(fetch_clients)
+    if (activeTab === 'demat') {
+      const fetch_clients: cbMAP[] = await fetchClientsFor(currentFund)
+      setListClients(fetch_clients)
+    } else {
+      setListClients([])
+    }
   }
 
   const setFund = (value: string) => {
     setCurrentFund(value)
+    setCurrentClient('')
+    resetCashCalculation()
   }
 
   const setClient = (value: string) => {
     setCurrentClient(value)
+    resetCashCalculation()
+  }
+
+  useEffect(() => {
+    if (activeTab !== 'demat') {
+      return
+    }
+
+    const calculateCashDemat = async () => {
+      if (currentFund && currentClient && cashSymbol) {
+        try {
+          const { getCurrentHoldings } = await import('@/app/api/sidebarAPIs/actions')
+          const holdingsData = await getCurrentHoldings(currentFund, currentClient, cashSymbol)
+
+          if (holdingsData.success && holdingsData.quantity > 0) {
+            setCashCurrentHoldings(holdingsData.quantity)
+            setStagingTotalHoldings(0)
+            return
+          }
+        } catch (error) {
+          console.error('Error fetching holdings for cash:', error)
+        }
+      }
+
+      setCashCurrentHoldings(0)
+      setStagingTotalHoldings(0)
+    }
+
+    const timeoutId = setTimeout(calculateCashDemat, 500)
+    return () => clearTimeout(timeoutId)
+  }, [activeTab, currentFund, currentClient, cashSymbol])
+
+  useEffect(() => {
+    if (activeTab !== 'non-demat') {
+      return
+    }
+
+    const calculateCashStaging = async () => {
+      if (currentFund && cashSymbol) {
+        try {
+          const { getStagingHoldings } = await import('@/app/api/sidebarAPIs/actions')
+          const holdingsData = await getStagingHoldings(currentFund, cashSymbol)
+
+          if (holdingsData.success && holdingsData.quantity > 0) {
+            setCashCurrentHoldings(holdingsData.quantity)
+            setStagingTotalHoldings(holdingsData.totalQuantity || holdingsData.quantity)
+            return
+          }
+        } catch (error) {
+          console.error('Error fetching staging holdings for cash:', error)
+        }
+      }
+
+      setCashCurrentHoldings(0)
+      setStagingTotalHoldings(0)
+    }
+
+    const timeoutId = setTimeout(calculateCashStaging, 500)
+    return () => clearTimeout(timeoutId)
+  }, [activeTab, currentFund, cashSymbol])
+
+  useEffect(() => {
+    const total = cashAmountPerShare > 0 && cashCurrentHoldings > 0
+      ? cashAmountPerShare * cashCurrentHoldings
+      : 0
+    setCalculatedCashAmount(total)
+  }, [cashAmountPerShare, cashCurrentHoldings])
+
+  const resetCashCalculation = () => {
+    setCashSymbol('')
+    setCashAmountPerShare(0)
+    setCalculatedCashAmount(0)
+    setCashCurrentHoldings(0)
+    setStagingTotalHoldings(0)
   }
 
   useEffect(() => {
@@ -83,18 +171,23 @@ export function CashDialog({ onSuccess }: CashDialogProps) {
   }, [isOpen])
 
   useEffect(() => {
-    if (currentFund) {
+    if (currentFund && activeTab === 'demat') {
       fetchClients();
     }
-  }, [currentFund])
+  }, [currentFund, activeTab])
 
   async function handleCash(formData: FormData) {
     const stock_symbol = formData.get('given_symbol') as string;
     const stock_cash_amount = Number(formData.get('given_cash_amount'));
     const stock_book_close = formData.get('given_book_close') as string;
 
-    if (!currentFund || !currentClient) {
-      toast.error('Please select both fund and client.')
+    if (!currentFund) {
+      toast.error('Please select fund.')
+      return
+    }
+
+    if (activeTab === 'demat' && !currentClient) {
+      toast.error('Please select a client.')
       return
     }
 
@@ -103,15 +196,28 @@ export function CashDialog({ onSuccess }: CashDialogProps) {
       return
     }
 
+    const resolvedAmount = calculatedCashAmount > 0 ? calculatedCashAmount : stock_cash_amount
+
+    if (resolvedAmount <= 0) {
+      toast.error('Calculated cash amount must be greater than 0.')
+      return
+    }
+
     try {
       setIsLoading(true);
-      await uploadCash(currentFund, currentClient, stock_symbol, stock_cash_amount, stock_book_close)
-      toast.success('Cash dividend added successfully!')
+      if (activeTab === 'demat') {
+        await uploadCash(currentFund, currentClient, stock_symbol, resolvedAmount, stock_book_close)
+      } else {
+        await uploadCashStaging(currentFund, stock_symbol, resolvedAmount, stock_book_close)
+      }
+      toast.success(activeTab === 'demat' ? 'Cash dividend added successfully!' : 'Cash staging record added successfully!')
+      resetCashCalculation()
       setIsOpen(false);
       onSuccess?.();
       // Reset form
       setCurrentFund('');
       setCurrentClient('');
+      setActiveTab('demat')
     } catch (error) {
       console.error('Error adding cash dividend:', error)
       toast.error('Failed to add cash dividend. Please try again.')
@@ -136,9 +242,21 @@ export function CashDialog({ onSuccess }: CashDialogProps) {
           </DialogTitle>
         </DialogHeader>
         
-        <form action={handleCash} id="cash-form">
-          <Card>
-            <CardContent className="grid gap-6">
+        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'demat' | 'non-demat')} className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="demat" className="flex items-center gap-2">
+              <DollarSign className="w-4 h-4" />
+              DEMAT (Allocated)
+            </TabsTrigger>
+            <TabsTrigger value="non-demat" className="flex items-center gap-2">
+              <Star className="w-4 h-4" />
+              Non-DEMAT (Pending)
+            </TabsTrigger>
+          </TabsList>
+
+          <form action={handleCash} id="cash-form">
+            <Card className="mt-4">
+              <CardContent className="grid gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="fund">Fund</Label>
                 <Select name="fund" onValueChange={setFund} value={currentFund} required>
@@ -155,45 +273,97 @@ export function CashDialog({ onSuccess }: CashDialogProps) {
                 </Select>
               </div>
 
-              <div className="grid gap-3">
-                <Label htmlFor="client">Client ID</Label>
-                <Select name="client" onValueChange={setClient} required>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Client" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {listClients?.map((details) => (
-                      <SelectItem value={details.client_id} key={details.client_id}>
-                        {details.client_id} | Broker: {details.client_broker}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <TabsContent value="demat" className="mt-0">
+                <div className="grid gap-3">
+                  <Label htmlFor="client">Client ID</Label>
+                  <Select name="client" onValueChange={setClient} required={activeTab === 'demat'} value={currentClient}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Client" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {listClients?.map((details) => (
+                        <SelectItem value={details.client_id} key={details.client_id}>
+                          {details.client_id} | Broker: {details.client_broker}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="non-demat" className="mt-0">
+                <div className="bg-amber-50 border border-amber-200 p-3 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Star className="w-4 h-4 text-amber-600" />
+                    <span className="text-sm font-medium text-amber-800">Non-DEMAT Notice</span>
+                  </div>
+                  <p className="text-xs text-amber-700">
+                    This cash dividend will be staged without assigning a client. You can dematerialize it later from manual stock history.
+                  </p>
+                </div>
+              </TabsContent>
 
               <div className="grid gap-3">
                 <Label htmlFor="given_symbol">Stock Symbol</Label>
-                <AutocompleteInput name="given_symbol" placeholder="Eg. NABIL" required />
+                <AutocompleteInput 
+                  name="given_symbol" 
+                  placeholder="Eg. NABIL" 
+                  required 
+                  onValueChange={(value) => setCashSymbol(value)}
+                />
               </div>
 
               <div className="grid gap-3">
                 <Label htmlFor="given_cash_amount">Cash Amount</Label>
-                <Input name="given_cash_amount" type="number" placeholder="Eg. 6000" step="0.01" required />
+                <Input 
+                  name="given_cash_amount" 
+                  type="number" 
+                  placeholder="Eg. 6000" 
+                  step="0.01" 
+                  required 
+                  value={cashAmountPerShare || ''}
+                  onChange={(e) => setCashAmountPerShare(Number(e.target.value) || 0)}
+                />
               </div>
 
               <div className="grid gap-3">
                 <Label htmlFor="given_book_close">Book Close Date</Label>
                 <Input name="given_book_close" type="date" required />
               </div>
-            </CardContent>
 
-            <CardFooter className="flex justify-end">
-              <Button type="submit" form="cash-form" disabled={isLoading} className="bg-orange-600 hover:bg-orange-700">
-                {isLoading ? 'Adding...' : 'Save changes'}
-              </Button>
-            </CardFooter>
-          </Card>
-        </form>
+              {currentFund && cashSymbol && cashAmountPerShare > 0 && (
+                <div className={`grid gap-3 ${activeTab === 'demat' ? '' : 'mt-3'}`}>
+                  <div className={`${activeTab === 'demat' ? 'bg-orange-50 border border-orange-200' : 'bg-amber-100 border border-amber-200'} p-3 rounded`}>
+                    <Label className={`text-sm font-medium ${activeTab === 'demat' ? 'text-orange-800' : 'text-amber-800'}`}>Cash Amount Preview</Label>
+                    <Input 
+                      type="number"
+                      required
+                      className="mt-2 mb-2"
+                      value={calculatedCashAmount}
+                      onChange={(e) => setCalculatedCashAmount(Number(e.target.value) || 0)}
+                    />
+                    <div className={`text-sm font-semibold ${activeTab === 'demat' ? 'text-orange-700' : 'text-amber-700'}`}>
+                      {calculatedCashAmount > 0 ? `₹${calculatedCashAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })}` : 'Awaiting holdings...'}
+                    </div>
+                    <div className={`text-xs ${activeTab === 'demat' ? 'text-orange-600' : 'text-amber-600'}`}>
+                      Based on {cashCurrentHoldings.toLocaleString()} holdings {activeTab === 'non-demat' && stagingTotalHoldings > 0 && stagingTotalHoldings !== cashCurrentHoldings ? `(Total staging quantity: ${stagingTotalHoldings.toLocaleString()} shares)` : ''}
+                    </div>
+                    <div className={`text-xs ${activeTab === 'demat' ? 'text-orange-500' : 'text-amber-500'} mt-1`}>
+                      Calculation uses Rs. {cashAmountPerShare} per share.
+                    </div>
+                  </div>
+                </div>
+              )}
+              </CardContent>
+
+              <CardFooter className="flex justify-end">
+                <Button type="submit" form="cash-form" disabled={isLoading} className="bg-orange-600 hover:bg-orange-700">
+                  {isLoading ? 'Adding...' : activeTab === 'demat' ? 'Save changes' : 'Save to Staging'}
+                </Button>
+              </CardFooter>
+            </Card>
+          </form>
+        </Tabs>
       </DialogContent>
     </Dialog>
   )

@@ -18,6 +18,7 @@ import {
   Layers,
   Tag,
   Users,
+  AppWindow,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -85,6 +86,11 @@ const data = {
       title: "Manual Stock History",
       url: "/dashboard/manual-stock-history",
       icon: BookText,
+    },
+    {
+      title: "Tax Base Calculation",
+      url: "/dashboard/tax-base-calculation",
+      icon: AppWindow,
     },
     {
       title: "Audit Log",

@@ -128,15 +128,21 @@ export default function DashboardTwo() {
   
   // Pagination states for trading table
   const [tradingCurrentPage, setTradingCurrentPage] = useState(1)
-  const tradingItemsPerPage = 10
+  const [tradingItemsPerPage, setTradingItemsPerPage] = useState(10)
+  const [tradingSortField, setTradingSortField] = useState<string | null>(null)
+  const [tradingSortOrder, setTradingSortOrder] = useState<'asc' | 'desc'>('asc')
   
   // Pagination states for promoter table
   const [promoterCurrentPage, setPromoterCurrentPage] = useState(1)
-  const promoterItemsPerPage = 10
+  const [promoterItemsPerPage, setPromoterItemsPerPage] = useState(10)
+  const [promoterSortField, setPromoterSortField] = useState<string | null>(null)
+  const [promoterSortOrder, setPromoterSortOrder] = useState<'asc' | 'desc'>('asc')
   
   // Pagination states for sub class tables
   const [subClassCurrentPages, setSubClassCurrentPages] = useState<Map<number, number>>(new Map())
-  const subClassItemsPerPage = 10
+  const [subClassItemsPerPage, setSubClassItemsPerPage] = useState(10)
+  const [subClassSortFields, setSubClassSortFields] = useState<Map<number, string>>(new Map())
+  const [subClassSortOrders, setSubClassSortOrders] = useState<Map<number, 'asc' | 'desc'>>(new Map())
 
   // Consolidation function for trading data
   const consolidateTradingData = (data: MetricData[]) => {
@@ -212,21 +218,79 @@ export default function DashboardTwo() {
     return consolidateTradingData(tradingData)
   }, [tradingData, fiscalID, currentFund])
 
+  // Sort and paginate trading data
+  const sortedTradingData = useMemo(() => {
+    let sorted = [...consolidatedTradingData]
+    if (tradingSortField) {
+      sorted.sort((a, b) => {
+        const aValue = a[tradingSortField as keyof typeof a]
+        const bValue = b[tradingSortField as keyof typeof b]
+        
+        if (aValue == null && bValue == null) return 0
+        if (aValue == null) return tradingSortOrder === 'asc' ? 1 : -1
+        if (bValue == null) return tradingSortOrder === 'asc' ? -1 : 1
+        
+        if (typeof aValue === 'string') {
+          return tradingSortOrder === 'asc' 
+            ? aValue.localeCompare(bValue as string)
+            : (bValue as string).localeCompare(aValue)
+        }
+        
+        if (typeof aValue === 'number') {
+          return tradingSortOrder === 'asc' 
+            ? (aValue as number) - (bValue as number)
+            : (bValue as number) - (aValue as number)
+        }
+        return 0
+      })
+    }
+    return sorted
+  }, [consolidatedTradingData, tradingSortField, tradingSortOrder])
+
   const paginatedTradingData = useMemo(() => {
     const startIndex = (tradingCurrentPage - 1) * tradingItemsPerPage
     const endIndex = startIndex + tradingItemsPerPage
-    return consolidatedTradingData.slice(startIndex, endIndex)
-  }, [consolidatedTradingData, tradingCurrentPage, tradingItemsPerPage])
+    return sortedTradingData.slice(startIndex, endIndex)
+  }, [sortedTradingData, tradingCurrentPage, tradingItemsPerPage])
+
+  // Sort and paginate promoter data
+  const sortedPromoterData = useMemo(() => {
+    let sorted = [...promoterData]
+    if (promoterSortField) {
+      sorted.sort((a, b) => {
+        const aValue = a[promoterSortField as keyof typeof a]
+        const bValue = b[promoterSortField as keyof typeof b]
+        
+        if (aValue == null && bValue == null) return 0
+        if (aValue == null) return promoterSortOrder === 'asc' ? 1 : -1
+        if (bValue == null) return promoterSortOrder === 'asc' ? -1 : 1
+        
+        if (typeof aValue === 'string') {
+          return promoterSortOrder === 'asc' 
+            ? aValue.localeCompare(bValue as string)
+            : (bValue as string).localeCompare(aValue)
+        }
+        
+        if (typeof aValue === 'number') {
+          return promoterSortOrder === 'asc' 
+            ? (aValue as number) - (bValue as number)
+            : (bValue as number) - (aValue as number)
+        }
+        return 0
+      })
+    }
+    return sorted
+  }, [promoterData, promoterSortField, promoterSortOrder])
 
   const paginatedPromoterData = useMemo(() => {
     const startIndex = (promoterCurrentPage - 1) * promoterItemsPerPage
     const endIndex = startIndex + promoterItemsPerPage
-    return promoterData.slice(startIndex, endIndex)
-  }, [promoterData, promoterCurrentPage, promoterItemsPerPage])
+    return sortedPromoterData.slice(startIndex, endIndex)
+  }, [sortedPromoterData, promoterCurrentPage, promoterItemsPerPage])
 
   // Calculate total pages
-  const tradingTotalPages = Math.ceil(consolidatedTradingData.length / tradingItemsPerPage)
-  const promoterTotalPages = Math.ceil(promoterData.length / promoterItemsPerPage)
+  const tradingTotalPages = Math.ceil(sortedTradingData.length / tradingItemsPerPage)
+  const promoterTotalPages = Math.ceil(sortedPromoterData.length / promoterItemsPerPage)
   
   // Calculate totals for trading table
   const tradingTotals = useMemo(() => {
@@ -463,47 +527,145 @@ export default function DashboardTwo() {
     setSubClassCurrentPages(newPages)
   }
 
+  // Sort handlers
+  const handleTradingSort = (field: string) => {
+    if (tradingSortField === field) {
+      setTradingSortOrder(tradingSortOrder === 'asc' ? 'desc' : 'asc')
+    } else {
+      setTradingSortField(field)
+      setTradingSortOrder('asc')
+    }
+    setTradingCurrentPage(1)
+  }
+
+  const handlePromoterSort = (field: string) => {
+    if (promoterSortField === field) {
+      setPromoterSortOrder(promoterSortOrder === 'asc' ? 'desc' : 'asc')
+    } else {
+      setPromoterSortField(field)
+      setPromoterSortOrder('asc')
+    }
+    setPromoterCurrentPage(1)
+  }
+
+  const handleSubClassSort = (subClassId: number, field: string) => {
+    const currentField = subClassSortFields.get(subClassId)
+    if (currentField === field) {
+      const currentOrder = subClassSortOrders.get(subClassId) || 'asc'
+      setSubClassSortOrders(new Map(subClassSortOrders).set(subClassId, currentOrder === 'asc' ? 'desc' : 'asc'))
+    } else {
+      setSubClassSortFields(new Map(subClassSortFields).set(subClassId, field))
+      setSubClassSortOrders(new Map(subClassSortOrders).set(subClassId, 'asc'))
+    }
+    const pages = new Map(subClassCurrentPages)
+    pages.set(subClassId, 1)
+    setSubClassCurrentPages(pages)
+  }
+
+  // Sort indicator component
+  const SortIndicator = ({ field, sortField, sortOrder }: { field: string; sortField: string | null; sortOrder: 'asc' | 'desc' }) => {
+    if (sortField !== field) return <span className="text-gray-400 text-xs">⇅</span>
+    return sortOrder === 'asc' ? <span className="text-blue-600">↑</span> : <span className="text-blue-600">↓</span>
+  }
+
   async function handleExport() {
     try {
       setIsExporting(true)
       
-      if (tradingData.length === 0 && promoterData.length === 0) {
-        alert('No data to export. Please apply filters first.')
+      if (!currentFund || !fiscalID) {
+        toast.error('Please select fund and fiscal year before exporting.')
         return
       }
       
       const fileName = `Metric_Dashboard_${currentFund}_${fiscalID}_${new Date().toISOString().split('T')[0]}`
       
-      // Combine both trading and promoter data
-      const combinedData = [
-        ...tradingData.map(item => ({ ...item, dataType: 'trading' })),
-        ...promoterData.map(item => ({ ...item, dataType: 'promoter' }))
-      ]
+      // Combine all data exactly as shown on page (all records, no pagination)
+      const combinedData = []
       
+      // 1. Trading Securities - all consolidated records
+      const tradingExportData = consolidatedTradingData.map(item => ({ 
+        ...item, 
+        dataType: 'trading',  // Match microservice expectation
+        tableType: 'Held for Trading Securities'
+      }))
+      combinedData.push(...tradingExportData)
+      
+      // 2. Promoter Shares - all records
+      const promoterExportData = promoterData.map(item => ({ 
+        ...item, 
+        dataType: 'promoter',  // Match microservice expectation
+        tableType: 'Promoter Shares (Held for Maturity)'
+      }))
+      combinedData.push(...promoterExportData)
+      
+      // 3. Sub-Class tables - treat as promoter data since they're held for maturity
+      subClasses.forEach(subClass => {
+        const subClassItems = subClassData.get(subClass.sub_id) || []
+        const subClassExportData = subClassItems.map(item => ({
+          ...item,
+          dataType: 'promoter',  // Sub-classes are promoter/maturity securities
+          tableType: `Sub-Class: ${subClass.sub_name}`,
+          subClassId: subClass.sub_id,
+          subClassName: subClass.sub_name
+        }))
+        combinedData.push(...subClassExportData)
+      })
+      
+      if (combinedData.length === 0) {
+        toast.error('No data to export. Please apply filters first.')
+        return
+      }
+      
+      // Detailed logging
+      console.log('=== EXPORT DEBUG INFO ===')
+      console.log('Export Summary:', {
+        totalRecords: combinedData.length,
+        tradingRecords: consolidatedTradingData.length,
+        promoterRecords: promoterData.length,
+        subClassCount: subClasses.length,
+        subClassRecords: combinedData.length - consolidatedTradingData.length - promoterData.length
+      })
+      console.log('First Trading Record:', consolidatedTradingData[0])
+      console.log('First Promoter Record:', promoterData[0])
+      console.log('Sub Classes:', subClasses)
+      console.log('Combined Data Sample (first 3):', combinedData.slice(0, 3))
+      
+      // Send to export API
+      console.log('Sending to universalExport API...')
       const result = await universalExport({
         fileName,
         data: combinedData,
         pageType: 'metric-dashboard',
         filters: {
           clientName: currentFund,
-          fiscalYear: fiscalID
+          fiscalYear: getFiscals?.find(f => f.fiscal_year_id.toString() === fiscalID)?.year_label || fiscalID,
+          fiscalYearId: fiscalID,
+          exportDate: new Date().toISOString(),
+          totalRecords: combinedData.length,
+          breakdown: {
+            trading: consolidatedTradingData.length,
+            promoter: promoterData.length,
+            subClasses: subClasses.length,
+            subClassRecords: combinedData.length - consolidatedTradingData.length - promoterData.length
+          }
         }
       })
       
+      console.log('Export API Response:', result)
+      
       if (!result.success) {
-        alert(`Export failed: ${result.message}`)
+        toast.error(`Export failed: ${result.message || 'Unknown error'}`)
+        console.error('Export failed:', result)
         return
       }
       
-      // Trigger the download on client side
       if (result.downloadData && result.fileName) {
         triggerFileDownload(result.downloadData, result.fileName)
-        console.log('Download triggered successfully')
+        toast.success(`Export Successful! Exported ${combinedData.length} records.`)
       } else {
-        alert('Export completed but download data is missing')
+        toast.error('Export completed but download data is missing')
+        console.error('Missing download data')
       }
-
-      toast.success('Export Successfull')
       
     } catch (error) {
       console.error('Export error:', error)
@@ -517,11 +679,41 @@ export default function DashboardTwo() {
   const renderSubClassTable = (subClass: {sub_id: number, sub_name: string}) => {
     const data = subClassData.get(subClass.sub_id) || []
     const currentPage = subClassCurrentPages.get(subClass.sub_id) || 1
-    const startIndex = (currentPage - 1) * subClassItemsPerPage
-    const endIndex = startIndex + subClassItemsPerPage
-    const paginatedData = data.slice(startIndex, endIndex)
-    const totalPages = Math.ceil(data.length / subClassItemsPerPage)
-    const subClassTotals = calculateSubClassTotals(data)
+    const itemsPerPage = subClassItemsPerPage
+    const sortField = subClassSortFields.get(subClass.sub_id)
+    const sortOrder = subClassSortOrders.get(subClass.sub_id) || 'asc'
+    
+    // Sort data
+    let sortedData = [...data]
+    if (sortField) {
+      sortedData.sort((a, b) => {
+        const aValue = a[sortField as keyof typeof a]
+        const bValue = b[sortField as keyof typeof b]
+        
+        if (aValue == null && bValue == null) return 0
+        if (aValue == null) return sortOrder === 'asc' ? 1 : -1
+        if (bValue == null) return sortOrder === 'asc' ? -1 : 1
+        
+        if (typeof aValue === 'string') {
+          return sortOrder === 'asc' 
+            ? aValue.localeCompare(bValue as string)
+            : (bValue as string).localeCompare(aValue)
+        }
+        
+        if (typeof aValue === 'number') {
+          return sortOrder === 'asc' 
+            ? (aValue as number) - (bValue as number)
+            : (bValue as number) - (aValue as number)
+        }
+        return 0
+      })
+    }
+    
+    const startIndex = (currentPage - 1) * itemsPerPage
+    const endIndex = startIndex + itemsPerPage
+    const paginatedData = sortedData.slice(startIndex, endIndex)
+    const totalPages = Math.ceil(sortedData.length / itemsPerPage)
+    const subClassTotals = calculateSubClassTotals(sortedData)
 
     return (
       <Card key={subClass.sub_id} className="bg-white shadow-sm border border-gray-200 mb-6">
@@ -533,9 +725,15 @@ export default function DashboardTwo() {
             <Table className="min-w-full">
               <TableHeader>
                 <TableRow>
-                  <TableHead rowSpan={2} className="text-center border-r">Company</TableHead>
-                  <TableHead rowSpan={2} className="text-center border-r">Code</TableHead>
-                  <TableHead rowSpan={2} className="text-center border-r">Category</TableHead>
+                  <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'company')}>
+                    Company <SortIndicator field="company" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                  </TableHead>
+                  <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'code')}>
+                    Code <SortIndicator field="code" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                  </TableHead>
+                  <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'category')}>
+                    Category <SortIndicator field="category" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                  </TableHead>
                   <TableHead colSpan={3} className="text-center border-r">Opening</TableHead>
                   <TableHead colSpan={3} className="text-center border-r">Purchase</TableHead>
                   <TableHead colSpan={2} className="text-center border-r">Right Share</TableHead>
@@ -578,7 +776,7 @@ export default function DashboardTwo() {
                       Loading {subClass.sub_name} data...
                     </TableCell>
                   </TableRow>
-                ) : paginatedData.length > 0 ? (
+                ) : sortedData.length > 0 ? (
                   paginatedData.map((data, index) => (
                     <TableRow 
                       key={`subclass-${subClass.sub_id}-${data.code}-${index}`}
@@ -634,7 +832,7 @@ export default function DashboardTwo() {
               </TableBody>
               
               {/* Sub Class Table Footer with Totals */}
-              {data.length > 0 && (
+              {sortedData.length > 0 && (
                 <TableFooter>
                   <TableRow className="bg-gray-100 font-semibold">
                     <TableCell className="font-bold border-r">TOTAL</TableCell>
@@ -670,19 +868,45 @@ export default function DashboardTwo() {
                 </TableFooter>
               )}
             </Table>
-          </div>
+            </div>
+          </CardContent>
           
           {/* Sub Class Table Pagination */}
-          {data.length > subClassItemsPerPage && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={(page) => handleSubClassPageChange(subClass.sub_id, page)}
-              itemsPerPage={subClassItemsPerPage}
-              totalItems={data.length}
-            />
+          {sortedData.length > itemsPerPage && (
+            <div className="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-700">Items per page:</span>
+                <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+                  setSubClassItemsPerPage(parseInt(value))
+                  const pages = new Map(subClassCurrentPages)
+                  pages.set(subClass.sub_id, 1)
+                  setSubClassCurrentPages(pages)
+                }}>
+                  <SelectTrigger className="w-20">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="5">5</SelectItem>
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="15">15</SelectItem>
+                      <SelectItem value="20">20</SelectItem>
+                      <SelectItem value="25">25</SelectItem>
+                      <SelectItem value="50">50</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={(page) => handleSubClassPageChange(subClass.sub_id, page)}
+                itemsPerPage={itemsPerPage}
+                totalItems={sortedData.length}
+              />
+            </div>
           )}
-        </CardContent>
+
       </Card>
     )
   }
@@ -693,79 +917,81 @@ export default function DashboardTwo() {
         <RefreshCw className="animate-spin size-6 mx-auto mb-2" />
       </div>
     ) : (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
-      {/* Fiscal Year Display Section */}
-      {fiscalID && currentFund && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <span className="text-blue-600 font-bold text-lg">
-                  FY {getFiscals?.find(f => f.fiscal_year_id.toString() === fiscalID)?.year_label}
-                </span>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">
-                  Metrics for Fiscal Year: {getFiscals?.find(f => f.fiscal_year_id.toString() === fiscalID)?.year_label}
-                </h3>
-                <p className="text-sm text-gray-600">
-                  Fund: {currentFund} | Data: {consolidatedTradingData.length} Trading + {promoterData.length} Promoter{subClasses.length > 0 ? ` + ${subClasses.length} Sub Classes` : ''} Securities
-                </p>
-              </div>
-            </div>
-            <Button onClick={handleExport} disabled={isExporting || (tradingData.length === 0 && promoterData.length === 0)} className="bg-blue-600 hover:bg-blue-700">
-              <Download className="w-4 h-4 mr-2" />
-              {isExporting ? 'Exporting...' : 'Export Data'}
-            </Button>
-          </div>
-        </div>
-      )}
-      
-      <Card className="bg-white shadow-sm border border-gray-200 mb-6">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-semibold text-gray-900">Metric Filters</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
-    
-                <Select defaultValue={initialUser} onValueChange={handleFundChange}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Fund" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Fund Category</SelectLabel>
+      <div className="space-y-6">
+        <Card className="bg-white shadow-sm border border-gray-200">
+          <CardHeader>
+            <CardTitle>Metric Dashboard</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Review trading, promoter, and subclass metrics with fiscal snapshots and export-ready data.
+            </p>
+          </CardHeader>
+          <CardContent className="grid gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))]">
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-muted-foreground">Fund</p>
+              <Select defaultValue={initialUser} onValueChange={handleFundChange}>
+                <SelectTrigger className="bg-white">
+                  <SelectValue placeholder="Fund" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Fund Category</SelectLabel>
                     {givenUsers.map((details) => (
                       <SelectItem key={details.client_id} value={details.client_name}>
                         {details.client_name}
                       </SelectItem>
                     ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-    
-            <Select value={fiscalID} onValueChange={handleFiscalChange}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Fiscal Year" />
-              </SelectTrigger>
-              <SelectContent>
-                {getFiscals?.map((fiscal) => (
-                  <SelectGroup key={fiscal.fiscal_year_id}>
-                    <SelectItem value={String(fiscal.fiscal_year_id)}>{fiscal.year_label}</SelectItem>
                   </SelectGroup>
-                ))}
-              </SelectContent>
-            </Select>
-    
-                <Button className="w-full" onClick={handleFilters} disabled={isLoading}>
-                  <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-                  {isLoading ? 'Loading...' : 'Apply'}
-                </Button>
-              </div>
-            </CardContent>
-    
-    
-          </Card>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-muted-foreground">Fiscal Year</p>
+              <Select value={fiscalID} onValueChange={handleFiscalChange}>
+                <SelectTrigger className="bg-white">
+                  <SelectValue placeholder="Fiscal Year" />
+                </SelectTrigger>
+                <SelectContent>
+                  {getFiscals?.map((fiscal) => (
+                    <SelectGroup key={fiscal.fiscal_year_id}>
+                      <SelectItem value={String(fiscal.fiscal_year_id)}>{fiscal.year_label}</SelectItem>
+                    </SelectGroup>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex items-end">
+              <Button onClick={handleFilters} disabled={isLoading} className="w-full">
+                <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
+                {isLoading ? "Loading..." : "Apply Filters"}
+              </Button>
+            </div>
+
+            <div className="flex items-end justify-end">
+              <Button
+                onClick={handleExport}
+                disabled={isExporting || (tradingData.length === 0 && promoterData.length === 0)}
+                className="w-full sm:w-auto"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                {isExporting ? "Exporting..." : "Export Data"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="space-y-4">
+          {fiscalID && currentFund && (
+            <div className="text-sm text-muted-foreground">
+              Viewing FY {getFiscals?.find((f) => f.fiscal_year_id.toString() === fiscalID)?.year_label} · Fund {currentFund} ·
+              {" "}
+              {consolidatedTradingData.length} Trading · {promoterData.length} Promoter
+              {subClasses.length > 0 ? ` · ${subClasses.length} Subclass tables` : ""}
+            </div>
+          )}
+        </div>
+
     {/* Held for Trading Table */}
     <Card className="bg-white shadow-sm border border-gray-200 mb-6">
       <CardHeader className="pb-4">
@@ -777,9 +1003,15 @@ export default function DashboardTwo() {
         <Table className="min-w-full">
           <TableHeader>
             <TableRow>
-              <TableHead rowSpan={2} className="text-center border-r">Company</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Code</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Category</TableHead>
+              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('company')}>
+                Company <SortIndicator field="company" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+              </TableHead>
+              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('code')}>
+                Code <SortIndicator field="code" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+              </TableHead>
+              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('category')}>
+                Category <SortIndicator field="category" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+              </TableHead>
               <TableHead colSpan={3} className="text-center border-r">Opening</TableHead>
               <TableHead colSpan={3} className="text-center border-r">Purchase</TableHead>
               <TableHead colSpan={2} className="text-center border-r">Right Share</TableHead>
@@ -823,7 +1055,7 @@ export default function DashboardTwo() {
                   Loading metric data...
                 </TableCell>
               </TableRow>
-            ) : consolidatedTradingData.length > 0 ? (
+            ) : sortedTradingData.length > 0 ? (
               paginatedTradingData.map((data, index) => (
                 <TableRow key={`trading-${data.code}-${index}`}>
                   <TableCell className="font-medium border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.company}</Link></TableCell>
@@ -883,66 +1115,43 @@ export default function DashboardTwo() {
               </TableRow>
             )}
           </TableBody>
-          
-          {/* Trading Table Footer with Totals */}
-          {consolidatedTradingData.length > 0 && (
-            <TableFooter>
-              <TableRow className="bg-gray-100 font-semibold">
-                <TableCell className="font-bold border-r">TOTAL</TableCell>
-                <TableCell className="border-r">-</TableCell>
-                <TableCell className="border-r">-</TableCell>
-                <TableCell className="text-center">{tradingTotals.opening_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">-</TableCell>
-                <TableCell className="text-center border-r">Rs. {tradingTotals.opening_amount.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{tradingTotals.purchase_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">-</TableCell>
-                <TableCell className="text-center border-r">Rs. {tradingTotals.purchase_amount.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{tradingTotals.right_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">Rs. {tradingTotals.right_total.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{tradingTotals.bonus_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">-</TableCell>
-                <TableCell className="text-center">{tradingTotals.sales_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">Rs. {tradingTotals.sales_cost.toLocaleString()}</TableCell>
-                <TableCell className="text-center">Rs. {tradingTotals.sales_amount.toLocaleString()}</TableCell>
-                <TableCell className={`text-center border-r ${
-                  tradingTotals.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  Rs. {tradingTotals.sales_profit.toLocaleString()}
-                </TableCell>
-                <TableCell className="text-center">{tradingTotals.closing_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">-</TableCell>
-                <TableCell className="text-center border-r">Rs. {tradingTotals.closing_amount.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{tradingTotals.demat.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">{tradingTotals.non_demat.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">-</TableCell>
-                <TableCell className={`text-center border-r font-bold ${
-                  tradingTotals.unrealised_amount >= 0 ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  Rs. {tradingTotals.unrealised_amount.toLocaleString()}
-                </TableCell>
-                <TableCell className={`text-center font-bold ${
-                  tradingTotalReturnPercent >= 0 ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  {tradingTotalReturnPercent.toFixed(2)}%
-                </TableCell>
-                <TableCell className="text-center">-</TableCell>
-              </TableRow>
-            </TableFooter>
-          )}
-        </Table>
-      </div>
-      
-      {/* Trading Table Pagination */}
-      {consolidatedTradingData.length > tradingItemsPerPage && (
-        <Pagination
-          currentPage={tradingCurrentPage}
-          totalPages={tradingTotalPages}
-          onPageChange={handleTradingPageChange}
-          itemsPerPage={tradingItemsPerPage}
-          totalItems={consolidatedTradingData.length}
-        />
-      )}
+          </Table>
+        </div>
       </CardContent>
+      
+      {/* Trading Table Pagination - Show both conditions */}
+      {sortedTradingData.length > 0 && (
+        <div className="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-gray-700">Items per page:</span>
+            <Select value={tradingItemsPerPage.toString()} onValueChange={(value) => {
+              setTradingItemsPerPage(parseInt(value))
+              setTradingCurrentPage(1)
+            }}>
+              <SelectTrigger className="w-20">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="5">5</SelectItem>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="15">15</SelectItem>
+                  <SelectItem value="20">20</SelectItem>
+                  <SelectItem value="25">25</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <Pagination
+            currentPage={tradingCurrentPage}
+            totalPages={tradingTotalPages}
+            onPageChange={handleTradingPageChange}
+            itemsPerPage={tradingItemsPerPage}
+            totalItems={sortedTradingData.length}
+          />
+        </div>
+      )}
     </Card>
     
     {/* Promoter Shares Table */}
@@ -956,9 +1165,15 @@ export default function DashboardTwo() {
         <Table className="min-w-full">
           <TableHeader>
             <TableRow>
-              <TableHead rowSpan={2} className="text-center border-r">Company</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Code</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Category</TableHead>
+              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('company')}>
+                Company <SortIndicator field="company" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+              </TableHead>
+              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('code')}>
+                Code <SortIndicator field="code" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+              </TableHead>
+              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('category')}>
+                Category <SortIndicator field="category" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+              </TableHead>
               <TableHead colSpan={3} className="text-center border-r">Opening</TableHead>
               <TableHead colSpan={3} className="text-center border-r">Purchase</TableHead>
               <TableHead colSpan={2} className="text-center border-r">Right Share</TableHead>
@@ -1001,7 +1216,7 @@ export default function DashboardTwo() {
                   Loading promoter data...
                 </TableCell>
               </TableRow>
-            ) : promoterData.length > 0 ? (
+            ) : sortedPromoterData.length > 0 ? (
               paginatedPromoterData.map((data, index) => (
                 <TableRow 
                   key={`promoter-${data.code}-${index}`}
@@ -1055,57 +1270,43 @@ export default function DashboardTwo() {
               </TableRow>
             )}
           </TableBody>
-          
-          {/* Promoter Table Footer with Totals */}
-          {promoterData.length > 0 && (
-            <TableFooter>
-              <TableRow className="bg-gray-100 font-semibold">
-                <TableCell className="font-bold border-r">TOTAL</TableCell>
-                <TableCell className="border-r">-</TableCell>
-                <TableCell className="border-r">-</TableCell>
-                <TableCell className="text-center">{promoterTotals.opening_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">-</TableCell>
-                <TableCell className="text-center border-r">Rs. {promoterTotals.opening_amount.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{promoterTotals.purchase_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">-</TableCell>
-                <TableCell className="text-center border-r">Rs. {promoterTotals.purchase_amount.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{promoterTotals.right_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">Rs. {promoterTotals.right_total.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{promoterTotals.bonus_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">-</TableCell>
-                <TableCell className="text-center">{promoterTotals.sales_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">Rs. {promoterTotals.sales_cost.toLocaleString()}</TableCell>
-                <TableCell className="text-center">Rs. {promoterTotals.sales_amount.toLocaleString()}</TableCell>
-                <TableCell className={`text-center border-r ${
-                  promoterTotals.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  Rs. {promoterTotals.sales_profit.toLocaleString()}
-                </TableCell>
-                <TableCell className="text-center">{promoterTotals.closing_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">-</TableCell>
-                <TableCell className="text-center border-r">Rs. {promoterTotals.closing_amount.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{promoterTotals.demat.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">{promoterTotals.non_demat.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">-</TableCell>
-                <TableCell className="text-center border-r font-bold">Rs. {promoterTotals.revaluation_amount.toLocaleString()}</TableCell>
-                <TableCell className="text-center">-</TableCell>
-              </TableRow>
-            </TableFooter>
-          )}
-        </Table>
-      </div>
-      
-      {/* Promoter Table Pagination */}
-      {promoterData.length > promoterItemsPerPage && (
-        <Pagination
-          currentPage={promoterCurrentPage}
-          totalPages={promoterTotalPages}
-          onPageChange={handlePromoterPageChange}
-          itemsPerPage={promoterItemsPerPage}
-          totalItems={promoterData.length}
-        />
-      )}
+          </Table>
+        </div>
       </CardContent>
+      
+      {/* Promoter Table Pagination - Show both conditions */}
+      {sortedPromoterData.length > 0 && (
+        <div className="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-gray-700">Items per page:</span>
+            <Select value={promoterItemsPerPage.toString()} onValueChange={(value) => {
+              setPromoterItemsPerPage(parseInt(value))
+              setPromoterCurrentPage(1)
+            }}>
+              <SelectTrigger className="w-20">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="5">5</SelectItem>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="15">15</SelectItem>
+                  <SelectItem value="20">20</SelectItem>
+                  <SelectItem value="25">25</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <Pagination
+            currentPage={promoterCurrentPage}
+            totalPages={promoterTotalPages}
+            onPageChange={handlePromoterPageChange}
+            itemsPerPage={promoterItemsPerPage}
+            totalItems={sortedPromoterData.length}
+          />
+        </div>
+      )}
     </Card>
     
     </div>
