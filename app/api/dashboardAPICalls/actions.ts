@@ -231,7 +231,7 @@ async function _getTotalInvestment(selectUser: string) {
             ipoStagingTotal = FinancialCalculator.add(ipoStagingTotal, costValue);
         });
 
-        // Total Investment = trading total + promoter total + ipo_allotment_staging total_value
+        // Total Investment = trading total + promoter total + fiscal_year_balance_staging total_value
         const totalInvestment = FinancialCalculator.add(
             FinancialCalculator.add(tradingTotal, promoterTotal), 
             ipoStagingTotal

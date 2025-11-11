@@ -226,25 +226,28 @@ async function _getTotalInvestmentFiscal(selectUser: string, fiscalYearId: numbe
             promoterTotal += costValue;
         });
 
-        // Get IPO allotment staging records total_value
-        const ipoStagingRecords = await prisma.ipo_allotment_staging.findMany({
+        // Get IPO allotment staging records from fiscal_year_balance_staging
+        const ipoStagingRecords = await prisma.fiscal_year_balance_staging.findMany({
             where: {
                 fiscal_year_id: fiscalYearId,
                 fund_id: clientMapping.fund_id
             },
             select: {
-                total_value: true
+                closing_quantity: true,
+                effective_rate: true
             }
         });
 
         // Calculate total from IPO staging records
         let ipoStagingTotal = 0;
         ipoStagingRecords.forEach(record => {
-            const totalValue = sanitizeNumeric(record.total_value);
+            const quantity = sanitizeNumeric(record.closing_quantity);
+            const rate = sanitizeNumeric(record.effective_rate);
+            const totalValue = quantity * rate;
             ipoStagingTotal += totalValue;
         });
 
-        // Total Investment = trading total + promoter total + ipo_allotment_staging total_value
+        // Total Investment = trading total + promoter total + fiscal_year_balance_staging total_value
         const totalInvestment = tradingTotal + promoterTotal + ipoStagingTotal;
 
         return {
@@ -459,28 +462,17 @@ export async function getInvestmentBreakdownFiscal(selectUser: string, fiscalYea
             }
         });
 
-        // Get IPO allotment staging records for maturity
-        const ipoStagingInvestments = await prisma.ipo_allotment_staging.findMany({
+        // Get IPO allotment staging records for maturity from fiscal_year_balance_staging
+        const ipoStagingInvestments = await prisma.fiscal_year_balance_staging.findMany({
             where: {
                 fiscal_year_id: fiscalYearId,
                 fund_id: clientMapping.fund_id
             },
             select: {
                 symbol: true,
-                quantity: true,
+                closing_quantity: true,
                 effective_rate: true,
-                fund_id: true,
-                stock_fulls: {
-                    select: {
-                        sector_id: true,
-                        promoter_sector_id: true,
-                        sectors: {
-                            select: {
-                                sector_name: true
-                            }
-                        }
-                    }
-                }
+                fund_id: true
             }
         });
 
@@ -490,11 +482,10 @@ export async function getInvestmentBreakdownFiscal(selectUser: string, fiscalYea
         // Add IPO staging records to maturity investments
         const ipoStagingMapped = ipoStagingInvestments.map(record => ({
             symbol: record.symbol,
-            closing_quantity: record.quantity,
+            closing_quantity: record.closing_quantity,
             effective_rate: record.effective_rate,
             fund_id: record.fund_id,
-            fiscal_year_id: fiscalYearId,
-            stock_fulls: record.stock_fulls
+            fiscal_year_id: fiscalYearId
         }));
         
         const combinedMaturityWithIPO = [...combinedMaturityInvestments, ...ipoStagingMapped];
@@ -658,33 +649,40 @@ export async function getSectorPortfolioSummaryFiscal(selectUser: string, fiscal
             }
         });
 
-        // Get IPO allotment staging records for maturity
-        const ipoStagingRecords = clientMapping ? await prisma.ipo_allotment_staging.findMany({
+        // Get IPO allotment staging records for maturity from fiscal_year_balance_staging
+        const ipoStagingRecords = clientMapping ? await prisma.fiscal_year_balance_staging.findMany({
             where: {
                 fiscal_year_id: fiscalYearId,
                 fund_id: clientMapping.fund_id
             },
             select: {
                 symbol: true,
-                quantity: true,
+                closing_quantity: true,
                 effective_rate: true,
-                fund_id: true,
-                stock_fulls: {
-                    select: {
-                        sector_id: true,
-                        promoter_sector_id: true,
-                        sectors: {
-                            select: {
-                                sector_name: true
-                            }
-                        }
-                    }
-                }
+                fund_id: true
             }
         }) : [];
 
     // Get promoter sector map for efficient sector name lookup
     const promoterSectorMap = await getPromoterSectorMap();
+
+    // Batch fetch stock_fulls data for IPO staging records (to get sector info)
+    const ipoSymbols = ipoStagingRecords.map(r => r.symbol);
+    const stockFullsMap = new Map();
+    if (ipoSymbols.length > 0) {
+        const stockFullsData = await prisma.stock_fulls.findMany({
+            where: { symbol: { in: ipoSymbols } },
+            select: {
+                symbol: true,
+                sector_id: true,
+                promoter_sector_id: true,
+                sectors: {
+                    select: { sector_name: true }
+                }
+            }
+        });
+        stockFullsData.forEach(sf => stockFullsMap.set(sf.symbol, sf));
+    }
 
     // Batch fetch LTP for all symbols (for unrealized gain calculation)
     const allSymbols = [
@@ -737,8 +735,11 @@ export async function getSectorPortfolioSummaryFiscal(selectUser: string, fiscal
 
         // Process IPO staging records (maturity holdings)
         for (const ipoRecord of ipoStagingRecords) {
-            const sectorName = getCorrectSectorName(ipoRecord.stock_fulls, promoterSectorMap);
-            const maturityValue = sanitizeNumeric(ipoRecord.quantity) * sanitizeNumeric(ipoRecord.effective_rate);
+            const stockFulls = stockFullsMap.get(ipoRecord.symbol);
+            if (!stockFulls) continue; // Skip if stock info not found
+            
+            const sectorName = getCorrectSectorName(stockFulls, promoterSectorMap);
+            const maturityValue = sanitizeNumeric(ipoRecord.closing_quantity) * sanitizeNumeric(ipoRecord.effective_rate);
 
             if (!sectorMap.has(sectorName)) {
                 sectorMap.set(sectorName, {

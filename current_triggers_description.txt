@@ -1,0 +1,1074 @@
+analyze my prisma schema properly, and I need you to create a .sql file with proper triggers and function like the way I tell you to.
+
+FUNCTIONS:
+1. calculate_weighted_average(current quantity, current_rate, new_quantity, new_rate)
+"
+DECLARE
+    total_quantity INTEGER;
+    total_value DECIMAL(16,2);
+BEGIN
+    -- Handle zero or null quantities
+    IF current_quantity IS NULL THEN current_quantity := 0; END IF;
+    IF new_quantity IS NULL THEN new_quantity := 0; END IF;
+    IF current_rate IS NULL THEN current_rate := 0; END IF;
+    IF new_rate IS NULL THEN new_rate := 0; END IF;
+    
+    total_quantity := current_quantity + new_quantity;
+    
+    -- Return 0 if total quantity is zero
+    IF total_quantity = 0 OR total_quantity IS NULL THEN
+        RETURN 0;
+    END IF;
+    
+    -- Calculate weighted average
+    total_value := (current_quantity * current_rate) + (new_quantity * new_rate);
+    
+    RETURN ROUND(total_value / total_quantity, 2);
+END;
+"
+
+
+2. carryforward_fiscal_year_balance(fromyear, toyear)
+"
+DECLARE
+    v_record RECORD;
+    v_count INTEGER := 0;
+BEGIN
+    -- Validate fiscal years exist
+    IF NOT EXISTS (SELECT 1 FROM fiscal_years WHERE fiscal_year_id = fromyear) THEN
+        RAISE EXCEPTION 'Source fiscal year % does not exist', fromyear;
+    END IF;
+    
+    IF NOT EXISTS (SELECT 1 FROM fiscal_years WHERE fiscal_year_id = toyear) THEN
+        RAISE EXCEPTION 'Target fiscal year % does not exist', toyear;
+    END IF;
+
+    -- Copy closing balances to opening balances
+    FOR v_record IN
+        SELECT 
+            client_id, symbol, fund_id, source_type, sub_id,
+            closing_quantity AS opening_qty,
+            effective_rate AS opening_rate
+        FROM fiscal_year_balance
+        WHERE fiscal_year_id = fromyear
+        AND closing_quantity > 0
+    LOOP
+        INSERT INTO fiscal_year_balance (
+            client_id, symbol, fiscal_year_id, fund_id,
+            opening_quantity, added_quantity, effective_rate,
+            opening_rate, source_type, sub_id
+        )
+        VALUES (
+            v_record.client_id, v_record.symbol, toyear, v_record.fund_id,
+            v_record.opening_qty, 0, v_record.opening_rate,
+            v_record.opening_rate, v_record.source_type, v_record.sub_id
+        )
+        ON CONFLICT (client_id, symbol, fiscal_year_id) DO UPDATE SET
+            opening_quantity = EXCLUDED.opening_quantity,
+            opening_rate = EXCLUDED.opening_rate,
+            added_quantity = 0,
+            effective_rate = EXCLUDED.effective_rate,
+            source_type = EXCLUDED.source_type,
+            sub_id = EXCLUDED.sub_id;
+        
+        v_count := v_count + 1;
+    END LOOP;
+
+    RETURN FORMAT('Carried forward %s records from fiscal year %s to %s', 
+                  v_count, fromyear, toyear);
+END;
+"
+
+3. check_data_integrity()
+"
+BEGIN
+    -- Check for negative quantities in fiscal_year_balance
+    RETURN QUERY
+    SELECT 
+        'Negative quantity in fiscal_year_balance'::VARCHAR(100),
+        FORMAT('Client: %s, Symbol: %s, FY: %s, Quantity: %s', 
+               client_id, symbol, fiscal_year_id, 
+               (opening_quantity + added_quantity))::TEXT
+    FROM fiscal_year_balance
+    WHERE (opening_quantity + added_quantity) < 0;
+
+    -- Check for negative quantities in symbol_holdings
+    RETURN QUERY
+    SELECT 
+        'Negative quantity in symbol_holdings'::VARCHAR(100),
+        FORMAT('Symbol: %s, Fund: %s, FY: %s, Quantity: %s', 
+               symbol, fund_id, fiscal_year_id, quantity)::TEXT
+    FROM symbol_holdings
+    WHERE quantity < 0;
+
+    -- Check for orphaned fiscal_year_balance records
+    RETURN QUERY
+    SELECT 
+        'Orphaned fiscal_year_balance record'::VARCHAR(100),
+        FORMAT('Client: %s, Symbol: %s, FY: %s', 
+               fyb.client_id, fyb.symbol, fyb.fiscal_year_id)::TEXT
+    FROM fiscal_year_balance fyb
+    LEFT JOIN client_broker_mapping cbm ON fyb.client_id = cbm.client_id
+    WHERE cbm.client_id IS NULL;
+
+    -- Check for missing WACC when quantity > 0
+    RETURN QUERY
+    SELECT 
+        'Missing WACC in symbol_holdings'::VARCHAR(100),
+        FORMAT('Symbol: %s, Fund: %s, FY: %s, Quantity: %s, Total Value: %s', 
+               symbol, fund_id, fiscal_year_id, quantity, total_txn_value)::TEXT
+    FROM symbol_holdings
+    WHERE quantity > 0 
+    AND (wacc IS NULL OR wacc = 0) 
+    AND total_txn_value > 0;
+
+    -- Check for records with NULL fiscal_year_id
+    RETURN QUERY
+    SELECT 
+        'Missing fiscal_year_id in buy_records'::VARCHAR(100),
+        FORMAT('Contract: %s, Symbol: %s, Date: %s', 
+               contract_number, symbol, transaction_date)::TEXT
+    FROM buy_records
+    WHERE fiscal_year_id IS NULL;
+
+    RETURN QUERY
+    SELECT 
+        'Missing fiscal_year_id in sell_records'::VARCHAR(100),
+        FORMAT('Contract: %s, Symbol: %s, Date: %s', 
+               contract_number, symbol, transaction_date)::TEXT
+    FROM sell_records
+    WHERE fiscal_year_id IS NULL;
+
+    RETURN;
+END;
+"
+
+4. cleanup_zero_quantity_records()
+"
+BEGIN
+    -- Clean up fiscal_year_balance
+    DELETE FROM fiscal_year_balance
+    WHERE (COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0)) <= 0;
+    
+    -- Clean up symbol_holdings
+    DELETE FROM symbol_holdings
+    WHERE COALESCE(quantity, 0) <= 0;
+    
+    RAISE NOTICE 'Cleaned up zero quantity records';
+END;
+"
+
+5. confirm_staging_records(uploadid)
+"
+DECLARE
+    v_record RECORD;
+    v_wacc DECIMAL(14,2);
+    v_profit_loss DECIMAL(14,2);
+    v_cost_basis DECIMAL(16,2);
+BEGIN
+    -- Validate upload exists and is not confirmed
+    IF NOT EXISTS (
+        SELECT 1 FROM uploads 
+        WHERE upload_id = uploadid 
+        AND is_confirmed = false
+    ) THEN
+        RAISE EXCEPTION 'Upload % does not exist or is already confirmed', uploadid;
+    END IF;
+
+    -- Copy buy_records_staging to buy_records
+    INSERT INTO buy_records (
+        fund_id, upload_id, client_id, symbol, quantity, price, txn_value,
+        commission_rate, commission_amount, sebon_commission, effective_rate,
+        net_payable, transaction_date, recorded_at, contract_number, fiscal_year_id
+    )
+    SELECT 
+        fund_id, upload_id, client_id, symbol, quantity, price, txn_value,
+        commission_rate, commission_amount, sebon_commission, effective_rate,
+        net_payable, transaction_date, recorded_at, contract_number, fiscal_year_id
+    FROM buy_records_staging
+    WHERE upload_id = uploadid
+    ON CONFLICT (contract_number) DO UPDATE SET
+        commission_rate = EXCLUDED.commission_rate,
+        commission_amount = EXCLUDED.commission_amount,
+        sebon_commission = EXCLUDED.sebon_commission,
+        effective_rate = EXCLUDED.effective_rate,
+        net_payable = EXCLUDED.net_payable;
+
+    -- Copy sell_records_staging to sell_records and calculate profit/loss
+    FOR v_record IN 
+        SELECT * FROM sell_records_staging WHERE upload_id = uploadid
+    LOOP
+        -- Ensure stock exists
+        PERFORM ensure_stock_exists(v_record.symbol);
+        
+        -- Get WACC for profit/loss calculation
+        SELECT wacc INTO v_wacc
+        FROM symbol_holdings
+        WHERE symbol = v_record.symbol
+          AND fund_id = v_record.fund_id
+          AND fiscal_year_id = COALESCE(v_record.fiscal_year_id, (
+              SELECT fiscal_year_id FROM fiscal_years
+              WHERE start_date <= v_record.transaction_date
+              AND end_date >= v_record.transaction_date
+              LIMIT 1
+          ))
+        LIMIT 1;
+
+        -- Calculate profit/loss if WACC exists
+        IF v_wacc IS NOT NULL AND v_wacc > 0 THEN
+            v_cost_basis := v_record.quantity * v_wacc;
+            v_profit_loss := v_record.txn_value - v_cost_basis - 
+                           COALESCE(v_record.commission_amount, 0) - 
+                           COALESCE(v_record.sebon_commission, 0) - 
+                           COALESCE(v_record.capital_gain_tax, 0);
+        ELSE
+            v_profit_loss := COALESCE(v_record.approx_profit_loss, 0);
+        END IF;
+
+        -- Insert into sell_records
+        INSERT INTO sell_records (
+            fund_id, upload_id, client_id, symbol, quantity, price, txn_value,
+            commission_rate, commission_amount, capital_gain_tax, sebon_commission,
+            effective_rate, net_receivable, profit_loss, transaction_date, recorded_at,
+            approx_profit_loss, contract_number, fiscal_year_id
+        )
+        VALUES (
+            v_record.fund_id, v_record.upload_id, v_record.client_id, v_record.symbol,
+            v_record.quantity, v_record.price, v_record.txn_value,
+            v_record.commission_rate, v_record.commission_amount, v_record.capital_gain_tax,
+            v_record.sebon_commission, v_record.effective_rate, v_record.net_receivable,
+            v_profit_loss, v_record.transaction_date, v_record.recorded_at,
+            v_record.approx_profit_loss, v_record.contract_number, v_record.fiscal_year_id
+        )
+        ON CONFLICT (contract_number) DO UPDATE SET
+            commission_rate = EXCLUDED.commission_rate,
+            commission_amount = EXCLUDED.commission_amount,
+            capital_gain_tax = EXCLUDED.capital_gain_tax,
+            sebon_commission = EXCLUDED.sebon_commission,
+            effective_rate = EXCLUDED.effective_rate,
+            net_receivable = EXCLUDED.net_receivable,
+            profit_loss = EXCLUDED.profit_loss,
+            approx_profit_loss = EXCLUDED.approx_profit_loss;
+
+    END LOOP;
+
+    -- Note: fiscal_year_balance and symbol_holdings are updated via triggers
+    -- when records are inserted into buy_records and sell_records
+    
+    RAISE NOTICE 'Successfully confirmed staging records for upload %', uploadid;
+END;
+"
+
+6. ensure_stock_exists(p_symbol character varying)
+"
+BEGIN
+    INSERT INTO stock_fulls (symbol, full_form, sector_id, is_auto_generated)
+    VALUES (p_symbol, UPPER(p_symbol), 1, true)
+    ON CONFLICT (symbol) DO NOTHING;
+END;
+"
+
+7. recalculate_all_holdings()
+"
+BEGIN
+    -- Clear existing data
+    TRUNCATE TABLE fiscal_year_balance CASCADE;
+    TRUNCATE TABLE symbol_holdings CASCADE;
+    
+    -- Recalculate from buy_records
+    INSERT INTO fiscal_year_balance (client_id, symbol, fiscal_year_id, fund_id, opening_quantity, added_quantity, effective_rate)
+    SELECT 
+        client_id, 
+        symbol, 
+        fiscal_year_id, 
+        fund_id,
+        0,
+        SUM(quantity),
+        SUM(quantity * effective_rate) / NULLIF(SUM(quantity), 0)
+    FROM buy_records
+    GROUP BY client_id, symbol, fiscal_year_id, fund_id;
+    
+    -- Add other record types and update accordingly
+    -- This is a simplified version - you'd need to add logic for all record types
+    
+    RAISE NOTICE 'Recalculated all holdings';
+END;
+"
+
+TRIGGER FUNCTIONS
+
+1. calc_sell_record_profit_loss()
+
+"
+DECLARE
+    fy_effective_rate numeric(14,2);
+    sh_wacc_tax_base   numeric(14,2);
+    calculated_profit_loss numeric(18,4);
+    calculated_approx_profit_loss numeric(18,4);
+BEGIN
+    -- Basic guards: require keys we need
+    IF NEW.fund_id IS NULL OR NEW.fiscal_year_id IS NULL OR NEW.symbol IS NULL OR NEW.client_id IS NULL THEN
+        RETURN NEW;
+    END IF;
+
+    -- Skip if quantity missing or zero
+    IF NEW.quantity IS NULL OR NEW.quantity = 0 THEN
+        RETURN NEW;
+    END IF;
+
+    -- Fetch effective_rate from fiscal_year_balance for this client_id, symbol, fiscal_year_id
+    SELECT COALESCE(effective_rate, 0)
+    INTO fy_effective_rate
+    FROM fiscal_year_balance
+    WHERE client_id = NEW.client_id
+      AND symbol = NEW.symbol
+      AND fiscal_year_id = NEW.fiscal_year_id
+    LIMIT 1;
+
+    -- If no fiscal_year_balance row found, set fy_effective_rate = 0 (and log)
+    IF NOT FOUND THEN
+        fy_effective_rate := 0;
+        RAISE NOTICE 'fiscal_year_balance row not found for client_id=%, symbol=%, fiscal_year_id=%; using effective_rate=0',
+                     NEW.client_id, NEW.symbol, NEW.fiscal_year_id;
+    END IF;
+
+    -- Fetch wacc_tax_base from symbol_holdings for this fund_id, symbol, fiscal_year_id
+    SELECT COALESCE(wacc_tax_base, 0)
+    INTO sh_wacc_tax_base
+    FROM symbol_holdings
+    WHERE fund_id = NEW.fund_id
+      AND symbol = NEW.symbol
+      AND fiscal_year_id = NEW.fiscal_year_id
+    LIMIT 1;
+
+    IF NOT FOUND THEN
+        sh_wacc_tax_base := 0;
+        RAISE NOTICE 'symbol_holdings row not found for fund_id=%, symbol=%, fiscal_year_id=%; using wacc_tax_base=0',
+                     NEW.fund_id, NEW.symbol, NEW.fiscal_year_id;
+    END IF;
+
+    -- Calculate accounting profit_loss using fiscal_year_balance.effective_rate
+    -- Only when price is present and positive
+    IF NEW.price IS NOT NULL AND NEW.price > 0 THEN
+        -- If fy_effective_rate > 0, compute; otherwise set 0 (you can change behavior if you prefer NULL)
+        IF fy_effective_rate > 0 THEN
+            calculated_profit_loss := (NEW.price - fy_effective_rate) * NEW.quantity;
+            NEW.profit_loss := ROUND(calculated_profit_loss::numeric, 2);
+        ELSE
+            NEW.profit_loss := 0;
+        END IF;
+    END IF;
+
+    -- Calculate approx_profit_loss using symbol_holdings.wacc_tax_base and NEW.effective_rate (sell record effective_rate)
+    -- Only when the sell-record effective_rate is present and positive
+    IF NEW.effective_rate IS NOT NULL AND NEW.effective_rate > 0 THEN
+        IF sh_wacc_tax_base > 0 THEN
+            calculated_approx_profit_loss := (NEW.effective_rate - sh_wacc_tax_base) * NEW.quantity;
+            NEW.approx_profit_loss := ROUND(calculated_approx_profit_loss::numeric, 2);
+        ELSE
+            NEW.approx_profit_loss := 0;
+        END IF;
+    END IF;
+
+    -- Log summary for debugging
+    RAISE NOTICE 'calc_sell_record_profit_loss: symbol=% | price=% | sell.effective_rate=% | fy_effective_rate=% | sh_wacc_tax_base=% | qty=% | profit_loss=% | approx_profit_loss=%',
+                 NEW.symbol, NEW.price, NEW.effective_rate, fy_effective_rate, sh_wacc_tax_base, NEW.quantity, NEW.profit_loss, NEW.approx_profit_loss;
+
+    RETURN NEW;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE WARNING 'Error in calc_sell_record_profit_loss for sell_records (contract_number=%): %', COALESCE(NEW.contract_number::text, '<no-contract>'), SQLERRM;
+        RETURN NEW;
+END;
+"
+
+2. insert_into_staging()
+
+"
+BEGIN
+    -- Case 1: BUY transactions → insert into buy_records_staging
+    IF UPPER(NEW.transaction_type) = 'BUY' THEN
+        INSERT INTO buy_records_staging (
+            fund_id,
+            upload_id,
+            contract_number,
+            client_id,
+            symbol,
+            quantity,
+            price,
+            txn_value,
+            transaction_date,
+			fiscal_year_id
+        )
+        VALUES (
+            (SELECT fund_id FROM client_broker_mapping WHERE client_id = NEW.client_id LIMIT 1),
+            NEW.upload_id,
+            NEW.contract_number,
+            NEW.client_id,
+            NEW.symbol,
+            NEW.quantity,
+            NEW.price,
+            NEW.txn_value,
+            NEW.transaction_date,
+			NEW.fiscal_year_id
+        );
+
+    -- Case 2: SELL transactions → insert into sell_records_staging
+    ELSIF UPPER(NEW.transaction_type) = 'SELL' THEN
+        INSERT INTO sell_records_staging (
+            fund_id,
+            upload_id,
+            contract_number,
+            client_id,
+            symbol,
+            quantity,
+            price,
+            txn_value,
+            transaction_date,
+			fiscal_year_id
+        )
+        VALUES (
+            (SELECT fund_id FROM client_broker_mapping WHERE client_id = NEW.client_id LIMIT 1),
+            NEW.upload_id,
+            NEW.contract_number,
+            NEW.client_id,
+            NEW.symbol,
+            NEW.quantity,
+            NEW.price,
+            NEW.txn_value,
+            NEW.transaction_date,
+			NEW.fiscal_year_id
+        );
+    END IF;
+
+    RETURN NEW;
+END;
+"
+
+
+3. sync_portfolio_data()
+
+"
+DECLARE
+    v_fiscal_year_id INTEGER;
+    v_fund_id INTEGER;
+    v_client_id VARCHAR(25);
+    v_symbol VARCHAR(15);
+    v_quantity INTEGER;
+    v_rate DECIMAL(14,2);
+    v_action VARCHAR(10);
+BEGIN
+    -- Determine the action and get common fields
+    IF TG_OP = 'DELETE' THEN
+        v_fiscal_year_id := OLD.fiscal_year_id;
+        v_fund_id := OLD.fund_id;
+        v_symbol := OLD.symbol;
+        
+        -- Get client_id based on table
+        IF TG_TABLE_NAME IN ('buy_records', 'sell_records', 'right_records', 'bonus_records', 
+                              'promoter_records', 'ipo_allotment_records', 'closeout_records') THEN
+            v_client_id := OLD.client_id;
+        END IF;
+    ELSE
+        v_fiscal_year_id := NEW.fiscal_year_id;
+        v_fund_id := NEW.fund_id;
+        v_symbol := NEW.symbol;
+        
+        -- Get client_id based on table
+        IF TG_TABLE_NAME IN ('buy_records', 'sell_records', 'right_records', 'bonus_records', 
+                              'promoter_records', 'ipo_allotment_records', 'closeout_records') THEN
+            v_client_id := NEW.client_id;
+        END IF;
+    END IF;
+
+    -- Determine the specific action based on table and operation
+    CASE TG_TABLE_NAME
+        WHEN 'buy_records' THEN
+            v_action := 'BUY';
+            v_quantity := CASE WHEN TG_OP = 'DELETE' THEN OLD.quantity ELSE NEW.quantity END;
+            v_rate := CASE WHEN TG_OP = 'DELETE' THEN OLD.effective_rate ELSE NEW.effective_rate END;
+            
+        WHEN 'sell_records' THEN
+            v_action := 'SELL';
+            v_quantity := CASE WHEN TG_OP = 'DELETE' THEN OLD.quantity ELSE NEW.quantity END;
+            v_rate := 0; -- Sells don't affect average rate
+            
+        WHEN 'bonus_records' THEN
+            v_action := 'BONUS';
+            v_quantity := CASE WHEN TG_OP = 'DELETE' THEN OLD.quantity ELSE NEW.quantity END;
+            v_rate := 0; -- Bonus shares are free
+            
+        WHEN 'right_records' THEN
+            v_action := 'RIGHT';
+            v_quantity := CASE WHEN TG_OP = 'DELETE' THEN OLD.quantity ELSE NEW.quantity END;
+            v_rate := CASE WHEN TG_OP = 'DELETE' THEN OLD.effective_rate ELSE NEW.effective_rate END;
+            
+        WHEN 'promoter_records' THEN
+            v_action := 'PROMOTER';
+            v_quantity := CASE WHEN TG_OP = 'DELETE' THEN OLD.quantity ELSE NEW.quantity END;
+            v_rate := CASE WHEN TG_OP = 'DELETE' THEN OLD.effective_rate ELSE NEW.effective_rate END;
+            
+        WHEN 'ipo_allotment_records' THEN
+            v_action := 'IPO';
+            v_quantity := CASE WHEN TG_OP = 'DELETE' THEN OLD.quantity ELSE NEW.quantity END;
+            v_rate := CASE WHEN TG_OP = 'DELETE' THEN OLD.effective_rate ELSE NEW.effective_rate END;
+            
+        WHEN 'closeout_records' THEN
+            v_action := 'CLOSEOUT';
+            v_quantity := CASE WHEN TG_OP = 'DELETE' THEN OLD.closeout_quantity ELSE NEW.closeout_quantity END;
+            v_rate := CASE WHEN TG_OP = 'DELETE' THEN 
+                         OLD.closeout_amount / NULLIF(OLD.closeout_quantity, 0) 
+                      ELSE 
+                         NEW.closeout_amount / NULLIF(NEW.closeout_quantity, 0) 
+                      END;
+    END CASE;
+
+    -- Log the action for audit purposes (optional)
+    INSERT INTO audit_log (performed_action) 
+    VALUES (FORMAT('%s %s: %s %s @ %s', TG_OP, TG_TABLE_NAME, v_quantity, v_symbol, v_rate));
+
+    -- Return the appropriate row
+    IF TG_OP = 'DELETE' THEN
+        RETURN OLD;
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+"
+
+
+4. trigger_audit_log()
+
+"
+DECLARE
+    v_action VARCHAR(20);
+    v_quantity INTEGER;
+    v_rate DECIMAL(14,2);
+    v_symbol VARCHAR(15);
+    v_client_id VARCHAR(25);
+    v_details TEXT;
+BEGIN
+    -- Determine action and get values
+    IF TG_OP = 'DELETE' THEN
+        v_action := 'DELETE';
+        v_symbol := OLD.symbol;
+        v_client_id := COALESCE(OLD.client_id, 'N/A');
+        
+        v_quantity := CASE 
+            WHEN TG_TABLE_NAME = 'closeout_records' THEN OLD.closeout_quantity
+            ELSE OLD.quantity
+        END;
+        
+        v_rate := CASE 
+            WHEN TG_TABLE_NAME = 'closeout_records' THEN 
+                CASE WHEN OLD.closeout_quantity > 0 
+                THEN OLD.closeout_amount / OLD.closeout_quantity 
+                ELSE 0 END
+            ELSE COALESCE(OLD.effective_rate, 0)
+        END;
+    ELSE
+        v_action := TG_OP;
+        v_symbol := NEW.symbol;
+        v_client_id := COALESCE(NEW.client_id, 'N/A');
+        
+        v_quantity := CASE 
+            WHEN TG_TABLE_NAME = 'closeout_records' THEN NEW.closeout_quantity
+            ELSE NEW.quantity
+        END;
+        
+        v_rate := CASE 
+            WHEN TG_TABLE_NAME = 'closeout_records' THEN 
+                CASE WHEN NEW.closeout_quantity > 0 
+                THEN NEW.closeout_amount / NEW.closeout_quantity 
+                ELSE 0 END
+            ELSE COALESCE(NEW.effective_rate, 0)
+        END;
+    END IF;
+
+    -- Create detailed audit log
+    v_details := FORMAT('%s %s: Client %s, %s %s @ Rs. %s', 
+                       v_action, TG_TABLE_NAME, v_client_id, 
+                       v_quantity, v_symbol, v_rate);
+
+    INSERT INTO audit_log (performed_action) 
+    VALUES (v_details);
+
+    RETURN COALESCE(NEW, OLD);
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Don't fail the transaction if audit logging fails
+        RAISE WARNING 'Error in trigger_audit_log: %', SQLERRM;
+        RETURN COALESCE(NEW, OLD);
+END;
+"
+
+
+
+5. trigger_default_ltp_from_wacc()
+
+"
+BEGIN
+    -- If LTP is 0 or NULL, try to get WACC from symbol_holdings
+    IF NEW.ltp IS NULL OR NEW.ltp = 0 THEN
+        SELECT wacc INTO NEW.ltp
+        FROM symbol_holdings
+        WHERE symbol = NEW.symbol
+          AND fiscal_year_id = NEW.fiscal_year_id
+        ORDER BY fund_id
+        LIMIT 1;
+        
+        -- If still NULL, keep as 0
+        IF NEW.ltp IS NULL THEN
+            NEW.ltp := 0;
+        END IF;
+    END IF;
+    
+    RETURN NEW;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE WARNING 'Error in trigger_default_ltp_from_wacc: %', SQLERRM;
+        RETURN NEW;
+END;
+"
+
+
+6. trigger_update_fiscal_year_balance()
+
+"
+DECLARE
+    v_client_id VARCHAR(25);
+    v_symbol VARCHAR(15);
+    v_fiscal_year_id INTEGER;
+    v_fund_id INTEGER;
+    v_quantity INTEGER;
+    v_rate DECIMAL(14,2);
+    v_source_type VARCHAR(50) := 'TRADING';
+    v_sub_id INTEGER := 1;
+    v_operation VARCHAR(10);
+    v_old_quantity INTEGER;
+    v_old_rate DECIMAL(14,2);
+    v_new_quantity INTEGER;
+    v_new_rate DECIMAL(14,2);
+    v_current_quantity INTEGER;
+    v_current_rate DECIMAL(14,2);
+BEGIN
+    v_operation := TG_ARGV[0];
+
+    -- Extract values based on table and operation
+    IF TG_OP = 'DELETE' THEN
+        v_symbol := OLD.symbol;
+        v_fiscal_year_id := OLD.fiscal_year_id;
+        v_fund_id := OLD.fund_id;
+        v_client_id := OLD.client_id;
+
+        -- Get quantity and rate based on table
+        IF TG_TABLE_NAME = 'buy_records' THEN
+            v_quantity := OLD.quantity;
+            v_rate := COALESCE(OLD.price, 0);  -- Using price instead of effective_rate
+            -- For DELETE, we need to SUBTRACT this purchase
+            IF v_operation = 'ADD' THEN
+                v_quantity := -v_quantity;  -- Reverse the quantity for DELETE
+            END IF;
+        ELSIF TG_TABLE_NAME = 'sell_records' THEN
+            v_quantity := -OLD.quantity;  -- Sell reduces quantity (already negative)
+            v_rate := 0;
+            -- For DELETE of a sell, we need to ADD back the quantity (reverse the sell)
+            IF v_operation = 'ADD' THEN
+                v_quantity := -v_quantity;  -- Reverse: if sell was -100, deleting it means +100
+            END IF;
+        ELSIF TG_TABLE_NAME = 'bonus_records' THEN
+            v_quantity := OLD.quantity;
+            v_rate := 0;  -- Bonus shares are free
+            -- For DELETE, subtract the bonus shares
+            IF v_operation = 'ADD' THEN
+                v_quantity := -v_quantity;
+            END IF;
+        ELSIF TG_TABLE_NAME = 'right_records' THEN
+            v_quantity := OLD.quantity;
+            v_rate := COALESCE(OLD.effective_rate, 0);
+            -- For DELETE, subtract the right shares
+            IF v_operation = 'ADD' THEN
+                v_quantity := -v_quantity;
+            END IF;
+        ELSIF TG_TABLE_NAME = 'promoter_records' THEN
+            v_quantity := OLD.quantity;
+            v_rate := COALESCE(OLD.effective_rate, 0);
+            v_source_type := 'PROMOTER';
+            v_sub_id := COALESCE(OLD.sub_id, 1);
+            -- For DELETE, subtract the promoter shares
+            IF v_operation = 'ADD' THEN
+                v_quantity := -v_quantity;
+            END IF;
+        ELSIF TG_TABLE_NAME = 'ipo_allotment_records' THEN
+            v_quantity := OLD.quantity;
+            v_rate := COALESCE(OLD.effective_rate, 0);
+            v_sub_id := COALESCE(OLD.sub_id, 1);
+            -- For DELETE, subtract the IPO shares
+            IF v_operation = 'ADD' THEN
+                v_quantity := -v_quantity;
+            END IF;
+        ELSIF TG_TABLE_NAME = 'closeout_records' THEN
+            v_quantity := OLD.closeout_quantity;
+            v_rate := CASE 
+                WHEN OLD.closeout_quantity > 0 
+                THEN OLD.closeout_amount / OLD.closeout_quantity 
+                ELSE 0 
+            END;
+            -- For DELETE, subtract the closeout
+            IF v_operation = 'ADD' THEN
+                v_quantity := -v_quantity;
+            END IF;
+        ELSE
+            RETURN OLD;
+        END IF;
+
+    ELSIF TG_OP = 'UPDATE' THEN
+        -- Handle UPDATE: need to reverse old values and apply new values
+        v_symbol := NEW.symbol;
+        v_fiscal_year_id := NEW.fiscal_year_id;
+        v_fund_id := NEW.fund_id;
+        v_client_id := NEW.client_id;
+
+        -- Get current fiscal_year_balance values
+        SELECT 
+            COALESCE(added_quantity, 0),
+            COALESCE(effective_rate, 0)
+        INTO v_current_quantity, v_current_rate
+        FROM fiscal_year_balance
+        WHERE client_id = NEW.client_id 
+          AND symbol = NEW.symbol 
+          AND fiscal_year_id = NEW.fiscal_year_id;
+
+        -- Calculate old transaction values
+        IF TG_TABLE_NAME = 'buy_records' THEN
+            v_old_quantity := OLD.quantity;
+            v_old_rate := COALESCE(OLD.price, 0);
+            v_new_quantity := NEW.quantity;
+            v_new_rate := COALESCE(NEW.price, 0);
+        ELSIF TG_TABLE_NAME = 'sell_records' THEN
+            -- For sells, just adjust quantity
+            v_old_quantity := -OLD.quantity;
+            v_old_rate := 0;
+            v_new_quantity := -NEW.quantity;
+            v_new_rate := 0;
+            v_new_quantity := v_current_quantity + (v_new_quantity - v_old_quantity);
+            v_new_rate := v_current_rate;  -- Rate doesn't change for sells
+        ELSIF TG_TABLE_NAME = 'bonus_records' THEN
+            v_old_quantity := OLD.quantity;
+            v_old_rate := 0;
+            v_new_quantity := NEW.quantity;
+            v_new_rate := 0;
+            -- Recalculate rate with new bonus quantity
+            v_new_quantity := v_current_quantity - v_old_quantity + v_new_quantity;
+            v_new_rate := CASE 
+                WHEN v_new_quantity > 0 
+                THEN (v_current_quantity * v_current_rate) / v_new_quantity
+                ELSE 0
+            END;
+        ELSIF TG_TABLE_NAME = 'right_records' THEN
+            v_old_quantity := OLD.quantity;
+            v_old_rate := COALESCE(OLD.effective_rate, 0);
+            v_new_quantity := NEW.quantity;
+            v_new_rate := COALESCE(NEW.effective_rate, 0);
+            -- Recalculate WACC
+            v_new_quantity := v_current_quantity - v_old_quantity + v_new_quantity;
+            v_new_rate := calculate_weighted_average(
+                v_current_quantity - v_old_quantity,
+                v_current_rate,
+                v_new_quantity,
+                v_new_rate
+            );
+        ELSIF TG_TABLE_NAME = 'promoter_records' THEN
+            v_old_quantity := OLD.quantity;
+            v_old_rate := COALESCE(OLD.effective_rate, 0);
+            v_new_quantity := NEW.quantity;
+            v_new_rate := COALESCE(NEW.effective_rate, 0);
+            v_source_type := 'PROMOTER';
+            v_sub_id := COALESCE(NEW.sub_id, 1);
+            -- Recalculate WACC
+            v_new_quantity := v_current_quantity - v_old_quantity + v_new_quantity;
+            v_new_rate := calculate_weighted_average(
+                v_current_quantity - v_old_quantity,
+                v_current_rate,
+                v_new_quantity,
+                v_new_rate
+            );
+        ELSIF TG_TABLE_NAME = 'ipo_allotment_records' THEN
+            v_old_quantity := OLD.quantity;
+            v_old_rate := COALESCE(OLD.effective_rate, 0);
+            v_new_quantity := NEW.quantity;
+            v_new_rate := COALESCE(NEW.effective_rate, 0);
+            v_sub_id := COALESCE(NEW.sub_id, 1);
+            -- Recalculate WACC
+            v_new_quantity := v_current_quantity - v_old_quantity + v_new_quantity;
+            v_new_rate := calculate_weighted_average(
+                v_current_quantity - v_old_quantity,
+                v_current_rate,
+                v_new_quantity,
+                v_new_rate
+            );
+        ELSIF TG_TABLE_NAME = 'closeout_records' THEN
+            v_old_quantity := OLD.closeout_quantity;
+            v_old_rate := CASE 
+                WHEN OLD.closeout_quantity > 0 
+                THEN OLD.closeout_amount / OLD.closeout_quantity 
+                ELSE 0 
+            END;
+            v_new_quantity := NEW.closeout_quantity;
+            v_new_rate := CASE 
+                WHEN NEW.closeout_quantity > 0 
+                THEN NEW.closeout_amount / NEW.closeout_quantity 
+                ELSE 0 
+            END;
+            -- Recalculate WACC
+            v_new_quantity := v_current_quantity - v_old_quantity + v_new_quantity;
+            v_new_rate := calculate_weighted_average(
+                v_current_quantity - v_old_quantity,
+                v_current_rate,
+                v_new_quantity,
+                v_new_rate
+            );
+        ELSE
+            RETURN NEW;
+        END IF;
+
+        -- For buy_records UPDATE, recalculate WACC
+        IF TG_TABLE_NAME = 'buy_records' THEN
+            v_new_quantity := v_current_quantity - v_old_quantity + v_new_quantity;
+            v_new_rate := calculate_weighted_average(
+                v_current_quantity - v_old_quantity,
+                v_current_rate,
+                v_new_quantity,
+                v_new_rate
+            );
+        END IF;
+
+    ELSE
+        -- INSERT operation
+        v_symbol := NEW.symbol;
+        v_fiscal_year_id := NEW.fiscal_year_id;
+        v_fund_id := NEW.fund_id;
+        v_client_id := NEW.client_id;
+
+        -- Get quantity and rate based on table
+        IF TG_TABLE_NAME = 'buy_records' THEN
+            v_quantity := NEW.quantity;
+            v_rate := COALESCE(NEW.price, 0);  -- Using price instead of effective_rate
+        ELSIF TG_TABLE_NAME = 'sell_records' THEN
+            v_quantity := -NEW.quantity;  -- Sell reduces quantity
+            v_rate := 0;
+        ELSIF TG_TABLE_NAME = 'bonus_records' THEN
+            v_quantity := NEW.quantity;
+            v_rate := 0;  -- Bonus shares are free
+        ELSIF TG_TABLE_NAME = 'right_records' THEN
+            v_quantity := NEW.quantity;
+            v_rate := COALESCE(NEW.effective_rate, 0);
+        ELSIF TG_TABLE_NAME = 'promoter_records' THEN
+            v_quantity := NEW.quantity;
+            v_rate := COALESCE(NEW.effective_rate, 0);
+            v_source_type := 'PROMOTER';
+            v_sub_id := COALESCE(NEW.sub_id, 1);
+        ELSIF TG_TABLE_NAME = 'ipo_allotment_records' THEN
+            v_quantity := NEW.quantity;
+            v_rate := COALESCE(NEW.effective_rate, 0);
+            v_sub_id := COALESCE(NEW.sub_id, 1);
+        ELSIF TG_TABLE_NAME = 'closeout_records' THEN
+            v_quantity := NEW.closeout_quantity;
+            v_rate := CASE 
+                WHEN NEW.closeout_quantity > 0 
+                THEN NEW.closeout_amount / NEW.closeout_quantity 
+                ELSE 0 
+            END;
+        ELSE
+            RETURN NEW;
+        END IF;
+
+        -- Apply operation (for INSERT, operation is usually 'ADD')
+        IF v_operation = 'SUBTRACT' THEN
+            v_quantity := -v_quantity;
+        END IF;
+
+        -- Get current fiscal_year_balance values
+        SELECT 
+            COALESCE(added_quantity, 0),
+            COALESCE(effective_rate, 0)
+        INTO v_current_quantity, v_current_rate
+        FROM fiscal_year_balance
+        WHERE client_id = v_client_id 
+          AND symbol = v_symbol 
+          AND fiscal_year_id = v_fiscal_year_id;
+
+        -- Calculate new values based on transaction type
+        IF TG_TABLE_NAME = 'sell_records' THEN
+            -- For sells, just subtract quantity, rate stays same
+            v_new_quantity := v_current_quantity + v_quantity;
+            v_new_rate := v_current_rate;  -- Rate doesn't change for sells
+        ELSIF TG_TABLE_NAME = 'bonus_records' THEN
+            -- Bonus shares: quantity increases, rate decreases proportionally
+            v_new_quantity := v_current_quantity + v_quantity;
+            v_new_rate := CASE 
+                WHEN v_new_quantity > 0 
+                THEN (v_current_quantity * v_current_rate) / v_new_quantity
+                ELSE 0
+            END;
+        ELSE
+            -- For buys and other records, use weighted average
+            v_new_quantity := v_current_quantity + v_quantity;
+            v_new_rate := calculate_weighted_average(
+                v_current_quantity,
+                v_current_rate,
+                v_quantity,
+                v_rate
+            );
+        END IF;
+    END IF;
+
+    -- Skip if required fields are missing
+    IF v_fiscal_year_id IS NULL OR v_client_id IS NULL THEN
+        RETURN COALESCE(NEW, OLD);
+    END IF;
+
+    -- Ensure stock exists
+    PERFORM ensure_stock_exists(v_symbol);
+
+    -- Insert or update fiscal_year_balance
+    INSERT INTO fiscal_year_balance (
+        client_id, symbol, fiscal_year_id, fund_id,
+        opening_quantity, added_quantity, effective_rate,
+        opening_rate, source_type, sub_id
+    ) VALUES (
+        v_client_id, v_symbol, v_fiscal_year_id, v_fund_id,
+        0, v_new_quantity, v_new_rate,
+        0, v_source_type, v_sub_id
+    )
+    ON CONFLICT (client_id, symbol, fiscal_year_id) DO UPDATE SET
+        added_quantity = v_new_quantity,
+        effective_rate = CASE 
+            WHEN v_new_quantity > 0 THEN v_new_rate
+            ELSE fiscal_year_balance.effective_rate
+        END,
+        source_type = COALESCE(v_source_type, fiscal_year_balance.source_type),
+        sub_id = COALESCE(v_sub_id, fiscal_year_balance.sub_id);
+
+    -- Delete if quantity becomes zero or negative
+    DELETE FROM fiscal_year_balance
+    WHERE client_id = v_client_id
+      AND symbol = v_symbol
+      AND fiscal_year_id = v_fiscal_year_id
+      AND (opening_quantity + added_quantity) <= 0;
+
+    RETURN COALESCE(NEW, OLD);
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE WARNING 'Error in trigger_update_fiscal_year_balance for table %: %', TG_TABLE_NAME, SQLERRM;
+        RETURN COALESCE(NEW, OLD);
+END;
+"
+
+
+7. trigger_update_symbol_holdings()
+
+"
+DECLARE
+    v_symbol VARCHAR(15);
+    v_fiscal_year_id INTEGER;
+    v_fund_id INTEGER;
+    v_quantity INTEGER;
+    v_txn_value DECIMAL(16,2);
+    v_net_payable DECIMAL(16,2);
+    v_operation VARCHAR(10);
+BEGIN
+    -- Only process buy_records (sells don't affect WACC calculation)
+    IF TG_TABLE_NAME != 'buy_records' THEN
+        RETURN COALESCE(NEW, OLD);
+    END IF;
+
+    v_operation := TG_ARGV[0];
+
+    -- Get values based on operation
+    IF TG_OP = 'DELETE' THEN
+        v_symbol := OLD.symbol;
+        v_fiscal_year_id := OLD.fiscal_year_id;
+        v_fund_id := OLD.fund_id;
+        
+        IF v_operation = 'ADD' THEN
+            v_quantity := -OLD.quantity;
+            v_txn_value := -COALESCE(OLD.txn_value, 0);
+            v_net_payable := -COALESCE(OLD.net_payable, 0);
+        ELSE
+            v_quantity := OLD.quantity;
+            v_txn_value := COALESCE(OLD.txn_value, 0);
+            v_net_payable := COALESCE(OLD.net_payable, 0);
+        END IF;
+    ELSE
+        v_symbol := NEW.symbol;
+        v_fiscal_year_id := NEW.fiscal_year_id;
+        v_fund_id := NEW.fund_id;
+        
+        IF v_operation = 'ADD' THEN
+            v_quantity := NEW.quantity;
+            v_txn_value := COALESCE(NEW.txn_value, 0);
+            v_net_payable := COALESCE(NEW.net_payable, 0);
+        ELSE
+            v_quantity := -NEW.quantity;
+            v_txn_value := -COALESCE(NEW.txn_value, 0);
+            v_net_payable := -COALESCE(NEW.net_payable, 0);
+        END IF;
+    END IF;
+
+    -- Skip if fiscal_year_id is NULL
+    IF v_fiscal_year_id IS NULL THEN
+        RETURN COALESCE(NEW, OLD);
+    END IF;
+
+    -- Ensure stock exists
+    PERFORM ensure_stock_exists(v_symbol);
+
+    -- Handle UPDATE operation
+    IF TG_OP = 'UPDATE' THEN
+        -- Reverse old values
+        v_quantity := CASE 
+            WHEN v_operation = 'ADD' THEN NEW.quantity - OLD.quantity
+            ELSE OLD.quantity - NEW.quantity
+        END;
+        v_txn_value := COALESCE(NEW.txn_value, 0) - COALESCE(OLD.txn_value, 0);
+        v_net_payable := COALESCE(NEW.net_payable, 0) - COALESCE(OLD.net_payable, 0);
+        
+        IF v_operation = 'SUBTRACT' THEN
+            v_txn_value := -v_txn_value;
+            v_net_payable := -v_net_payable;
+        END IF;
+    END IF;
+
+    -- Insert or update symbol_holdings
+    INSERT INTO symbol_holdings (
+        symbol, fund_id, fiscal_year_id,
+        quantity, total_txn_value, total_with_commission,
+        source_type, sub_id
+    ) VALUES (
+        v_symbol, v_fund_id, v_fiscal_year_id,
+        v_quantity, v_txn_value, v_net_payable,
+        'TRADING', 1
+    )
+    ON CONFLICT (symbol, fund_id, fiscal_year_id) DO UPDATE SET
+        quantity = symbol_holdings.quantity + v_quantity,
+        total_txn_value = symbol_holdings.total_txn_value + v_txn_value,
+        total_with_commission = symbol_holdings.total_with_commission + v_net_payable;
+
+    -- Delete if quantity becomes zero or negative
+    DELETE FROM symbol_holdings
+    WHERE symbol = v_symbol
+      AND fiscal_year_id = v_fiscal_year_id
+      AND fund_id = v_fund_id
+      AND quantity <= 0;
+
+    RETURN COALESCE(NEW, OLD);
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE WARNING 'Error in trigger_update_symbol_holdings: %', SQLERRM;
+        RETURN COALESCE(NEW, OLD);
+END;
+"
+
+

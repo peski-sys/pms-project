@@ -139,11 +139,6 @@ export type symbol_holdings = $Result.DefaultSelection<Prisma.$symbol_holdingsPa
  */
 export type sub_classes = $Result.DefaultSelection<Prisma.$sub_classesPayload>
 /**
- * Model ipo_allotment_staging
- * 
- */
-export type ipo_allotment_staging = $Result.DefaultSelection<Prisma.$ipo_allotment_stagingPayload>
-/**
  * Model bonus_records_staging
  * 
  */
@@ -531,16 +526,6 @@ export class PrismaClient<
     * ```
     */
   get sub_classes(): Prisma.sub_classesDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.ipo_allotment_staging`: Exposes CRUD operations for the **ipo_allotment_staging** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Ipo_allotment_stagings
-    * const ipo_allotment_stagings = await prisma.ipo_allotment_staging.findMany()
-    * ```
-    */
-  get ipo_allotment_staging(): Prisma.ipo_allotment_stagingDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.bonus_records_staging`: Exposes CRUD operations for the **bonus_records_staging** model.
@@ -1046,7 +1031,6 @@ export namespace Prisma {
     market_snapshots: 'market_snapshots',
     symbol_holdings: 'symbol_holdings',
     sub_classes: 'sub_classes',
-    ipo_allotment_staging: 'ipo_allotment_staging',
     bonus_records_staging: 'bonus_records_staging',
     cash_records_staging: 'cash_records_staging',
     right_records_staging: 'right_records_staging',
@@ -1069,7 +1053,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "audit_log" | "buy_records" | "client_broker_mapping" | "order_book" | "sell_records" | "uploads" | "users" | "fiscal_year_balance" | "buy_records_staging" | "fiscal_years" | "funds" | "sell_records_staging" | "stock_fulls" | "bonus_records" | "cash_records" | "promoter_records" | "right_records" | "sectors" | "client_boid_mapping" | "pdf_records" | "closeout_records" | "ipo_allotment_records" | "market_snapshots" | "symbol_holdings" | "sub_classes" | "ipo_allotment_staging" | "bonus_records_staging" | "cash_records_staging" | "right_records_staging" | "fiscal_year_balance_staging"
+      modelProps: "audit_log" | "buy_records" | "client_broker_mapping" | "order_book" | "sell_records" | "uploads" | "users" | "fiscal_year_balance" | "buy_records_staging" | "fiscal_years" | "funds" | "sell_records_staging" | "stock_fulls" | "bonus_records" | "cash_records" | "promoter_records" | "right_records" | "sectors" | "client_boid_mapping" | "pdf_records" | "closeout_records" | "ipo_allotment_records" | "market_snapshots" | "symbol_holdings" | "sub_classes" | "bonus_records_staging" | "cash_records_staging" | "right_records_staging" | "fiscal_year_balance_staging"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2923,80 +2907,6 @@ export namespace Prisma {
           }
         }
       }
-      ipo_allotment_staging: {
-        payload: Prisma.$ipo_allotment_stagingPayload<ExtArgs>
-        fields: Prisma.ipo_allotment_stagingFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.ipo_allotment_stagingFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.ipo_allotment_stagingFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload>
-          }
-          findFirst: {
-            args: Prisma.ipo_allotment_stagingFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.ipo_allotment_stagingFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload>
-          }
-          findMany: {
-            args: Prisma.ipo_allotment_stagingFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload>[]
-          }
-          create: {
-            args: Prisma.ipo_allotment_stagingCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload>
-          }
-          createMany: {
-            args: Prisma.ipo_allotment_stagingCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.ipo_allotment_stagingCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload>[]
-          }
-          delete: {
-            args: Prisma.ipo_allotment_stagingDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload>
-          }
-          update: {
-            args: Prisma.ipo_allotment_stagingUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload>
-          }
-          deleteMany: {
-            args: Prisma.ipo_allotment_stagingDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.ipo_allotment_stagingUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.ipo_allotment_stagingUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload>[]
-          }
-          upsert: {
-            args: Prisma.ipo_allotment_stagingUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ipo_allotment_stagingPayload>
-          }
-          aggregate: {
-            args: Prisma.Ipo_allotment_stagingAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateIpo_allotment_staging>
-          }
-          groupBy: {
-            args: Prisma.ipo_allotment_stagingGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Ipo_allotment_stagingGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.ipo_allotment_stagingCountArgs<ExtArgs>
-            result: $Utils.Optional<Ipo_allotment_stagingCountAggregateOutputType> | number
-          }
-        }
-      }
       bonus_records_staging: {
         payload: Prisma.$bonus_records_stagingPayload<ExtArgs>
         fields: Prisma.bonus_records_stagingFieldRefs
@@ -3414,7 +3324,6 @@ export namespace Prisma {
     market_snapshots?: market_snapshotsOmit
     symbol_holdings?: symbol_holdingsOmit
     sub_classes?: sub_classesOmit
-    ipo_allotment_staging?: ipo_allotment_stagingOmit
     bonus_records_staging?: bonus_records_stagingOmit
     cash_records_staging?: cash_records_stagingOmit
     right_records_staging?: right_records_stagingOmit
@@ -3714,7 +3623,6 @@ export namespace Prisma {
     closeout_records: number
     fiscal_year_balance: number
     ipo_allotment_records: number
-    ipo_allotment_staging: number
     market_snapshots: number
     order_book: number
     promoter_records: number
@@ -3735,7 +3643,6 @@ export namespace Prisma {
     closeout_records?: boolean | Fiscal_yearsCountOutputTypeCountCloseout_recordsArgs
     fiscal_year_balance?: boolean | Fiscal_yearsCountOutputTypeCountFiscal_year_balanceArgs
     ipo_allotment_records?: boolean | Fiscal_yearsCountOutputTypeCountIpo_allotment_recordsArgs
-    ipo_allotment_staging?: boolean | Fiscal_yearsCountOutputTypeCountIpo_allotment_stagingArgs
     market_snapshots?: boolean | Fiscal_yearsCountOutputTypeCountMarket_snapshotsArgs
     order_book?: boolean | Fiscal_yearsCountOutputTypeCountOrder_bookArgs
     promoter_records?: boolean | Fiscal_yearsCountOutputTypeCountPromoter_recordsArgs
@@ -3823,13 +3730,6 @@ export namespace Prisma {
   /**
    * Fiscal_yearsCountOutputType without action
    */
-  export type Fiscal_yearsCountOutputTypeCountIpo_allotment_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ipo_allotment_stagingWhereInput
-  }
-
-  /**
-   * Fiscal_yearsCountOutputType without action
-   */
   export type Fiscal_yearsCountOutputTypeCountMarket_snapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: market_snapshotsWhereInput
   }
@@ -3899,7 +3799,6 @@ export namespace Prisma {
     closeout_records: number
     fiscal_year_balance: number
     ipo_allotment_records: number
-    ipo_allotment_staging: number
     promoter_records: number
     right_records: number
     right_records_staging: number
@@ -3920,7 +3819,6 @@ export namespace Prisma {
     closeout_records?: boolean | FundsCountOutputTypeCountCloseout_recordsArgs
     fiscal_year_balance?: boolean | FundsCountOutputTypeCountFiscal_year_balanceArgs
     ipo_allotment_records?: boolean | FundsCountOutputTypeCountIpo_allotment_recordsArgs
-    ipo_allotment_staging?: boolean | FundsCountOutputTypeCountIpo_allotment_stagingArgs
     promoter_records?: boolean | FundsCountOutputTypeCountPromoter_recordsArgs
     right_records?: boolean | FundsCountOutputTypeCountRight_recordsArgs
     right_records_staging?: boolean | FundsCountOutputTypeCountRight_records_stagingArgs
@@ -4014,13 +3912,6 @@ export namespace Prisma {
   /**
    * FundsCountOutputType without action
    */
-  export type FundsCountOutputTypeCountIpo_allotment_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ipo_allotment_stagingWhereInput
-  }
-
-  /**
-   * FundsCountOutputType without action
-   */
   export type FundsCountOutputTypeCountPromoter_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: promoter_recordsWhereInput
   }
@@ -4082,7 +3973,6 @@ export namespace Prisma {
     closeout_records: number
     fiscal_year_balance: number
     ipo_allotment_records: number
-    ipo_allotment_staging: number
     order_book: number
     promoter_records: number
     right_records: number
@@ -4102,7 +3992,6 @@ export namespace Prisma {
     closeout_records?: boolean | Stock_fullsCountOutputTypeCountCloseout_recordsArgs
     fiscal_year_balance?: boolean | Stock_fullsCountOutputTypeCountFiscal_year_balanceArgs
     ipo_allotment_records?: boolean | Stock_fullsCountOutputTypeCountIpo_allotment_recordsArgs
-    ipo_allotment_staging?: boolean | Stock_fullsCountOutputTypeCountIpo_allotment_stagingArgs
     order_book?: boolean | Stock_fullsCountOutputTypeCountOrder_bookArgs
     promoter_records?: boolean | Stock_fullsCountOutputTypeCountPromoter_recordsArgs
     right_records?: boolean | Stock_fullsCountOutputTypeCountRight_recordsArgs
@@ -4184,13 +4073,6 @@ export namespace Prisma {
    */
   export type Stock_fullsCountOutputTypeCountIpo_allotment_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ipo_allotment_recordsWhereInput
-  }
-
-  /**
-   * Stock_fullsCountOutputType without action
-   */
-  export type Stock_fullsCountOutputTypeCountIpo_allotment_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ipo_allotment_stagingWhereInput
   }
 
   /**
@@ -4314,7 +4196,6 @@ export namespace Prisma {
     cash_records_staging: number
     fiscal_year_balance: number
     ipo_allotment_records: number
-    ipo_allotment_staging: number
     promoter_records: number
     right_records_staging: number
     symbol_holdings: number
@@ -4325,7 +4206,6 @@ export namespace Prisma {
     cash_records_staging?: boolean | Sub_classesCountOutputTypeCountCash_records_stagingArgs
     fiscal_year_balance?: boolean | Sub_classesCountOutputTypeCountFiscal_year_balanceArgs
     ipo_allotment_records?: boolean | Sub_classesCountOutputTypeCountIpo_allotment_recordsArgs
-    ipo_allotment_staging?: boolean | Sub_classesCountOutputTypeCountIpo_allotment_stagingArgs
     promoter_records?: boolean | Sub_classesCountOutputTypeCountPromoter_recordsArgs
     right_records_staging?: boolean | Sub_classesCountOutputTypeCountRight_records_stagingArgs
     symbol_holdings?: boolean | Sub_classesCountOutputTypeCountSymbol_holdingsArgs
@@ -4368,13 +4248,6 @@ export namespace Prisma {
    */
   export type Sub_classesCountOutputTypeCountIpo_allotment_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ipo_allotment_recordsWhereInput
-  }
-
-  /**
-   * Sub_classesCountOutputType without action
-   */
-  export type Sub_classesCountOutputTypeCountIpo_allotment_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ipo_allotment_stagingWhereInput
   }
 
   /**
@@ -15876,7 +15749,6 @@ export namespace Prisma {
     closeout_records?: boolean | fiscal_years$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | fiscal_years$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | fiscal_years$ipo_allotment_recordsArgs<ExtArgs>
-    ipo_allotment_staging?: boolean | fiscal_years$ipo_allotment_stagingArgs<ExtArgs>
     market_snapshots?: boolean | fiscal_years$market_snapshotsArgs<ExtArgs>
     order_book?: boolean | fiscal_years$order_bookArgs<ExtArgs>
     promoter_records?: boolean | fiscal_years$promoter_recordsArgs<ExtArgs>
@@ -15923,7 +15795,6 @@ export namespace Prisma {
     closeout_records?: boolean | fiscal_years$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | fiscal_years$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | fiscal_years$ipo_allotment_recordsArgs<ExtArgs>
-    ipo_allotment_staging?: boolean | fiscal_years$ipo_allotment_stagingArgs<ExtArgs>
     market_snapshots?: boolean | fiscal_years$market_snapshotsArgs<ExtArgs>
     order_book?: boolean | fiscal_years$order_bookArgs<ExtArgs>
     promoter_records?: boolean | fiscal_years$promoter_recordsArgs<ExtArgs>
@@ -15949,7 +15820,6 @@ export namespace Prisma {
       closeout_records: Prisma.$closeout_recordsPayload<ExtArgs>[]
       fiscal_year_balance: Prisma.$fiscal_year_balancePayload<ExtArgs>[]
       ipo_allotment_records: Prisma.$ipo_allotment_recordsPayload<ExtArgs>[]
-      ipo_allotment_staging: Prisma.$ipo_allotment_stagingPayload<ExtArgs>[]
       market_snapshots: Prisma.$market_snapshotsPayload<ExtArgs>[]
       order_book: Prisma.$order_bookPayload<ExtArgs>[]
       promoter_records: Prisma.$promoter_recordsPayload<ExtArgs>[]
@@ -16368,7 +16238,6 @@ export namespace Prisma {
     closeout_records<T extends fiscal_years$closeout_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$closeout_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$closeout_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     fiscal_year_balance<T extends fiscal_years$fiscal_year_balanceArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$fiscal_year_balanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ipo_allotment_records<T extends fiscal_years$ipo_allotment_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$ipo_allotment_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    ipo_allotment_staging<T extends fiscal_years$ipo_allotment_stagingArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$ipo_allotment_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     market_snapshots<T extends fiscal_years$market_snapshotsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$market_snapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$market_snapshotsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     order_book<T extends fiscal_years$order_bookArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$order_bookArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$order_bookPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     promoter_records<T extends fiscal_years$promoter_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$promoter_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$promoter_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -17015,30 +16884,6 @@ export namespace Prisma {
   }
 
   /**
-   * fiscal_years.ipo_allotment_staging
-   */
-  export type fiscal_years$ipo_allotment_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    where?: ipo_allotment_stagingWhereInput
-    orderBy?: ipo_allotment_stagingOrderByWithRelationInput | ipo_allotment_stagingOrderByWithRelationInput[]
-    cursor?: ipo_allotment_stagingWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Ipo_allotment_stagingScalarFieldEnum | Ipo_allotment_stagingScalarFieldEnum[]
-  }
-
-  /**
    * fiscal_years.market_snapshots
    */
   export type fiscal_years$market_snapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17441,7 +17286,6 @@ export namespace Prisma {
     closeout_records?: boolean | funds$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | funds$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | funds$ipo_allotment_recordsArgs<ExtArgs>
-    ipo_allotment_staging?: boolean | funds$ipo_allotment_stagingArgs<ExtArgs>
     promoter_records?: boolean | funds$promoter_recordsArgs<ExtArgs>
     right_records?: boolean | funds$right_recordsArgs<ExtArgs>
     right_records_staging?: boolean | funds$right_records_stagingArgs<ExtArgs>
@@ -17482,7 +17326,6 @@ export namespace Prisma {
     closeout_records?: boolean | funds$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | funds$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | funds$ipo_allotment_recordsArgs<ExtArgs>
-    ipo_allotment_staging?: boolean | funds$ipo_allotment_stagingArgs<ExtArgs>
     promoter_records?: boolean | funds$promoter_recordsArgs<ExtArgs>
     right_records?: boolean | funds$right_recordsArgs<ExtArgs>
     right_records_staging?: boolean | funds$right_records_stagingArgs<ExtArgs>
@@ -17508,7 +17351,6 @@ export namespace Prisma {
       closeout_records: Prisma.$closeout_recordsPayload<ExtArgs>[]
       fiscal_year_balance: Prisma.$fiscal_year_balancePayload<ExtArgs>[]
       ipo_allotment_records: Prisma.$ipo_allotment_recordsPayload<ExtArgs>[]
-      ipo_allotment_staging: Prisma.$ipo_allotment_stagingPayload<ExtArgs>[]
       promoter_records: Prisma.$promoter_recordsPayload<ExtArgs>[]
       right_records: Prisma.$right_recordsPayload<ExtArgs>[]
       right_records_staging: Prisma.$right_records_stagingPayload<ExtArgs>[]
@@ -17925,7 +17767,6 @@ export namespace Prisma {
     closeout_records<T extends funds$closeout_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$closeout_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$closeout_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     fiscal_year_balance<T extends funds$fiscal_year_balanceArgs<ExtArgs> = {}>(args?: Subset<T, funds$fiscal_year_balanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ipo_allotment_records<T extends funds$ipo_allotment_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$ipo_allotment_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    ipo_allotment_staging<T extends funds$ipo_allotment_stagingArgs<ExtArgs> = {}>(args?: Subset<T, funds$ipo_allotment_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     promoter_records<T extends funds$promoter_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$promoter_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$promoter_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     right_records<T extends funds$right_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$right_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     right_records_staging<T extends funds$right_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, funds$right_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -18590,30 +18431,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Ipo_allotment_recordsScalarFieldEnum | Ipo_allotment_recordsScalarFieldEnum[]
-  }
-
-  /**
-   * funds.ipo_allotment_staging
-   */
-  export type funds$ipo_allotment_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    where?: ipo_allotment_stagingWhereInput
-    orderBy?: ipo_allotment_stagingOrderByWithRelationInput | ipo_allotment_stagingOrderByWithRelationInput[]
-    cursor?: ipo_allotment_stagingWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Ipo_allotment_stagingScalarFieldEnum | Ipo_allotment_stagingScalarFieldEnum[]
   }
 
   /**
@@ -20387,7 +20204,6 @@ export namespace Prisma {
     closeout_records?: boolean | stock_fulls$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | stock_fulls$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | stock_fulls$ipo_allotment_recordsArgs<ExtArgs>
-    ipo_allotment_staging?: boolean | stock_fulls$ipo_allotment_stagingArgs<ExtArgs>
     order_book?: boolean | stock_fulls$order_bookArgs<ExtArgs>
     promoter_records?: boolean | stock_fulls$promoter_recordsArgs<ExtArgs>
     right_records?: boolean | stock_fulls$right_recordsArgs<ExtArgs>
@@ -20436,7 +20252,6 @@ export namespace Prisma {
     closeout_records?: boolean | stock_fulls$closeout_recordsArgs<ExtArgs>
     fiscal_year_balance?: boolean | stock_fulls$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | stock_fulls$ipo_allotment_recordsArgs<ExtArgs>
-    ipo_allotment_staging?: boolean | stock_fulls$ipo_allotment_stagingArgs<ExtArgs>
     order_book?: boolean | stock_fulls$order_bookArgs<ExtArgs>
     promoter_records?: boolean | stock_fulls$promoter_recordsArgs<ExtArgs>
     right_records?: boolean | stock_fulls$right_recordsArgs<ExtArgs>
@@ -20466,7 +20281,6 @@ export namespace Prisma {
       closeout_records: Prisma.$closeout_recordsPayload<ExtArgs>[]
       fiscal_year_balance: Prisma.$fiscal_year_balancePayload<ExtArgs>[]
       ipo_allotment_records: Prisma.$ipo_allotment_recordsPayload<ExtArgs>[]
-      ipo_allotment_staging: Prisma.$ipo_allotment_stagingPayload<ExtArgs>[]
       order_book: Prisma.$order_bookPayload<ExtArgs>[]
       promoter_records: Prisma.$promoter_recordsPayload<ExtArgs>[]
       right_records: Prisma.$right_recordsPayload<ExtArgs>[]
@@ -20885,7 +20699,6 @@ export namespace Prisma {
     closeout_records<T extends stock_fulls$closeout_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$closeout_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$closeout_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     fiscal_year_balance<T extends stock_fulls$fiscal_year_balanceArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$fiscal_year_balanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ipo_allotment_records<T extends stock_fulls$ipo_allotment_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$ipo_allotment_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    ipo_allotment_staging<T extends stock_fulls$ipo_allotment_stagingArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$ipo_allotment_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     order_book<T extends stock_fulls$order_bookArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$order_bookArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$order_bookPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     promoter_records<T extends stock_fulls$promoter_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$promoter_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$promoter_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     right_records<T extends stock_fulls$right_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$right_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -21537,30 +21350,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Ipo_allotment_recordsScalarFieldEnum | Ipo_allotment_recordsScalarFieldEnum[]
-  }
-
-  /**
-   * stock_fulls.ipo_allotment_staging
-   */
-  export type stock_fulls$ipo_allotment_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    where?: ipo_allotment_stagingWhereInput
-    orderBy?: ipo_allotment_stagingOrderByWithRelationInput | ipo_allotment_stagingOrderByWithRelationInput[]
-    cursor?: ipo_allotment_stagingWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Ipo_allotment_stagingScalarFieldEnum | Ipo_allotment_stagingScalarFieldEnum[]
   }
 
   /**
@@ -34897,7 +34686,6 @@ export namespace Prisma {
     cash_records_staging?: boolean | sub_classes$cash_records_stagingArgs<ExtArgs>
     fiscal_year_balance?: boolean | sub_classes$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | sub_classes$ipo_allotment_recordsArgs<ExtArgs>
-    ipo_allotment_staging?: boolean | sub_classes$ipo_allotment_stagingArgs<ExtArgs>
     promoter_records?: boolean | sub_classes$promoter_recordsArgs<ExtArgs>
     right_records_staging?: boolean | sub_classes$right_records_stagingArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
@@ -34934,7 +34722,6 @@ export namespace Prisma {
     cash_records_staging?: boolean | sub_classes$cash_records_stagingArgs<ExtArgs>
     fiscal_year_balance?: boolean | sub_classes$fiscal_year_balanceArgs<ExtArgs>
     ipo_allotment_records?: boolean | sub_classes$ipo_allotment_recordsArgs<ExtArgs>
-    ipo_allotment_staging?: boolean | sub_classes$ipo_allotment_stagingArgs<ExtArgs>
     promoter_records?: boolean | sub_classes$promoter_recordsArgs<ExtArgs>
     right_records_staging?: boolean | sub_classes$right_records_stagingArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
@@ -34955,7 +34742,6 @@ export namespace Prisma {
       cash_records_staging: Prisma.$cash_records_stagingPayload<ExtArgs>[]
       fiscal_year_balance: Prisma.$fiscal_year_balancePayload<ExtArgs>[]
       ipo_allotment_records: Prisma.$ipo_allotment_recordsPayload<ExtArgs>[]
-      ipo_allotment_staging: Prisma.$ipo_allotment_stagingPayload<ExtArgs>[]
       promoter_records: Prisma.$promoter_recordsPayload<ExtArgs>[]
       right_records_staging: Prisma.$right_records_stagingPayload<ExtArgs>[]
       funds: Prisma.$fundsPayload<ExtArgs>
@@ -35364,7 +35150,6 @@ export namespace Prisma {
     cash_records_staging<T extends sub_classes$cash_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$cash_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cash_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     fiscal_year_balance<T extends sub_classes$fiscal_year_balanceArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$fiscal_year_balanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fiscal_year_balancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ipo_allotment_records<T extends sub_classes$ipo_allotment_recordsArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$ipo_allotment_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    ipo_allotment_staging<T extends sub_classes$ipo_allotment_stagingArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$ipo_allotment_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     promoter_records<T extends sub_classes$promoter_recordsArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$promoter_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$promoter_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     right_records_staging<T extends sub_classes$right_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, sub_classes$right_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     funds<T extends fundsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fundsDefaultArgs<ExtArgs>>): Prisma__fundsClient<$Result.GetResult<Prisma.$fundsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -35894,30 +35679,6 @@ export namespace Prisma {
   }
 
   /**
-   * sub_classes.ipo_allotment_staging
-   */
-  export type sub_classes$ipo_allotment_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    where?: ipo_allotment_stagingWhereInput
-    orderBy?: ipo_allotment_stagingOrderByWithRelationInput | ipo_allotment_stagingOrderByWithRelationInput[]
-    cursor?: ipo_allotment_stagingWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Ipo_allotment_stagingScalarFieldEnum | Ipo_allotment_stagingScalarFieldEnum[]
-  }
-
-  /**
    * sub_classes.promoter_records
    */
   export type sub_classes$promoter_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -36005,1224 +35766,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: sub_classesInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model ipo_allotment_staging
-   */
-
-  export type AggregateIpo_allotment_staging = {
-    _count: Ipo_allotment_stagingCountAggregateOutputType | null
-    _avg: Ipo_allotment_stagingAvgAggregateOutputType | null
-    _sum: Ipo_allotment_stagingSumAggregateOutputType | null
-    _min: Ipo_allotment_stagingMinAggregateOutputType | null
-    _max: Ipo_allotment_stagingMaxAggregateOutputType | null
-  }
-
-  export type Ipo_allotment_stagingAvgAggregateOutputType = {
-    allotment_staging_id: number | null
-    fund_id: number | null
-    quantity: number | null
-    effective_rate: Decimal | null
-    total_value: Decimal | null
-    fiscal_year_id: number | null
-    sub_id: number | null
-  }
-
-  export type Ipo_allotment_stagingSumAggregateOutputType = {
-    allotment_staging_id: number | null
-    fund_id: number | null
-    quantity: number | null
-    effective_rate: Decimal | null
-    total_value: Decimal | null
-    fiscal_year_id: number | null
-    sub_id: number | null
-  }
-
-  export type Ipo_allotment_stagingMinAggregateOutputType = {
-    allotment_staging_id: number | null
-    fund_id: number | null
-    quantity: number | null
-    effective_rate: Decimal | null
-    total_value: Decimal | null
-    fiscal_year_id: number | null
-    recorded_at: Date | null
-    added_at: Date | null
-    remarks: string | null
-    symbol: string | null
-    sub_id: number | null
-  }
-
-  export type Ipo_allotment_stagingMaxAggregateOutputType = {
-    allotment_staging_id: number | null
-    fund_id: number | null
-    quantity: number | null
-    effective_rate: Decimal | null
-    total_value: Decimal | null
-    fiscal_year_id: number | null
-    recorded_at: Date | null
-    added_at: Date | null
-    remarks: string | null
-    symbol: string | null
-    sub_id: number | null
-  }
-
-  export type Ipo_allotment_stagingCountAggregateOutputType = {
-    allotment_staging_id: number
-    fund_id: number
-    quantity: number
-    effective_rate: number
-    total_value: number
-    fiscal_year_id: number
-    recorded_at: number
-    added_at: number
-    remarks: number
-    symbol: number
-    sub_id: number
-    _all: number
-  }
-
-
-  export type Ipo_allotment_stagingAvgAggregateInputType = {
-    allotment_staging_id?: true
-    fund_id?: true
-    quantity?: true
-    effective_rate?: true
-    total_value?: true
-    fiscal_year_id?: true
-    sub_id?: true
-  }
-
-  export type Ipo_allotment_stagingSumAggregateInputType = {
-    allotment_staging_id?: true
-    fund_id?: true
-    quantity?: true
-    effective_rate?: true
-    total_value?: true
-    fiscal_year_id?: true
-    sub_id?: true
-  }
-
-  export type Ipo_allotment_stagingMinAggregateInputType = {
-    allotment_staging_id?: true
-    fund_id?: true
-    quantity?: true
-    effective_rate?: true
-    total_value?: true
-    fiscal_year_id?: true
-    recorded_at?: true
-    added_at?: true
-    remarks?: true
-    symbol?: true
-    sub_id?: true
-  }
-
-  export type Ipo_allotment_stagingMaxAggregateInputType = {
-    allotment_staging_id?: true
-    fund_id?: true
-    quantity?: true
-    effective_rate?: true
-    total_value?: true
-    fiscal_year_id?: true
-    recorded_at?: true
-    added_at?: true
-    remarks?: true
-    symbol?: true
-    sub_id?: true
-  }
-
-  export type Ipo_allotment_stagingCountAggregateInputType = {
-    allotment_staging_id?: true
-    fund_id?: true
-    quantity?: true
-    effective_rate?: true
-    total_value?: true
-    fiscal_year_id?: true
-    recorded_at?: true
-    added_at?: true
-    remarks?: true
-    symbol?: true
-    sub_id?: true
-    _all?: true
-  }
-
-  export type Ipo_allotment_stagingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which ipo_allotment_staging to aggregate.
-     */
-    where?: ipo_allotment_stagingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ipo_allotment_stagings to fetch.
-     */
-    orderBy?: ipo_allotment_stagingOrderByWithRelationInput | ipo_allotment_stagingOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: ipo_allotment_stagingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ipo_allotment_stagings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ipo_allotment_stagings.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned ipo_allotment_stagings
-    **/
-    _count?: true | Ipo_allotment_stagingCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Ipo_allotment_stagingAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Ipo_allotment_stagingSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Ipo_allotment_stagingMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Ipo_allotment_stagingMaxAggregateInputType
-  }
-
-  export type GetIpo_allotment_stagingAggregateType<T extends Ipo_allotment_stagingAggregateArgs> = {
-        [P in keyof T & keyof AggregateIpo_allotment_staging]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateIpo_allotment_staging[P]>
-      : GetScalarType<T[P], AggregateIpo_allotment_staging[P]>
-  }
-
-
-
-
-  export type ipo_allotment_stagingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ipo_allotment_stagingWhereInput
-    orderBy?: ipo_allotment_stagingOrderByWithAggregationInput | ipo_allotment_stagingOrderByWithAggregationInput[]
-    by: Ipo_allotment_stagingScalarFieldEnum[] | Ipo_allotment_stagingScalarFieldEnum
-    having?: ipo_allotment_stagingScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Ipo_allotment_stagingCountAggregateInputType | true
-    _avg?: Ipo_allotment_stagingAvgAggregateInputType
-    _sum?: Ipo_allotment_stagingSumAggregateInputType
-    _min?: Ipo_allotment_stagingMinAggregateInputType
-    _max?: Ipo_allotment_stagingMaxAggregateInputType
-  }
-
-  export type Ipo_allotment_stagingGroupByOutputType = {
-    allotment_staging_id: number
-    fund_id: number
-    quantity: number
-    effective_rate: Decimal
-    total_value: Decimal | null
-    fiscal_year_id: number
-    recorded_at: Date | null
-    added_at: Date
-    remarks: string | null
-    symbol: string
-    sub_id: number
-    _count: Ipo_allotment_stagingCountAggregateOutputType | null
-    _avg: Ipo_allotment_stagingAvgAggregateOutputType | null
-    _sum: Ipo_allotment_stagingSumAggregateOutputType | null
-    _min: Ipo_allotment_stagingMinAggregateOutputType | null
-    _max: Ipo_allotment_stagingMaxAggregateOutputType | null
-  }
-
-  type GetIpo_allotment_stagingGroupByPayload<T extends ipo_allotment_stagingGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Ipo_allotment_stagingGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Ipo_allotment_stagingGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Ipo_allotment_stagingGroupByOutputType[P]>
-            : GetScalarType<T[P], Ipo_allotment_stagingGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type ipo_allotment_stagingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    allotment_staging_id?: boolean
-    fund_id?: boolean
-    quantity?: boolean
-    effective_rate?: boolean
-    total_value?: boolean
-    fiscal_year_id?: boolean
-    recorded_at?: boolean
-    added_at?: boolean
-    remarks?: boolean
-    symbol?: boolean
-    sub_id?: boolean
-    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
-    funds?: boolean | fundsDefaultArgs<ExtArgs>
-    sub_classes?: boolean | sub_classesDefaultArgs<ExtArgs>
-    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["ipo_allotment_staging"]>
-
-  export type ipo_allotment_stagingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    allotment_staging_id?: boolean
-    fund_id?: boolean
-    quantity?: boolean
-    effective_rate?: boolean
-    total_value?: boolean
-    fiscal_year_id?: boolean
-    recorded_at?: boolean
-    added_at?: boolean
-    remarks?: boolean
-    symbol?: boolean
-    sub_id?: boolean
-    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
-    funds?: boolean | fundsDefaultArgs<ExtArgs>
-    sub_classes?: boolean | sub_classesDefaultArgs<ExtArgs>
-    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["ipo_allotment_staging"]>
-
-  export type ipo_allotment_stagingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    allotment_staging_id?: boolean
-    fund_id?: boolean
-    quantity?: boolean
-    effective_rate?: boolean
-    total_value?: boolean
-    fiscal_year_id?: boolean
-    recorded_at?: boolean
-    added_at?: boolean
-    remarks?: boolean
-    symbol?: boolean
-    sub_id?: boolean
-    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
-    funds?: boolean | fundsDefaultArgs<ExtArgs>
-    sub_classes?: boolean | sub_classesDefaultArgs<ExtArgs>
-    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["ipo_allotment_staging"]>
-
-  export type ipo_allotment_stagingSelectScalar = {
-    allotment_staging_id?: boolean
-    fund_id?: boolean
-    quantity?: boolean
-    effective_rate?: boolean
-    total_value?: boolean
-    fiscal_year_id?: boolean
-    recorded_at?: boolean
-    added_at?: boolean
-    remarks?: boolean
-    symbol?: boolean
-    sub_id?: boolean
-  }
-
-  export type ipo_allotment_stagingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"allotment_staging_id" | "fund_id" | "quantity" | "effective_rate" | "total_value" | "fiscal_year_id" | "recorded_at" | "added_at" | "remarks" | "symbol" | "sub_id", ExtArgs["result"]["ipo_allotment_staging"]>
-  export type ipo_allotment_stagingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
-    funds?: boolean | fundsDefaultArgs<ExtArgs>
-    sub_classes?: boolean | sub_classesDefaultArgs<ExtArgs>
-    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
-  }
-  export type ipo_allotment_stagingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
-    funds?: boolean | fundsDefaultArgs<ExtArgs>
-    sub_classes?: boolean | sub_classesDefaultArgs<ExtArgs>
-    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
-  }
-  export type ipo_allotment_stagingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
-    funds?: boolean | fundsDefaultArgs<ExtArgs>
-    sub_classes?: boolean | sub_classesDefaultArgs<ExtArgs>
-    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
-  }
-
-  export type $ipo_allotment_stagingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "ipo_allotment_staging"
-    objects: {
-      fiscal_years: Prisma.$fiscal_yearsPayload<ExtArgs>
-      funds: Prisma.$fundsPayload<ExtArgs>
-      sub_classes: Prisma.$sub_classesPayload<ExtArgs>
-      stock_fulls: Prisma.$stock_fullsPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      allotment_staging_id: number
-      fund_id: number
-      quantity: number
-      effective_rate: Prisma.Decimal
-      total_value: Prisma.Decimal | null
-      fiscal_year_id: number
-      recorded_at: Date | null
-      added_at: Date
-      remarks: string | null
-      symbol: string
-      sub_id: number
-    }, ExtArgs["result"]["ipo_allotment_staging"]>
-    composites: {}
-  }
-
-  type ipo_allotment_stagingGetPayload<S extends boolean | null | undefined | ipo_allotment_stagingDefaultArgs> = $Result.GetResult<Prisma.$ipo_allotment_stagingPayload, S>
-
-  type ipo_allotment_stagingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ipo_allotment_stagingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: Ipo_allotment_stagingCountAggregateInputType | true
-    }
-
-  export interface ipo_allotment_stagingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ipo_allotment_staging'], meta: { name: 'ipo_allotment_staging' } }
-    /**
-     * Find zero or one Ipo_allotment_staging that matches the filter.
-     * @param {ipo_allotment_stagingFindUniqueArgs} args - Arguments to find a Ipo_allotment_staging
-     * @example
-     * // Get one Ipo_allotment_staging
-     * const ipo_allotment_staging = await prisma.ipo_allotment_staging.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends ipo_allotment_stagingFindUniqueArgs>(args: SelectSubset<T, ipo_allotment_stagingFindUniqueArgs<ExtArgs>>): Prisma__ipo_allotment_stagingClient<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Ipo_allotment_staging that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {ipo_allotment_stagingFindUniqueOrThrowArgs} args - Arguments to find a Ipo_allotment_staging
-     * @example
-     * // Get one Ipo_allotment_staging
-     * const ipo_allotment_staging = await prisma.ipo_allotment_staging.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends ipo_allotment_stagingFindUniqueOrThrowArgs>(args: SelectSubset<T, ipo_allotment_stagingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ipo_allotment_stagingClient<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Ipo_allotment_staging that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ipo_allotment_stagingFindFirstArgs} args - Arguments to find a Ipo_allotment_staging
-     * @example
-     * // Get one Ipo_allotment_staging
-     * const ipo_allotment_staging = await prisma.ipo_allotment_staging.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends ipo_allotment_stagingFindFirstArgs>(args?: SelectSubset<T, ipo_allotment_stagingFindFirstArgs<ExtArgs>>): Prisma__ipo_allotment_stagingClient<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Ipo_allotment_staging that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ipo_allotment_stagingFindFirstOrThrowArgs} args - Arguments to find a Ipo_allotment_staging
-     * @example
-     * // Get one Ipo_allotment_staging
-     * const ipo_allotment_staging = await prisma.ipo_allotment_staging.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends ipo_allotment_stagingFindFirstOrThrowArgs>(args?: SelectSubset<T, ipo_allotment_stagingFindFirstOrThrowArgs<ExtArgs>>): Prisma__ipo_allotment_stagingClient<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Ipo_allotment_stagings that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ipo_allotment_stagingFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Ipo_allotment_stagings
-     * const ipo_allotment_stagings = await prisma.ipo_allotment_staging.findMany()
-     * 
-     * // Get first 10 Ipo_allotment_stagings
-     * const ipo_allotment_stagings = await prisma.ipo_allotment_staging.findMany({ take: 10 })
-     * 
-     * // Only select the `allotment_staging_id`
-     * const ipo_allotment_stagingWithAllotment_staging_idOnly = await prisma.ipo_allotment_staging.findMany({ select: { allotment_staging_id: true } })
-     * 
-     */
-    findMany<T extends ipo_allotment_stagingFindManyArgs>(args?: SelectSubset<T, ipo_allotment_stagingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Ipo_allotment_staging.
-     * @param {ipo_allotment_stagingCreateArgs} args - Arguments to create a Ipo_allotment_staging.
-     * @example
-     * // Create one Ipo_allotment_staging
-     * const Ipo_allotment_staging = await prisma.ipo_allotment_staging.create({
-     *   data: {
-     *     // ... data to create a Ipo_allotment_staging
-     *   }
-     * })
-     * 
-     */
-    create<T extends ipo_allotment_stagingCreateArgs>(args: SelectSubset<T, ipo_allotment_stagingCreateArgs<ExtArgs>>): Prisma__ipo_allotment_stagingClient<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Ipo_allotment_stagings.
-     * @param {ipo_allotment_stagingCreateManyArgs} args - Arguments to create many Ipo_allotment_stagings.
-     * @example
-     * // Create many Ipo_allotment_stagings
-     * const ipo_allotment_staging = await prisma.ipo_allotment_staging.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends ipo_allotment_stagingCreateManyArgs>(args?: SelectSubset<T, ipo_allotment_stagingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Ipo_allotment_stagings and returns the data saved in the database.
-     * @param {ipo_allotment_stagingCreateManyAndReturnArgs} args - Arguments to create many Ipo_allotment_stagings.
-     * @example
-     * // Create many Ipo_allotment_stagings
-     * const ipo_allotment_staging = await prisma.ipo_allotment_staging.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Ipo_allotment_stagings and only return the `allotment_staging_id`
-     * const ipo_allotment_stagingWithAllotment_staging_idOnly = await prisma.ipo_allotment_staging.createManyAndReturn({
-     *   select: { allotment_staging_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends ipo_allotment_stagingCreateManyAndReturnArgs>(args?: SelectSubset<T, ipo_allotment_stagingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Ipo_allotment_staging.
-     * @param {ipo_allotment_stagingDeleteArgs} args - Arguments to delete one Ipo_allotment_staging.
-     * @example
-     * // Delete one Ipo_allotment_staging
-     * const Ipo_allotment_staging = await prisma.ipo_allotment_staging.delete({
-     *   where: {
-     *     // ... filter to delete one Ipo_allotment_staging
-     *   }
-     * })
-     * 
-     */
-    delete<T extends ipo_allotment_stagingDeleteArgs>(args: SelectSubset<T, ipo_allotment_stagingDeleteArgs<ExtArgs>>): Prisma__ipo_allotment_stagingClient<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Ipo_allotment_staging.
-     * @param {ipo_allotment_stagingUpdateArgs} args - Arguments to update one Ipo_allotment_staging.
-     * @example
-     * // Update one Ipo_allotment_staging
-     * const ipo_allotment_staging = await prisma.ipo_allotment_staging.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends ipo_allotment_stagingUpdateArgs>(args: SelectSubset<T, ipo_allotment_stagingUpdateArgs<ExtArgs>>): Prisma__ipo_allotment_stagingClient<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Ipo_allotment_stagings.
-     * @param {ipo_allotment_stagingDeleteManyArgs} args - Arguments to filter Ipo_allotment_stagings to delete.
-     * @example
-     * // Delete a few Ipo_allotment_stagings
-     * const { count } = await prisma.ipo_allotment_staging.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends ipo_allotment_stagingDeleteManyArgs>(args?: SelectSubset<T, ipo_allotment_stagingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Ipo_allotment_stagings.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ipo_allotment_stagingUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Ipo_allotment_stagings
-     * const ipo_allotment_staging = await prisma.ipo_allotment_staging.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends ipo_allotment_stagingUpdateManyArgs>(args: SelectSubset<T, ipo_allotment_stagingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Ipo_allotment_stagings and returns the data updated in the database.
-     * @param {ipo_allotment_stagingUpdateManyAndReturnArgs} args - Arguments to update many Ipo_allotment_stagings.
-     * @example
-     * // Update many Ipo_allotment_stagings
-     * const ipo_allotment_staging = await prisma.ipo_allotment_staging.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Ipo_allotment_stagings and only return the `allotment_staging_id`
-     * const ipo_allotment_stagingWithAllotment_staging_idOnly = await prisma.ipo_allotment_staging.updateManyAndReturn({
-     *   select: { allotment_staging_id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends ipo_allotment_stagingUpdateManyAndReturnArgs>(args: SelectSubset<T, ipo_allotment_stagingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Ipo_allotment_staging.
-     * @param {ipo_allotment_stagingUpsertArgs} args - Arguments to update or create a Ipo_allotment_staging.
-     * @example
-     * // Update or create a Ipo_allotment_staging
-     * const ipo_allotment_staging = await prisma.ipo_allotment_staging.upsert({
-     *   create: {
-     *     // ... data to create a Ipo_allotment_staging
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Ipo_allotment_staging we want to update
-     *   }
-     * })
-     */
-    upsert<T extends ipo_allotment_stagingUpsertArgs>(args: SelectSubset<T, ipo_allotment_stagingUpsertArgs<ExtArgs>>): Prisma__ipo_allotment_stagingClient<$Result.GetResult<Prisma.$ipo_allotment_stagingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Ipo_allotment_stagings.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ipo_allotment_stagingCountArgs} args - Arguments to filter Ipo_allotment_stagings to count.
-     * @example
-     * // Count the number of Ipo_allotment_stagings
-     * const count = await prisma.ipo_allotment_staging.count({
-     *   where: {
-     *     // ... the filter for the Ipo_allotment_stagings we want to count
-     *   }
-     * })
-    **/
-    count<T extends ipo_allotment_stagingCountArgs>(
-      args?: Subset<T, ipo_allotment_stagingCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Ipo_allotment_stagingCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Ipo_allotment_staging.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Ipo_allotment_stagingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Ipo_allotment_stagingAggregateArgs>(args: Subset<T, Ipo_allotment_stagingAggregateArgs>): Prisma.PrismaPromise<GetIpo_allotment_stagingAggregateType<T>>
-
-    /**
-     * Group by Ipo_allotment_staging.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ipo_allotment_stagingGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends ipo_allotment_stagingGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ipo_allotment_stagingGroupByArgs['orderBy'] }
-        : { orderBy?: ipo_allotment_stagingGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, ipo_allotment_stagingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIpo_allotment_stagingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the ipo_allotment_staging model
-   */
-  readonly fields: ipo_allotment_stagingFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for ipo_allotment_staging.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__ipo_allotment_stagingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    fiscal_years<T extends fiscal_yearsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_yearsDefaultArgs<ExtArgs>>): Prisma__fiscal_yearsClient<$Result.GetResult<Prisma.$fiscal_yearsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    funds<T extends fundsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fundsDefaultArgs<ExtArgs>>): Prisma__fundsClient<$Result.GetResult<Prisma.$fundsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    sub_classes<T extends sub_classesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, sub_classesDefaultArgs<ExtArgs>>): Prisma__sub_classesClient<$Result.GetResult<Prisma.$sub_classesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    stock_fulls<T extends stock_fullsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, stock_fullsDefaultArgs<ExtArgs>>): Prisma__stock_fullsClient<$Result.GetResult<Prisma.$stock_fullsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the ipo_allotment_staging model
-   */
-  interface ipo_allotment_stagingFieldRefs {
-    readonly allotment_staging_id: FieldRef<"ipo_allotment_staging", 'Int'>
-    readonly fund_id: FieldRef<"ipo_allotment_staging", 'Int'>
-    readonly quantity: FieldRef<"ipo_allotment_staging", 'Int'>
-    readonly effective_rate: FieldRef<"ipo_allotment_staging", 'Decimal'>
-    readonly total_value: FieldRef<"ipo_allotment_staging", 'Decimal'>
-    readonly fiscal_year_id: FieldRef<"ipo_allotment_staging", 'Int'>
-    readonly recorded_at: FieldRef<"ipo_allotment_staging", 'DateTime'>
-    readonly added_at: FieldRef<"ipo_allotment_staging", 'DateTime'>
-    readonly remarks: FieldRef<"ipo_allotment_staging", 'String'>
-    readonly symbol: FieldRef<"ipo_allotment_staging", 'String'>
-    readonly sub_id: FieldRef<"ipo_allotment_staging", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * ipo_allotment_staging findUnique
-   */
-  export type ipo_allotment_stagingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    /**
-     * Filter, which ipo_allotment_staging to fetch.
-     */
-    where: ipo_allotment_stagingWhereUniqueInput
-  }
-
-  /**
-   * ipo_allotment_staging findUniqueOrThrow
-   */
-  export type ipo_allotment_stagingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    /**
-     * Filter, which ipo_allotment_staging to fetch.
-     */
-    where: ipo_allotment_stagingWhereUniqueInput
-  }
-
-  /**
-   * ipo_allotment_staging findFirst
-   */
-  export type ipo_allotment_stagingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    /**
-     * Filter, which ipo_allotment_staging to fetch.
-     */
-    where?: ipo_allotment_stagingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ipo_allotment_stagings to fetch.
-     */
-    orderBy?: ipo_allotment_stagingOrderByWithRelationInput | ipo_allotment_stagingOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ipo_allotment_stagings.
-     */
-    cursor?: ipo_allotment_stagingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ipo_allotment_stagings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ipo_allotment_stagings.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ipo_allotment_stagings.
-     */
-    distinct?: Ipo_allotment_stagingScalarFieldEnum | Ipo_allotment_stagingScalarFieldEnum[]
-  }
-
-  /**
-   * ipo_allotment_staging findFirstOrThrow
-   */
-  export type ipo_allotment_stagingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    /**
-     * Filter, which ipo_allotment_staging to fetch.
-     */
-    where?: ipo_allotment_stagingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ipo_allotment_stagings to fetch.
-     */
-    orderBy?: ipo_allotment_stagingOrderByWithRelationInput | ipo_allotment_stagingOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ipo_allotment_stagings.
-     */
-    cursor?: ipo_allotment_stagingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ipo_allotment_stagings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ipo_allotment_stagings.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ipo_allotment_stagings.
-     */
-    distinct?: Ipo_allotment_stagingScalarFieldEnum | Ipo_allotment_stagingScalarFieldEnum[]
-  }
-
-  /**
-   * ipo_allotment_staging findMany
-   */
-  export type ipo_allotment_stagingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    /**
-     * Filter, which ipo_allotment_stagings to fetch.
-     */
-    where?: ipo_allotment_stagingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ipo_allotment_stagings to fetch.
-     */
-    orderBy?: ipo_allotment_stagingOrderByWithRelationInput | ipo_allotment_stagingOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing ipo_allotment_stagings.
-     */
-    cursor?: ipo_allotment_stagingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ipo_allotment_stagings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ipo_allotment_stagings.
-     */
-    skip?: number
-    distinct?: Ipo_allotment_stagingScalarFieldEnum | Ipo_allotment_stagingScalarFieldEnum[]
-  }
-
-  /**
-   * ipo_allotment_staging create
-   */
-  export type ipo_allotment_stagingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    /**
-     * The data needed to create a ipo_allotment_staging.
-     */
-    data: XOR<ipo_allotment_stagingCreateInput, ipo_allotment_stagingUncheckedCreateInput>
-  }
-
-  /**
-   * ipo_allotment_staging createMany
-   */
-  export type ipo_allotment_stagingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many ipo_allotment_stagings.
-     */
-    data: ipo_allotment_stagingCreateManyInput | ipo_allotment_stagingCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * ipo_allotment_staging createManyAndReturn
-   */
-  export type ipo_allotment_stagingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * The data used to create many ipo_allotment_stagings.
-     */
-    data: ipo_allotment_stagingCreateManyInput | ipo_allotment_stagingCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * ipo_allotment_staging update
-   */
-  export type ipo_allotment_stagingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    /**
-     * The data needed to update a ipo_allotment_staging.
-     */
-    data: XOR<ipo_allotment_stagingUpdateInput, ipo_allotment_stagingUncheckedUpdateInput>
-    /**
-     * Choose, which ipo_allotment_staging to update.
-     */
-    where: ipo_allotment_stagingWhereUniqueInput
-  }
-
-  /**
-   * ipo_allotment_staging updateMany
-   */
-  export type ipo_allotment_stagingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update ipo_allotment_stagings.
-     */
-    data: XOR<ipo_allotment_stagingUpdateManyMutationInput, ipo_allotment_stagingUncheckedUpdateManyInput>
-    /**
-     * Filter which ipo_allotment_stagings to update
-     */
-    where?: ipo_allotment_stagingWhereInput
-    /**
-     * Limit how many ipo_allotment_stagings to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * ipo_allotment_staging updateManyAndReturn
-   */
-  export type ipo_allotment_stagingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * The data used to update ipo_allotment_stagings.
-     */
-    data: XOR<ipo_allotment_stagingUpdateManyMutationInput, ipo_allotment_stagingUncheckedUpdateManyInput>
-    /**
-     * Filter which ipo_allotment_stagings to update
-     */
-    where?: ipo_allotment_stagingWhereInput
-    /**
-     * Limit how many ipo_allotment_stagings to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * ipo_allotment_staging upsert
-   */
-  export type ipo_allotment_stagingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    /**
-     * The filter to search for the ipo_allotment_staging to update in case it exists.
-     */
-    where: ipo_allotment_stagingWhereUniqueInput
-    /**
-     * In case the ipo_allotment_staging found by the `where` argument doesn't exist, create a new ipo_allotment_staging with this data.
-     */
-    create: XOR<ipo_allotment_stagingCreateInput, ipo_allotment_stagingUncheckedCreateInput>
-    /**
-     * In case the ipo_allotment_staging was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<ipo_allotment_stagingUpdateInput, ipo_allotment_stagingUncheckedUpdateInput>
-  }
-
-  /**
-   * ipo_allotment_staging delete
-   */
-  export type ipo_allotment_stagingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
-    /**
-     * Filter which ipo_allotment_staging to delete.
-     */
-    where: ipo_allotment_stagingWhereUniqueInput
-  }
-
-  /**
-   * ipo_allotment_staging deleteMany
-   */
-  export type ipo_allotment_stagingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which ipo_allotment_stagings to delete
-     */
-    where?: ipo_allotment_stagingWhereInput
-    /**
-     * Limit how many ipo_allotment_stagings to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * ipo_allotment_staging without action
-   */
-  export type ipo_allotment_stagingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ipo_allotment_staging
-     */
-    select?: ipo_allotment_stagingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ipo_allotment_staging
-     */
-    omit?: ipo_allotment_stagingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ipo_allotment_stagingInclude<ExtArgs> | null
   }
 
 
@@ -42511,23 +41054,6 @@ export namespace Prisma {
   export type Sub_classesScalarFieldEnum = (typeof Sub_classesScalarFieldEnum)[keyof typeof Sub_classesScalarFieldEnum]
 
 
-  export const Ipo_allotment_stagingScalarFieldEnum: {
-    allotment_staging_id: 'allotment_staging_id',
-    fund_id: 'fund_id',
-    quantity: 'quantity',
-    effective_rate: 'effective_rate',
-    total_value: 'total_value',
-    fiscal_year_id: 'fiscal_year_id',
-    recorded_at: 'recorded_at',
-    added_at: 'added_at',
-    remarks: 'remarks',
-    symbol: 'symbol',
-    sub_id: 'sub_id'
-  };
-
-  export type Ipo_allotment_stagingScalarFieldEnum = (typeof Ipo_allotment_stagingScalarFieldEnum)[keyof typeof Ipo_allotment_stagingScalarFieldEnum]
-
-
   export const Bonus_records_stagingScalarFieldEnum: {
     bonus_staging_id: 'bonus_staging_id',
     fund_id: 'fund_id',
@@ -43586,7 +42112,6 @@ export namespace Prisma {
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
-    ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     market_snapshots?: Market_snapshotsListRelationFilter
     order_book?: Order_bookListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
@@ -43612,7 +42137,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsOrderByRelationAggregateInput
     fiscal_year_balance?: fiscal_year_balanceOrderByRelationAggregateInput
     ipo_allotment_records?: ipo_allotment_recordsOrderByRelationAggregateInput
-    ipo_allotment_staging?: ipo_allotment_stagingOrderByRelationAggregateInput
     market_snapshots?: market_snapshotsOrderByRelationAggregateInput
     order_book?: order_bookOrderByRelationAggregateInput
     promoter_records?: promoter_recordsOrderByRelationAggregateInput
@@ -43641,7 +42165,6 @@ export namespace Prisma {
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
-    ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     market_snapshots?: Market_snapshotsListRelationFilter
     order_book?: Order_bookListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
@@ -43693,7 +42216,6 @@ export namespace Prisma {
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
-    ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records?: Right_recordsListRelationFilter
     right_records_staging?: Right_records_stagingListRelationFilter
@@ -43717,7 +42239,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsOrderByRelationAggregateInput
     fiscal_year_balance?: fiscal_year_balanceOrderByRelationAggregateInput
     ipo_allotment_records?: ipo_allotment_recordsOrderByRelationAggregateInput
-    ipo_allotment_staging?: ipo_allotment_stagingOrderByRelationAggregateInput
     promoter_records?: promoter_recordsOrderByRelationAggregateInput
     right_records?: right_recordsOrderByRelationAggregateInput
     right_records_staging?: right_records_stagingOrderByRelationAggregateInput
@@ -43744,7 +42265,6 @@ export namespace Prisma {
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
-    ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records?: Right_recordsListRelationFilter
     right_records_staging?: Right_records_stagingListRelationFilter
@@ -43931,7 +42451,6 @@ export namespace Prisma {
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
-    ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     order_book?: Order_bookListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records?: Right_recordsListRelationFilter
@@ -43957,7 +42476,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsOrderByRelationAggregateInput
     fiscal_year_balance?: fiscal_year_balanceOrderByRelationAggregateInput
     ipo_allotment_records?: ipo_allotment_recordsOrderByRelationAggregateInput
-    ipo_allotment_staging?: ipo_allotment_stagingOrderByRelationAggregateInput
     order_book?: order_bookOrderByRelationAggregateInput
     promoter_records?: promoter_recordsOrderByRelationAggregateInput
     right_records?: right_recordsOrderByRelationAggregateInput
@@ -43986,7 +42504,6 @@ export namespace Prisma {
     closeout_records?: Closeout_recordsListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
-    ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     order_book?: Order_bookListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records?: Right_recordsListRelationFilter
@@ -44904,7 +43421,6 @@ export namespace Prisma {
     cash_records_staging?: Cash_records_stagingListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
-    ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records_staging?: Right_records_stagingListRelationFilter
     funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
@@ -44920,7 +43436,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingOrderByRelationAggregateInput
     fiscal_year_balance?: fiscal_year_balanceOrderByRelationAggregateInput
     ipo_allotment_records?: ipo_allotment_recordsOrderByRelationAggregateInput
-    ipo_allotment_staging?: ipo_allotment_stagingOrderByRelationAggregateInput
     promoter_records?: promoter_recordsOrderByRelationAggregateInput
     right_records_staging?: right_records_stagingOrderByRelationAggregateInput
     funds?: fundsOrderByWithRelationInput
@@ -44939,7 +43454,6 @@ export namespace Prisma {
     cash_records_staging?: Cash_records_stagingListRelationFilter
     fiscal_year_balance?: Fiscal_year_balanceListRelationFilter
     ipo_allotment_records?: Ipo_allotment_recordsListRelationFilter
-    ipo_allotment_staging?: Ipo_allotment_stagingListRelationFilter
     promoter_records?: Promoter_recordsListRelationFilter
     right_records_staging?: Right_records_stagingListRelationFilter
     funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
@@ -44966,102 +43480,6 @@ export namespace Prisma {
     fund_id?: IntWithAggregatesFilter<"sub_classes"> | number
     sub_name?: StringWithAggregatesFilter<"sub_classes"> | string
     added_at?: DateTimeNullableWithAggregatesFilter<"sub_classes"> | Date | string | null
-  }
-
-  export type ipo_allotment_stagingWhereInput = {
-    AND?: ipo_allotment_stagingWhereInput | ipo_allotment_stagingWhereInput[]
-    OR?: ipo_allotment_stagingWhereInput[]
-    NOT?: ipo_allotment_stagingWhereInput | ipo_allotment_stagingWhereInput[]
-    allotment_staging_id?: IntFilter<"ipo_allotment_staging"> | number
-    fund_id?: IntFilter<"ipo_allotment_staging"> | number
-    quantity?: IntFilter<"ipo_allotment_staging"> | number
-    effective_rate?: DecimalFilter<"ipo_allotment_staging"> | Decimal | DecimalJsLike | number | string
-    total_value?: DecimalNullableFilter<"ipo_allotment_staging"> | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFilter<"ipo_allotment_staging"> | number
-    recorded_at?: DateTimeNullableFilter<"ipo_allotment_staging"> | Date | string | null
-    added_at?: DateTimeFilter<"ipo_allotment_staging"> | Date | string
-    remarks?: StringNullableFilter<"ipo_allotment_staging"> | string | null
-    symbol?: StringFilter<"ipo_allotment_staging"> | string
-    sub_id?: IntFilter<"ipo_allotment_staging"> | number
-    fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
-    funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
-    sub_classes?: XOR<Sub_classesScalarRelationFilter, sub_classesWhereInput>
-    stock_fulls?: XOR<Stock_fullsScalarRelationFilter, stock_fullsWhereInput>
-  }
-
-  export type ipo_allotment_stagingOrderByWithRelationInput = {
-    allotment_staging_id?: SortOrder
-    fund_id?: SortOrder
-    quantity?: SortOrder
-    effective_rate?: SortOrder
-    total_value?: SortOrderInput | SortOrder
-    fiscal_year_id?: SortOrder
-    recorded_at?: SortOrderInput | SortOrder
-    added_at?: SortOrder
-    remarks?: SortOrderInput | SortOrder
-    symbol?: SortOrder
-    sub_id?: SortOrder
-    fiscal_years?: fiscal_yearsOrderByWithRelationInput
-    funds?: fundsOrderByWithRelationInput
-    sub_classes?: sub_classesOrderByWithRelationInput
-    stock_fulls?: stock_fullsOrderByWithRelationInput
-  }
-
-  export type ipo_allotment_stagingWhereUniqueInput = Prisma.AtLeast<{
-    allotment_staging_id?: number
-    AND?: ipo_allotment_stagingWhereInput | ipo_allotment_stagingWhereInput[]
-    OR?: ipo_allotment_stagingWhereInput[]
-    NOT?: ipo_allotment_stagingWhereInput | ipo_allotment_stagingWhereInput[]
-    fund_id?: IntFilter<"ipo_allotment_staging"> | number
-    quantity?: IntFilter<"ipo_allotment_staging"> | number
-    effective_rate?: DecimalFilter<"ipo_allotment_staging"> | Decimal | DecimalJsLike | number | string
-    total_value?: DecimalNullableFilter<"ipo_allotment_staging"> | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFilter<"ipo_allotment_staging"> | number
-    recorded_at?: DateTimeNullableFilter<"ipo_allotment_staging"> | Date | string | null
-    added_at?: DateTimeFilter<"ipo_allotment_staging"> | Date | string
-    remarks?: StringNullableFilter<"ipo_allotment_staging"> | string | null
-    symbol?: StringFilter<"ipo_allotment_staging"> | string
-    sub_id?: IntFilter<"ipo_allotment_staging"> | number
-    fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
-    funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
-    sub_classes?: XOR<Sub_classesScalarRelationFilter, sub_classesWhereInput>
-    stock_fulls?: XOR<Stock_fullsScalarRelationFilter, stock_fullsWhereInput>
-  }, "allotment_staging_id">
-
-  export type ipo_allotment_stagingOrderByWithAggregationInput = {
-    allotment_staging_id?: SortOrder
-    fund_id?: SortOrder
-    quantity?: SortOrder
-    effective_rate?: SortOrder
-    total_value?: SortOrderInput | SortOrder
-    fiscal_year_id?: SortOrder
-    recorded_at?: SortOrderInput | SortOrder
-    added_at?: SortOrder
-    remarks?: SortOrderInput | SortOrder
-    symbol?: SortOrder
-    sub_id?: SortOrder
-    _count?: ipo_allotment_stagingCountOrderByAggregateInput
-    _avg?: ipo_allotment_stagingAvgOrderByAggregateInput
-    _max?: ipo_allotment_stagingMaxOrderByAggregateInput
-    _min?: ipo_allotment_stagingMinOrderByAggregateInput
-    _sum?: ipo_allotment_stagingSumOrderByAggregateInput
-  }
-
-  export type ipo_allotment_stagingScalarWhereWithAggregatesInput = {
-    AND?: ipo_allotment_stagingScalarWhereWithAggregatesInput | ipo_allotment_stagingScalarWhereWithAggregatesInput[]
-    OR?: ipo_allotment_stagingScalarWhereWithAggregatesInput[]
-    NOT?: ipo_allotment_stagingScalarWhereWithAggregatesInput | ipo_allotment_stagingScalarWhereWithAggregatesInput[]
-    allotment_staging_id?: IntWithAggregatesFilter<"ipo_allotment_staging"> | number
-    fund_id?: IntWithAggregatesFilter<"ipo_allotment_staging"> | number
-    quantity?: IntWithAggregatesFilter<"ipo_allotment_staging"> | number
-    effective_rate?: DecimalWithAggregatesFilter<"ipo_allotment_staging"> | Decimal | DecimalJsLike | number | string
-    total_value?: DecimalNullableWithAggregatesFilter<"ipo_allotment_staging"> | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntWithAggregatesFilter<"ipo_allotment_staging"> | number
-    recorded_at?: DateTimeNullableWithAggregatesFilter<"ipo_allotment_staging"> | Date | string | null
-    added_at?: DateTimeWithAggregatesFilter<"ipo_allotment_staging"> | Date | string
-    remarks?: StringNullableWithAggregatesFilter<"ipo_allotment_staging"> | string | null
-    symbol?: StringWithAggregatesFilter<"ipo_allotment_staging"> | string
-    sub_id?: IntWithAggregatesFilter<"ipo_allotment_staging"> | number
   }
 
   export type bonus_records_stagingWhereInput = {
@@ -46350,7 +44768,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -46376,7 +44793,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -46401,7 +44817,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -46427,7 +44842,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -46474,7 +44888,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -46498,7 +44911,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -46521,7 +44933,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -46545,7 +44956,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -46735,7 +45145,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -46761,7 +45170,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -46785,7 +45193,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -46811,7 +45218,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -47664,7 +46070,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
@@ -47680,7 +46085,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
@@ -47693,7 +46097,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
@@ -47709,7 +46112,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
@@ -47732,97 +46134,6 @@ export namespace Prisma {
     fund_id?: IntFieldUpdateOperationsInput | number
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type ipo_allotment_stagingCreateInput = {
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    fiscal_years: fiscal_yearsCreateNestedOneWithoutIpo_allotment_stagingInput
-    funds: fundsCreateNestedOneWithoutIpo_allotment_stagingInput
-    sub_classes: sub_classesCreateNestedOneWithoutIpo_allotment_stagingInput
-    stock_fulls: stock_fullsCreateNestedOneWithoutIpo_allotment_stagingInput
-  }
-
-  export type ipo_allotment_stagingUncheckedCreateInput = {
-    allotment_staging_id?: number
-    fund_id: number
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id: number
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    symbol: string
-    sub_id: number
-  }
-
-  export type ipo_allotment_stagingUpdateInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    funds?: fundsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    sub_classes?: sub_classesUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    stock_fulls?: stock_fullsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateInput = {
-    allotment_staging_id?: IntFieldUpdateOperationsInput | number
-    fund_id?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    symbol?: StringFieldUpdateOperationsInput | string
-    sub_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ipo_allotment_stagingCreateManyInput = {
-    allotment_staging_id?: number
-    fund_id: number
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id: number
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    symbol: string
-    sub_id: number
-  }
-
-  export type ipo_allotment_stagingUpdateManyMutationInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateManyInput = {
-    allotment_staging_id?: IntFieldUpdateOperationsInput | number
-    fund_id?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    symbol?: StringFieldUpdateOperationsInput | string
-    sub_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type bonus_records_stagingCreateInput = {
@@ -49184,12 +47495,6 @@ export namespace Prisma {
     none?: cash_records_stagingWhereInput
   }
 
-  export type Ipo_allotment_stagingListRelationFilter = {
-    every?: ipo_allotment_stagingWhereInput
-    some?: ipo_allotment_stagingWhereInput
-    none?: ipo_allotment_stagingWhereInput
-  }
-
   export type Market_snapshotsListRelationFilter = {
     every?: market_snapshotsWhereInput
     some?: market_snapshotsWhereInput
@@ -49213,10 +47518,6 @@ export namespace Prisma {
   }
 
   export type cash_records_stagingOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ipo_allotment_stagingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -50024,73 +48325,6 @@ export namespace Prisma {
   export type sub_classesSumOrderByAggregateInput = {
     sub_id?: SortOrder
     fund_id?: SortOrder
-  }
-
-  export type Sub_classesScalarRelationFilter = {
-    is?: sub_classesWhereInput
-    isNot?: sub_classesWhereInput
-  }
-
-  export type ipo_allotment_stagingCountOrderByAggregateInput = {
-    allotment_staging_id?: SortOrder
-    fund_id?: SortOrder
-    quantity?: SortOrder
-    effective_rate?: SortOrder
-    total_value?: SortOrder
-    fiscal_year_id?: SortOrder
-    recorded_at?: SortOrder
-    added_at?: SortOrder
-    remarks?: SortOrder
-    symbol?: SortOrder
-    sub_id?: SortOrder
-  }
-
-  export type ipo_allotment_stagingAvgOrderByAggregateInput = {
-    allotment_staging_id?: SortOrder
-    fund_id?: SortOrder
-    quantity?: SortOrder
-    effective_rate?: SortOrder
-    total_value?: SortOrder
-    fiscal_year_id?: SortOrder
-    sub_id?: SortOrder
-  }
-
-  export type ipo_allotment_stagingMaxOrderByAggregateInput = {
-    allotment_staging_id?: SortOrder
-    fund_id?: SortOrder
-    quantity?: SortOrder
-    effective_rate?: SortOrder
-    total_value?: SortOrder
-    fiscal_year_id?: SortOrder
-    recorded_at?: SortOrder
-    added_at?: SortOrder
-    remarks?: SortOrder
-    symbol?: SortOrder
-    sub_id?: SortOrder
-  }
-
-  export type ipo_allotment_stagingMinOrderByAggregateInput = {
-    allotment_staging_id?: SortOrder
-    fund_id?: SortOrder
-    quantity?: SortOrder
-    effective_rate?: SortOrder
-    total_value?: SortOrder
-    fiscal_year_id?: SortOrder
-    recorded_at?: SortOrder
-    added_at?: SortOrder
-    remarks?: SortOrder
-    symbol?: SortOrder
-    sub_id?: SortOrder
-  }
-
-  export type ipo_allotment_stagingSumOrderByAggregateInput = {
-    allotment_staging_id?: SortOrder
-    fund_id?: SortOrder
-    quantity?: SortOrder
-    effective_rate?: SortOrder
-    total_value?: SortOrder
-    fiscal_year_id?: SortOrder
-    sub_id?: SortOrder
   }
 
   export type bonus_records_stagingCountOrderByAggregateInput = {
@@ -51608,13 +49842,6 @@ export namespace Prisma {
     connect?: ipo_allotment_recordsWhereUniqueInput | ipo_allotment_recordsWhereUniqueInput[]
   }
 
-  export type ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutFiscal_yearsInput, ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput> | ipo_allotment_stagingCreateWithoutFiscal_yearsInput[] | ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutFiscal_yearsInput | ipo_allotment_stagingCreateOrConnectWithoutFiscal_yearsInput[]
-    createMany?: ipo_allotment_stagingCreateManyFiscal_yearsInputEnvelope
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-  }
-
   export type market_snapshotsCreateNestedManyWithoutFiscal_yearsInput = {
     create?: XOR<market_snapshotsCreateWithoutFiscal_yearsInput, market_snapshotsUncheckedCreateWithoutFiscal_yearsInput> | market_snapshotsCreateWithoutFiscal_yearsInput[] | market_snapshotsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: market_snapshotsCreateOrConnectWithoutFiscal_yearsInput | market_snapshotsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -51732,13 +49959,6 @@ export namespace Prisma {
     connectOrCreate?: ipo_allotment_recordsCreateOrConnectWithoutFiscal_yearsInput | ipo_allotment_recordsCreateOrConnectWithoutFiscal_yearsInput[]
     createMany?: ipo_allotment_recordsCreateManyFiscal_yearsInputEnvelope
     connect?: ipo_allotment_recordsWhereUniqueInput | ipo_allotment_recordsWhereUniqueInput[]
-  }
-
-  export type ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutFiscal_yearsInput, ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput> | ipo_allotment_stagingCreateWithoutFiscal_yearsInput[] | ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutFiscal_yearsInput | ipo_allotment_stagingCreateOrConnectWithoutFiscal_yearsInput[]
-    createMany?: ipo_allotment_stagingCreateManyFiscal_yearsInputEnvelope
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
   }
 
   export type market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput = {
@@ -51921,20 +50141,6 @@ export namespace Prisma {
     update?: ipo_allotment_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput | ipo_allotment_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
     updateMany?: ipo_allotment_recordsUpdateManyWithWhereWithoutFiscal_yearsInput | ipo_allotment_recordsUpdateManyWithWhereWithoutFiscal_yearsInput[]
     deleteMany?: ipo_allotment_recordsScalarWhereInput | ipo_allotment_recordsScalarWhereInput[]
-  }
-
-  export type ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutFiscal_yearsInput, ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput> | ipo_allotment_stagingCreateWithoutFiscal_yearsInput[] | ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutFiscal_yearsInput | ipo_allotment_stagingCreateOrConnectWithoutFiscal_yearsInput[]
-    upsert?: ipo_allotment_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput | ipo_allotment_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput[]
-    createMany?: ipo_allotment_stagingCreateManyFiscal_yearsInputEnvelope
-    set?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    disconnect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    delete?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    update?: ipo_allotment_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput | ipo_allotment_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
-    updateMany?: ipo_allotment_stagingUpdateManyWithWhereWithoutFiscal_yearsInput | ipo_allotment_stagingUpdateManyWithWhereWithoutFiscal_yearsInput[]
-    deleteMany?: ipo_allotment_stagingScalarWhereInput | ipo_allotment_stagingScalarWhereInput[]
   }
 
   export type market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput = {
@@ -52175,20 +50381,6 @@ export namespace Prisma {
     deleteMany?: ipo_allotment_recordsScalarWhereInput | ipo_allotment_recordsScalarWhereInput[]
   }
 
-  export type ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutFiscal_yearsInput, ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput> | ipo_allotment_stagingCreateWithoutFiscal_yearsInput[] | ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutFiscal_yearsInput | ipo_allotment_stagingCreateOrConnectWithoutFiscal_yearsInput[]
-    upsert?: ipo_allotment_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput | ipo_allotment_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput[]
-    createMany?: ipo_allotment_stagingCreateManyFiscal_yearsInputEnvelope
-    set?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    disconnect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    delete?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    update?: ipo_allotment_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput | ipo_allotment_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
-    updateMany?: ipo_allotment_stagingUpdateManyWithWhereWithoutFiscal_yearsInput | ipo_allotment_stagingUpdateManyWithWhereWithoutFiscal_yearsInput[]
-    deleteMany?: ipo_allotment_stagingScalarWhereInput | ipo_allotment_stagingScalarWhereInput[]
-  }
-
   export type market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput = {
     create?: XOR<market_snapshotsCreateWithoutFiscal_yearsInput, market_snapshotsUncheckedCreateWithoutFiscal_yearsInput> | market_snapshotsCreateWithoutFiscal_yearsInput[] | market_snapshotsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: market_snapshotsCreateOrConnectWithoutFiscal_yearsInput | market_snapshotsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -52371,13 +50563,6 @@ export namespace Prisma {
     connect?: ipo_allotment_recordsWhereUniqueInput | ipo_allotment_recordsWhereUniqueInput[]
   }
 
-  export type ipo_allotment_stagingCreateNestedManyWithoutFundsInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutFundsInput, ipo_allotment_stagingUncheckedCreateWithoutFundsInput> | ipo_allotment_stagingCreateWithoutFundsInput[] | ipo_allotment_stagingUncheckedCreateWithoutFundsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutFundsInput | ipo_allotment_stagingCreateOrConnectWithoutFundsInput[]
-    createMany?: ipo_allotment_stagingCreateManyFundsInputEnvelope
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-  }
-
   export type promoter_recordsCreateNestedManyWithoutFundsInput = {
     create?: XOR<promoter_recordsCreateWithoutFundsInput, promoter_recordsUncheckedCreateWithoutFundsInput> | promoter_recordsCreateWithoutFundsInput[] | promoter_recordsUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: promoter_recordsCreateOrConnectWithoutFundsInput | promoter_recordsCreateOrConnectWithoutFundsInput[]
@@ -52495,13 +50680,6 @@ export namespace Prisma {
     connectOrCreate?: ipo_allotment_recordsCreateOrConnectWithoutFundsInput | ipo_allotment_recordsCreateOrConnectWithoutFundsInput[]
     createMany?: ipo_allotment_recordsCreateManyFundsInputEnvelope
     connect?: ipo_allotment_recordsWhereUniqueInput | ipo_allotment_recordsWhereUniqueInput[]
-  }
-
-  export type ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutFundsInput, ipo_allotment_stagingUncheckedCreateWithoutFundsInput> | ipo_allotment_stagingCreateWithoutFundsInput[] | ipo_allotment_stagingUncheckedCreateWithoutFundsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutFundsInput | ipo_allotment_stagingCreateOrConnectWithoutFundsInput[]
-    createMany?: ipo_allotment_stagingCreateManyFundsInputEnvelope
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
   }
 
   export type promoter_recordsUncheckedCreateNestedManyWithoutFundsInput = {
@@ -52691,20 +50869,6 @@ export namespace Prisma {
     update?: ipo_allotment_recordsUpdateWithWhereUniqueWithoutFundsInput | ipo_allotment_recordsUpdateWithWhereUniqueWithoutFundsInput[]
     updateMany?: ipo_allotment_recordsUpdateManyWithWhereWithoutFundsInput | ipo_allotment_recordsUpdateManyWithWhereWithoutFundsInput[]
     deleteMany?: ipo_allotment_recordsScalarWhereInput | ipo_allotment_recordsScalarWhereInput[]
-  }
-
-  export type ipo_allotment_stagingUpdateManyWithoutFundsNestedInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutFundsInput, ipo_allotment_stagingUncheckedCreateWithoutFundsInput> | ipo_allotment_stagingCreateWithoutFundsInput[] | ipo_allotment_stagingUncheckedCreateWithoutFundsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutFundsInput | ipo_allotment_stagingCreateOrConnectWithoutFundsInput[]
-    upsert?: ipo_allotment_stagingUpsertWithWhereUniqueWithoutFundsInput | ipo_allotment_stagingUpsertWithWhereUniqueWithoutFundsInput[]
-    createMany?: ipo_allotment_stagingCreateManyFundsInputEnvelope
-    set?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    disconnect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    delete?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    update?: ipo_allotment_stagingUpdateWithWhereUniqueWithoutFundsInput | ipo_allotment_stagingUpdateWithWhereUniqueWithoutFundsInput[]
-    updateMany?: ipo_allotment_stagingUpdateManyWithWhereWithoutFundsInput | ipo_allotment_stagingUpdateManyWithWhereWithoutFundsInput[]
-    deleteMany?: ipo_allotment_stagingScalarWhereInput | ipo_allotment_stagingScalarWhereInput[]
   }
 
   export type promoter_recordsUpdateManyWithoutFundsNestedInput = {
@@ -52945,20 +51109,6 @@ export namespace Prisma {
     deleteMany?: ipo_allotment_recordsScalarWhereInput | ipo_allotment_recordsScalarWhereInput[]
   }
 
-  export type ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutFundsInput, ipo_allotment_stagingUncheckedCreateWithoutFundsInput> | ipo_allotment_stagingCreateWithoutFundsInput[] | ipo_allotment_stagingUncheckedCreateWithoutFundsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutFundsInput | ipo_allotment_stagingCreateOrConnectWithoutFundsInput[]
-    upsert?: ipo_allotment_stagingUpsertWithWhereUniqueWithoutFundsInput | ipo_allotment_stagingUpsertWithWhereUniqueWithoutFundsInput[]
-    createMany?: ipo_allotment_stagingCreateManyFundsInputEnvelope
-    set?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    disconnect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    delete?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    update?: ipo_allotment_stagingUpdateWithWhereUniqueWithoutFundsInput | ipo_allotment_stagingUpdateWithWhereUniqueWithoutFundsInput[]
-    updateMany?: ipo_allotment_stagingUpdateManyWithWhereWithoutFundsInput | ipo_allotment_stagingUpdateManyWithWhereWithoutFundsInput[]
-    deleteMany?: ipo_allotment_stagingScalarWhereInput | ipo_allotment_stagingScalarWhereInput[]
-  }
-
   export type promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput = {
     create?: XOR<promoter_recordsCreateWithoutFundsInput, promoter_recordsUncheckedCreateWithoutFundsInput> | promoter_recordsCreateWithoutFundsInput[] | promoter_recordsUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: promoter_recordsCreateOrConnectWithoutFundsInput | promoter_recordsCreateOrConnectWithoutFundsInput[]
@@ -53192,13 +51342,6 @@ export namespace Prisma {
     connect?: ipo_allotment_recordsWhereUniqueInput | ipo_allotment_recordsWhereUniqueInput[]
   }
 
-  export type ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutStock_fullsInput, ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput> | ipo_allotment_stagingCreateWithoutStock_fullsInput[] | ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutStock_fullsInput | ipo_allotment_stagingCreateOrConnectWithoutStock_fullsInput[]
-    createMany?: ipo_allotment_stagingCreateManyStock_fullsInputEnvelope
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-  }
-
   export type order_bookCreateNestedManyWithoutStock_fullsInput = {
     create?: XOR<order_bookCreateWithoutStock_fullsInput, order_bookUncheckedCreateWithoutStock_fullsInput> | order_bookCreateWithoutStock_fullsInput[] | order_bookUncheckedCreateWithoutStock_fullsInput[]
     connectOrCreate?: order_bookCreateOrConnectWithoutStock_fullsInput | order_bookCreateOrConnectWithoutStock_fullsInput[]
@@ -53315,13 +51458,6 @@ export namespace Prisma {
     connectOrCreate?: ipo_allotment_recordsCreateOrConnectWithoutStock_fullsInput | ipo_allotment_recordsCreateOrConnectWithoutStock_fullsInput[]
     createMany?: ipo_allotment_recordsCreateManyStock_fullsInputEnvelope
     connect?: ipo_allotment_recordsWhereUniqueInput | ipo_allotment_recordsWhereUniqueInput[]
-  }
-
-  export type ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutStock_fullsInput, ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput> | ipo_allotment_stagingCreateWithoutStock_fullsInput[] | ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutStock_fullsInput | ipo_allotment_stagingCreateOrConnectWithoutStock_fullsInput[]
-    createMany?: ipo_allotment_stagingCreateManyStock_fullsInputEnvelope
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
   }
 
   export type order_bookUncheckedCreateNestedManyWithoutStock_fullsInput = {
@@ -53497,20 +51633,6 @@ export namespace Prisma {
     update?: ipo_allotment_recordsUpdateWithWhereUniqueWithoutStock_fullsInput | ipo_allotment_recordsUpdateWithWhereUniqueWithoutStock_fullsInput[]
     updateMany?: ipo_allotment_recordsUpdateManyWithWhereWithoutStock_fullsInput | ipo_allotment_recordsUpdateManyWithWhereWithoutStock_fullsInput[]
     deleteMany?: ipo_allotment_recordsScalarWhereInput | ipo_allotment_recordsScalarWhereInput[]
-  }
-
-  export type ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutStock_fullsInput, ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput> | ipo_allotment_stagingCreateWithoutStock_fullsInput[] | ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutStock_fullsInput | ipo_allotment_stagingCreateOrConnectWithoutStock_fullsInput[]
-    upsert?: ipo_allotment_stagingUpsertWithWhereUniqueWithoutStock_fullsInput | ipo_allotment_stagingUpsertWithWhereUniqueWithoutStock_fullsInput[]
-    createMany?: ipo_allotment_stagingCreateManyStock_fullsInputEnvelope
-    set?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    disconnect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    delete?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    update?: ipo_allotment_stagingUpdateWithWhereUniqueWithoutStock_fullsInput | ipo_allotment_stagingUpdateWithWhereUniqueWithoutStock_fullsInput[]
-    updateMany?: ipo_allotment_stagingUpdateManyWithWhereWithoutStock_fullsInput | ipo_allotment_stagingUpdateManyWithWhereWithoutStock_fullsInput[]
-    deleteMany?: ipo_allotment_stagingScalarWhereInput | ipo_allotment_stagingScalarWhereInput[]
   }
 
   export type order_bookUpdateManyWithoutStock_fullsNestedInput = {
@@ -53743,20 +51865,6 @@ export namespace Prisma {
     update?: ipo_allotment_recordsUpdateWithWhereUniqueWithoutStock_fullsInput | ipo_allotment_recordsUpdateWithWhereUniqueWithoutStock_fullsInput[]
     updateMany?: ipo_allotment_recordsUpdateManyWithWhereWithoutStock_fullsInput | ipo_allotment_recordsUpdateManyWithWhereWithoutStock_fullsInput[]
     deleteMany?: ipo_allotment_recordsScalarWhereInput | ipo_allotment_recordsScalarWhereInput[]
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutStock_fullsInput, ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput> | ipo_allotment_stagingCreateWithoutStock_fullsInput[] | ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutStock_fullsInput | ipo_allotment_stagingCreateOrConnectWithoutStock_fullsInput[]
-    upsert?: ipo_allotment_stagingUpsertWithWhereUniqueWithoutStock_fullsInput | ipo_allotment_stagingUpsertWithWhereUniqueWithoutStock_fullsInput[]
-    createMany?: ipo_allotment_stagingCreateManyStock_fullsInputEnvelope
-    set?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    disconnect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    delete?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    update?: ipo_allotment_stagingUpdateWithWhereUniqueWithoutStock_fullsInput | ipo_allotment_stagingUpdateWithWhereUniqueWithoutStock_fullsInput[]
-    updateMany?: ipo_allotment_stagingUpdateManyWithWhereWithoutStock_fullsInput | ipo_allotment_stagingUpdateManyWithWhereWithoutStock_fullsInput[]
-    deleteMany?: ipo_allotment_stagingScalarWhereInput | ipo_allotment_stagingScalarWhereInput[]
   }
 
   export type order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput = {
@@ -54433,13 +52541,6 @@ export namespace Prisma {
     connect?: ipo_allotment_recordsWhereUniqueInput | ipo_allotment_recordsWhereUniqueInput[]
   }
 
-  export type ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutSub_classesInput, ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput> | ipo_allotment_stagingCreateWithoutSub_classesInput[] | ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutSub_classesInput | ipo_allotment_stagingCreateOrConnectWithoutSub_classesInput[]
-    createMany?: ipo_allotment_stagingCreateManySub_classesInputEnvelope
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-  }
-
   export type promoter_recordsCreateNestedManyWithoutSub_classesInput = {
     create?: XOR<promoter_recordsCreateWithoutSub_classesInput, promoter_recordsUncheckedCreateWithoutSub_classesInput> | promoter_recordsCreateWithoutSub_classesInput[] | promoter_recordsUncheckedCreateWithoutSub_classesInput[]
     connectOrCreate?: promoter_recordsCreateOrConnectWithoutSub_classesInput | promoter_recordsCreateOrConnectWithoutSub_classesInput[]
@@ -54493,13 +52594,6 @@ export namespace Prisma {
     connectOrCreate?: ipo_allotment_recordsCreateOrConnectWithoutSub_classesInput | ipo_allotment_recordsCreateOrConnectWithoutSub_classesInput[]
     createMany?: ipo_allotment_recordsCreateManySub_classesInputEnvelope
     connect?: ipo_allotment_recordsWhereUniqueInput | ipo_allotment_recordsWhereUniqueInput[]
-  }
-
-  export type ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutSub_classesInput, ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput> | ipo_allotment_stagingCreateWithoutSub_classesInput[] | ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutSub_classesInput | ipo_allotment_stagingCreateOrConnectWithoutSub_classesInput[]
-    createMany?: ipo_allotment_stagingCreateManySub_classesInputEnvelope
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
   }
 
   export type promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput = {
@@ -54577,20 +52671,6 @@ export namespace Prisma {
     update?: ipo_allotment_recordsUpdateWithWhereUniqueWithoutSub_classesInput | ipo_allotment_recordsUpdateWithWhereUniqueWithoutSub_classesInput[]
     updateMany?: ipo_allotment_recordsUpdateManyWithWhereWithoutSub_classesInput | ipo_allotment_recordsUpdateManyWithWhereWithoutSub_classesInput[]
     deleteMany?: ipo_allotment_recordsScalarWhereInput | ipo_allotment_recordsScalarWhereInput[]
-  }
-
-  export type ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutSub_classesInput, ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput> | ipo_allotment_stagingCreateWithoutSub_classesInput[] | ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutSub_classesInput | ipo_allotment_stagingCreateOrConnectWithoutSub_classesInput[]
-    upsert?: ipo_allotment_stagingUpsertWithWhereUniqueWithoutSub_classesInput | ipo_allotment_stagingUpsertWithWhereUniqueWithoutSub_classesInput[]
-    createMany?: ipo_allotment_stagingCreateManySub_classesInputEnvelope
-    set?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    disconnect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    delete?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    update?: ipo_allotment_stagingUpdateWithWhereUniqueWithoutSub_classesInput | ipo_allotment_stagingUpdateWithWhereUniqueWithoutSub_classesInput[]
-    updateMany?: ipo_allotment_stagingUpdateManyWithWhereWithoutSub_classesInput | ipo_allotment_stagingUpdateManyWithWhereWithoutSub_classesInput[]
-    deleteMany?: ipo_allotment_stagingScalarWhereInput | ipo_allotment_stagingScalarWhereInput[]
   }
 
   export type promoter_recordsUpdateManyWithoutSub_classesNestedInput = {
@@ -54699,20 +52779,6 @@ export namespace Prisma {
     deleteMany?: ipo_allotment_recordsScalarWhereInput | ipo_allotment_recordsScalarWhereInput[]
   }
 
-  export type ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput = {
-    create?: XOR<ipo_allotment_stagingCreateWithoutSub_classesInput, ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput> | ipo_allotment_stagingCreateWithoutSub_classesInput[] | ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput[]
-    connectOrCreate?: ipo_allotment_stagingCreateOrConnectWithoutSub_classesInput | ipo_allotment_stagingCreateOrConnectWithoutSub_classesInput[]
-    upsert?: ipo_allotment_stagingUpsertWithWhereUniqueWithoutSub_classesInput | ipo_allotment_stagingUpsertWithWhereUniqueWithoutSub_classesInput[]
-    createMany?: ipo_allotment_stagingCreateManySub_classesInputEnvelope
-    set?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    disconnect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    delete?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    connect?: ipo_allotment_stagingWhereUniqueInput | ipo_allotment_stagingWhereUniqueInput[]
-    update?: ipo_allotment_stagingUpdateWithWhereUniqueWithoutSub_classesInput | ipo_allotment_stagingUpdateWithWhereUniqueWithoutSub_classesInput[]
-    updateMany?: ipo_allotment_stagingUpdateManyWithWhereWithoutSub_classesInput | ipo_allotment_stagingUpdateManyWithWhereWithoutSub_classesInput[]
-    deleteMany?: ipo_allotment_stagingScalarWhereInput | ipo_allotment_stagingScalarWhereInput[]
-  }
-
   export type promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput = {
     create?: XOR<promoter_recordsCreateWithoutSub_classesInput, promoter_recordsUncheckedCreateWithoutSub_classesInput> | promoter_recordsCreateWithoutSub_classesInput[] | promoter_recordsUncheckedCreateWithoutSub_classesInput[]
     connectOrCreate?: promoter_recordsCreateOrConnectWithoutSub_classesInput | promoter_recordsCreateOrConnectWithoutSub_classesInput[]
@@ -54753,62 +52819,6 @@ export namespace Prisma {
     update?: symbol_holdingsUpdateWithWhereUniqueWithoutSub_classesInput | symbol_holdingsUpdateWithWhereUniqueWithoutSub_classesInput[]
     updateMany?: symbol_holdingsUpdateManyWithWhereWithoutSub_classesInput | symbol_holdingsUpdateManyWithWhereWithoutSub_classesInput[]
     deleteMany?: symbol_holdingsScalarWhereInput | symbol_holdingsScalarWhereInput[]
-  }
-
-  export type fiscal_yearsCreateNestedOneWithoutIpo_allotment_stagingInput = {
-    create?: XOR<fiscal_yearsCreateWithoutIpo_allotment_stagingInput, fiscal_yearsUncheckedCreateWithoutIpo_allotment_stagingInput>
-    connectOrCreate?: fiscal_yearsCreateOrConnectWithoutIpo_allotment_stagingInput
-    connect?: fiscal_yearsWhereUniqueInput
-  }
-
-  export type fundsCreateNestedOneWithoutIpo_allotment_stagingInput = {
-    create?: XOR<fundsCreateWithoutIpo_allotment_stagingInput, fundsUncheckedCreateWithoutIpo_allotment_stagingInput>
-    connectOrCreate?: fundsCreateOrConnectWithoutIpo_allotment_stagingInput
-    connect?: fundsWhereUniqueInput
-  }
-
-  export type sub_classesCreateNestedOneWithoutIpo_allotment_stagingInput = {
-    create?: XOR<sub_classesCreateWithoutIpo_allotment_stagingInput, sub_classesUncheckedCreateWithoutIpo_allotment_stagingInput>
-    connectOrCreate?: sub_classesCreateOrConnectWithoutIpo_allotment_stagingInput
-    connect?: sub_classesWhereUniqueInput
-  }
-
-  export type stock_fullsCreateNestedOneWithoutIpo_allotment_stagingInput = {
-    create?: XOR<stock_fullsCreateWithoutIpo_allotment_stagingInput, stock_fullsUncheckedCreateWithoutIpo_allotment_stagingInput>
-    connectOrCreate?: stock_fullsCreateOrConnectWithoutIpo_allotment_stagingInput
-    connect?: stock_fullsWhereUniqueInput
-  }
-
-  export type fiscal_yearsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput = {
-    create?: XOR<fiscal_yearsCreateWithoutIpo_allotment_stagingInput, fiscal_yearsUncheckedCreateWithoutIpo_allotment_stagingInput>
-    connectOrCreate?: fiscal_yearsCreateOrConnectWithoutIpo_allotment_stagingInput
-    upsert?: fiscal_yearsUpsertWithoutIpo_allotment_stagingInput
-    connect?: fiscal_yearsWhereUniqueInput
-    update?: XOR<XOR<fiscal_yearsUpdateToOneWithWhereWithoutIpo_allotment_stagingInput, fiscal_yearsUpdateWithoutIpo_allotment_stagingInput>, fiscal_yearsUncheckedUpdateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type fundsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput = {
-    create?: XOR<fundsCreateWithoutIpo_allotment_stagingInput, fundsUncheckedCreateWithoutIpo_allotment_stagingInput>
-    connectOrCreate?: fundsCreateOrConnectWithoutIpo_allotment_stagingInput
-    upsert?: fundsUpsertWithoutIpo_allotment_stagingInput
-    connect?: fundsWhereUniqueInput
-    update?: XOR<XOR<fundsUpdateToOneWithWhereWithoutIpo_allotment_stagingInput, fundsUpdateWithoutIpo_allotment_stagingInput>, fundsUncheckedUpdateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type sub_classesUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput = {
-    create?: XOR<sub_classesCreateWithoutIpo_allotment_stagingInput, sub_classesUncheckedCreateWithoutIpo_allotment_stagingInput>
-    connectOrCreate?: sub_classesCreateOrConnectWithoutIpo_allotment_stagingInput
-    upsert?: sub_classesUpsertWithoutIpo_allotment_stagingInput
-    connect?: sub_classesWhereUniqueInput
-    update?: XOR<XOR<sub_classesUpdateToOneWithWhereWithoutIpo_allotment_stagingInput, sub_classesUpdateWithoutIpo_allotment_stagingInput>, sub_classesUncheckedUpdateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type stock_fullsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput = {
-    create?: XOR<stock_fullsCreateWithoutIpo_allotment_stagingInput, stock_fullsUncheckedCreateWithoutIpo_allotment_stagingInput>
-    connectOrCreate?: stock_fullsCreateOrConnectWithoutIpo_allotment_stagingInput
-    upsert?: stock_fullsUpsertWithoutIpo_allotment_stagingInput
-    connect?: stock_fullsWhereUniqueInput
-    update?: XOR<XOR<stock_fullsUpdateToOneWithWhereWithoutIpo_allotment_stagingInput, stock_fullsUpdateWithoutIpo_allotment_stagingInput>, stock_fullsUncheckedUpdateWithoutIpo_allotment_stagingInput>
   }
 
   export type fiscal_yearsCreateNestedOneWithoutBonus_records_stagingInput = {
@@ -55311,7 +53321,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -55336,7 +53345,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -55364,7 +53372,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -55387,7 +53394,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -55415,7 +53421,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -55440,7 +53445,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -55558,7 +53562,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -55583,7 +53586,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -55617,7 +53619,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -55640,7 +53641,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -55674,7 +53674,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -55699,7 +53698,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -55928,7 +53926,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -55951,7 +53948,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -56475,7 +54471,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -56498,7 +54493,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -56851,7 +54845,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -56876,7 +54869,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -56905,7 +54897,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -56930,7 +54921,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -57048,7 +55038,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -57073,7 +55062,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -57108,7 +55096,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -57133,7 +55120,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -57235,7 +55221,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -57260,7 +55245,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -57288,7 +55272,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -57311,7 +55294,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -57339,7 +55321,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -57364,7 +55345,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -57482,7 +55462,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -57507,7 +55486,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -57541,7 +55519,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -57564,7 +55541,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -57598,7 +55574,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -57623,7 +55598,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -58083,7 +56057,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -58108,7 +56081,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -58136,7 +56108,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -58159,7 +56130,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -58180,7 +56150,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
@@ -58195,7 +56164,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
@@ -58219,7 +56187,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -58244,7 +56211,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -58334,7 +56300,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -58359,7 +56324,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -58393,7 +56357,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -58416,7 +56379,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -58443,7 +56405,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
     cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
@@ -58458,7 +56419,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
@@ -58488,7 +56448,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -58513,7 +56472,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -58581,7 +56539,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -58606,7 +56563,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -58634,7 +56590,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -58657,7 +56612,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -58685,7 +56639,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -58710,7 +56663,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -58828,7 +56780,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -58853,7 +56804,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -58887,7 +56837,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -58910,7 +56859,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -58944,7 +56892,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -58969,7 +56916,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -59346,41 +57292,6 @@ export namespace Prisma {
 
   export type ipo_allotment_recordsCreateManyFiscal_yearsInputEnvelope = {
     data: ipo_allotment_recordsCreateManyFiscal_yearsInput | ipo_allotment_recordsCreateManyFiscal_yearsInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ipo_allotment_stagingCreateWithoutFiscal_yearsInput = {
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    funds: fundsCreateNestedOneWithoutIpo_allotment_stagingInput
-    sub_classes: sub_classesCreateNestedOneWithoutIpo_allotment_stagingInput
-    stock_fulls: stock_fullsCreateNestedOneWithoutIpo_allotment_stagingInput
-  }
-
-  export type ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput = {
-    allotment_staging_id?: number
-    fund_id: number
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    symbol: string
-    sub_id: number
-  }
-
-  export type ipo_allotment_stagingCreateOrConnectWithoutFiscal_yearsInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    create: XOR<ipo_allotment_stagingCreateWithoutFiscal_yearsInput, ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput>
-  }
-
-  export type ipo_allotment_stagingCreateManyFiscal_yearsInputEnvelope = {
-    data: ipo_allotment_stagingCreateManyFiscal_yearsInput | ipo_allotment_stagingCreateManyFiscal_yearsInput[]
     skipDuplicates?: boolean
   }
 
@@ -59869,39 +57780,6 @@ export namespace Prisma {
   export type ipo_allotment_recordsUpdateManyWithWhereWithoutFiscal_yearsInput = {
     where: ipo_allotment_recordsScalarWhereInput
     data: XOR<ipo_allotment_recordsUpdateManyMutationInput, ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsInput>
-  }
-
-  export type ipo_allotment_stagingUpsertWithWhereUniqueWithoutFiscal_yearsInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    update: XOR<ipo_allotment_stagingUpdateWithoutFiscal_yearsInput, ipo_allotment_stagingUncheckedUpdateWithoutFiscal_yearsInput>
-    create: XOR<ipo_allotment_stagingCreateWithoutFiscal_yearsInput, ipo_allotment_stagingUncheckedCreateWithoutFiscal_yearsInput>
-  }
-
-  export type ipo_allotment_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    data: XOR<ipo_allotment_stagingUpdateWithoutFiscal_yearsInput, ipo_allotment_stagingUncheckedUpdateWithoutFiscal_yearsInput>
-  }
-
-  export type ipo_allotment_stagingUpdateManyWithWhereWithoutFiscal_yearsInput = {
-    where: ipo_allotment_stagingScalarWhereInput
-    data: XOR<ipo_allotment_stagingUpdateManyMutationInput, ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsInput>
-  }
-
-  export type ipo_allotment_stagingScalarWhereInput = {
-    AND?: ipo_allotment_stagingScalarWhereInput | ipo_allotment_stagingScalarWhereInput[]
-    OR?: ipo_allotment_stagingScalarWhereInput[]
-    NOT?: ipo_allotment_stagingScalarWhereInput | ipo_allotment_stagingScalarWhereInput[]
-    allotment_staging_id?: IntFilter<"ipo_allotment_staging"> | number
-    fund_id?: IntFilter<"ipo_allotment_staging"> | number
-    quantity?: IntFilter<"ipo_allotment_staging"> | number
-    effective_rate?: DecimalFilter<"ipo_allotment_staging"> | Decimal | DecimalJsLike | number | string
-    total_value?: DecimalNullableFilter<"ipo_allotment_staging"> | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFilter<"ipo_allotment_staging"> | number
-    recorded_at?: DateTimeNullableFilter<"ipo_allotment_staging"> | Date | string | null
-    added_at?: DateTimeFilter<"ipo_allotment_staging"> | Date | string
-    remarks?: StringNullableFilter<"ipo_allotment_staging"> | string | null
-    symbol?: StringFilter<"ipo_allotment_staging"> | string
-    sub_id?: IntFilter<"ipo_allotment_staging"> | number
   }
 
   export type market_snapshotsUpsertWithWhereUniqueWithoutFiscal_yearsInput = {
@@ -60465,41 +58343,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ipo_allotment_stagingCreateWithoutFundsInput = {
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    fiscal_years: fiscal_yearsCreateNestedOneWithoutIpo_allotment_stagingInput
-    sub_classes: sub_classesCreateNestedOneWithoutIpo_allotment_stagingInput
-    stock_fulls: stock_fullsCreateNestedOneWithoutIpo_allotment_stagingInput
-  }
-
-  export type ipo_allotment_stagingUncheckedCreateWithoutFundsInput = {
-    allotment_staging_id?: number
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id: number
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    symbol: string
-    sub_id: number
-  }
-
-  export type ipo_allotment_stagingCreateOrConnectWithoutFundsInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    create: XOR<ipo_allotment_stagingCreateWithoutFundsInput, ipo_allotment_stagingUncheckedCreateWithoutFundsInput>
-  }
-
-  export type ipo_allotment_stagingCreateManyFundsInputEnvelope = {
-    data: ipo_allotment_stagingCreateManyFundsInput | ipo_allotment_stagingCreateManyFundsInput[]
-    skipDuplicates?: boolean
-  }
-
   export type promoter_recordsCreateWithoutFundsInput = {
     quantity: number
     effective_rate?: Decimal | DecimalJsLike | number | string
@@ -60722,7 +58565,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
@@ -60736,7 +58578,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
@@ -60958,22 +58799,6 @@ export namespace Prisma {
     data: XOR<ipo_allotment_recordsUpdateManyMutationInput, ipo_allotment_recordsUncheckedUpdateManyWithoutFundsInput>
   }
 
-  export type ipo_allotment_stagingUpsertWithWhereUniqueWithoutFundsInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    update: XOR<ipo_allotment_stagingUpdateWithoutFundsInput, ipo_allotment_stagingUncheckedUpdateWithoutFundsInput>
-    create: XOR<ipo_allotment_stagingCreateWithoutFundsInput, ipo_allotment_stagingUncheckedCreateWithoutFundsInput>
-  }
-
-  export type ipo_allotment_stagingUpdateWithWhereUniqueWithoutFundsInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    data: XOR<ipo_allotment_stagingUpdateWithoutFundsInput, ipo_allotment_stagingUncheckedUpdateWithoutFundsInput>
-  }
-
-  export type ipo_allotment_stagingUpdateManyWithWhereWithoutFundsInput = {
-    where: ipo_allotment_stagingScalarWhereInput
-    data: XOR<ipo_allotment_stagingUpdateManyMutationInput, ipo_allotment_stagingUncheckedUpdateManyWithoutFundsInput>
-  }
-
   export type promoter_recordsUpsertWithWhereUniqueWithoutFundsInput = {
     where: promoter_recordsWhereUniqueInput
     update: XOR<promoter_recordsUpdateWithoutFundsInput, promoter_recordsUncheckedUpdateWithoutFundsInput>
@@ -61155,7 +58980,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -61180,7 +59004,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -61208,7 +59031,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -61231,7 +59053,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -61259,7 +59080,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -61284,7 +59104,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -61402,7 +59221,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -61427,7 +59245,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -61461,7 +59278,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -61484,7 +59300,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -61518,7 +59333,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -61543,7 +59357,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -61919,41 +59732,6 @@ export namespace Prisma {
 
   export type ipo_allotment_recordsCreateManyStock_fullsInputEnvelope = {
     data: ipo_allotment_recordsCreateManyStock_fullsInput | ipo_allotment_recordsCreateManyStock_fullsInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ipo_allotment_stagingCreateWithoutStock_fullsInput = {
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    fiscal_years: fiscal_yearsCreateNestedOneWithoutIpo_allotment_stagingInput
-    funds: fundsCreateNestedOneWithoutIpo_allotment_stagingInput
-    sub_classes: sub_classesCreateNestedOneWithoutIpo_allotment_stagingInput
-  }
-
-  export type ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput = {
-    allotment_staging_id?: number
-    fund_id: number
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id: number
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    sub_id: number
-  }
-
-  export type ipo_allotment_stagingCreateOrConnectWithoutStock_fullsInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    create: XOR<ipo_allotment_stagingCreateWithoutStock_fullsInput, ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput>
-  }
-
-  export type ipo_allotment_stagingCreateManyStock_fullsInputEnvelope = {
-    data: ipo_allotment_stagingCreateManyStock_fullsInput | ipo_allotment_stagingCreateManyStock_fullsInput[]
     skipDuplicates?: boolean
   }
 
@@ -62403,22 +60181,6 @@ export namespace Prisma {
     data: XOR<ipo_allotment_recordsUpdateManyMutationInput, ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsInput>
   }
 
-  export type ipo_allotment_stagingUpsertWithWhereUniqueWithoutStock_fullsInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    update: XOR<ipo_allotment_stagingUpdateWithoutStock_fullsInput, ipo_allotment_stagingUncheckedUpdateWithoutStock_fullsInput>
-    create: XOR<ipo_allotment_stagingCreateWithoutStock_fullsInput, ipo_allotment_stagingUncheckedCreateWithoutStock_fullsInput>
-  }
-
-  export type ipo_allotment_stagingUpdateWithWhereUniqueWithoutStock_fullsInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    data: XOR<ipo_allotment_stagingUpdateWithoutStock_fullsInput, ipo_allotment_stagingUncheckedUpdateWithoutStock_fullsInput>
-  }
-
-  export type ipo_allotment_stagingUpdateManyWithWhereWithoutStock_fullsInput = {
-    where: ipo_allotment_stagingScalarWhereInput
-    data: XOR<ipo_allotment_stagingUpdateManyMutationInput, ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsInput>
-  }
-
   export type order_bookUpsertWithWhereUniqueWithoutStock_fullsInput = {
     where: order_bookWhereUniqueInput
     update: XOR<order_bookUpdateWithoutStock_fullsInput, order_bookUncheckedUpdateWithoutStock_fullsInput>
@@ -62612,7 +60374,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -62637,7 +60398,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -62665,7 +60425,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -62688,7 +60447,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -62716,7 +60474,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -62741,7 +60498,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -62831,7 +60587,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -62856,7 +60611,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -62890,7 +60644,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -62913,7 +60666,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -62947,7 +60699,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -62972,7 +60723,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -63040,7 +60790,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -63065,7 +60814,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -63093,7 +60841,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -63116,7 +60863,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -63144,7 +60890,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -63169,7 +60914,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -63259,7 +61003,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -63284,7 +61027,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -63318,7 +61060,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -63341,7 +61082,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -63375,7 +61115,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -63400,7 +61139,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -63469,7 +61207,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -63494,7 +61231,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -63522,7 +61258,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
@@ -63545,7 +61280,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
@@ -63566,7 +61300,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
@@ -63581,7 +61314,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
   }
@@ -63605,7 +61337,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -63630,7 +61361,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -63720,7 +61450,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -63745,7 +61474,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -63779,7 +61507,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
@@ -63802,7 +61529,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
@@ -63829,7 +61555,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
@@ -63844,7 +61569,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
   }
@@ -63874,7 +61598,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -63899,7 +61622,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -63967,7 +61689,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -63992,7 +61713,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -64020,7 +61740,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
@@ -64043,7 +61762,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
@@ -64071,7 +61789,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
@@ -64096,7 +61813,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -64186,7 +61902,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -64211,7 +61926,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -64245,7 +61959,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
@@ -64268,7 +61981,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
@@ -64302,7 +62014,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
@@ -64327,7 +62038,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -64350,7 +62060,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -64374,7 +62083,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -64607,7 +62315,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -64632,7 +62339,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -64660,7 +62366,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -64683,7 +62388,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -64711,7 +62415,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -64736,7 +62439,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -64826,7 +62528,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -64851,7 +62552,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -64885,7 +62585,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -64908,7 +62607,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -64942,7 +62640,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -64967,7 +62664,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -65035,7 +62731,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -65060,7 +62755,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -65088,7 +62782,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -65111,7 +62804,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -65132,7 +62824,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
@@ -65147,7 +62838,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
@@ -65171,7 +62861,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -65196,7 +62885,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -65286,7 +62974,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -65311,7 +62998,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -65345,7 +63031,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -65368,7 +63053,6 @@ export namespace Prisma {
     client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -65395,7 +63079,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
     cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
@@ -65410,7 +63093,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
@@ -65440,7 +63122,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -65465,7 +63146,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -65489,7 +63169,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -65514,7 +63193,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -65554,7 +63232,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -65579,7 +63256,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -65603,7 +63279,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -65628,7 +63303,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -65656,7 +63330,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -65679,7 +63352,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -65700,7 +63372,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
@@ -65715,7 +63386,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
   }
@@ -65739,7 +63409,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -65764,7 +63433,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -65803,7 +63471,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -65828,7 +63495,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -65862,7 +63528,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -65885,7 +63550,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -65912,7 +63576,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
@@ -65927,7 +63590,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
   }
@@ -65957,7 +63619,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -65982,7 +63643,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -66138,41 +63798,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ipo_allotment_stagingCreateWithoutSub_classesInput = {
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    fiscal_years: fiscal_yearsCreateNestedOneWithoutIpo_allotment_stagingInput
-    funds: fundsCreateNestedOneWithoutIpo_allotment_stagingInput
-    stock_fulls: stock_fullsCreateNestedOneWithoutIpo_allotment_stagingInput
-  }
-
-  export type ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput = {
-    allotment_staging_id?: number
-    fund_id: number
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id: number
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    symbol: string
-  }
-
-  export type ipo_allotment_stagingCreateOrConnectWithoutSub_classesInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    create: XOR<ipo_allotment_stagingCreateWithoutSub_classesInput, ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput>
-  }
-
-  export type ipo_allotment_stagingCreateManySub_classesInputEnvelope = {
-    data: ipo_allotment_stagingCreateManySub_classesInput | ipo_allotment_stagingCreateManySub_classesInput[]
-    skipDuplicates?: boolean
-  }
-
   export type promoter_recordsCreateWithoutSub_classesInput = {
     quantity: number
     effective_rate?: Decimal | DecimalJsLike | number | string
@@ -66262,7 +63887,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -66285,7 +63909,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -66397,22 +64020,6 @@ export namespace Prisma {
     data: XOR<ipo_allotment_recordsUpdateManyMutationInput, ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesInput>
   }
 
-  export type ipo_allotment_stagingUpsertWithWhereUniqueWithoutSub_classesInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    update: XOR<ipo_allotment_stagingUpdateWithoutSub_classesInput, ipo_allotment_stagingUncheckedUpdateWithoutSub_classesInput>
-    create: XOR<ipo_allotment_stagingCreateWithoutSub_classesInput, ipo_allotment_stagingUncheckedCreateWithoutSub_classesInput>
-  }
-
-  export type ipo_allotment_stagingUpdateWithWhereUniqueWithoutSub_classesInput = {
-    where: ipo_allotment_stagingWhereUniqueInput
-    data: XOR<ipo_allotment_stagingUpdateWithoutSub_classesInput, ipo_allotment_stagingUncheckedUpdateWithoutSub_classesInput>
-  }
-
-  export type ipo_allotment_stagingUpdateManyWithWhereWithoutSub_classesInput = {
-    where: ipo_allotment_stagingScalarWhereInput
-    data: XOR<ipo_allotment_stagingUpdateManyMutationInput, ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesInput>
-  }
-
   export type promoter_recordsUpsertWithWhereUniqueWithoutSub_classesInput = {
     where: promoter_recordsWhereUniqueInput
     update: XOR<promoter_recordsUpdateWithoutSub_classesInput, promoter_recordsUncheckedUpdateWithoutSub_classesInput>
@@ -66469,7 +64076,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -66492,7 +64098,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -66517,408 +64122,6 @@ export namespace Prisma {
     data: XOR<symbol_holdingsUpdateManyMutationInput, symbol_holdingsUncheckedUpdateManyWithoutSub_classesInput>
   }
 
-  export type fiscal_yearsCreateWithoutIpo_allotment_stagingInput = {
-    year_label: string
-    start_date: Date | string
-    end_date: Date | string
-    initial_balance_synced?: boolean | null
-    bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
-    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
-    buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
-    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
-    cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
-    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
-    closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
-    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
-    order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
-    promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
-    right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
-    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
-    sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
-    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
-    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
-  }
-
-  export type fiscal_yearsUncheckedCreateWithoutIpo_allotment_stagingInput = {
-    fiscal_year_id?: number
-    year_label: string
-    start_date: Date | string
-    end_date: Date | string
-    initial_balance_synced?: boolean | null
-    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-  }
-
-  export type fiscal_yearsCreateOrConnectWithoutIpo_allotment_stagingInput = {
-    where: fiscal_yearsWhereUniqueInput
-    create: XOR<fiscal_yearsCreateWithoutIpo_allotment_stagingInput, fiscal_yearsUncheckedCreateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type fundsCreateWithoutIpo_allotment_stagingInput = {
-    fund_name: string
-    uploaded_at?: Date | string | null
-    bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
-    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
-    buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
-    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
-    cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
-    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
-    client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
-    closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
-    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
-    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
-    right_records?: right_recordsCreateNestedManyWithoutFundsInput
-    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
-    sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
-    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
-    sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
-    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
-  }
-
-  export type fundsUncheckedCreateWithoutIpo_allotment_stagingInput = {
-    fund_id?: number
-    fund_name: string
-    uploaded_at?: Date | string | null
-    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
-    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
-    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
-    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
-    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
-    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
-    client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
-    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
-    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
-    right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
-    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
-    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
-    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
-    sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
-    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
-  }
-
-  export type fundsCreateOrConnectWithoutIpo_allotment_stagingInput = {
-    where: fundsWhereUniqueInput
-    create: XOR<fundsCreateWithoutIpo_allotment_stagingInput, fundsUncheckedCreateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type sub_classesCreateWithoutIpo_allotment_stagingInput = {
-    sub_name: string
-    added_at?: Date | string | null
-    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
-    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
-    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
-    promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
-    right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
-    funds: fundsCreateNestedOneWithoutSub_classesInput
-    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
-  }
-
-  export type sub_classesUncheckedCreateWithoutIpo_allotment_stagingInput = {
-    sub_id?: number
-    fund_id: number
-    sub_name: string
-    added_at?: Date | string | null
-    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
-    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
-    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
-    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
-    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
-    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
-  }
-
-  export type sub_classesCreateOrConnectWithoutIpo_allotment_stagingInput = {
-    where: sub_classesWhereUniqueInput
-    create: XOR<sub_classesCreateWithoutIpo_allotment_stagingInput, sub_classesUncheckedCreateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type stock_fullsCreateWithoutIpo_allotment_stagingInput = {
-    symbol: string
-    full_form: string
-    is_auto_generated?: boolean | null
-    promoter_sector_id?: number | null
-    bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
-    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
-    buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
-    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
-    cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
-    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
-    closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
-    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
-    promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
-    right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
-    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
-    sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
-    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
-    sectors: sectorsCreateNestedOneWithoutStock_fullsInput
-    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
-  }
-
-  export type stock_fullsUncheckedCreateWithoutIpo_allotment_stagingInput = {
-    symbol: string
-    full_form: string
-    sector_id: number
-    is_auto_generated?: boolean | null
-    promoter_sector_id?: number | null
-    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
-    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
-    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
-    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
-    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
-    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
-    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
-  }
-
-  export type stock_fullsCreateOrConnectWithoutIpo_allotment_stagingInput = {
-    where: stock_fullsWhereUniqueInput
-    create: XOR<stock_fullsCreateWithoutIpo_allotment_stagingInput, stock_fullsUncheckedCreateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type fiscal_yearsUpsertWithoutIpo_allotment_stagingInput = {
-    update: XOR<fiscal_yearsUpdateWithoutIpo_allotment_stagingInput, fiscal_yearsUncheckedUpdateWithoutIpo_allotment_stagingInput>
-    create: XOR<fiscal_yearsCreateWithoutIpo_allotment_stagingInput, fiscal_yearsUncheckedCreateWithoutIpo_allotment_stagingInput>
-    where?: fiscal_yearsWhereInput
-  }
-
-  export type fiscal_yearsUpdateToOneWithWhereWithoutIpo_allotment_stagingInput = {
-    where?: fiscal_yearsWhereInput
-    data: XOR<fiscal_yearsUpdateWithoutIpo_allotment_stagingInput, fiscal_yearsUncheckedUpdateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type fiscal_yearsUpdateWithoutIpo_allotment_stagingInput = {
-    year_label?: StringFieldUpdateOperationsInput | string
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
-    buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
-    cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
-    closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
-    order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
-    promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
-    sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
-    symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
-  }
-
-  export type fiscal_yearsUncheckedUpdateWithoutIpo_allotment_stagingInput = {
-    fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    year_label?: StringFieldUpdateOperationsInput | string
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-  }
-
-  export type fundsUpsertWithoutIpo_allotment_stagingInput = {
-    update: XOR<fundsUpdateWithoutIpo_allotment_stagingInput, fundsUncheckedUpdateWithoutIpo_allotment_stagingInput>
-    create: XOR<fundsCreateWithoutIpo_allotment_stagingInput, fundsUncheckedCreateWithoutIpo_allotment_stagingInput>
-    where?: fundsWhereInput
-  }
-
-  export type fundsUpdateToOneWithWhereWithoutIpo_allotment_stagingInput = {
-    where?: fundsWhereInput
-    data: XOR<fundsUpdateWithoutIpo_allotment_stagingInput, fundsUncheckedUpdateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type fundsUpdateWithoutIpo_allotment_stagingInput = {
-    fund_name?: StringFieldUpdateOperationsInput | string
-    uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
-    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
-    buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
-    buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
-    cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
-    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
-    client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
-    closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
-    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
-    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
-    right_records?: right_recordsUpdateManyWithoutFundsNestedInput
-    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
-    sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
-    sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
-    sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
-    symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
-  }
-
-  export type fundsUncheckedUpdateWithoutIpo_allotment_stagingInput = {
-    fund_id?: IntFieldUpdateOperationsInput | number
-    fund_name?: StringFieldUpdateOperationsInput | string
-    uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
-    buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
-    cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
-    client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
-    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
-    sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
-    sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
-    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
-  }
-
-  export type sub_classesUpsertWithoutIpo_allotment_stagingInput = {
-    update: XOR<sub_classesUpdateWithoutIpo_allotment_stagingInput, sub_classesUncheckedUpdateWithoutIpo_allotment_stagingInput>
-    create: XOR<sub_classesCreateWithoutIpo_allotment_stagingInput, sub_classesUncheckedCreateWithoutIpo_allotment_stagingInput>
-    where?: sub_classesWhereInput
-  }
-
-  export type sub_classesUpdateToOneWithWhereWithoutIpo_allotment_stagingInput = {
-    where?: sub_classesWhereInput
-    data: XOR<sub_classesUpdateWithoutIpo_allotment_stagingInput, sub_classesUncheckedUpdateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type sub_classesUpdateWithoutIpo_allotment_stagingInput = {
-    sub_name?: StringFieldUpdateOperationsInput | string
-    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
-    cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
-    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
-    promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
-    right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
-    funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
-    symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
-  }
-
-  export type sub_classesUncheckedUpdateWithoutIpo_allotment_stagingInput = {
-    sub_id?: IntFieldUpdateOperationsInput | number
-    fund_id?: IntFieldUpdateOperationsInput | number
-    sub_name?: StringFieldUpdateOperationsInput | string
-    added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
-    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
-    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
-    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
-    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
-    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
-  }
-
-  export type stock_fullsUpsertWithoutIpo_allotment_stagingInput = {
-    update: XOR<stock_fullsUpdateWithoutIpo_allotment_stagingInput, stock_fullsUncheckedUpdateWithoutIpo_allotment_stagingInput>
-    create: XOR<stock_fullsCreateWithoutIpo_allotment_stagingInput, stock_fullsUncheckedCreateWithoutIpo_allotment_stagingInput>
-    where?: stock_fullsWhereInput
-  }
-
-  export type stock_fullsUpdateToOneWithWhereWithoutIpo_allotment_stagingInput = {
-    where?: stock_fullsWhereInput
-    data: XOR<stock_fullsUpdateWithoutIpo_allotment_stagingInput, stock_fullsUncheckedUpdateWithoutIpo_allotment_stagingInput>
-  }
-
-  export type stock_fullsUpdateWithoutIpo_allotment_stagingInput = {
-    symbol?: StringFieldUpdateOperationsInput | string
-    full_form?: StringFieldUpdateOperationsInput | string
-    is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
-    bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
-    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
-    buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
-    buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
-    cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
-    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
-    closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
-    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
-    promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
-    right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
-    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
-    sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
-    sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
-    sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
-    symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
-  }
-
-  export type stock_fullsUncheckedUpdateWithoutIpo_allotment_stagingInput = {
-    symbol?: StringFieldUpdateOperationsInput | string
-    full_form?: StringFieldUpdateOperationsInput | string
-    sector_id?: IntFieldUpdateOperationsInput | number
-    is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
-    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
-    buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
-    cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
-    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
-    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
-    sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
-    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
-  }
-
   export type fiscal_yearsCreateWithoutBonus_records_stagingInput = {
     year_label: string
     start_date: Date | string
@@ -66932,7 +64135,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -66957,7 +64159,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -66985,7 +64186,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -67008,7 +64208,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -67029,7 +64228,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
@@ -67044,7 +64242,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
@@ -67068,7 +64265,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -67093,7 +64289,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -67132,7 +64327,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -67157,7 +64351,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -67191,7 +64384,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -67214,7 +64406,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -67241,7 +64432,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
@@ -67256,7 +64446,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
@@ -67286,7 +64475,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -67311,7 +64499,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -67334,7 +64521,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -67359,7 +64545,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -67387,7 +64572,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
@@ -67410,7 +64594,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
@@ -67431,7 +64614,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
@@ -67446,7 +64628,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
@@ -67470,7 +64651,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -67495,7 +64675,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -67534,7 +64713,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -67559,7 +64737,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -67593,7 +64770,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
@@ -67616,7 +64792,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
@@ -67643,7 +64818,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
@@ -67658,7 +64832,6 @@ export namespace Prisma {
     bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
@@ -67688,7 +64861,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -67713,7 +64885,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -67737,7 +64908,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
@@ -67762,7 +64932,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
@@ -67790,7 +64959,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
@@ -67813,7 +64981,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutFundsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
@@ -67834,7 +65001,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutSub_classesInput
     funds: fundsCreateNestedOneWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutSub_classesInput
@@ -67849,7 +65015,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutSub_classesInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutSub_classesInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutSub_classesInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutSub_classesInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutSub_classesInput
   }
@@ -67873,7 +65038,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
@@ -67898,7 +65062,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
@@ -67937,7 +65100,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
@@ -67962,7 +65124,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
@@ -67996,7 +65157,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
@@ -68019,7 +65179,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutFundsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
@@ -68046,7 +65205,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
     funds?: fundsUpdateOneRequiredWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
@@ -68061,7 +65219,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
   }
@@ -68091,7 +65248,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -68116,7 +65272,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -69364,19 +66519,6 @@ export namespace Prisma {
     sub_id?: number | null
   }
 
-  export type ipo_allotment_stagingCreateManyFiscal_yearsInput = {
-    allotment_staging_id?: number
-    fund_id: number
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    symbol: string
-    sub_id: number
-  }
-
   export type market_snapshotsCreateManyFiscal_yearsInput = {
     id?: number
     symbol: string
@@ -69866,44 +67008,6 @@ export namespace Prisma {
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type ipo_allotment_stagingUpdateWithoutFiscal_yearsInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    funds?: fundsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    sub_classes?: sub_classesUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    stock_fulls?: stock_fullsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateWithoutFiscal_yearsInput = {
-    allotment_staging_id?: IntFieldUpdateOperationsInput | number
-    fund_id?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    symbol?: StringFieldUpdateOperationsInput | string
-    sub_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateManyWithoutFiscal_yearsInput = {
-    allotment_staging_id?: IntFieldUpdateOperationsInput | number
-    fund_id?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    symbol?: StringFieldUpdateOperationsInput | string
-    sub_id?: IntFieldUpdateOperationsInput | number
-  }
-
   export type market_snapshotsUpdateWithoutFiscal_yearsInput = {
     symbol?: StringFieldUpdateOperationsInput | string
     ltp?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -70383,19 +67487,6 @@ export namespace Prisma {
     remarks?: string | null
     symbol: string
     sub_id?: number | null
-  }
-
-  export type ipo_allotment_stagingCreateManyFundsInput = {
-    allotment_staging_id?: number
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id: number
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    symbol: string
-    sub_id: number
   }
 
   export type promoter_recordsCreateManyFundsInput = {
@@ -70920,44 +68011,6 @@ export namespace Prisma {
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type ipo_allotment_stagingUpdateWithoutFundsInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    sub_classes?: sub_classesUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    stock_fulls?: stock_fullsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateWithoutFundsInput = {
-    allotment_staging_id?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    symbol?: StringFieldUpdateOperationsInput | string
-    sub_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateManyWithoutFundsInput = {
-    allotment_staging_id?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    symbol?: StringFieldUpdateOperationsInput | string
-    sub_id?: IntFieldUpdateOperationsInput | number
-  }
-
   export type promoter_recordsUpdateWithoutFundsInput = {
     quantity?: IntFieldUpdateOperationsInput | number
     effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -71214,7 +68267,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutSub_classesNestedInput
@@ -71228,7 +68280,6 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutSub_classesNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutSub_classesNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutSub_classesNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutSub_classesNestedInput
@@ -71400,19 +68451,6 @@ export namespace Prisma {
     added_at: Date | string
     remarks?: string | null
     sub_id?: number | null
-  }
-
-  export type ipo_allotment_stagingCreateManyStock_fullsInput = {
-    allotment_staging_id?: number
-    fund_id: number
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id: number
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    sub_id: number
   }
 
   export type order_bookCreateManyStock_fullsInput = {
@@ -71896,44 +68934,6 @@ export namespace Prisma {
     sub_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type ipo_allotment_stagingUpdateWithoutStock_fullsInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    funds?: fundsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    sub_classes?: sub_classesUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateWithoutStock_fullsInput = {
-    allotment_staging_id?: IntFieldUpdateOperationsInput | number
-    fund_id?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    sub_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsInput = {
-    allotment_staging_id?: IntFieldUpdateOperationsInput | number
-    fund_id?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    sub_id?: IntFieldUpdateOperationsInput | number
-  }
-
   export type order_bookUpdateWithoutStock_fullsInput = {
     contract_number?: StringFieldUpdateOperationsInput | string
     transaction_type?: StringFieldUpdateOperationsInput | string
@@ -72279,7 +69279,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
@@ -72303,7 +69302,6 @@ export namespace Prisma {
     closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
     ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
-    ipo_allotment_staging?: ipo_allotment_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -72425,19 +69423,6 @@ export namespace Prisma {
     effective_rate: Decimal | DecimalJsLike | number | string
     total_value?: Decimal | DecimalJsLike | number | string | null
     fiscal_year_id?: number | null
-    recorded_at?: Date | string | null
-    added_at: Date | string
-    remarks?: string | null
-    symbol: string
-  }
-
-  export type ipo_allotment_stagingCreateManySub_classesInput = {
-    allotment_staging_id?: number
-    fund_id: number
-    quantity: number
-    effective_rate: Decimal | DecimalJsLike | number | string
-    total_value?: Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id: number
     recorded_at?: Date | string | null
     added_at: Date | string
     remarks?: string | null
@@ -72641,44 +69626,6 @@ export namespace Prisma {
     effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    symbol?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ipo_allotment_stagingUpdateWithoutSub_classesInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    funds?: fundsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-    stock_fulls?: stock_fullsUpdateOneRequiredWithoutIpo_allotment_stagingNestedInput
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateWithoutSub_classesInput = {
-    allotment_staging_id?: IntFieldUpdateOperationsInput | number
-    fund_id?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFieldUpdateOperationsInput | number
-    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    added_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    symbol?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ipo_allotment_stagingUncheckedUpdateManyWithoutSub_classesInput = {
-    allotment_staging_id?: IntFieldUpdateOperationsInput | number
-    fund_id?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    effective_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    total_value?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    fiscal_year_id?: IntFieldUpdateOperationsInput | number
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     added_at?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null

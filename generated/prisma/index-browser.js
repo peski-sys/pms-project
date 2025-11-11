@@ -414,20 +414,6 @@ exports.Prisma.Sub_classesScalarFieldEnum = {
   added_at: 'added_at'
 };
 
-exports.Prisma.Ipo_allotment_stagingScalarFieldEnum = {
-  allotment_staging_id: 'allotment_staging_id',
-  fund_id: 'fund_id',
-  quantity: 'quantity',
-  effective_rate: 'effective_rate',
-  total_value: 'total_value',
-  fiscal_year_id: 'fiscal_year_id',
-  recorded_at: 'recorded_at',
-  added_at: 'added_at',
-  remarks: 'remarks',
-  symbol: 'symbol',
-  sub_id: 'sub_id'
-};
-
 exports.Prisma.Bonus_records_stagingScalarFieldEnum = {
   bonus_staging_id: 'bonus_staging_id',
   fund_id: 'fund_id',
@@ -530,7 +516,6 @@ exports.Prisma.ModelName = {
   market_snapshots: 'market_snapshots',
   symbol_holdings: 'symbol_holdings',
   sub_classes: 'sub_classes',
-  ipo_allotment_staging: 'ipo_allotment_staging',
   bonus_records_staging: 'bonus_records_staging',
   cash_records_staging: 'cash_records_staging',
   right_records_staging: 'right_records_staging',
