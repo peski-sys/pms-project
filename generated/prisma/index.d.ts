@@ -43814,6 +43814,7 @@ export namespace Prisma {
 
   export type fiscal_year_balance_stagingWhereUniqueInput = Prisma.AtLeast<{
     staging_id?: number
+    symbol_fund_id_fiscal_year_id_sub_id?: fiscal_year_balance_stagingSymbolFund_idFiscal_year_idSub_idCompoundUniqueInput
     AND?: fiscal_year_balance_stagingWhereInput | fiscal_year_balance_stagingWhereInput[]
     OR?: fiscal_year_balance_stagingWhereInput[]
     NOT?: fiscal_year_balance_stagingWhereInput | fiscal_year_balance_stagingWhereInput[]
@@ -43830,7 +43831,7 @@ export namespace Prisma {
     fund_id?: IntFilter<"fiscal_year_balance_staging"> | number
     source_type?: StringNullableFilter<"fiscal_year_balance_staging"> | string | null
     sub_id?: IntNullableFilter<"fiscal_year_balance_staging"> | number | null
-  }, "staging_id">
+  }, "staging_id" | "symbol_fund_id_fiscal_year_id_sub_id">
 
   export type fiscal_year_balance_stagingOrderByWithAggregationInput = {
     symbol?: SortOrder
@@ -48510,6 +48511,13 @@ export namespace Prisma {
     effective_rate?: SortOrder
     total_value?: SortOrder
     sub_id?: SortOrder
+  }
+
+  export type fiscal_year_balance_stagingSymbolFund_idFiscal_year_idSub_idCompoundUniqueInput = {
+    symbol: string
+    fund_id: number
+    fiscal_year_id: number
+    sub_id: number
   }
 
   export type fiscal_year_balance_stagingCountOrderByAggregateInput = {

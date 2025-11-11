@@ -525,4 +525,6 @@ model fiscal_year_balance_staging {
   source_type      String?  @default("TRADING") @db.VarChar(50)
   sub_id           Int?     @default(1)
   staging_id       Int      @id @default(autoincrement())
+
+  @@unique([symbol, fund_id, fiscal_year_id, sub_id], map: "uq_staging_business_key")
 }

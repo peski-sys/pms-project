@@ -28,6 +28,13 @@ DROP TRIGGER IF EXISTS trg_ipo_allotment_records_fiscal_balance ON ipo_allotment
 DROP TRIGGER IF EXISTS trg_closeout_records_fiscal_balance ON closeout_records CASCADE;
 
 DROP TRIGGER IF EXISTS trg_buy_records_symbol_holdings ON buy_records CASCADE;
+DROP TRIGGER IF EXISTS trg_sell_records_symbol_holdings ON sell_records CASCADE;
+DROP TRIGGER IF EXISTS trg_bonus_records_symbol_holdings ON bonus_records CASCADE;
+DROP TRIGGER IF EXISTS trg_right_records_symbol_holdings ON right_records CASCADE;
+DROP TRIGGER IF EXISTS trg_promoter_records_symbol_holdings ON promoter_records CASCADE;
+DROP TRIGGER IF EXISTS trg_ipo_allotment_records_symbol_holdings ON ipo_allotment_records CASCADE;
+DROP TRIGGER IF EXISTS trg_closeout_records_symbol_holdings ON closeout_records CASCADE;
+
 DROP TRIGGER IF EXISTS trg_sell_records_profit_loss ON sell_records CASCADE;
 DROP TRIGGER IF EXISTS trg_sell_records_staging_profit_loss ON sell_records_staging CASCADE;
 
@@ -509,34 +516,19 @@ DECLARE
     v_commission NUMERIC(16,2) := 0;
     v_source_type VARCHAR(50) := 'TRADING';
     v_sub_id INTEGER := 1;
+    v_old_quantity INTEGER := 0;
+    v_old_txn_value NUMERIC(16,2) := 0;
+    v_old_commission NUMERIC(16,2) := 0;
 BEGIN
-    -- Only process buy_records for symbol_holdings (WACC calculation)
-    IF TG_TABLE_NAME != 'buy_records' THEN
-        RETURN COALESCE(NEW, OLD);
-    END IF;
-
-    -- Determine operation type and extract values
+    -- Extract common values based on operation
     IF TG_OP = 'DELETE' THEN
         v_symbol := OLD.symbol;
         v_fiscal_year_id := OLD.fiscal_year_id;
         v_fund_id := OLD.fund_id;
-        v_quantity := -OLD.quantity;
-        v_txn_value := -COALESCE(OLD.txn_value, 0);
-        v_commission := -COALESCE(OLD.net_payable, 0);
-    ELSIF TG_OP = 'UPDATE' THEN
+    ELSE
         v_symbol := NEW.symbol;
         v_fiscal_year_id := NEW.fiscal_year_id;
         v_fund_id := NEW.fund_id;
-        v_quantity := NEW.quantity - OLD.quantity;
-        v_txn_value := COALESCE(NEW.txn_value, 0) - COALESCE(OLD.txn_value, 0);
-        v_commission := COALESCE(NEW.net_payable, 0) - COALESCE(OLD.net_payable, 0);
-    ELSE -- INSERT
-        v_symbol := NEW.symbol;
-        v_fiscal_year_id := NEW.fiscal_year_id;
-        v_fund_id := NEW.fund_id;
-        v_quantity := NEW.quantity;
-        v_txn_value := COALESCE(NEW.txn_value, 0);
-        v_commission := COALESCE(NEW.net_payable, 0);
     END IF;
 
     -- Skip if fiscal_year_id is NULL
@@ -547,7 +539,132 @@ BEGIN
     -- Ensure stock exists
     PERFORM ensure_stock_exists(v_symbol);
 
+    -- ========================================================================
+    -- Calculate quantity and value changes based on table and operation
+    -- ========================================================================
+    
+    IF TG_TABLE_NAME = 'buy_records' THEN
+        -- BUY: Increase quantity, add transaction value, add commission (cost basis)
+        IF TG_OP = 'INSERT' THEN
+            v_quantity := NEW.quantity;
+            v_txn_value := COALESCE(NEW.txn_value, 0);
+            v_commission := COALESCE(NEW.net_payable, 0);
+        ELSIF TG_OP = 'UPDATE' THEN
+            v_quantity := NEW.quantity - OLD.quantity;
+            v_txn_value := COALESCE(NEW.txn_value, 0) - COALESCE(OLD.txn_value, 0);
+            v_commission := COALESCE(NEW.net_payable, 0) - COALESCE(OLD.net_payable, 0);
+        ELSIF TG_OP = 'DELETE' THEN
+            v_quantity := -OLD.quantity;
+            v_txn_value := -COALESCE(OLD.txn_value, 0);
+            v_commission := -COALESCE(OLD.net_payable, 0);
+        END IF;
+
+    ELSIF TG_TABLE_NAME = 'sell_records' THEN
+        -- SELL: Decrease quantity, subtract transaction value (negative), NO commission change
+        -- Sells don't affect cost basis (total_with_commission)
+        IF TG_OP = 'INSERT' THEN
+            v_quantity := -NEW.quantity;  -- Negative because selling
+            v_txn_value := -COALESCE(NEW.txn_value, 0);  -- Negative (money out)
+            v_commission := 0;  -- Sells don't affect cost basis
+        ELSIF TG_OP = 'UPDATE' THEN
+            v_quantity := -(NEW.quantity - OLD.quantity);  -- Net change (negative)
+            v_txn_value := -(COALESCE(NEW.txn_value, 0) - COALESCE(OLD.txn_value, 0));
+            v_commission := 0;
+        ELSIF TG_OP = 'DELETE' THEN
+            v_quantity := OLD.quantity;  -- Restore quantity
+            v_txn_value := COALESCE(OLD.txn_value, 0);  -- Restore value
+            v_commission := 0;
+        END IF;
+
+    ELSIF TG_TABLE_NAME = 'bonus_records' THEN
+        -- BONUS: Increase quantity (free shares), NO cost
+        -- This dilutes the WACC (same total cost, more shares)
+        IF TG_OP = 'INSERT' THEN
+            v_quantity := NEW.quantity;
+            v_txn_value := 0;  -- Free shares
+            v_commission := 0;  -- No cost
+        ELSIF TG_OP = 'UPDATE' THEN
+            v_quantity := NEW.quantity - OLD.quantity;
+            v_txn_value := 0;
+            v_commission := 0;
+        ELSIF TG_OP = 'DELETE' THEN
+            v_quantity := -OLD.quantity;
+            v_txn_value := 0;
+            v_commission := 0;
+        END IF;
+
+    ELSIF TG_TABLE_NAME = 'right_records' THEN
+        -- RIGHT: Increase quantity, add cost (paid for rights)
+        IF TG_OP = 'INSERT' THEN
+            v_quantity := NEW.quantity;
+            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0);
+            v_commission := COALESCE(NEW.total_value, NEW.quantity * NEW.effective_rate, 0);
+        ELSIF TG_OP = 'UPDATE' THEN
+            v_quantity := NEW.quantity - OLD.quantity;
+            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
+            v_commission := COALESCE(NEW.total_value, 0) - COALESCE(OLD.total_value, 0);
+        ELSIF TG_OP = 'DELETE' THEN
+            v_quantity := -OLD.quantity;
+            v_txn_value := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
+            v_commission := -COALESCE(OLD.total_value, OLD.quantity * OLD.effective_rate, 0);
+        END IF;
+
+    ELSIF TG_TABLE_NAME = 'promoter_records' THEN
+        -- PROMOTER: Increase quantity, add cost
+        IF TG_OP = 'INSERT' THEN
+            v_quantity := NEW.quantity;
+            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0);
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0);
+        ELSIF TG_OP = 'UPDATE' THEN
+            v_quantity := NEW.quantity - OLD.quantity;
+            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
+        ELSIF TG_OP = 'DELETE' THEN
+            v_quantity := -OLD.quantity;
+            v_txn_value := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
+            v_commission := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
+        END IF;
+
+    ELSIF TG_TABLE_NAME = 'ipo_allotment_records' THEN
+        -- IPO: Increase quantity, add cost
+        IF TG_OP = 'INSERT' THEN
+            v_quantity := NEW.quantity;
+            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0);
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0);
+        ELSIF TG_OP = 'UPDATE' THEN
+            v_quantity := NEW.quantity - OLD.quantity;
+            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
+        ELSIF TG_OP = 'DELETE' THEN
+            v_quantity := -OLD.quantity;
+            v_txn_value := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
+            v_commission := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
+        END IF;
+
+    ELSIF TG_TABLE_NAME = 'closeout_records' THEN
+        -- CLOSEOUT: Increase quantity, add cost
+        IF TG_OP = 'INSERT' THEN
+            v_quantity := NEW.closeout_quantity;
+            v_txn_value := COALESCE(NEW.closeout_amount, 0);
+            v_commission := COALESCE(NEW.closeout_amount, 0);
+        ELSIF TG_OP = 'UPDATE' THEN
+            v_quantity := NEW.closeout_quantity - OLD.closeout_quantity;
+            v_txn_value := COALESCE(NEW.closeout_amount, 0) - COALESCE(OLD.closeout_amount, 0);
+            v_commission := COALESCE(NEW.closeout_amount, 0) - COALESCE(OLD.closeout_amount, 0);
+        ELSIF TG_OP = 'DELETE' THEN
+            v_quantity := -OLD.closeout_quantity;
+            v_txn_value := -COALESCE(OLD.closeout_amount, 0);
+            v_commission := -COALESCE(OLD.closeout_amount, 0);
+        END IF;
+
+    ELSE
+        -- Unknown table, return without changes
+        RETURN COALESCE(NEW, OLD);
+    END IF;
+
+    -- ========================================================================
     -- Insert or update symbol_holdings
+    -- ========================================================================
     INSERT INTO symbol_holdings (
         symbol, fund_id, fiscal_year_id,
         quantity, total_txn_value, total_with_commission,
@@ -572,7 +689,7 @@ BEGIN
     RETURN COALESCE(NEW, OLD);
 EXCEPTION
     WHEN OTHERS THEN
-        RAISE WARNING 'Error in fn_update_symbol_holdings: %', SQLERRM;
+        RAISE WARNING 'Error in fn_update_symbol_holdings for table %: %', TG_TABLE_NAME, SQLERRM;
         RETURN COALESCE(NEW, OLD);
 END;
 $$ LANGUAGE plpgsql;
@@ -1060,9 +1177,39 @@ CREATE TRIGGER trg_right_staging_fiscal_balance_staging
     FOR EACH ROW
     EXECUTE FUNCTION fn_update_fiscal_year_balance_staging();
 
--- Trigger for symbol_holdings updates (only buy_records affect WACC)
+-- Triggers for symbol_holdings updates (all transaction types affect WACC)
 CREATE TRIGGER trg_buy_records_symbol_holdings
     AFTER INSERT OR UPDATE OR DELETE ON buy_records
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_symbol_holdings();
+
+CREATE TRIGGER trg_sell_records_symbol_holdings
+    AFTER INSERT OR UPDATE OR DELETE ON sell_records
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_symbol_holdings();
+
+CREATE TRIGGER trg_bonus_records_symbol_holdings
+    AFTER INSERT OR UPDATE OR DELETE ON bonus_records
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_symbol_holdings();
+
+CREATE TRIGGER trg_right_records_symbol_holdings
+    AFTER INSERT OR UPDATE OR DELETE ON right_records
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_symbol_holdings();
+
+CREATE TRIGGER trg_promoter_records_symbol_holdings
+    AFTER INSERT OR UPDATE OR DELETE ON promoter_records
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_symbol_holdings();
+
+CREATE TRIGGER trg_ipo_allotment_records_symbol_holdings
+    AFTER INSERT OR UPDATE OR DELETE ON ipo_allotment_records
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_symbol_holdings();
+
+CREATE TRIGGER trg_closeout_records_symbol_holdings
+    AFTER INSERT OR UPDATE OR DELETE ON closeout_records
     FOR EACH ROW
     EXECUTE FUNCTION fn_update_symbol_holdings();
 
