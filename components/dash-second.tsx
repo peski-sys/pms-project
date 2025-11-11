@@ -918,12 +918,10 @@ export default function DashboardTwo() {
       </div>
     ) : (
       <div className="space-y-6">
+        {/* Filters Card */}
         <Card className="bg-white shadow-sm border border-gray-200">
-          <CardHeader>
-            <CardTitle>Metric Dashboard</CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Review trading, promoter, and subclass metrics with fiscal snapshots and export-ready data.
-            </p>
+          <CardHeader className="pb-4">
+            <CardTitle className="text-lg font-semibold text-gray-900">Filters</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))]">
             <div className="space-y-2">
@@ -981,16 +979,14 @@ export default function DashboardTwo() {
           </CardContent>
         </Card>
 
-        <div className="space-y-4">
-          {fiscalID && currentFund && (
-            <div className="text-sm text-muted-foreground">
-              Viewing FY {getFiscals?.find((f) => f.fiscal_year_id.toString() === fiscalID)?.year_label} · Fund {currentFund} ·
-              {" "}
-              {consolidatedTradingData.length} Trading · {promoterData.length} Promoter
-              {subClasses.length > 0 ? ` · ${subClasses.length} Subclass tables` : ""}
+        {/* Summary Info */}
+        {fiscalID && currentFund && (
+          <div className="bg-white rounded-lg border border-gray-200 px-4 py-3">
+            <div className="text-sm text-gray-600">
+              <span className="font-medium text-gray-900">Viewing:</span> FY {getFiscals?.find((f) => f.fiscal_year_id.toString() === fiscalID)?.year_label} · Fund {currentFund} · {consolidatedTradingData.length} Trading · {promoterData.length} Promoter{subClasses.length > 0 ? ` · ${subClasses.length} Subclass tables` : ""}
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
     {/* Held for Trading Table */}
     <Card className="bg-white shadow-sm border border-gray-200 mb-6">

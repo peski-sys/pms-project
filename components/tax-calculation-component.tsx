@@ -549,12 +549,10 @@ export default function TaxCalculationComponent() {
 
   return (
     <div className="space-y-6">
+      {/* Filters Card */}
       <Card className="bg-white shadow-sm border border-gray-200">
-        <CardHeader>
-          <CardTitle>Tax Base Calculation</CardTitle>
-          <CardDescription>
-            Review tax base and market comparisons across trading, promoter, and IPO staging holdings.
-          </CardDescription>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-semibold text-gray-900">Filters</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4 lg:grid-cols-[repeat(3,minmax(0,1fr))]">
           <div className="space-y-2">

@@ -55,12 +55,10 @@ const microservice_url = process.env.MICROSERVICE_URL
 export async function fileSubmitted(file: File[] | null) {
     try {
         if (!file) {
-            console.log('No files provided');
             return { success: false, error: 'No files provided' };
         }
 
         if (!microservice_url) {
-            console.log('Microservice URL not configured');
             return { success: false, error: 'Microservice URL not configured' };
         }
 
@@ -69,8 +67,6 @@ export async function fileSubmitted(file: File[] | null) {
         // Separate files by type to ensure Excel files are processed first
         const excelFiles = file.filter(f => f.name.endsWith(".xlsx"));
         const pdfFiles = file.filter(f => f.name.endsWith(".pdf"));
-        
-        console.log(`Processing ${excelFiles.length} Excel files first, then ${pdfFiles.length} PDF files`);
         
         // Process ALL Excel files first
         for(const forExcel of excelFiles) {
@@ -101,7 +97,6 @@ export async function fileSubmitted(file: File[] | null) {
                 try {
                     // Validate client IDs before insertion
                     const uniqueClientIds = [...new Set(final_excel.map(row => String(row["CLIENT"])))];
-                    console.log(`Validating client IDs from Excel: ${uniqueClientIds.join(', ')}`);
                     
                     // Check which client IDs exist in client_broker_mapping
                     const existingClients = await prisma.client_broker_mapping.findMany({
@@ -120,12 +115,8 @@ export async function fileSubmitted(file: File[] | null) {
                     const missingClientIds = uniqueClientIds.filter(id => !existingClientIds.includes(id));
                     
                     if (missingClientIds.length > 0) {
-                        console.error(`Missing client IDs in database: ${missingClientIds.join(', ')}`);
-                        console.log(`Existing client IDs: ${existingClientIds.join(', ')}`);
                         throw new Error(`Client IDs not found in database: ${missingClientIds.join(', ')}. Please ensure these clients are registered in the system first.`);
                     }
-                    
-                    console.log(`All client IDs validated successfully: ${existingClientIds.join(', ')}`);
                     
                     // Get fiscal year mapping for each transaction date
                     const fiscalYearMapping = new Map<string, number>();
@@ -151,8 +142,6 @@ export async function fileSubmitted(file: File[] | null) {
                             
                             if (fiscalYear) {
                                 fiscalYearMapping.set(dateKey, fiscalYear.fiscal_year_id);
-                            } else {
-                                console.warn(`No fiscal year found for date: ${transactionDate.toISOString()}`);
                             }
                         }
                     }
@@ -188,19 +177,16 @@ export async function fileSubmitted(file: File[] | null) {
                         },
                     });
 
-                    console.log(`Successfully processed Excel file: ${forExcel.name}`);
                     results.push({ file: forExcel.name, status: 'success', type: 'excel' });
 
                 } catch (dbError) {
-                    console.log(`Database error while processing ${forExcel.name}`, dbError);
-                    
                     // Clean up upload record on failure
                     try {
                         await prisma.uploads.delete({
                             where: { upload_id: uploadRecord.upload_id }
                         });
                     } catch (deleteError) {
-                        console.log(`Failed to clean up upload record for ${forExcel.name}`);
+                        // Cleanup failed, but continue processing
                     }
                     
                     results.push({ 
@@ -212,7 +198,6 @@ export async function fileSubmitted(file: File[] | null) {
                 }
 
             } catch (fileError) {
-                console.log(`Error processing Excel file ${forExcel.name}`);
                 results.push({ 
                     file: forExcel.name, 
                     status: 'error', 
@@ -223,8 +208,6 @@ export async function fileSubmitted(file: File[] | null) {
         }
 
         // Process ALL PDF files after Excel files are completely processed
-        console.log(`Excel processing complete. Now processing PDF files...`);
-        
         for(const forPDF of pdfFiles) {
             const formDataPDF = new FormData();
             try {
@@ -330,7 +313,6 @@ export async function fileSubmitted(file: File[] | null) {
                                         });
 
                                         if (!find_check) {
-                                            console.warn(`Order book record not found for contract: ${details.contract_number}`);
                                             continue;
                                         }
 
@@ -358,7 +340,7 @@ export async function fileSubmitted(file: File[] | null) {
                                             });
                                         }
                                     } catch (recordError) {
-                                        console.error(`Error updating buy record ${details.contract_number}:`, recordError);
+                                        // Continue processing other records
                                     }
                                 }
 
@@ -373,11 +355,8 @@ export async function fileSubmitted(file: File[] | null) {
                                         data: { is_confirmed: true }
                                     });
                                 }
-                            } else {
-                                console.log(`BUY data already exists for PDF ${forPDF.name}, skipping processing`);
                             }
                         } catch (buyError) {
-                            console.error(`Error processing BUY data for ${forPDF.name}:`, buyError);
                             throw buyError;
                         }
                     }
@@ -465,7 +444,6 @@ export async function fileSubmitted(file: File[] | null) {
                                         });
 
                                         if (!find_check) {
-                                            console.warn(`Order book record not found for contract: ${details.contract_number}`);
                                             continue;
                                         }
 
@@ -495,7 +473,7 @@ export async function fileSubmitted(file: File[] | null) {
                                             });
                                         }
                                     } catch (recordError) {
-                                        console.error(`Error updating sell record ${details.contract_number}:`, recordError);
+                                        // Continue processing other records
                                     }
                                 }
 
@@ -510,22 +488,15 @@ export async function fileSubmitted(file: File[] | null) {
                                         data: { is_confirmed: true }
                                     });
                                 }
-                            } else {
-                                console.log(`SELL data already exists for PDF ${forPDF.name}, skipping processing`);
                             }
                         } catch (sellError) {
-                            console.error(`Error processing SELL data for ${forPDF.name}:`, sellError);
                             throw sellError;
                         }
-                    } else {
-                        console.warn(`Unknown PDF status: ${final_response.STATUS} for file ${forPDF.name}`);
                     }
 
-                    console.log(`Successfully processed PDF file: ${forPDF.name}`);
                     results.push({ file: forPDF.name, status: 'success', type: 'pdf', pdfType: final_response.STATUS });
 
                 } catch (pdfError) {
-                    console.error(`Error processing PDF file ${forPDF.name}:`, pdfError);
                     results.push({ 
                         file: forPDF.name, 
                         status: 'error', 
@@ -538,7 +509,6 @@ export async function fileSubmitted(file: File[] | null) {
         return { success: true, results };
 
     } catch (error) {
-        console.error('Critical error in fileSubmitted function:', error);
         return { 
             success: false, 
             error: error instanceof Error ? error.message : 'Unknown error occurred',
@@ -555,12 +525,10 @@ type shareType = {
 export async function uploadDEMAT(file: File[] | null) {
     try {
         if (!file) {
-            console.warn('No files provided to uploadDEMAT function');
             return { success: false, error: 'No files provided' };
         }
 
         if (!microservice_url) {
-            console.error('MICROSERVICE_URL is not configured for DEMAT upload');
             return { success: false, error: 'Microservice URL not configured' };
         }
 
@@ -568,7 +536,6 @@ export async function uploadDEMAT(file: File[] | null) {
 
         for(const forPDF of file) {
             try {
-                console.log(`Processing DEMAT file: ${forPDF.name}`);
                 const formDataPDF = new FormData();
                 formDataPDF.append("file", forPDF);
 
@@ -644,12 +611,10 @@ export async function uploadDEMAT(file: File[] | null) {
                         });
                         updatedSymbols++;
                     } catch (updateError) {
-                        console.error(`Failed to update DEMAT holding for ${symbol} in fiscal year ${fiscalYearId}:`, updateError);
                         // Continue with other symbols rather than failing completely
                     }
                 }
 
-                console.log(`Successfully processed DEMAT file: ${forPDF.name}, updated ${updatedSymbols} symbols in fiscal year ${fiscalYearId}`);
                 results.push({
                     file: forPDF.name,
                     status: 'success',
@@ -659,7 +624,6 @@ export async function uploadDEMAT(file: File[] | null) {
                 });
 
             } catch (fileError) {
-                console.error(`Error processing DEMAT file ${forPDF.name}:`, fileError);
                 results.push({
                     file: forPDF.name,
                     status: 'error',
@@ -671,7 +635,6 @@ export async function uploadDEMAT(file: File[] | null) {
         return { success: true, results };
 
     } catch (error) {
-        console.error('Critical error in uploadDEMAT function:', error);
         return {
             success: false,
             error: error instanceof Error ? error.message : 'Unknown error occurred',
@@ -685,11 +648,8 @@ export async function uploadDEMAT(file: File[] | null) {
 export async function confirmSubmission(given_upload_id: number) {
     try {
         if (!given_upload_id || given_upload_id <= 0) {
-            console.error('Invalid upload ID provided to confirmSubmission');
             return { success: false, error: 'Invalid upload ID provided' };
         }
-
-        console.log(`Confirming submission for upload ID: ${given_upload_id}`);
 
         // First check if the upload exists and is not already confirmed
         const uploadExists = await prisma.uploads.findUnique({
@@ -702,7 +662,6 @@ export async function confirmSubmission(given_upload_id: number) {
         }
 
         if (uploadExists.is_confirmed) {
-            console.warn(`Upload ${given_upload_id} is already confirmed`);
             return { success: true, message: 'Upload already confirmed', alreadyConfirmed: true };
         }
 
@@ -722,7 +681,6 @@ export async function confirmSubmission(given_upload_id: number) {
             },
         });
 
-        console.log(`Successfully confirmed submission for upload ID: ${given_upload_id}`);
         return { 
             success: true, 
             message: 'Upload confirmed successfully',
@@ -731,7 +689,6 @@ export async function confirmSubmission(given_upload_id: number) {
         };
 
     } catch (error) {
-        console.error(`Error confirming submission for upload ID ${given_upload_id}:`, error);
         return {
             success: false,
             error: error instanceof Error ? error.message : 'Failed to confirm submission',

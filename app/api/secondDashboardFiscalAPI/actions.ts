@@ -498,6 +498,8 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             },
             select: {
                 symbol: true,
+                opening_quantity: true,
+                opening_rate: true,
                 closing_quantity: true,
                 effective_rate: true,
                 demat: true,
@@ -649,6 +651,8 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             },
             select: {
                 symbol: true,
+                opening_quantity: true,
+                opening_rate: true,
                 closing_quantity: true,
                 effective_rate: true,
                 demat: true,
@@ -933,6 +937,8 @@ export async function getMetricDataSubClassFiscal(currentFund: string, fiscalID:
             },
             select: {
                 symbol: true,
+                opening_quantity: true,
+                opening_rate: true,
                 closing_quantity: true,
                 effective_rate: true,
                 demat: true,
@@ -1084,6 +1090,8 @@ export async function getMetricDataSubClassFiscal(currentFund: string, fiscalID:
             },
             select: {
                 symbol: true,
+                opening_quantity: true,
+                opening_rate: true,
                 closing_quantity: true,
                 effective_rate: true,
                 demat: true,
@@ -1186,11 +1194,18 @@ export async function getMetricDataSubClassFiscal(currentFund: string, fiscalID:
         const ipoData: MetricData[] = Array.from(ipoAggregated.entries()).map(([symbol, data]) => {
             const stockDetail = ipoStockMap.get(symbol)
             const marketPriceFromLTP = ltpMap.get(symbol) || 0
-            const opening = ipoOpeningMap.get(symbol)
+            const previousOpening = ipoOpeningMap.get(symbol)
             
-            // Opening data from previous year's staging records (if exists)
-            const openingQty = opening?.quantity || 0
-            const openingAmount = opening?.amount || 0
+            // Opening data: prioritize current fiscal year's opening, fallback to previous year's closing
+            const currentOpeningQty = sanitizeNumeric(data.openingQuantity)
+            const currentOpeningAmount = sanitizeNumeric(data.openingAmount)
+            const hasCurrentOpening = currentOpeningQty > 0
+            
+            const fallbackOpeningQty = previousOpening ? sanitizeNumeric(previousOpening.openingQuantity ?? previousOpening.quantity) : 0
+            const fallbackOpeningAmount = previousOpening ? sanitizeNumeric(previousOpening.openingAmount ?? previousOpening.amount) : 0
+            
+            const openingQty = hasCurrentOpening ? currentOpeningQty : fallbackOpeningQty
+            const openingAmount = hasCurrentOpening ? currentOpeningAmount : fallbackOpeningAmount
             const openingRate = openingQty > 0 ? openingAmount / openingQty : 0
             
             // Closing data from current staging records
@@ -1287,6 +1302,8 @@ export async function getMetricDataIPOStagingOtherFiscal(currentFund: string, fi
             select: {
                 symbol: true,
                 sub_id: true,
+                opening_quantity: true,
+                opening_rate: true,
                 closing_quantity: true,
                 effective_rate: true,
                 demat: true,
@@ -1345,6 +1362,8 @@ export async function getMetricDataIPOStagingOtherFiscal(currentFund: string, fi
             select: {
                 symbol: true,
                 sub_id: true,
+                opening_quantity: true,
+                opening_rate: true,
                 closing_quantity: true,
                 effective_rate: true,
                 demat: true,
@@ -1365,11 +1384,18 @@ export async function getMetricDataIPOStagingOtherFiscal(currentFund: string, fi
             const key = `${symbol}_${sub_id ?? 'null'}`
             const stockDetail = stockMap.get(symbol)
             const marketPriceFromLTP = ltpMap.get(symbol) || 0
-            const opening = openingMap.get(key)
+            const previousOpening = openingMap.get(key)
             
-            // Opening data from previous year (if exists)
-            const openingQty = opening?.quantity || 0
-            const openingAmount = opening?.amount || 0
+            // Opening data: prioritize current fiscal year's opening, fallback to previous year's closing
+            const currentOpeningQty = sanitizeNumeric(holding.openingQuantity)
+            const currentOpeningAmount = sanitizeNumeric(holding.openingAmount)
+            const hasCurrentOpening = currentOpeningQty > 0
+            
+            const fallbackOpeningQty = previousOpening ? sanitizeNumeric(previousOpening.openingQuantity ?? previousOpening.quantity) : 0
+            const fallbackOpeningAmount = previousOpening ? sanitizeNumeric(previousOpening.openingAmount ?? previousOpening.amount) : 0
+            
+            const openingQty = hasCurrentOpening ? currentOpeningQty : fallbackOpeningQty
+            const openingAmount = hasCurrentOpening ? currentOpeningAmount : fallbackOpeningAmount
             const openingRate = openingQty > 0 ? openingAmount / openingQty : 0
             
             // Closing data from current staging records

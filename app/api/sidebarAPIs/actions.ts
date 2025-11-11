@@ -27,7 +27,6 @@ export async function getStockSymbols(query?: string) {
 
         return stocks;
     } catch (error) {
-        console.error('Error fetching stock symbols:', error);
         return [];
     }
 }
@@ -87,7 +86,6 @@ export async function getCurrentHoldings(fundName: string, clientId: string, sym
         };
         
     } catch (error) {
-        console.error('Error fetching holdings:', error);
         return {
             success: false,
             message: 'Error fetching holdings data',
@@ -192,7 +190,6 @@ export async function getStagingHoldings(fundName: string, symbol: string) {
             totalQuantity,
         }
     } catch (error) {
-        console.error('Error fetching staging holdings:', error)
         return {
             success: false,
             message: 'Error fetching staging holdings',
@@ -262,7 +259,6 @@ export async function uploadCloseout(currentFund: string, currentClient: string,
             }
         });
 
-        console.log(`Successfully uploaded closeout record for ${stock_symbol}`);
         return {
             success: true,
             message: 'Closeout record uploaded successfully',
@@ -276,7 +272,6 @@ export async function uploadCloseout(currentFund: string, currentClient: string,
         };
 
     } catch (error) {
-        console.error('Error uploading closeout record:', error);
         return {
             success: false,
             error: error instanceof Error ? error.message : 'Failed to upload closeout record'
@@ -346,7 +341,6 @@ export async function uploadPromoter(currentFund: string, currentClient: string,
             }
         });
 
-        console.log(`Successfully uploaded promoter record for ${stock_symbol}`);
         return {
             success: true,
             message: 'Promoter record uploaded successfully',
@@ -360,7 +354,6 @@ export async function uploadPromoter(currentFund: string, currentClient: string,
         };
 
     } catch (error) {
-        console.error('Error uploading promoter record:', error);
         return {
             success: false,
             error: error instanceof Error ? error.message : 'Failed to upload promoter record'
@@ -430,7 +423,6 @@ export async function uploadBonus(currentFund: string, currentClient: string, st
             }
         });
 
-        console.log(`Successfully uploaded bonus record for ${stock_symbol}`);
         return {
             success: true,
             message: 'Bonus record uploaded successfully',
@@ -445,7 +437,6 @@ export async function uploadBonus(currentFund: string, currentClient: string, st
         };
 
     } catch (error) {
-        console.error('Error uploading bonus record:', error);
         return {
             success: false,
             error: error instanceof Error ? error.message : 'Failed to upload bonus record'
@@ -510,7 +501,6 @@ export async function uploadBonusStaging(currentFund: string, stock_symbol: stri
             }
         });
 
-        console.log(`Successfully uploaded bonus staging record for ${stock_symbol}`);
         return {
             success: true,
             message: 'Bonus staging record uploaded successfully',
@@ -524,7 +514,6 @@ export async function uploadBonusStaging(currentFund: string, stock_symbol: stri
         };
 
     } catch (error) {
-        console.error('Error uploading bonus staging record:', error);
         return {
             success: false,
             error: error instanceof Error ? error.message : 'Failed to upload bonus staging record'
@@ -578,7 +567,7 @@ export async function uploadRight(currentFund: string, currentClient: string, st
             }
         })
     } catch(e) {
-        console.log(`Error Performing Right Action: ${e}`)
+        // Error handled silently
     }
 }
 
@@ -644,7 +633,6 @@ export async function uploadRightStaging(currentFund: string, stock_symbol: stri
             }
         })
 
-        console.log(`Successfully uploaded right staging record for ${stock_symbol}`);
         return {
             success: true,
             message: 'Right staging record uploaded successfully',
@@ -658,7 +646,6 @@ export async function uploadRightStaging(currentFund: string, stock_symbol: stri
         };
 
     } catch (error) {
-        console.error('Error uploading right staging record:', error)
         return {
             success: false,
             error: error instanceof Error ? error.message : 'Failed to upload right staging record'
@@ -771,7 +758,6 @@ export async function uploadCashStaging(
       }
     };
   } catch (error) {
-    console.error('Error uploading cash staging record:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Failed to upload cash staging record'
