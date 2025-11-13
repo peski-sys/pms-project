@@ -30,7 +30,15 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { RefreshCw, Download } from "lucide-react"
+import { RefreshCw, Download, Search, X, Settings } from "lucide-react"
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 import { useState, useEffect, useMemo } from "react"
 import { getCurrentSessionUser, getUsers } from "@/app/api/dashboardAPICalls/actions"
@@ -233,6 +241,42 @@ export default function ViewLedger() {
   const [salesSortField, setSalesSortField] = useState<string | null>(null)
   const [salesSortOrder, setSalesSortOrder] = useState<'asc' | 'desc'>('asc')
 
+  // Search and column visibility states for Purchase Records
+  const [purchaseSearchTerm, setPurchaseSearchTerm] = useState<string>("")
+  const [purchaseColumnVisibility, setPurchaseColumnVisibility] = useState({
+    date: true,
+    quantity: true,
+    rate: true,
+    amount: true,
+    commission: true,
+    netAmount: true,
+    remarks: true
+  })
+
+  // Search and column visibility states for Eligible Records
+  const [eligibleSearchTerm, setEligibleSearchTerm] = useState<string>("")
+  const [eligibleColumnVisibility, setEligibleColumnVisibility] = useState({
+    date: true,
+    quantity: true,
+    rate: true,
+    amount: true,
+    type: true,
+    remarks: true
+  })
+
+  // Search and column visibility states for Sales Records
+  const [salesSearchTerm, setSalesSearchTerm] = useState<string>("")
+  const [salesColumnVisibility, setSalesColumnVisibility] = useState({
+    date: true,
+    quantity: true,
+    rate: true,
+    amount: true,
+    commission: true,
+    netAmount: true,
+    profitLoss: true,
+    remarks: true
+  })
+
   // Derived: Cost Price = (Eligible Amount + Purchase Total Cost) / (Eligible Shares + Purchase Shares)
   const costPrice = useMemo(() => {
     if (!ledgerData || !ledgerData.totals) return 0
@@ -240,10 +284,10 @@ export default function ViewLedger() {
     const eligibleAmount = (ledgerData.totals.eligible?.totalEligibleValue ?? ledgerData.totals.opening?.totalEligibleValue ?? 0) || 0
 
     const purchaseQty = ledgerData.totals.purchase?.totalQuantity ?? 0
-    const purchaseCost = ledgerData.totals.purchase?.totalNetPayable ?? 0
+    const purchaseCost = Number(ledgerData.totals.purchase?.totalNetPayable ?? 0)
 
     const totalQty = (eligibleQty || 0) + (purchaseQty || 0)
-    const totalCost = (eligibleAmount || 0) + (purchaseCost || 0)
+    const totalCost = Number(eligibleAmount || 0) + Number(purchaseCost || 0)
 
     if (totalQty <= 0) return 0
     return totalCost / totalQty
@@ -378,6 +422,26 @@ export default function ViewLedger() {
         const firstUser = usersData[0].client_name
         setCurrentUser(firstUser)
         setCurrentFund(firstUser)
+      }
+
+      // Auto-select current fiscal year
+      if (fiscalData.length > 0) {
+        const today = new Date()
+        const currentFiscalYear = fiscalData.find(fiscal => {
+          const startDate = new Date(fiscal.start_date)
+          const endDate = new Date(fiscal.end_date)
+          return today >= startDate && today <= endDate
+        })
+        
+        if (currentFiscalYear) {
+          setFiscalID(currentFiscalYear.fiscal_year_id.toString())
+        } else {
+          // If no current fiscal year found, select the most recent one
+          const sortedFiscal = fiscalData.sort((a, b) => 
+            new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
+          )
+          setFiscalID(sortedFiscal[0].fiscal_year_id.toString())
+        }
       }
     } catch (error) {
       console.error('Error initializing data:', error)
@@ -581,6 +645,49 @@ export default function ViewLedger() {
     setSalesPage(1);
   }, [symbol, fiscalID, currentFund]);
 
+  // Process and filter data for each table
+  const filteredPurchaseRecords = useMemo(() => {
+    if (!ledgerData?.purchased_sanitized) return [];
+    let filtered = [...ledgerData.purchased_sanitized];
+    
+    // Apply search filtering
+    if (purchaseSearchTerm.trim()) {
+      filtered = filtered.filter((record) =>
+        JSON.stringify(record).toLowerCase().includes(purchaseSearchTerm.toLowerCase())
+      );
+    }
+    
+    return filtered;
+  }, [ledgerData?.purchased_sanitized, purchaseSearchTerm]);
+
+  const filteredEligibleRecords = useMemo(() => {
+    if (!ledgerData?.eligible_sanitized) return [];
+    let filtered = [...ledgerData.eligible_sanitized];
+    
+    // Apply search filtering
+    if (eligibleSearchTerm.trim()) {
+      filtered = filtered.filter((record) =>
+        JSON.stringify(record).toLowerCase().includes(eligibleSearchTerm.toLowerCase())
+      );
+    }
+    
+    return filtered;
+  }, [ledgerData?.eligible_sanitized, eligibleSearchTerm]);
+
+  const filteredSalesRecords = useMemo(() => {
+    if (!ledgerData?.sales_sanitized) return [];
+    let filtered = [...ledgerData.sales_sanitized];
+    
+    // Apply search filtering
+    if (salesSearchTerm.trim()) {
+      filtered = filtered.filter((record) =>
+        record.transaction_date?.toString().toLowerCase().includes(salesSearchTerm.toLowerCase()) ||
+        JSON.stringify(record).toLowerCase().includes(salesSearchTerm.toLowerCase())
+      );
+    }
+    
+    return filtered;
+  }, [ledgerData?.sales_sanitized, salesSearchTerm]);
 
   return (
     isLoadingMain ? (
@@ -714,16 +821,113 @@ export default function ViewLedger() {
 
 
       </Card>
-        <Card className="bg-white shadow-sm border border-gray-200 mb-6">
-          <CardHeader className="pb-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <CardTitle className="text-lg font-semibold text-gray-900">Purchase Records</CardTitle>
-                <p className="text-sm text-gray-600 mt-1">Purchase transactions and closeout records</p>
+        <Card className="bg-white shadow-lg border border-gray-100 mb-6" style={{boxShadow: 'inset 0 2px 4px -1px rgba(34, 197, 94, 0.1)'}}>
+          <CardHeader className="pb-4 bg-gradient-to-r from-green-50 to-emerald-50 border-b border-gray-100">
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                <div>
+                  <CardTitle className="text-xl font-bold text-gray-900">Purchase Records</CardTitle>
+                  <p className="text-sm text-gray-600 mt-1">Purchase transactions and closeout records</p>
+                </div>
+                {filteredPurchaseRecords.length > 0 && (
+                  <span className="ml-4 text-sm text-gray-500">({filteredPurchaseRecords.length} records)</span>
+                )}
               </div>
-              {purchaseTotalItems > 0 && (
-                <span className="text-sm text-gray-500">({purchaseTotalItems} records)</span>
-              )}
+            </div>
+            
+            {/* Search and Column Controls for Purchase */}
+            <div className="flex items-center gap-3 mb-4">
+              {/* Search Input */}
+              <div className="relative flex-1 max-w-lg">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  placeholder="Search by date or remarks..."
+                  value={purchaseSearchTerm}
+                  onChange={(e) => setPurchaseSearchTerm(e.target.value)}
+                  className="pl-10 pr-10 border-gray-200 focus:border-green-300"
+                />
+                {purchaseSearchTerm && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setPurchaseSearchTerm("")}
+                    className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                )}
+              </div>
+              
+              {/* Column Visibility Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-green-300">
+                    <Settings className="h-4 w-4" />
+                    Columns
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+                  <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuCheckboxItem
+                    checked={purchaseColumnVisibility.date}
+                    onCheckedChange={(checked) => 
+                      setPurchaseColumnVisibility(prev => ({ ...prev, date: checked }))
+                    }
+                  >
+                    Date
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={purchaseColumnVisibility.quantity}
+                    onCheckedChange={(checked) => 
+                      setPurchaseColumnVisibility(prev => ({ ...prev, quantity: checked }))
+                    }
+                  >
+                    Quantity
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={purchaseColumnVisibility.rate}
+                    onCheckedChange={(checked) => 
+                      setPurchaseColumnVisibility(prev => ({ ...prev, rate: checked }))
+                    }
+                  >
+                    Rate
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={purchaseColumnVisibility.amount}
+                    onCheckedChange={(checked) => 
+                      setPurchaseColumnVisibility(prev => ({ ...prev, amount: checked }))
+                    }
+                  >
+                    Amount
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={purchaseColumnVisibility.commission}
+                    onCheckedChange={(checked) => 
+                      setPurchaseColumnVisibility(prev => ({ ...prev, commission: checked }))
+                    }
+                  >
+                    Commission
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={purchaseColumnVisibility.netAmount}
+                    onCheckedChange={(checked) => 
+                      setPurchaseColumnVisibility(prev => ({ ...prev, netAmount: checked }))
+                    }
+                  >
+                    Net Amount
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={purchaseColumnVisibility.remarks}
+                    onCheckedChange={(checked) => 
+                      setPurchaseColumnVisibility(prev => ({ ...prev, remarks: checked }))
+                    }
+                  >
+                    Remarks
+                  </DropdownMenuCheckboxItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </CardHeader>
           <CardContent className="p-0">
@@ -879,16 +1083,105 @@ export default function ViewLedger() {
         </Card>
 
         {/* Eligible Records - Organized by Type */}
-        <Card className="bg-white shadow-sm border border-gray-200 mb-6">
-          <CardHeader className="pb-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <CardTitle className="text-lg font-semibold text-gray-900">Eligible Holdings</CardTitle>
-                <p className="text-sm text-gray-600 mt-1">Opening balance, bonus shares, right shares, promoter holdings, and IPO allotments</p>
+        <Card className="bg-white shadow-lg border border-gray-100 mb-6" style={{boxShadow: 'inset 0 2px 4px -1px rgba(59, 130, 246, 0.1)'}}>
+          <CardHeader className="pb-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-100">
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                <div>
+                  <CardTitle className="text-xl font-bold text-gray-900">Eligible Holdings</CardTitle>
+                  <p className="text-sm text-gray-600 mt-1">Opening balance, bonus shares, right shares, promoter holdings, and IPO allotments</p>
+                </div>
+                {filteredEligibleRecords.length > 0 && (
+                  <span className="ml-4 text-sm text-gray-500">({filteredEligibleRecords.length} records)</span>
+                )}
               </div>
-              {eligibleTotalItems > 0 && (
-                <span className="text-sm text-gray-500">({eligibleTotalItems} records)</span>
-              )}
+            </div>
+            
+            {/* Search and Column Controls for Eligible */}
+            <div className="flex items-center gap-3 mb-4">
+              {/* Search Input */}
+              <div className="relative flex-1 max-w-lg">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  placeholder="Search by date, type, or remarks..."
+                  value={eligibleSearchTerm}
+                  onChange={(e) => setEligibleSearchTerm(e.target.value)}
+                  className="pl-10 pr-10 border-gray-200 focus:border-blue-300"
+                />
+                {eligibleSearchTerm && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setEligibleSearchTerm("")}
+                    className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                )}
+              </div>
+              
+              {/* Column Visibility Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-blue-300">
+                    <Settings className="h-4 w-4" />
+                    Columns
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+                  <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuCheckboxItem
+                    checked={eligibleColumnVisibility.date}
+                    onCheckedChange={(checked) => 
+                      setEligibleColumnVisibility(prev => ({ ...prev, date: checked }))
+                    }
+                  >
+                    Date
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={eligibleColumnVisibility.quantity}
+                    onCheckedChange={(checked) => 
+                      setEligibleColumnVisibility(prev => ({ ...prev, quantity: checked }))
+                    }
+                  >
+                    Quantity
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={eligibleColumnVisibility.rate}
+                    onCheckedChange={(checked) => 
+                      setEligibleColumnVisibility(prev => ({ ...prev, rate: checked }))
+                    }
+                  >
+                    Rate
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={eligibleColumnVisibility.amount}
+                    onCheckedChange={(checked) => 
+                      setEligibleColumnVisibility(prev => ({ ...prev, amount: checked }))
+                    }
+                  >
+                    Amount
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={eligibleColumnVisibility.type}
+                    onCheckedChange={(checked) => 
+                      setEligibleColumnVisibility(prev => ({ ...prev, type: checked }))
+                    }
+                  >
+                    Type
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={eligibleColumnVisibility.remarks}
+                    onCheckedChange={(checked) => 
+                      setEligibleColumnVisibility(prev => ({ ...prev, remarks: checked }))
+                    }
+                  >
+                    Remarks
+                  </DropdownMenuCheckboxItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </CardHeader>
           <CardContent className="p-0">
@@ -1094,16 +1387,121 @@ export default function ViewLedger() {
         </Card>
 
   
-          <Card className="bg-white shadow-sm border border-gray-200 mb-6">
-          <CardHeader className="pb-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <CardTitle className="text-lg font-semibold text-gray-900">Sales Records</CardTitle>
-                <p className="text-sm text-gray-600 mt-1">Sales transactions with profit/loss calculations</p>
+          <Card className="bg-white shadow-lg border border-gray-100 mb-6" style={{boxShadow: 'inset 0 2px 4px -1px rgba(249, 115, 22, 0.1)'}}>
+          <CardHeader className="pb-4 bg-gradient-to-r from-orange-50 to-amber-50 border-b border-gray-100">
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
+                <div>
+                  <CardTitle className="text-xl font-bold text-gray-900">Sales Records</CardTitle>
+                  <p className="text-sm text-gray-600 mt-1">Sales transactions with profit/loss calculations</p>
+                </div>
+                {filteredSalesRecords.length > 0 && (
+                  <span className="ml-4 text-sm text-gray-500">({filteredSalesRecords.length} records)</span>
+                )}
               </div>
-              {salesTotalItems > 0 && (
-                <span className="text-sm text-gray-500">({salesTotalItems} records)</span>
-              )}
+            </div>
+            
+            {/* Search and Column Controls for Sales */}
+            <div className="flex items-center gap-3 mb-4">
+              {/* Search Input */}
+              <div className="relative flex-1 max-w-lg">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  placeholder="Search by date or any field..."
+                  value={salesSearchTerm}
+                  onChange={(e) => setSalesSearchTerm(e.target.value)}
+                  className="pl-10 pr-10 border-gray-200 focus:border-orange-300"
+                />
+                {salesSearchTerm && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSalesSearchTerm("")}
+                    className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                )}
+              </div>
+              
+              {/* Column Visibility Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-orange-300">
+                    <Settings className="h-4 w-4" />
+                    Columns
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+                  <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuCheckboxItem
+                    checked={salesColumnVisibility.date}
+                    onCheckedChange={(checked) => 
+                      setSalesColumnVisibility(prev => ({ ...prev, date: checked }))
+                    }
+                  >
+                    Date
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={salesColumnVisibility.quantity}
+                    onCheckedChange={(checked) => 
+                      setSalesColumnVisibility(prev => ({ ...prev, quantity: checked }))
+                    }
+                  >
+                    Quantity
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={salesColumnVisibility.rate}
+                    onCheckedChange={(checked) => 
+                      setSalesColumnVisibility(prev => ({ ...prev, rate: checked }))
+                    }
+                  >
+                    Rate
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={salesColumnVisibility.amount}
+                    onCheckedChange={(checked) => 
+                      setSalesColumnVisibility(prev => ({ ...prev, amount: checked }))
+                    }
+                  >
+                    Amount
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={salesColumnVisibility.commission}
+                    onCheckedChange={(checked) => 
+                      setSalesColumnVisibility(prev => ({ ...prev, commission: checked }))
+                    }
+                  >
+                    Commission
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={salesColumnVisibility.netAmount}
+                    onCheckedChange={(checked) => 
+                      setSalesColumnVisibility(prev => ({ ...prev, netAmount: checked }))
+                    }
+                  >
+                    Net Amount
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={salesColumnVisibility.profitLoss}
+                    onCheckedChange={(checked) => 
+                      setSalesColumnVisibility(prev => ({ ...prev, profitLoss: checked }))
+                    }
+                  >
+                    Profit/Loss
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={salesColumnVisibility.remarks}
+                    onCheckedChange={(checked) => 
+                      setSalesColumnVisibility(prev => ({ ...prev, remarks: checked }))
+                    }
+                  >
+                    Remarks
+                  </DropdownMenuCheckboxItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </CardHeader>
           <CardContent className="p-0">

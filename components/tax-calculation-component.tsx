@@ -25,7 +25,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import { RefreshCw } from "lucide-react"
+import { RefreshCw, Search, X, Settings } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { getUsers } from "@/app/api/dashboardAPICalls/actions"
 import { getFiscal } from "@/app/api/fiscalAPI/actions"
 import { getTaxBaseCalculationData, TaxBaseCalculationResponse, TaxBaseCalculationRow } from "@/app/api/taxCalculationsAPICalls/actions"
@@ -132,6 +141,29 @@ export default function TaxCalculationComponent() {
       acc[section.key] = { field: null, order: "asc" }
       return acc
     }, {} as Record<SectionConfig["key"], { field: keyof TaxBaseCalculationRow | null; order: "asc" | "desc" }>)
+  })
+
+  // Search and column visibility states for all tables
+  const [searchTerms, setSearchTerms] = useState<Record<SectionConfig["key"], string>>(() => {
+    return TAX_BASE_SECTIONS.reduce((acc, section) => {
+      acc[section.key] = ""
+      return acc
+    }, {} as Record<SectionConfig["key"], string>)
+  })
+
+  const [columnVisibility, setColumnVisibility] = useState<Record<SectionConfig["key"], Record<string, boolean>>>(() => {
+    return TAX_BASE_SECTIONS.reduce((acc, section) => {
+      acc[section.key] = {
+        symbol: true,
+        companyName: true,
+        quantity: true,
+        taxBase: true,
+        marketValue: true,
+        difference: true,
+        percentage: true
+      }
+      return acc
+    }, {} as Record<SectionConfig["key"], Record<string, boolean>>)
   })
 
   useEffect(() => {
@@ -246,7 +278,19 @@ export default function TaxCalculationComponent() {
   const renderSectionTable = (section: SectionConfig, rows: TaxBaseCalculationRow[]) => {
     const sectionTotals = data?.[section.key]?.totals
     const currentPage = sectionState[section.key]?.page ?? 1
-    const sortedRows = getSortedRows(section.key, rows)
+    
+    // Apply search filtering
+    const searchTerm = searchTerms[section.key] || ""
+    const filteredRows = rows.filter((row) => {
+      if (!searchTerm.trim()) return true
+      return (
+        row.symbol?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.company?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        JSON.stringify(row).toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    })
+    
+    const sortedRows = getSortedRows(section.key, filteredRows)
     const totalPages = Math.ceil(sortedRows.length / itemsPerPage) || 1
     const startIndex = (currentPage - 1) * itemsPerPage
     const pageRows = sortedRows.slice(startIndex, startIndex + itemsPerPage)
@@ -263,13 +307,138 @@ export default function TaxCalculationComponent() {
         : []
 
     return (
-      <Card key={section.key} className="bg-white shadow-sm border border-gray-200">
-        <CardHeader className="space-y-1">
-          <CardTitle>
-            {section.title}
-            {otherClassNames.length > 0 ? ` (${otherClassNames.join(", ")})` : ""}
-          </CardTitle>
-          <CardDescription>{section.description}</CardDescription>
+      <Card key={section.key} className="bg-white shadow-lg border border-gray-100">
+        <CardHeader className="pb-4 bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-gray-100">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center">
+              <div className="w-3 h-3 bg-amber-500 rounded-full mr-2"></div>
+              <div>
+                <CardTitle className="text-xl font-bold text-gray-900">
+                  {section.title}
+                  {otherClassNames.length > 0 ? ` (${otherClassNames.join(", ")})` : ""}
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600 mt-1">{section.description}</CardDescription>
+              </div>
+              {filteredRows.length > 0 && (
+                <span className="ml-4 text-sm text-gray-500">({filteredRows.length} records)</span>
+              )}
+            </div>
+          </div>
+          
+          {/* Search and Column Controls */}
+          <div className="flex items-center gap-3 mb-4">
+            {/* Search Input */}
+            <div className="relative flex-1 max-w-lg">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                placeholder="Search by symbol, company, or any field..."
+                value={searchTerms[section.key] || ""}
+                onChange={(e) => setSearchTerms(prev => ({ ...prev, [section.key]: e.target.value }))}
+                className="pl-10 pr-10 border-gray-200 focus:border-amber-300"
+              />
+              {searchTerms[section.key] && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearchTerms(prev => ({ ...prev, [section.key]: "" }))}
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              )}
+            </div>
+            
+            {/* Column Visibility Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-amber-300">
+                  <Settings className="h-4 w-4" />
+                  Columns
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+                <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.symbol ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], symbol: checked } 
+                    }))
+                  }
+                >
+                  Symbol
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.companyName ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], companyName: checked } 
+                    }))
+                  }
+                >
+                  Company Name
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.quantity ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], quantity: checked } 
+                    }))
+                  }
+                >
+                  Quantities
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.taxBase ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], taxBase: checked } 
+                    }))
+                  }
+                >
+                  Tax Base Values
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.marketValue ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], marketValue: checked } 
+                    }))
+                  }
+                >
+                  Market Values
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.difference ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], difference: checked } 
+                    }))
+                  }
+                >
+                  Differences
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.percentage ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], percentage: checked } 
+                    }))
+                  }
+                >
+                  Percentages
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">

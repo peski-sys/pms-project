@@ -202,8 +202,8 @@ type IPOAllotmentRecord = {
   fund_id: number;
   client_id: string;
   quantity: number;
-  effective_rate: Decimal;
-  total_value: Decimal | null;
+  effective_rate: number;
+  total_value: number;
   fiscal_year_id: number | null;
   recorded_at: Date | null;
   added_at: Date;

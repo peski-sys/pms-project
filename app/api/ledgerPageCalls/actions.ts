@@ -147,10 +147,10 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
         }
     })
 
-    // Fetch IPO allotment records (Note: IPO allotment records don't have symbol field in schema)
-    // We'll fetch all IPO records for the fiscal year and fund since they might be relevant
+    // Fetch IPO allotment records - filter by symbol, fiscal_year_id, and fund
     const ipo_allotment_records = await prisma.ipo_allotment_records.findMany({
         where: {
+            symbol: given_symbol,
             fiscal_year_id: given_fiscal,
             client_broker_mapping: {
                 client_name: given_fund
@@ -451,7 +451,8 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
         }
     })
 
-    const opening_sanitized = Array.from(openingGroups.values()).map((group, index) => ({
+    // Create all opening records for totals calculation
+    const opening_all = Array.from(openingGroups.values()).map((group, index) => ({
         symbol: group.symbol,
         opening_quantity: group.total_quantity,
         effective_rate: group.effective_rate,
@@ -466,6 +467,9 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
         client_id: group.client_ids.join(', ') || '',
         combined_count: group.count
     }))
+
+    // Create filtered opening records for display (exclude 0 quantity)
+    const opening_sanitized = opening_all.filter(record => record.opening_quantity > 0)
     
     // Group bonus records by fund_id, fiscal_year_id, and effective_rate
     const bonusGroups = new Map<string, {
@@ -652,7 +656,17 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
         }
     })
     
-    // Combine all eligible records
+    // Combine all eligible records for totals calculation (includes all opening records)
+    const eligible_records_for_totals = [
+        ...opening_all,
+        ...bonus_sanitized,
+        ...rights_sanitized,
+        ...promoter_sanitized,
+        ...ipo_allotment_sanitized,
+        ...ipo_allotment_staging_sanitized
+    ]
+
+    // Combine eligible records for display (excludes zero opening balance)
     const eligible_records = [
         ...opening_sanitized,
         ...bonus_sanitized,
@@ -718,7 +732,8 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
     salesTotals.totalProfitLoss = FinancialCalculator.round(salesTotals.totalProfitLoss);
 
     // Calculate totals for eligible records (opening + bonus + rights + promoter) with decimal precision
-    const eligibleTotals = eligible_records.reduce((acc, record) => {
+    // Use eligible_records_for_totals to include all opening records (even with 0 quantity) for accurate cost calculation
+    const eligibleTotals = eligible_records_for_totals.reduce((acc, record) => {
         acc.totalEligibleQuantity += record.opening_quantity;
         acc.totalEligibleValue = FinancialCalculator.add(acc.totalEligibleValue, record.total_value);
         return acc;

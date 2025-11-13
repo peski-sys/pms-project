@@ -131,7 +131,13 @@ export async function getIPOAllotmentRecords(fundName?: string, fiscalYearId?: n
             }
         });
 
-        return records;
+        // Convert Decimal fields to numbers for client component compatibility
+        return records.map(record => ({
+            ...record,
+            quantity: Number(record.quantity),
+            effective_rate: Number(record.effective_rate),
+            total_value: Number((Number(record.quantity) * Number(record.effective_rate)).toFixed(2))
+        }));
     } catch (error) {
         console.error('Error fetching IPO allotment records:', error);
         return [];
@@ -458,6 +464,7 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
         const normalizedHolding = clientTrading?.toUpperCase() === 'PROMOTER' ? 'PROMOTER' : 'TRADING';
 
         const transactionResult = await prisma.$transaction(async (tx) => {
+            // Get the staging record with all required fields
             const stagingRecord = await tx.fiscal_year_balance_staging.findUnique({
                 where: { staging_id: stagingId },
                 select: {
@@ -479,6 +486,7 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
                 throw new Error('IPO allotment staging record not found');
             }
 
+            // Validate client exists and belongs to the correct fund
             const client = await tx.client_broker_mapping.findUnique({
                 where: { client_id: clientId },
                 select: {
@@ -496,6 +504,14 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
                 throw new Error('Selected client does not belong to the staging fund');
             }
 
+            const dematerializedQuantity = Number(stagingRecord.closing_quantity ?? 0);
+            const stagingEffectiveRate = Number(stagingRecord.effective_rate ?? 0);
+
+            if (dematerializedQuantity <= 0) {
+                throw new Error('No quantity available to dematerialize');
+            }
+
+            // Parse remarks to get original added_at date
             const parsedRemarks = (() => {
                 try {
                     return stagingRecord.remarks ? JSON.parse(stagingRecord.remarks) : null;
@@ -506,11 +522,11 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
 
             const addedAtRaw = parsedRemarks?.added_at;
             const addedAt = addedAtRaw ? new Date(addedAtRaw) : new Date();
-            const noteSuffix = `Dematerialized to ${client.client_name ?? client.client_id} (${normalizedHolding}) on ${new Date().toISOString()}`;
 
-            const dematerializedQuantity = Number(stagingRecord.closing_quantity ?? 0);
-            const stagingEffectiveRate = Number(stagingRecord.effective_rate ?? 0);
-
+            // Create the appropriate transaction record based on holding type
+            // Add special marker to prevent double counting in symbol_holdings
+            const remarksWithMarker = `SKIP_SYMBOL_HOLDINGS|Dematerialized from staging on ${new Date().toISOString()}`;
+            
             if (normalizedHolding === 'TRADING') {
                 await tx.ipo_allotment_records.create({
                     data: {
@@ -522,7 +538,7 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
                         added_at: addedAt,
                         fiscal_year_id: stagingRecord.fiscal_year_id,
                         sub_id: stagingRecord.sub_id ?? 1,
-                        remarks: noteSuffix
+                        remarks: remarksWithMarker
                     }
                 });
             } else {
@@ -536,156 +552,34 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
                         added_at: addedAt,
                         fiscal_year_id: stagingRecord.fiscal_year_id,
                         sub_id: stagingRecord.sub_id ?? 1,
-                        remarks: noteSuffix
+                        remarks: remarksWithMarker
                     }
                 });
             }
 
-            const [bonusStagingRecords, rightStagingRecords, cashStagingRecords] = await Promise.all([
-                tx.bonus_records_staging.findMany({
-                    where: {
-                        fund_id: stagingRecord.fund_id,
-                        symbol: stagingRecord.symbol,
-                        fiscal_year_id: stagingRecord.fiscal_year_id
-                    }
-                }),
-                tx.right_records_staging.findMany({
-                    where: {
-                        fund_id: stagingRecord.fund_id,
-                        symbol: stagingRecord.symbol,
-                        fiscal_year_id: stagingRecord.fiscal_year_id
-                    }
-                }),
-                tx.cash_records_staging.findMany({
-                    where: {
-                        fund_id: stagingRecord.fund_id,
-                        symbol: stagingRecord.symbol,
-                        fiscal_year_id: stagingRecord.fiscal_year_id
-                    }
-                })
-            ]);
+            // Use the safe_update_fiscal_year_balance helper function to create/update fiscal_year_balance
+            // This will respect auto-generated fields and let triggers handle the calculations
+            await tx.$executeRaw`
+                SELECT safe_update_fiscal_year_balance(
+                    ${clientId}::VARCHAR(25),
+                    ${stagingRecord.symbol}::VARCHAR(15),
+                    ${stagingRecord.fiscal_year_id}::INTEGER,
+                    ${Number(stagingRecord.opening_quantity ?? 0)}::INTEGER,
+                    ${Number(stagingRecord.added_quantity ?? dematerializedQuantity)}::INTEGER,
+                    ${stagingEffectiveRate}::NUMERIC(14,2),
+                    ${Number(stagingRecord.opening_rate ?? stagingEffectiveRate)}::NUMERIC(14,2),
+                    ${dematerializedQuantity}::INTEGER,
+                    ${normalizedHolding}::VARCHAR(50),
+                    ${stagingRecord.sub_id ?? 1}::INTEGER
+                )
+            `;
 
-            const mapRemarks = (existing?: string | null) => {
-                const parts = [existing, noteSuffix].filter(Boolean);
-                return parts.join(' | ');
-            };
-
-            for (const bonus of bonusStagingRecords) {
-                await tx.bonus_records.create({
-                    data: {
-                        fund_id: bonus.fund_id,
-                        client_id: clientId,
-                        symbol: bonus.symbol,
-                        bonus_percent: Number(bonus.bonus_percent),
-                        quantity: Number(bonus.quantity),
-                        bookclose_date: bonus.bookclose_date,
-                        effective_rate: Number(bonus.effective_rate ?? 0),
-                        fiscal_year_id: bonus.fiscal_year_id,
-                        remarks: mapRemarks(bonus.remarks)
-                    }
-                });
-
-                await tx.bonus_records_staging.delete({ where: { bonus_staging_id: bonus.bonus_staging_id } });
-            }
-
-            for (const right of rightStagingRecords) {
-                await tx.right_records.create({
-                    data: {
-                        fund_id: right.fund_id,
-                        client_id: clientId,
-                        symbol: right.symbol,
-                        right_ratio: right.right_ratio,
-                        bookclose_date: right.bookclose_date,
-                        quantity: Number(right.quantity),
-                        effective_rate: Number(right.effective_rate ?? 0),
-                        total_value: right.total_value ? Number(right.total_value) : null,
-                        fiscal_year_id: right.fiscal_year_id,
-                        remarks: mapRemarks(right.remarks)
-                    }
-                });
-
-                await tx.right_records_staging.delete({ where: { right_staging_id: right.right_staging_id } });
-            }
-
-            for (const cash of cashStagingRecords) {
-                await tx.cash_records.create({
-                    data: {
-                        fund_id: cash.fund_id,
-                        client_id: clientId,
-                        symbol: cash.symbol,
-                        amount: Number(cash.amount),
-                        bookclose_date: cash.bookclose_date,
-                        fiscal_year_id: cash.fiscal_year_id,
-                        remarks: mapRemarks(cash.remarks)
-                    }
-                });
-
-                await tx.cash_records_staging.delete({ where: { cash_staging_id: cash.cash_staging_id } });
-            }
-
-            const existingBalance = await tx.fiscal_year_balance.findUnique({
-                where: {
-                    client_id_symbol_fiscal_year_id: {
-                        client_id: clientId,
-                        symbol: stagingRecord.symbol,
-                        fiscal_year_id: stagingRecord.fiscal_year_id
-                    }
-                }
+            // Delete the staging record
+            await tx.fiscal_year_balance_staging.delete({
+                where: { staging_id: stagingId }
             });
 
-            const stagingAddedQuantity = Number(stagingRecord.added_quantity ?? dematerializedQuantity);
-            const stagingOpeningQuantity = Number(stagingRecord.opening_quantity ?? 0);
-
-            if (existingBalance) {
-                const existingClosing = Number(existingBalance.closing_quantity ?? 0);
-                const updatedClosing = existingClosing + dematerializedQuantity;
-                const existingEffective = Number(existingBalance.effective_rate ?? 0);
-                const weightedEffective = updatedClosing > 0
-                    ? ((existingEffective * existingClosing) + (stagingEffectiveRate * dematerializedQuantity)) / updatedClosing
-                    : stagingEffectiveRate;
-
-                await tx.fiscal_year_balance.update({
-                    where: {
-                        client_id_symbol_fiscal_year_id: {
-                            client_id: clientId,
-                            symbol: stagingRecord.symbol,
-                            fiscal_year_id: stagingRecord.fiscal_year_id
-                        }
-                    },
-                    data: {
-                        added_quantity: Number(existingBalance.added_quantity ?? 0) + stagingAddedQuantity,
-                        closing_quantity: updatedClosing,
-                        demat: Number(existingBalance.demat ?? 0) + dematerializedQuantity,
-                        non_demat: Math.max(Number(existingBalance.non_demat ?? 0) - dematerializedQuantity, 0),
-                        effective_rate: Number(weightedEffective.toFixed(6)),
-                        source_type: normalizedHolding,
-                        sub_id: stagingRecord.sub_id ?? existingBalance.sub_id ?? 1,
-                        remarks: mapRemarks(existingBalance.remarks)
-                    }
-                });
-            } else {
-                await tx.fiscal_year_balance.create({
-                    data: {
-                        client_id: clientId,
-                        symbol: stagingRecord.symbol,
-                        fiscal_year_id: stagingRecord.fiscal_year_id,
-                        fund_id: stagingRecord.fund_id,
-                        opening_quantity: stagingOpeningQuantity,
-                        added_quantity: stagingAddedQuantity,
-                        closing_quantity: dematerializedQuantity,
-                        effective_rate: stagingEffectiveRate,
-                        opening_rate: Number(stagingRecord.opening_rate ?? stagingEffectiveRate),
-                        demat: dematerializedQuantity,
-                        non_demat: 0,
-                        source_type: normalizedHolding,
-                        sub_id: stagingRecord.sub_id ?? 1,
-                        remarks: mapRemarks(stagingRecord.remarks ?? null)
-                    }
-                });
-            }
-
-            await tx.fiscal_year_balance_staging.delete({ where: { staging_id: stagingId } });
-
+            // Create audit log
             await tx.audit_log.create({
                 data: {
                     performed_action: `Dematerialized Non-DEMAT holdings for ${stagingRecord.symbol} (${dematerializedQuantity} shares) to ${clientId} as ${normalizedHolding}`
@@ -695,9 +589,7 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
             return {
                 symbol: stagingRecord.symbol,
                 quantity: dematerializedQuantity,
-                bonusMigrated: bonusStagingRecords.length,
-                rightMigrated: rightStagingRecords.length,
-                cashMigrated: cashStagingRecords.length
+                client_name: client.client_name
             };
         });
 
@@ -707,7 +599,8 @@ export async function dematerializeIPOStaging(stagingId: number, clientId: strin
             data: {
                 symbol: transactionResult.symbol,
                 quantity: transactionResult.quantity,
-                client_id: clientId
+                client_id: clientId,
+                client_name: transactionResult.client_name
             }
         };
 

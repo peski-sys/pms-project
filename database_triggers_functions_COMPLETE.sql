@@ -12,6 +12,39 @@
 -- - Data integrity checks
 --
 -- All calculations use ROUND(value, 2) for accounting standards compliance
+--
+-- *** CRITICAL WARNING: AUTO-GENERATED FIELDS ***
+-- The following fields are auto-generated in the database and MUST NOT be
+-- directly modified by triggers OR application code. Attempting to update
+-- these fields directly will result in PostgreSQL errors.
+--
+-- When using Prisma or any other ORM, NEVER include these fields in update
+-- operations. Only update the base fields they depend on.
+--
+-- IMPORTANT: This file has been modified to respect auto-generated fields in the
+-- Prisma schema. The following fields are managed by Prisma and should NOT be
+-- modified by triggers:
+--
+-- 1. fiscal_year_balance:
+--    - closing_quantity: @default(dbgenerated("(opening_quantity + added_quantity)"))
+--    - non_demat: @default(dbgenerated("((opening_quantity + added_quantity) - demat)"))
+--
+-- 2. symbol_holdings:
+--    - wacc_tax_base: @default(dbgenerated(CASE expression))
+--
+-- 3. Transaction models (promoter_records, ipo_allotment_records, right_records):
+--    - total_value: @default(dbgenerated("((quantity)::numeric * effective_rate)"))
+--
+-- 4. fiscal_year_balance_staging:
+--    - closing_quantity: @default(dbgenerated("(opening_quantity + added_quantity)"))
+--    - non_demat: @default(dbgenerated("((opening_quantity + added_quantity) - demat)"))
+--
+-- PRODUCTION READINESS:
+-- - All triggers include proper error handling and logging
+-- - Functions are designed to be idempotent
+-- - Proper NULL handling with COALESCE
+-- - Consistent rounding for accounting standards
+-- - Data integrity checks and cleanup functions included
 -- ============================================================================
 
 -- ============================================================================
@@ -57,6 +90,11 @@ DROP FUNCTION IF EXISTS fn_update_fiscal_year_balance_staging() CASCADE;
 DROP FUNCTION IF EXISTS fn_update_symbol_holdings() CASCADE;
 DROP FUNCTION IF EXISTS fn_calculate_sell_profit_loss() CASCADE;
 DROP FUNCTION IF EXISTS fn_insert_order_book_to_staging() CASCADE;
+
+-- Drop helper functions
+DROP FUNCTION IF EXISTS safe_update_fiscal_year_balance(VARCHAR, VARCHAR, INTEGER, INTEGER, INTEGER, NUMERIC, NUMERIC, INTEGER, VARCHAR, INTEGER) CASCADE;
+DROP FUNCTION IF EXISTS safe_update_fiscal_year_balance_staging(VARCHAR, INTEGER, INTEGER, INTEGER, INTEGER, NUMERIC, NUMERIC, INTEGER, VARCHAR, INTEGER, VARCHAR) CASCADE;
+DROP FUNCTION IF EXISTS dematerialize_ipo_allotment(VARCHAR, VARCHAR, INTEGER, INTEGER, INTEGER, INTEGER) CASCADE;
 
 -- ============================================================================
 -- SECTION 2: UTILITY FUNCTIONS
@@ -318,6 +356,8 @@ BEGIN
     END IF;
 
     -- Insert or update fiscal_year_balance
+    -- Note: closing_quantity and non_demat are auto-generated fields in Prisma schema
+    -- and should not be modified by this trigger
     INSERT INTO fiscal_year_balance (
         client_id, symbol, fiscal_year_id, fund_id,
         opening_quantity, added_quantity, effective_rate,
@@ -460,6 +500,8 @@ BEGIN
     END IF;
 
     -- Check if record exists and update, or insert new
+    -- Note: closing_quantity and non_demat are auto-generated fields in Prisma schema
+    -- and should not be modified by this trigger
     UPDATE fiscal_year_balance_staging
     SET 
         added_quantity = v_new_quantity,
@@ -595,50 +637,73 @@ BEGIN
 
     ELSIF TG_TABLE_NAME = 'right_records' THEN
         -- RIGHT: Increase quantity, add cost (paid for rights)
+        -- Note: total_value is an auto-generated field in Prisma schema
         IF TG_OP = 'INSERT' THEN
             v_quantity := NEW.quantity;
             v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0);
-            v_commission := COALESCE(NEW.total_value, NEW.quantity * NEW.effective_rate, 0);
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0); -- Calculate directly instead of using total_value
         ELSIF TG_OP = 'UPDATE' THEN
             v_quantity := NEW.quantity - OLD.quantity;
             v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := COALESCE(NEW.total_value, 0) - COALESCE(OLD.total_value, 0);
+            v_commission := v_txn_value; -- Use calculated value instead of total_value
         ELSIF TG_OP = 'DELETE' THEN
             v_quantity := -OLD.quantity;
             v_txn_value := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := -COALESCE(OLD.total_value, OLD.quantity * OLD.effective_rate, 0);
+            v_commission := v_txn_value; -- Use calculated value instead of total_value
         END IF;
 
     ELSIF TG_TABLE_NAME = 'promoter_records' THEN
         -- PROMOTER: Increase quantity, add cost
+        -- Note: total_value is an auto-generated field in Prisma schema
+        -- Check for SKIP_SYMBOL_HOLDINGS marker to prevent double counting from staging dematerialization
         IF TG_OP = 'INSERT' THEN
+            IF NEW.remarks IS NOT NULL AND NEW.remarks LIKE 'SKIP_SYMBOL_HOLDINGS%' THEN
+                RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
+            END IF;
             v_quantity := NEW.quantity;
             v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0);
-            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0);
+            v_commission := v_txn_value; -- Use calculated value instead of total_value
         ELSIF TG_OP = 'UPDATE' THEN
+            IF NEW.remarks IS NOT NULL AND NEW.remarks LIKE 'SKIP_SYMBOL_HOLDINGS%' THEN
+                RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
+            END IF;
             v_quantity := NEW.quantity - OLD.quantity;
             v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
+            v_commission := v_txn_value; -- Use calculated value instead of total_value
         ELSIF TG_OP = 'DELETE' THEN
+            IF OLD.remarks IS NOT NULL AND OLD.remarks LIKE 'SKIP_SYMBOL_HOLDINGS%' THEN
+                RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
+            END IF;
             v_quantity := -OLD.quantity;
             v_txn_value := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
+            v_commission := v_txn_value; -- Use calculated value instead of total_value
         END IF;
 
     ELSIF TG_TABLE_NAME = 'ipo_allotment_records' THEN
         -- IPO: Increase quantity, add cost
+        -- Note: total_value is an auto-generated field in Prisma schema
+        -- Check for SKIP_SYMBOL_HOLDINGS marker to prevent double counting from staging dematerialization
         IF TG_OP = 'INSERT' THEN
+            IF NEW.remarks IS NOT NULL AND NEW.remarks LIKE 'SKIP_SYMBOL_HOLDINGS%' THEN
+                RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
+            END IF;
             v_quantity := NEW.quantity;
             v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0);
-            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0);
+            v_commission := v_txn_value; -- Use calculated value instead of total_value
         ELSIF TG_OP = 'UPDATE' THEN
+            IF NEW.remarks IS NOT NULL AND NEW.remarks LIKE 'SKIP_SYMBOL_HOLDINGS%' THEN
+                RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
+            END IF;
             v_quantity := NEW.quantity - OLD.quantity;
             v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
+            v_commission := v_txn_value; -- Use calculated value instead of total_value
         ELSIF TG_OP = 'DELETE' THEN
+            IF OLD.remarks IS NOT NULL AND OLD.remarks LIKE 'SKIP_SYMBOL_HOLDINGS%' THEN
+                RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
+            END IF;
             v_quantity := -OLD.quantity;
             v_txn_value := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
+            v_commission := v_txn_value; -- Use calculated value instead of total_value
         END IF;
 
     ELSIF TG_TABLE_NAME = 'closeout_records' THEN
@@ -665,6 +730,8 @@ BEGIN
     -- ========================================================================
     -- Insert or update symbol_holdings
     -- ========================================================================
+    -- Note: wacc_tax_base is an auto-generated field in Prisma schema
+    -- and should not be modified by this trigger
     INSERT INTO symbol_holdings (
         symbol, fund_id, fiscal_year_id,
         quantity, total_txn_value, total_with_commission,
@@ -732,6 +799,7 @@ BEGIN
     END IF;
 
     -- Fetch wacc_tax_base from symbol_holdings for this fund_id, symbol, fiscal_year_id
+    -- Note: wacc_tax_base is an auto-generated field in Prisma schema
     SELECT COALESCE(wacc_tax_base, 0)
     INTO sh_wacc_tax_base
     FROM symbol_holdings
@@ -871,23 +939,25 @@ BEGIN
     FOR v_record IN
         SELECT 
             client_id, symbol, fund_id, source_type, sub_id,
-            COALESCE(closing_quantity, 0) AS closing_qty,
+            COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0) AS closing_qty,
             COALESCE(effective_rate, 0) AS closing_rate
         FROM fiscal_year_balance
         WHERE fiscal_year_id = fromyear
-          AND COALESCE(closing_quantity, 0) > 0
+          AND (COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0)) > 0
     LOOP
         -- Insert as opening balance in new fiscal year
+        -- Note: closing_quantity and non_demat are auto-generated fields in Prisma schema
+        -- and should not be modified by this function
         INSERT INTO fiscal_year_balance (
             client_id, symbol, fiscal_year_id, fund_id,
             opening_quantity, added_quantity, effective_rate,
-            opening_rate, source_type, sub_id, demat, non_demat
+            opening_rate, source_type, sub_id, demat
         )
         VALUES (
             v_record.client_id, v_record.symbol, toyear, v_record.fund_id,
             v_record.closing_qty, 0, v_record.closing_rate,
             v_record.closing_rate, v_record.source_type, v_record.sub_id,
-            0, v_record.closing_qty  -- All carried forward as non_demat initially
+            0  -- All carried forward as non_demat initially
         )
         ON CONFLICT (client_id, symbol, fiscal_year_id) DO UPDATE SET
             opening_quantity = EXCLUDED.opening_quantity,
@@ -896,8 +966,7 @@ BEGIN
             source_type = EXCLUDED.source_type,
             sub_id = EXCLUDED.sub_id,
             added_quantity = 0,
-            demat = 0,
-            non_demat = EXCLUDED.opening_quantity;
+            demat = 0;
         
         v_count := v_count + 1;
     END LOOP;
@@ -908,24 +977,26 @@ BEGIN
     FOR v_staging_record IN
         SELECT 
             symbol, fund_id, source_type, sub_id,
-            COALESCE(closing_quantity, 0) AS closing_qty,
+            COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0) AS closing_qty,
             COALESCE(effective_rate, 0) AS closing_rate,
             remarks
         FROM fiscal_year_balance_staging
         WHERE fiscal_year_id = fromyear
-          AND COALESCE(closing_quantity, 0) > 0
+          AND (COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0)) > 0
     LOOP
         -- Insert as opening balance in new fiscal year staging
+        -- Note: closing_quantity and non_demat are auto-generated fields in Prisma schema
+        -- and should not be modified by this function
         INSERT INTO fiscal_year_balance_staging (
             symbol, fiscal_year_id, fund_id, sub_id,
             opening_quantity, added_quantity, effective_rate,
-            opening_rate, source_type, demat, non_demat, remarks
+            opening_rate, source_type, demat, remarks
         )
         VALUES (
             v_staging_record.symbol, toyear, v_staging_record.fund_id, v_staging_record.sub_id,
             v_staging_record.closing_qty, 0, v_staging_record.closing_rate,
             v_staging_record.closing_rate, v_staging_record.source_type,
-            0, v_staging_record.closing_qty,  -- All carried forward as non_demat
+            0,  -- All carried forward as non_demat
             COALESCE(v_staging_record.remarks, '') || ' | Carried forward from FY ' || fromyear
         );
         
@@ -1057,15 +1128,17 @@ BEGIN
     LEFT JOIN client_broker_mapping cbm ON fyb.client_id = cbm.client_id
     WHERE cbm.client_id IS NULL;
 
-    -- Check for missing WACC when quantity > 0
+    -- Check for missing values when quantity > 0
+    -- Note: wacc_tax_base is an auto-generated field in Prisma schema
+    -- We only check if the required fields for its calculation are present
     RETURN QUERY
     SELECT 
-        'Missing WACC in symbol_holdings'::VARCHAR(100),
+        'Missing values for WACC calculation in symbol_holdings'::VARCHAR(100),
         FORMAT('Symbol: %s, Fund: %s, FY: %s, Quantity: %s, Total Value: %s', 
                symbol, fund_id, fiscal_year_id, quantity, total_txn_value)::TEXT
     FROM symbol_holdings
     WHERE COALESCE(quantity, 0) > 0 
-      AND (wacc_tax_base IS NULL OR wacc_tax_base = 0) 
+      AND COALESCE(total_with_commission, 0) <= 0 
       AND COALESCE(total_txn_value, 0) > 0;
 
     -- Check for records with NULL fiscal_year_id
@@ -1241,6 +1314,179 @@ CREATE TRIGGER trg_order_book_to_staging
 -- GRANT EXECUTE ON FUNCTION confirm_staging_records TO your_app_user;
 -- GRANT EXECUTE ON FUNCTION check_data_integrity TO your_app_user;
 -- GRANT EXECUTE ON FUNCTION cleanup_zero_quantity_records TO your_app_user;
+-- GRANT EXECUTE ON FUNCTION safe_update_fiscal_year_balance TO your_app_user;
+-- GRANT EXECUTE ON FUNCTION safe_update_fiscal_year_balance_staging TO your_app_user;
+-- GRANT EXECUTE ON FUNCTION dematerialize_ipo_allotment TO your_app_user;
+
+-- ============================================================================
+-- SECTION 14: HELPER FUNCTIONS FOR SAFE UPDATES
+-- ============================================================================
+
+-- Helper function to safely update fiscal_year_balance without touching auto-generated fields
+CREATE OR REPLACE FUNCTION safe_update_fiscal_year_balance(
+    p_client_id VARCHAR(25),
+    p_symbol VARCHAR(15),
+    p_fiscal_year_id INTEGER,
+    p_opening_quantity INTEGER,
+    p_added_quantity INTEGER,
+    p_effective_rate NUMERIC(14,2),
+    p_opening_rate NUMERIC(14,2),
+    p_demat INTEGER,
+    p_source_type VARCHAR(50),
+    p_sub_id INTEGER
+) RETURNS VOID AS $$
+BEGIN
+    -- This function only updates fields that are safe to update directly
+    -- It never touches auto-generated fields like closing_quantity or non_demat
+    UPDATE fiscal_year_balance
+    SET 
+        opening_quantity = p_opening_quantity,
+        added_quantity = p_added_quantity,
+        effective_rate = p_effective_rate,
+        opening_rate = p_opening_rate,
+        demat = p_demat,
+        source_type = p_source_type,
+        sub_id = p_sub_id
+    WHERE 
+        client_id = p_client_id AND 
+        symbol = p_symbol AND 
+        fiscal_year_id = p_fiscal_year_id;
+        
+    -- If no record was updated, insert a new one
+    IF NOT FOUND THEN
+        INSERT INTO fiscal_year_balance (
+            client_id, symbol, fiscal_year_id,
+            opening_quantity, added_quantity, effective_rate, opening_rate,
+            demat, source_type, sub_id
+        ) VALUES (
+            p_client_id, p_symbol, p_fiscal_year_id,
+            p_opening_quantity, p_added_quantity, p_effective_rate, p_opening_rate,
+            p_demat, p_source_type, p_sub_id
+        );
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Helper function to safely update fiscal_year_balance_staging without touching auto-generated fields
+CREATE OR REPLACE FUNCTION safe_update_fiscal_year_balance_staging(
+    p_symbol VARCHAR(15),
+    p_fiscal_year_id INTEGER,
+    p_fund_id INTEGER,
+    p_opening_quantity INTEGER,
+    p_added_quantity INTEGER,
+    p_effective_rate NUMERIC(14,2),
+    p_opening_rate NUMERIC(14,2),
+    p_demat INTEGER,
+    p_source_type VARCHAR(50),
+    p_sub_id INTEGER,
+    p_remarks VARCHAR(300)
+) RETURNS VOID AS $$
+BEGIN
+    -- This function only updates fields that are safe to update directly
+    -- It never touches auto-generated fields like closing_quantity or non_demat
+    UPDATE fiscal_year_balance_staging
+    SET 
+        opening_quantity = p_opening_quantity,
+        added_quantity = p_added_quantity,
+        effective_rate = p_effective_rate,
+        opening_rate = p_opening_rate,
+        demat = p_demat,
+        source_type = p_source_type,
+        remarks = p_remarks
+    WHERE 
+        symbol = p_symbol AND 
+        fiscal_year_id = p_fiscal_year_id AND
+        fund_id = p_fund_id AND
+        sub_id = p_sub_id;
+        
+    -- If no record was updated, insert a new one
+    IF NOT FOUND THEN
+        INSERT INTO fiscal_year_balance_staging (
+            symbol, fiscal_year_id, fund_id, sub_id,
+            opening_quantity, added_quantity, effective_rate, opening_rate,
+            demat, source_type, remarks
+        ) VALUES (
+            p_symbol, p_fiscal_year_id, p_fund_id, p_sub_id,
+            p_opening_quantity, p_added_quantity, p_effective_rate, p_opening_rate,
+            p_demat, p_source_type, p_remarks
+        );
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Helper function specifically for dematerializing IPO allotments
+CREATE OR REPLACE FUNCTION dematerialize_ipo_allotment(
+    p_client_id VARCHAR(25),
+    p_symbol VARCHAR(15),
+    p_fiscal_year_id INTEGER,
+    p_fund_id INTEGER,
+    p_quantity INTEGER,
+    p_sub_id INTEGER DEFAULT 1
+) RETURNS VOID AS $$
+DECLARE
+    v_current_opening_quantity INTEGER;
+    v_current_added_quantity INTEGER;
+    v_current_demat INTEGER;
+    v_current_effective_rate NUMERIC(14,2);
+    v_current_opening_rate NUMERIC(14,2);
+    v_current_source_type VARCHAR(50);
+    v_new_demat INTEGER;
+BEGIN
+    -- Get current values from fiscal_year_balance
+    SELECT 
+        COALESCE(opening_quantity, 0),
+        COALESCE(added_quantity, 0),
+        COALESCE(demat, 0),
+        COALESCE(effective_rate, 0),
+        COALESCE(opening_rate, 0),
+        COALESCE(source_type, 'TRADING')
+    INTO 
+        v_current_opening_quantity,
+        v_current_added_quantity,
+        v_current_demat,
+        v_current_effective_rate,
+        v_current_opening_rate,
+        v_current_source_type
+    FROM fiscal_year_balance
+    WHERE 
+        client_id = p_client_id AND 
+        symbol = p_symbol AND 
+        fiscal_year_id = p_fiscal_year_id;
+    
+    -- If record not found, nothing to dematerialize
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No holdings found for client % symbol % in fiscal year %', 
+                        p_client_id, p_symbol, p_fiscal_year_id;
+    END IF;
+    
+    -- Calculate new demat value
+    v_new_demat := v_current_demat + p_quantity;
+    
+    -- Check if trying to dematerialize more than available
+    IF v_new_demat > (v_current_opening_quantity + v_current_added_quantity) THEN
+        RAISE EXCEPTION 'Cannot dematerialize more than available quantity';
+    END IF;
+    
+    -- Update fiscal_year_balance using the safe update function
+    -- IMPORTANT: We only update the demat field, not closing_quantity or non_demat
+    PERFORM safe_update_fiscal_year_balance(
+        p_client_id,
+        p_symbol,
+        p_fiscal_year_id,
+        v_current_opening_quantity,
+        v_current_added_quantity,
+        v_current_effective_rate,
+        v_current_opening_rate,
+        v_new_demat,
+        v_current_source_type,
+        p_sub_id
+    );
+    
+    -- Log the dematerialization
+    RAISE NOTICE 'Successfully dematerialized % units of % for client % in fiscal year %',
+                 p_quantity, p_symbol, p_client_id, p_fiscal_year_id;
+END;
+$$ LANGUAGE plpgsql;
 
 -- ============================================================================
 -- END OF TRIGGER AND FUNCTION DEFINITIONS

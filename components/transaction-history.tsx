@@ -29,7 +29,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { RefreshCw, Download, TrendingUp, TrendingDown, Coins, ShoppingCart, Receipt, CreditCard, Banknote, Wallet } from "lucide-react"
+import { RefreshCw, Download, TrendingUp, TrendingDown, Coins, ShoppingCart, Receipt, CreditCard, Banknote, Wallet, Settings } from "lucide-react"
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import * as React from "react"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -193,6 +201,19 @@ export default function TransactionHistoryComponent() {
   const [currentPage, setCurrentPage] = React.useState(1)
   const itemsPerPage = 10
 
+  // Column visibility state for Transaction Details Table
+  const [columnVisibility, setColumnVisibility] = React.useState({
+    date: true,
+    symbol: true,
+    transactionType: true,
+    quantity: true,
+    rate: true,
+    amount: true,
+    commission: true,
+    netAmount: true,
+    clientName: true
+  })
+
   async function handleFilters(formData: FormData) {
     const stock_symbol = formData.get('stock') as string
     setSymbol(stock_symbol)
@@ -281,17 +302,17 @@ export default function TransactionHistoryComponent() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-semibold text-gray-900">Total Buy Amount</CardTitle>
-              <div className="p-2 bg-green-100 rounded-lg">
+              <div className="p-2 bg-green-100 rounded-lg flex-shrink-0">
                 <ShoppingCart className="h-5 w-5 text-green-600" />
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-0">
-            <p className="text-2xl font-bold text-gray-900 mb-2">
+            <p className="text-xl lg:text-2xl font-bold text-gray-900 mb-2 break-words leading-tight">
               Rs. {(heroTransactions?.fromBuy.txn_value || 0).toLocaleString()}
             </p>
             <div className="flex items-center text-sm text-green-600">
-              <TrendingUp className="w-4 h-4 mr-1" />
+              <TrendingUp className="w-4 h-4 mr-1 flex-shrink-0" />
               <span>Buy Transactions</span>
             </div>
           </CardContent>
@@ -301,17 +322,17 @@ export default function TransactionHistoryComponent() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-semibold text-gray-900">Total Sell Amount</CardTitle>
-              <div className="p-2 bg-red-100 rounded-lg">
+              <div className="p-2 bg-red-100 rounded-lg flex-shrink-0">
                 <Receipt className="h-5 w-5 text-red-600" />
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-0">
-            <p className="text-2xl font-bold text-gray-900 mb-2">
+            <p className="text-xl lg:text-2xl font-bold text-gray-900 mb-2 break-words leading-tight">
               Rs. {(heroTransactions?.fromSell.txn_value || 0).toLocaleString()}
             </p>
             <div className="flex items-center text-sm text-red-600">
-              <TrendingDown className="w-4 h-4 mr-1" />
+              <TrendingDown className="w-4 h-4 mr-1 flex-shrink-0" />
               <span>Sell Transactions</span>
             </div>
           </CardContent>
@@ -321,13 +342,13 @@ export default function TransactionHistoryComponent() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-semibold text-gray-900">Total Charges</CardTitle>
-              <div className="p-2 bg-orange-100 rounded-lg">
+              <div className="p-2 bg-orange-100 rounded-lg flex-shrink-0">
                 <CreditCard className="h-5 w-5 text-orange-600" />
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-0">
-            <p className="text-2xl font-bold text-gray-900 mb-2">
+            <p className="text-xl lg:text-2xl font-bold text-gray-900 mb-2 break-words leading-tight">
               Rs. {(heroTransactions?.fromBuy.expected_commission || 0).toLocaleString()}
             </p>
             <div className="flex items-center text-sm text-orange-600">
@@ -340,19 +361,19 @@ export default function TransactionHistoryComponent() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-semibold text-gray-900">Realised P&L</CardTitle>
-              <div className="p-2 bg-purple-100 rounded-lg">
+              <div className="p-2 bg-purple-100 rounded-lg flex-shrink-0">
                 <Banknote className="h-5 w-5 text-purple-600" />
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-0">
-            <p className={`text-2xl font-bold mb-2 ${
+            <p className={`text-xl lg:text-2xl font-bold mb-2 break-words leading-tight ${
               (heroTransactions?.fromSell.profit_loss || 0) >= 0 ? 'text-green-600' : 'text-red-600'
             }`}>
               {(heroTransactions?.fromSell.profit_loss || 0) >= 0 ? '+' : ''}Rs. {(heroTransactions?.fromSell.profit_loss || 0).toLocaleString()}
             </p>
             <div className="flex items-center text-sm text-gray-600">
-              <Coins className="w-4 h-4 mr-1" />
+              <Coins className="w-4 h-4 mr-1 flex-shrink-0" />
               <span>Total Profit/Loss</span>
             </div>
           </CardContent>
@@ -362,13 +383,13 @@ export default function TransactionHistoryComponent() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-semibold text-gray-900">DP Amount</CardTitle>
-              <div className="p-2 bg-indigo-100 rounded-lg">
+              <div className="p-2 bg-indigo-100 rounded-lg flex-shrink-0">
                 <Wallet className="h-5 w-5 text-indigo-600" />
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-0">
-            <p className="text-2xl font-bold text-gray-900 mb-2">
+            <p className="text-xl lg:text-2xl font-bold text-gray-900 mb-2 break-words leading-tight">
               Rs. {(heroTransactions?.dpAmount || 0).toLocaleString()}
             </p>
             <div className="flex items-center text-sm text-indigo-600">
@@ -378,13 +399,19 @@ export default function TransactionHistoryComponent() {
         </Card>
       </div>
 
-      {/* Filters Section */}
+      {/* Enhanced Filters Section */}
       <form action={handleFilters} id="applyFilters">
-      <Card className="bg-white shadow-sm border border-gray-200 mb-6">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-semibold text-gray-900">Transaction Filters</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <Card className="bg-white shadow-lg border border-gray-100 mb-6">
+        <div className="bg-gradient-to-r from-cyan-50 to-blue-50 px-6 py-4 border-b border-gray-100">
+          <div className="flex items-center">
+            <svg className="w-5 h-5 mr-2 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z" />
+            </svg>
+            <CardTitle className="text-xl font-bold text-gray-900">Transaction Filters & Search</CardTitle>
+          </div>
+          <p className="text-sm text-gray-600 mt-1">Configure search parameters to analyze specific transactions and patterns</p>
+        </div>
+        <CardContent className="p-6">
           <div className="space-y-6">
             {/* First Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -437,6 +464,9 @@ export default function TransactionHistoryComponent() {
                 placeholder="Stock Symbol"
                 className="w-full"
                 name="stock"
+                value={symbol}
+                onChange={(e) => setSymbol(e.target.value.toUpperCase())}
+                style={{ textTransform: 'uppercase' }}
               />
             </div>
 
@@ -553,10 +583,98 @@ export default function TransactionHistoryComponent() {
         </CardContent>
       </Card>
       </form>
-      {/* Transaction History Table */}
-      <Card className="bg-white shadow-sm border border-gray-200 h-fit">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-semibold text-gray-900">Transaction Details</CardTitle>
+      {/* Enhanced Transaction History Table */}
+      <Card className="bg-white shadow-lg border border-gray-100 h-fit">
+        <CardHeader className="pb-4 bg-gradient-to-r from-cyan-50 to-blue-50 border-b border-gray-100">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center">
+              <div className="w-3 h-3 bg-cyan-500 rounded-full mr-2"></div>
+              <div>
+                <CardTitle className="text-xl font-bold text-gray-900">Transaction Details</CardTitle>
+                <p className="text-sm text-gray-600 mt-1">Comprehensive transaction history and analysis</p>
+              </div>
+              {transactions.length > 0 && (
+                <span className="ml-4 text-sm text-gray-500">({transactions.length} transactions)</span>
+              )}
+            </div>
+          </div>
+          
+          {/* Column Visibility Controls */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="flex-1">
+              <p className="text-sm text-gray-600">Customize table columns to focus on relevant transaction data</p>
+            </div>
+            
+            {/* Column Visibility Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-cyan-300">
+                  <Settings className="h-4 w-4" />
+                  Columns
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+                <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.date}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, date: checked }))
+                  }
+                >
+                  Date Range
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.symbol}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, symbol: checked }))
+                  }
+                >
+                  Client & Stock
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.transactionType}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, transactionType: checked }))
+                  }
+                >
+                  Transaction Type
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.quantity}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, quantity: checked }))
+                  }
+                >
+                  Total Quantity
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.rate}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, rate: checked }))
+                  }
+                >
+                  Average Price
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.amount}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, amount: checked }))
+                  }
+                >
+                  Total Value
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.commission}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, commission: checked }))
+                  }
+                >
+                  Number of Trades
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="w-full overflow-x-auto">

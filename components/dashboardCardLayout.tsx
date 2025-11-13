@@ -114,6 +114,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Settings, Search, X } from "lucide-react";
 import { useRouter } from "next/navigation"
 
 import {
@@ -242,6 +254,17 @@ export default function Dashcard() {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [sortField, setSortField] = useState<string | null>(null)
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
+  
+  // Search and column visibility state for Trading Portfolio Summary
+  const [searchTerm, setSearchTerm] = useState<string>("")
+  const [columnVisibility, setColumnVisibility] = useState({
+    symbol: true,
+    pricePerShare: true,
+    quantity: true,
+    value: true,
+    unrealizedPL: true,
+    unrealizedPLPercent: true,
+  })
 
 async function handleSelectValueChange(value: string) {
     setselectValue(value)
@@ -305,7 +328,7 @@ const fetchSelect = async () => {
     router.refresh()
   }
 
-  // Memoized data processing with sorting
+  // Memoized data processing with sorting and search filtering
   const processedHoldingsData = useMemo(() => {
     let data: any[] = [];
     
@@ -334,6 +357,14 @@ const fetchSelect = async () => {
           unrealizedGainPercent: unrealizedData?.unrealized_gain_percent || 0
         };
       });
+    }
+    
+    // Apply search filtering
+    if (searchTerm.trim()) {
+      data = data.filter((row) =>
+        row.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.stock_fulls.full_form.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
     
     // Apply sorting if a sort field is set
@@ -365,7 +396,7 @@ const fetchSelect = async () => {
     }
     
     return data;
-  }, [listOrderData, unrealizedGains, useFiscalYearData, selectValue, sortField, sortOrder]);
+  }, [listOrderData, unrealizedGains, useFiscalYearData, selectValue, sortField, sortOrder, searchTerm]);
 
   // Paginated holdings data
   const paginatedHoldingsData = useMemo(() => {
@@ -385,9 +416,10 @@ const fetchSelect = async () => {
     }, 0);
   }, [processedHoldingsData]);
 
-  // Reset pagination when user changes or data changes
+  // Reset pagination and search when user changes or data changes
   useEffect(() => {
     setCurrentPage(1);
+    setSearchTerm(""); // Clear search when changing user or fiscal year
   }, [selectValue, useFiscalYearData, selectedFiscalYear]);
 
   // Handle column header click for sorting
@@ -636,9 +668,9 @@ const fetchSelect = async () => {
 <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0 shadow-lg">
   <CardContent className="p-6">
     <div className="flex items-center justify-between">
-      <div>
+      <div className="flex-1 min-w-0 pr-4">
         <p className="text-blue-100 text-sm font-medium">Total Investment</p>
-        <p className="text-3xl font-bold mt-2">
+        <p className="text-2xl lg:text-3xl font-bold mt-2 break-words leading-tight">
           Rs. {(
             useFiscalYearData && fiscalYearData 
               ? fiscalYearData.totalInvestment 
@@ -663,13 +695,13 @@ const fetchSelect = async () => {
 ) >= 0 ? 'bg-gradient-to-br from-green-500 to-green-600' : 'bg-gradient-to-br from-red-500 to-red-600'} text-white border-0 shadow-lg`}>
   <CardContent className="p-6">
     <div className="flex items-center justify-between">
-      <div>
+      <div className="flex-1 min-w-0 pr-4">
         <p className={`${(
           useFiscalYearData && fiscalYearData 
             ? fiscalYearData.realizedGain 
             : listRealisedGain?._sum.profit_loss || 0
         ) >= 0 ? 'text-green-100' : 'text-red-100'} text-sm font-medium`}>Realised P&L</p>
-        <p className="text-3xl font-bold mt-2">
+        <p className="text-2xl lg:text-3xl font-bold mt-2 break-words leading-tight">
           Rs. {(
             useFiscalYearData && fiscalYearData 
               ? fiscalYearData.realizedGain 
@@ -707,13 +739,13 @@ const fetchSelect = async () => {
 ) >= 0 ? 'bg-gradient-to-br from-emerald-500 to-emerald-600' : 'bg-gradient-to-br from-orange-500 to-orange-600'} text-white border-0 shadow-lg`}>
   <CardContent className="p-6">
     <div className="flex items-center justify-between">
-      <div>
+      <div className="flex-1 min-w-0 pr-4">
         <p className={`${(
           useFiscalYearData && fiscalYearData 
             ? fiscalYearData.unrealizedGain 
             : unrealizedGains?.total_unrealized_gain || 0
         ) >= 0 ? 'text-emerald-100' : 'text-orange-100'} text-sm font-medium`}>Unrealised P&L</p>
-        <p className="text-3xl font-bold mt-2">
+        <p className="text-2xl lg:text-3xl font-bold mt-2 break-words leading-tight">
           Rs. {(
             useFiscalYearData && fiscalYearData 
               ? fiscalYearData.unrealizedGain 
@@ -737,9 +769,9 @@ const fetchSelect = async () => {
 <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0 shadow-lg">
   <CardContent className="p-6">
     <div className="flex items-center justify-between">
-      <div>
+      <div className="flex-1 min-w-0 pr-4">
         <p className="text-purple-100 text-sm font-medium">Held for Trading</p>
-        <p className="text-3xl font-bold mt-2">
+        <p className="text-2xl lg:text-3xl font-bold mt-2 break-words leading-tight">
           Rs. {(useFiscalYearData && fiscalStockInvestmentBreakdown ? fiscalStockInvestmentBreakdown.trading.total : investmentBreakdown?.trading.total)?.toLocaleString() || '0'}
         </p>
       </div>
@@ -755,9 +787,9 @@ const fetchSelect = async () => {
 <Card className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white border-0 shadow-lg">
   <CardContent className="p-6">
     <div className="flex items-center justify-between">
-      <div>
+      <div className="flex-1 min-w-0 pr-4">
         <p className="text-indigo-100 text-sm font-medium">Held till Maturity</p>
-        <p className="text-3xl font-bold mt-2">
+        <p className="text-2xl lg:text-3xl font-bold mt-2 break-words leading-tight">
           Rs. {(useFiscalYearData && fiscalStockInvestmentBreakdown ? fiscalStockInvestmentBreakdown.maturity.total : investmentBreakdown?.maturity.total)?.toLocaleString() || '0'}
         </p>
       </div>
@@ -773,9 +805,9 @@ const fetchSelect = async () => {
 <Card className="bg-gradient-to-br from-teal-500 to-teal-600 text-white border-0 shadow-lg">
   <CardContent className="p-6">
     <div className="flex items-center justify-between">
-      <div>
+      <div className="flex-1 min-w-0 pr-4">
         <p className="text-teal-100 text-sm font-medium">No. of Scrips</p>
-        <p className="text-3xl font-bold mt-2">
+        <p className="text-2xl lg:text-3xl font-bold mt-2 break-words leading-tight">
           {useFiscalYearData ? (fiscalScripCount || 0) : (listScripCount || 0)}
         </p>
       </div>
@@ -791,7 +823,7 @@ const fetchSelect = async () => {
 </div>
 
 <div className="mt-12 mb-6">
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center mb-4">
       <div className="flex items-center gap-4">
         <span className="text-xl font-bold">Trading Portfolio Summary</span>
         {totalItems > 0 && (
@@ -824,6 +856,92 @@ const fetchSelect = async () => {
     </Select>
       </div>
     </div>
+    
+    {/* Search and Column Controls */}
+    <div className="flex items-center gap-3 mb-4">
+      {/* Search Input */}
+      <div className="relative flex-1 max-w-sm">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+        <Input
+          placeholder="Search by symbol or company name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="pl-10 pr-10"
+        />
+        {searchTerm && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setSearchTerm("")}
+            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+          >
+            <X className="h-3 w-3" />
+          </Button>
+        )}
+      </div>
+      
+      {/* Column Visibility Dropdown */}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <Settings className="h-4 w-4" />
+            Columns
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuCheckboxItem
+            checked={columnVisibility.symbol}
+            onCheckedChange={(checked) => 
+              setColumnVisibility(prev => ({ ...prev, symbol: checked }))
+            }
+          >
+            Stock
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            checked={columnVisibility.pricePerShare}
+            onCheckedChange={(checked) => 
+              setColumnVisibility(prev => ({ ...prev, pricePerShare: checked }))
+            }
+          >
+            Price Per Share
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            checked={columnVisibility.quantity}
+            onCheckedChange={(checked) => 
+              setColumnVisibility(prev => ({ ...prev, quantity: checked }))
+            }
+          >
+            Quantity
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            checked={columnVisibility.value}
+            onCheckedChange={(checked) => 
+              setColumnVisibility(prev => ({ ...prev, value: checked }))
+            }
+          >
+            Value
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            checked={columnVisibility.unrealizedPL}
+            onCheckedChange={(checked) => 
+              setColumnVisibility(prev => ({ ...prev, unrealizedPL: checked }))
+            }
+          >
+            Unrealised P&L
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            checked={columnVisibility.unrealizedPLPercent}
+            onCheckedChange={(checked) => 
+              setColumnVisibility(prev => ({ ...prev, unrealizedPLPercent: checked }))
+            }
+          >
+            (Unrealised P&L)%
+          </DropdownMenuCheckboxItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
 </div>
 
 
@@ -832,48 +950,63 @@ const fetchSelect = async () => {
     <Table className="min-w-full">
   <TableHeader>
     <TableRow>
-      <TableHead className="font-medium cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('symbol')}>
-        <div className="flex items-center justify-between gap-2">
-          Stock
-          <SortIndicator field="symbol" />
-        </div>
-      </TableHead>
-      <TableHead className="text-center cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('price_per_share')}>
-        <div className="flex items-center justify-center gap-2">
-          Price Per Share
-          <SortIndicator field="price_per_share" />
-        </div>
-      </TableHead>
-      <TableHead className="text-center cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('quantity')}>
-        <div className="flex items-center justify-center gap-2">
-          Quantity
-          <SortIndicator field="quantity" />
-        </div>
-      </TableHead>
-      <TableHead className="text-right cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('total_value')}>
-        <div className="flex items-center justify-end gap-2">
-          Value
-          <SortIndicator field="total_value" />
-        </div>
-      </TableHead>
-      <TableHead className="text-right cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('unrealizedGain')}>
-        <div className="flex items-center justify-end gap-2">
-          Unrealised P&L
-          <SortIndicator field="unrealizedGain" />
-        </div>
-      </TableHead>
-      <TableHead className="text-right cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('unrealizedGainPercent')}>
-        <div className="flex items-center justify-end gap-2">
-          (Unrealised P&L)%
-          <SortIndicator field="unrealizedGainPercent" />
-        </div>
-      </TableHead>
+      {columnVisibility.symbol && (
+        <TableHead className="font-medium cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('symbol')}>
+          <div className="flex items-center justify-between gap-2">
+            Stock
+            <SortIndicator field="symbol" />
+          </div>
+        </TableHead>
+      )}
+      {columnVisibility.pricePerShare && (
+        <TableHead className="text-center cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('price_per_share')}>
+          <div className="flex items-center justify-center gap-2">
+            Price Per Share
+            <SortIndicator field="price_per_share" />
+          </div>
+        </TableHead>
+      )}
+      {columnVisibility.quantity && (
+        <TableHead className="text-center cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('quantity')}>
+          <div className="flex items-center justify-center gap-2">
+            Quantity
+            <SortIndicator field="quantity" />
+          </div>
+        </TableHead>
+      )}
+      {columnVisibility.value && (
+        <TableHead className="text-right cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('total_value')}>
+          <div className="flex items-center justify-end gap-2">
+            Value
+            <SortIndicator field="total_value" />
+          </div>
+        </TableHead>
+      )}
+      {columnVisibility.unrealizedPL && (
+        <TableHead className="text-right cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('unrealizedGain')}>
+          <div className="flex items-center justify-end gap-2">
+            Unrealised P&L
+            <SortIndicator field="unrealizedGain" />
+          </div>
+        </TableHead>
+      )}
+      {columnVisibility.unrealizedPLPercent && (
+        <TableHead className="text-right cursor-pointer hover:bg-gray-100 py-3" onClick={() => handleHeaderClick('unrealizedGainPercent')}>
+          <div className="flex items-center justify-end gap-2">
+            (Unrealised P&L)%
+            <SortIndicator field="unrealizedGainPercent" />
+          </div>
+        </TableHead>
+      )}
     </TableRow>
   </TableHeader>
   <TableBody>
     {paginatedHoldingsData.length === 0 ? (
       <TableRow>
-        <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+        <TableCell 
+          colSpan={Object.values(columnVisibility).filter(Boolean).length} 
+          className="text-center py-8 text-gray-500"
+        >
           {processedHoldingsData.length === 0 ? (
             <div>
               <p className="text-lg font-medium">No portfolio data available</p>
@@ -887,38 +1020,68 @@ const fetchSelect = async () => {
     ) : (
       paginatedHoldingsData.map((row) => (
       <TableRow key={`${row.fund_id}-${row.symbol}`}>
-      <TableCell className="font-medium">
-      <Tooltip>
-        <TooltipTrigger>
-      <Link href={`/dashboard/stock/${row.symbol}`} target="_blank">{row.symbol}</Link>
-      </TooltipTrigger>
-      <TooltipContent>
-        <Link href={`/dashboard/stock/${row.symbol}`} target="_blank">{row.stock_fulls.full_form}</Link>
-      </TooltipContent>
-      </Tooltip>
-      </TableCell>
-      <TableCell className="text-center">Rs. {(row.price_per_share || 0).toLocaleString()}</TableCell>
-      <TableCell className="text-center">{(row.quantity || 0).toLocaleString()}</TableCell>
-      <TableCell className="text-right">Rs. {Number(row.total_value || 0).toLocaleString()}</TableCell>
-      <TableCell className={`text-right ${(row.unrealizedGain || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-        Rs. {(row.unrealizedGain || 0).toLocaleString()}
-      </TableCell>
-      <TableCell className={`text-right ${(row.unrealizedGain || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-        {(row.unrealizedGainPercent || 0).toFixed(2)}%
-      </TableCell>
-    </TableRow>
+        {columnVisibility.symbol && (
+          <TableCell className="font-medium">
+            <Tooltip>
+              <TooltipTrigger>
+                <Link href={`/dashboard/stock/${row.symbol}`} target="_blank">{row.symbol}</Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <Link href={`/dashboard/stock/${row.symbol}`} target="_blank">{row.stock_fulls.full_form}</Link>
+              </TooltipContent>
+            </Tooltip>
+          </TableCell>
+        )}
+        {columnVisibility.pricePerShare && (
+          <TableCell className="text-center">Rs. {(row.price_per_share || 0).toLocaleString()}</TableCell>
+        )}
+        {columnVisibility.quantity && (
+          <TableCell className="text-center">{(row.quantity || 0).toLocaleString()}</TableCell>
+        )}
+        {columnVisibility.value && (
+          <TableCell className="text-right">Rs. {Number(row.total_value || 0).toLocaleString()}</TableCell>
+        )}
+        {columnVisibility.unrealizedPL && (
+          <TableCell className={`text-right ${(row.unrealizedGain || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            Rs. {(row.unrealizedGain || 0).toLocaleString()}
+          </TableCell>
+        )}
+        {columnVisibility.unrealizedPLPercent && (
+          <TableCell className={`text-right ${(row.unrealizedGain || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            {(row.unrealizedGainPercent || 0).toFixed(2)}%
+          </TableCell>
+        )}
+      </TableRow>
   ))
     )}
   </TableBody>
 
     <TableFooter>
       <TableRow>
-      <TableCell colSpan={3}>Total</TableCell>
-      <TableCell className="text-right">Rs. {totalHoldingsValue.toLocaleString()}</TableCell>
-      <TableCell className="text-right">Rs. {(unrealizedGains?.total_unrealized_gain)?.toLocaleString()}</TableCell>
-      <TableCell className="text-right">{unrealizedGains?.total_unrealized_gain && totalHoldingsValue > 0 ? (
-        (unrealizedGains.total_unrealized_gain / totalHoldingsValue) * 100
-      ).toFixed(2) : '0.00'}%</TableCell>
+        {/* Calculate colspan for "Total" label based on visible columns before Value column */}
+        {(() => {
+          const visibleColumnsBeforeValue = [
+            columnVisibility.symbol,
+            columnVisibility.pricePerShare,
+            columnVisibility.quantity
+          ].filter(Boolean).length;
+          
+          return visibleColumnsBeforeValue > 0 ? (
+            <TableCell colSpan={visibleColumnsBeforeValue}>Total</TableCell>
+          ) : null;
+        })()}
+        
+        {columnVisibility.value && (
+          <TableCell className="text-right">Rs. {totalHoldingsValue.toLocaleString()}</TableCell>
+        )}
+        {columnVisibility.unrealizedPL && (
+          <TableCell className="text-right">Rs. {(unrealizedGains?.total_unrealized_gain)?.toLocaleString()}</TableCell>
+        )}
+        {columnVisibility.unrealizedPLPercent && (
+          <TableCell className="text-right">{unrealizedGains?.total_unrealized_gain && totalHoldingsValue > 0 ? (
+            (unrealizedGains.total_unrealized_gain / totalHoldingsValue) * 100
+          ).toFixed(2) : '0.00'}%</TableCell>
+        )}
       </TableRow>
     </TableFooter>
 </Table>

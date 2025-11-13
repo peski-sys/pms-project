@@ -31,8 +31,17 @@ import {
 } from "@/components/ui/select"
 
 import { Button } from "./ui/button"
-import { RefreshCw, Download } from "lucide-react"
+import { Input } from "./ui/input"
+import { RefreshCw, Download, Search, X, Settings } from "lucide-react"
 import { Pagination } from "@/components/ui/pagination"
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 import { useState, useEffect, useMemo } from "react"
 import { getUsers } from "@/app/api/dashboardAPICalls/actions"
@@ -144,6 +153,71 @@ export default function DashboardTwo() {
   const [subClassSortFields, setSubClassSortFields] = useState<Map<number, string>>(new Map())
   const [subClassSortOrders, setSubClassSortOrders] = useState<Map<number, 'asc' | 'desc'>>(new Map())
 
+  // Search and column visibility states for Trading table
+  const [tradingSearchTerm, setTradingSearchTerm] = useState<string>("")
+  const [tradingColumnVisibility, setTradingColumnVisibility] = useState({
+    company: true,
+    code: true,
+    category: true,
+    opening_quantity: true,
+    opening_rate: true,
+    opening_amount: true,
+    purchase_quantity: true,
+    purchase_rate: true,
+    purchase_amount: true,
+    right_quantity: true,
+    right_total: true,
+    bonus_quantity: true,
+    bonus_book_close_date: true,
+    sales_quantity: true,
+    sales_cost: true,
+    sales_amount: true,
+    sales_profit: true,
+    closing_quantity: true,
+    closing_rate: true,
+    closing_amount: true,
+    demat: true,
+    non_demat: true,
+    market_price: true,
+    unrealised_amount: true,
+    today_return_percent: true,
+    remarks: true
+  })
+
+  // Search and column visibility states for Promoter table
+  const [promoterSearchTerm, setPromoterSearchTerm] = useState<string>("")
+  const [promoterColumnVisibility, setPromoterColumnVisibility] = useState({
+    company: true,
+    code: true,
+    category: true,
+    opening_quantity: true,
+    opening_rate: true,
+    opening_amount: true,
+    purchase_quantity: true,
+    purchase_rate: true,
+    purchase_amount: true,
+    right_quantity: true,
+    right_total: true,
+    bonus_quantity: true,
+    bonus_book_close_date: true,
+    sales_quantity: true,
+    sales_cost: true,
+    sales_amount: true,
+    sales_profit: true,
+    closing_quantity: true,
+    closing_rate: true,
+    closing_amount: true,
+    demat: true,
+    non_demat: true,
+    market_price: true,
+    revaluation_amount: true,
+    remarks: true
+  })
+
+  // Search and column visibility states for Sub-class tables
+  const [subClassSearchTerms, setSubClassSearchTerms] = useState<Map<number, string>>(new Map())
+  const [subClassColumnVisibility, setSubClassColumnVisibility] = useState<Map<number, any>>(new Map())
+
   // Consolidation function for trading data
   const consolidateTradingData = (data: MetricData[]) => {
     const consolidated = new Map<string, MetricData>()
@@ -218,11 +292,22 @@ export default function DashboardTwo() {
     return consolidateTradingData(tradingData)
   }, [tradingData, fiscalID, currentFund])
 
-  // Sort and paginate trading data
+  // Sort, filter and paginate trading data
   const sortedTradingData = useMemo(() => {
-    let sorted = [...consolidatedTradingData]
+    let filtered = [...consolidatedTradingData]
+    
+    // Apply search filtering
+    if (tradingSearchTerm.trim()) {
+      filtered = filtered.filter((item) =>
+        item.company.toLowerCase().includes(tradingSearchTerm.toLowerCase()) ||
+        item.code.toLowerCase().includes(tradingSearchTerm.toLowerCase()) ||
+        item.category.toLowerCase().includes(tradingSearchTerm.toLowerCase())
+      )
+    }
+    
+    // Apply sorting
     if (tradingSortField) {
-      sorted.sort((a, b) => {
+      filtered.sort((a, b) => {
         const aValue = a[tradingSortField as keyof typeof a]
         const bValue = b[tradingSortField as keyof typeof b]
         
@@ -244,8 +329,8 @@ export default function DashboardTwo() {
         return 0
       })
     }
-    return sorted
-  }, [consolidatedTradingData, tradingSortField, tradingSortOrder])
+    return filtered
+  }, [consolidatedTradingData, tradingSortField, tradingSortOrder, tradingSearchTerm])
 
   const paginatedTradingData = useMemo(() => {
     const startIndex = (tradingCurrentPage - 1) * tradingItemsPerPage
@@ -253,11 +338,22 @@ export default function DashboardTwo() {
     return sortedTradingData.slice(startIndex, endIndex)
   }, [sortedTradingData, tradingCurrentPage, tradingItemsPerPage])
 
-  // Sort and paginate promoter data
+  // Sort, filter and paginate promoter data
   const sortedPromoterData = useMemo(() => {
-    let sorted = [...promoterData]
+    let filtered = [...promoterData]
+    
+    // Apply search filtering
+    if (promoterSearchTerm.trim()) {
+      filtered = filtered.filter((item) =>
+        item.company.toLowerCase().includes(promoterSearchTerm.toLowerCase()) ||
+        item.code.toLowerCase().includes(promoterSearchTerm.toLowerCase()) ||
+        item.category.toLowerCase().includes(promoterSearchTerm.toLowerCase())
+      )
+    }
+    
+    // Apply sorting
     if (promoterSortField) {
-      sorted.sort((a, b) => {
+      filtered.sort((a, b) => {
         const aValue = a[promoterSortField as keyof typeof a]
         const bValue = b[promoterSortField as keyof typeof b]
         
@@ -279,8 +375,8 @@ export default function DashboardTwo() {
         return 0
       })
     }
-    return sorted
-  }, [promoterData, promoterSortField, promoterSortOrder])
+    return filtered
+  }, [promoterData, promoterSortField, promoterSortOrder, promoterSearchTerm])
 
   const paginatedPromoterData = useMemo(() => {
     const startIndex = (promoterCurrentPage - 1) * promoterItemsPerPage
@@ -682,11 +778,31 @@ export default function DashboardTwo() {
     const itemsPerPage = subClassItemsPerPage
     const sortField = subClassSortFields.get(subClass.sub_id)
     const sortOrder = subClassSortOrders.get(subClass.sub_id) || 'asc'
+    const searchTerm = subClassSearchTerms.get(subClass.sub_id) || ''
+    const columnVisibility = subClassColumnVisibility.get(subClass.sub_id) || {
+      company: true, code: true, category: true, opening_quantity: true, opening_rate: true,
+      opening_amount: true, purchase_quantity: true, purchase_rate: true, purchase_amount: true,
+      right_quantity: true, right_total: true, bonus_quantity: true, bonus_book_close_date: true,
+      sales_quantity: true, sales_cost: true, sales_amount: true, sales_profit: true,
+      closing_quantity: true, closing_rate: true, closing_amount: true, demat: true,
+      non_demat: true, market_price: true, revaluation_amount: true, remarks: true
+    }
     
-    // Sort data
-    let sortedData = [...data]
+    // Filter and sort data
+    let filteredData = [...data]
+    
+    // Apply search filtering
+    if (searchTerm.trim()) {
+      filteredData = filteredData.filter((item) =>
+        item.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.category.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    }
+    
+    // Apply sorting
     if (sortField) {
-      sortedData.sort((a, b) => {
+      filteredData.sort((a, b) => {
         const aValue = a[sortField as keyof typeof a]
         const bValue = b[sortField as keyof typeof b]
         
@@ -711,14 +827,141 @@ export default function DashboardTwo() {
     
     const startIndex = (currentPage - 1) * itemsPerPage
     const endIndex = startIndex + itemsPerPage
-    const paginatedData = sortedData.slice(startIndex, endIndex)
-    const totalPages = Math.ceil(sortedData.length / itemsPerPage)
-    const subClassTotals = calculateSubClassTotals(sortedData)
+    const paginatedData = filteredData.slice(startIndex, endIndex)
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage)
+    const subClassTotals = calculateSubClassTotals(filteredData)
 
     return (
-      <Card key={subClass.sub_id} className="bg-white shadow-sm border border-gray-200 mb-6">
+      <Card key={subClass.sub_id} className="bg-white shadow-lg border border-gray-100 mb-6">
         <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-semibold text-gray-900">{subClass.sub_name}</CardTitle>
+          <div className="flex justify-between items-center mb-4">
+            <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
+              <div className="w-3 h-3 bg-purple-500 rounded-full mr-2"></div>
+              {subClass.sub_name}
+              {filteredData.length > 0 && (
+                <span className="ml-2 text-sm font-normal text-gray-500">
+                  ({filteredData.length} securities)
+                </span>
+              )}
+            </CardTitle>
+          </div>
+          
+          {/* Search and Column Controls for Sub-class */}
+          <div className="flex items-center gap-3 mb-4">
+            {/* Search Input */}
+            <div className="relative flex-1 max-w-lg">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                placeholder="Search by company, code, or category..."
+                value={searchTerm}
+                onChange={(e) => {
+                  const newTerms = new Map(subClassSearchTerms)
+                  newTerms.set(subClass.sub_id, e.target.value)
+                  setSubClassSearchTerms(newTerms)
+                }}
+                className="pl-10 pr-10 border-gray-200 focus:border-purple-300"
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    const newTerms = new Map(subClassSearchTerms)
+                    newTerms.set(subClass.sub_id, "")
+                    setSubClassSearchTerms(newTerms)
+                  }}
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              )}
+            </div>
+            
+            {/* Column Visibility Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-purple-300">
+                  <Settings className="h-4 w-4" />
+                  Columns
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+                <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.company}
+                  onCheckedChange={(checked) => {
+                    const newVisibility = new Map(subClassColumnVisibility)
+                    newVisibility.set(subClass.sub_id, { ...columnVisibility, company: checked })
+                    setSubClassColumnVisibility(newVisibility)
+                  }}
+                >
+                  Company
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.code}
+                  onCheckedChange={(checked) => {
+                    const newVisibility = new Map(subClassColumnVisibility)
+                    newVisibility.set(subClass.sub_id, { ...columnVisibility, code: checked })
+                    setSubClassColumnVisibility(newVisibility)
+                  }}
+                >
+                  Code
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.category}
+                  onCheckedChange={(checked) => {
+                    const newVisibility = new Map(subClassColumnVisibility)
+                    newVisibility.set(subClass.sub_id, { ...columnVisibility, category: checked })
+                    setSubClassColumnVisibility(newVisibility)
+                  }}
+                >
+                  Category
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.opening_quantity}
+                  onCheckedChange={(checked) => {
+                    const newVisibility = new Map(subClassColumnVisibility)
+                    newVisibility.set(subClass.sub_id, { ...columnVisibility, opening_quantity: checked })
+                    setSubClassColumnVisibility(newVisibility)
+                  }}
+                >
+                  Opening Quantity
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.closing_quantity}
+                  onCheckedChange={(checked) => {
+                    const newVisibility = new Map(subClassColumnVisibility)
+                    newVisibility.set(subClass.sub_id, { ...columnVisibility, closing_quantity: checked })
+                    setSubClassColumnVisibility(newVisibility)
+                  }}
+                >
+                  Closing Quantity
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.market_price}
+                  onCheckedChange={(checked) => {
+                    const newVisibility = new Map(subClassColumnVisibility)
+                    newVisibility.set(subClass.sub_id, { ...columnVisibility, market_price: checked })
+                    setSubClassColumnVisibility(newVisibility)
+                  }}
+                >
+                  Market Price
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.revaluation_amount}
+                  onCheckedChange={(checked) => {
+                    const newVisibility = new Map(subClassColumnVisibility)
+                    newVisibility.set(subClass.sub_id, { ...columnVisibility, revaluation_amount: checked })
+                    setSubClassColumnVisibility(newVisibility)
+                  }}
+                >
+                  Revaluation Amount
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
@@ -776,7 +1019,7 @@ export default function DashboardTwo() {
                       Loading {subClass.sub_name} data...
                     </TableCell>
                   </TableRow>
-                ) : sortedData.length > 0 ? (
+                ) : filteredData.length > 0 ? (
                   paginatedData.map((data, index) => (
                     <TableRow 
                       key={`subclass-${subClass.sub_id}-${data.code}-${index}`}
@@ -832,7 +1075,7 @@ export default function DashboardTwo() {
               </TableBody>
               
               {/* Sub Class Table Footer with Totals */}
-              {sortedData.length > 0 && (
+              {filteredData.length > 0 && (
                 <TableFooter>
                   <TableRow className="bg-gray-100 font-semibold">
                     <TableCell className="font-bold border-r">TOTAL</TableCell>
@@ -872,7 +1115,7 @@ export default function DashboardTwo() {
           </CardContent>
           
           {/* Sub Class Table Pagination */}
-          {sortedData.length > itemsPerPage && (
+          {filteredData.length > itemsPerPage && (
             <div className="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-sm text-gray-700">Items per page:</span>
@@ -902,7 +1145,7 @@ export default function DashboardTwo() {
                 totalPages={totalPages}
                 onPageChange={(page) => handleSubClassPageChange(subClass.sub_id, page)}
                 itemsPerPage={itemsPerPage}
-                totalItems={sortedData.length}
+                totalItems={filteredData.length}
               />
             </div>
           )}
@@ -918,63 +1161,89 @@ export default function DashboardTwo() {
       </div>
     ) : (
       <div className="space-y-6">
-        {/* Filters Card */}
-        <Card className="bg-white shadow-sm border border-gray-200">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg font-semibold text-gray-900">Filters</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))]">
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-muted-foreground">Fund</p>
-              <Select defaultValue={initialUser} onValueChange={handleFundChange}>
-                <SelectTrigger className="bg-white">
-                  <SelectValue placeholder="Fund" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Fund Category</SelectLabel>
-                    {givenUsers.map((details) => (
-                      <SelectItem key={details.client_id} value={details.client_name}>
-                        {details.client_name}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-muted-foreground">Fiscal Year</p>
-              <Select value={fiscalID} onValueChange={handleFiscalChange}>
-                <SelectTrigger className="bg-white">
-                  <SelectValue placeholder="Fiscal Year" />
-                </SelectTrigger>
-                <SelectContent>
-                  {getFiscals?.map((fiscal) => (
-                    <SelectGroup key={fiscal.fiscal_year_id}>
-                      <SelectItem value={String(fiscal.fiscal_year_id)}>{fiscal.year_label}</SelectItem>
+        {/* Enhanced Filters Card */}
+        <Card className="bg-white shadow-lg border border-gray-100 overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-100">
+            <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
+              <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z" />
+              </svg>
+              Data Filters & Controls
+            </CardTitle>
+            <p className="text-sm text-gray-600 mt-1">Configure your data view and export settings</p>
+          </div>
+          <CardContent className="p-6">
+            <div className="grid gap-6 lg:grid-cols-4">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <p className="text-sm font-semibold text-gray-700">Fund Selection</p>
+                </div>
+                <Select defaultValue={initialUser} onValueChange={handleFundChange}>
+                  <SelectTrigger className="bg-white border-gray-200 hover:border-blue-300 transition-colors">
+                    <SelectValue placeholder="Choose Fund" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Available Funds</SelectLabel>
+                      {givenUsers.map((details) => (
+                        <SelectItem key={details.client_id} value={details.client_name}>
+                          {details.client_name}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div className="flex items-end">
-              <Button onClick={handleFilters} disabled={isLoading} className="w-full">
-                <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
-                {isLoading ? "Loading..." : "Apply Filters"}
-              </Button>
-            </div>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <p className="text-sm font-semibold text-gray-700">Fiscal Year</p>
+                </div>
+                <Select value={fiscalID} onValueChange={handleFiscalChange}>
+                  <SelectTrigger className="bg-white border-gray-200 hover:border-green-300 transition-colors">
+                    <SelectValue placeholder="Select Fiscal Year" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {getFiscals?.map((fiscal) => (
+                      <SelectGroup key={fiscal.fiscal_year_id}>
+                        <SelectItem value={String(fiscal.fiscal_year_id)}>{fiscal.year_label}</SelectItem>
+                      </SelectGroup>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div className="flex items-end justify-end">
-              <Button
-                onClick={handleExport}
-                disabled={isExporting || (tradingData.length === 0 && promoterData.length === 0)}
-                className="w-full sm:w-auto"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                {isExporting ? "Exporting..." : "Export Data"}
-              </Button>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                  <p className="text-sm font-semibold text-gray-700">Actions</p>
+                </div>
+                <Button 
+                  onClick={handleFilters} 
+                  disabled={isLoading} 
+                  className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200"
+                >
+                  <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
+                  {isLoading ? "Loading..." : "Apply Filters"}
+                </Button>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                  <p className="text-sm font-semibold text-gray-700">Export</p>
+                </div>
+                <Button
+                  onClick={handleExport}
+                  disabled={isExporting || (tradingData.length === 0 && promoterData.length === 0)}
+                  className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-200"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  {isExporting ? "Exporting..." : "Export Data"}
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -989,9 +1258,181 @@ export default function DashboardTwo() {
         )}
 
     {/* Held for Trading Table */}
-    <Card className="bg-white shadow-sm border border-gray-200 mb-6">
+    <Card className="bg-white shadow-lg border border-gray-100 mb-6">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-semibold text-gray-900">Held for Trading Securities</CardTitle>
+        <div className="flex justify-between items-center mb-4">
+          <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
+            <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+            Held for Trading Securities
+            {sortedTradingData.length > 0 && (
+              <span className="ml-2 text-sm font-normal text-gray-500">
+                ({sortedTradingData.length} securities)
+              </span>
+            )}
+          </CardTitle>
+        </div>
+        
+        {/* Search and Column Controls for Trading */}
+        <div className="flex items-center gap-3 mb-4">
+          {/* Search Input */}
+          <div className="relative flex-1 max-w-lg">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Input
+              placeholder="Search by company, code, or category..."
+              value={tradingSearchTerm}
+              onChange={(e) => setTradingSearchTerm(e.target.value)}
+              className="pl-10 pr-10 border-gray-200 focus:border-blue-300"
+            />
+            {tradingSearchTerm && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setTradingSearchTerm("")}
+                className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            )}
+          </div>
+          
+          {/* Column Visibility Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-blue-300">
+                <Settings className="h-4 w-4" />
+                Columns
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+              <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.company}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, company: checked }))
+                }
+              >
+                Company
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.code}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, code: checked }))
+                }
+              >
+                Code
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.category}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, category: checked }))
+                }
+              >
+                Category
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.opening_quantity}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, opening_quantity: checked }))
+                }
+              >
+                Opening Quantity
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.opening_rate}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, opening_rate: checked }))
+                }
+              >
+                Opening Rate
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.opening_amount}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, opening_amount: checked }))
+                }
+              >
+                Opening Amount
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.purchase_quantity}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, purchase_quantity: checked }))
+                }
+              >
+                Purchase Quantity
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.purchase_rate}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, purchase_rate: checked }))
+                }
+              >
+                Purchase Rate
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.purchase_amount}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, purchase_amount: checked }))
+                }
+              >
+                Purchase Amount
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.closing_quantity}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, closing_quantity: checked }))
+                }
+              >
+                Closing Quantity
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.closing_rate}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, closing_rate: checked }))
+                }
+              >
+                Closing Rate
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.closing_amount}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, closing_amount: checked }))
+                }
+              >
+                Closing Amount
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.market_price}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, market_price: checked }))
+                }
+              >
+                Market Price
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.unrealised_amount}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, unrealised_amount: checked }))
+                }
+              >
+                Unrealised P&L
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={tradingColumnVisibility.today_return_percent}
+                onCheckedChange={(checked) => 
+                  setTradingColumnVisibility(prev => ({ ...prev, today_return_percent: checked }))
+                }
+              >
+                Return %
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </CardHeader>
       <CardContent className="p-0">
       
@@ -1195,9 +1636,173 @@ export default function DashboardTwo() {
     </Card>
     
     {/* Promoter Shares Table */}
-    <Card className="bg-white shadow-sm border border-gray-200 mb-6">
+    <Card className="bg-white shadow-lg border border-gray-100 mb-6">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-semibold text-gray-900">Promoter Shares (Held for Maturity)</CardTitle>
+        <div className="flex justify-between items-center mb-4">
+          <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
+            <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+            Promoter Shares (Held for Maturity)
+            {sortedPromoterData.length > 0 && (
+              <span className="ml-2 text-sm font-normal text-gray-500">
+                ({sortedPromoterData.length} securities)
+              </span>
+            )}
+          </CardTitle>
+        </div>
+        
+        {/* Search and Column Controls for Promoter */}
+        <div className="flex items-center gap-3 mb-4">
+          {/* Search Input */}
+          <div className="relative flex-1 max-w-lg">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Input
+              placeholder="Search by company, code, or category..."
+              value={promoterSearchTerm}
+              onChange={(e) => setPromoterSearchTerm(e.target.value)}
+              className="pl-10 pr-10 border-gray-200 focus:border-green-300"
+            />
+            {promoterSearchTerm && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setPromoterSearchTerm("")}
+                className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            )}
+          </div>
+          
+          {/* Column Visibility Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-green-300">
+                <Settings className="h-4 w-4" />
+                Columns
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+              <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.company}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, company: checked }))
+                }
+              >
+                Company
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.code}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, code: checked }))
+                }
+              >
+                Code
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.category}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, category: checked }))
+                }
+              >
+                Category
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.opening_quantity}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, opening_quantity: checked }))
+                }
+              >
+                Opening Quantity
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.opening_rate}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, opening_rate: checked }))
+                }
+              >
+                Opening Rate
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.opening_amount}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, opening_amount: checked }))
+                }
+              >
+                Opening Amount
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.purchase_quantity}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, purchase_quantity: checked }))
+                }
+              >
+                Purchase Quantity
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.purchase_rate}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, purchase_rate: checked }))
+                }
+              >
+                Purchase Rate
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.purchase_amount}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, purchase_amount: checked }))
+                }
+              >
+                Purchase Amount
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.closing_quantity}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, closing_quantity: checked }))
+                }
+              >
+                Closing Quantity
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.closing_rate}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, closing_rate: checked }))
+                }
+              >
+                Closing Rate
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.closing_amount}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, closing_amount: checked }))
+                }
+              >
+                Closing Amount
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.market_price}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, market_price: checked }))
+                }
+              >
+                Market Price
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={promoterColumnVisibility.revaluation_amount}
+                onCheckedChange={(checked) => 
+                  setPromoterColumnVisibility(prev => ({ ...prev, revaluation_amount: checked }))
+                }
+              >
+                Revaluation Amount
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </CardHeader>
       <CardContent className="p-0">
       

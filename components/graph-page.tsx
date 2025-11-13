@@ -27,6 +27,18 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Search, X, Settings } from "lucide-react"
+
 import { useState, useEffect, useMemo, useCallback } from "react"
 import { getUsers, getComprehensivePortfolio, getInvestmentHighlights } from "@/app/api/dashboardAPICalls/actions"
 import { 
@@ -243,6 +255,21 @@ export default function GraphPageComponent() {
   const [dividendSortField, setDividendSortField] = useState<string | null>(null)
   const [dividendSortOrder, setDividendSortOrder] = useState<'asc' | 'desc'>('asc')
 
+  // Search and column visibility state for Comprehensive Portfolio Analysis
+  const [portfolioSearchTerm, setPortfolioSearchTerm] = useState<string>("")
+  const [portfolioColumnVisibility, setPortfolioColumnVisibility] = useState({
+    companyName: true,
+    code: true,
+    sector: true,
+    quantity: true,
+    bookValue: true,
+    pricePerShare: true,
+    marketValue: true,
+    unrealizedGain: true,
+    unrealizedGainPercent: true,
+    weightage: true
+  })
+
   // Handle select value change
   async function handleSelectValueChange(value: string) {
     setselectValue(value)
@@ -443,11 +470,21 @@ export default function GraphPageComponent() {
     setDividendPage(1);
   };
 
-  // Process and sort Comprehensive Portfolio data
+  // Process, filter and sort Comprehensive Portfolio data
   const processedPortfolioData = useMemo(() => {
     if (!comprehensivePortfolio) return [];
     let data = [...comprehensivePortfolio];
     
+    // Apply search filtering
+    if (portfolioSearchTerm.trim()) {
+      data = data.filter((item) =>
+        item.companyName.toLowerCase().includes(portfolioSearchTerm.toLowerCase()) ||
+        item.code.toLowerCase().includes(portfolioSearchTerm.toLowerCase()) ||
+        item.sector.toLowerCase().includes(portfolioSearchTerm.toLowerCase())
+      );
+    }
+    
+    // Apply sorting
     if (sortField) {
       data.sort((a, b) => {
         const aValue = a[sortField as keyof ComprehensivePortfolioType[0]];
@@ -474,7 +511,7 @@ export default function GraphPageComponent() {
     }
     
     return data;
-  }, [comprehensivePortfolio, sortField, sortOrder]);
+  }, [comprehensivePortfolio, sortField, sortOrder, portfolioSearchTerm]);
 
   // Memoized pagination calculations for comprehensive portfolio
   const paginatedPortfolioData = useMemo(() => {
@@ -651,22 +688,51 @@ export default function GraphPageComponent() {
                     </div>
                 </div>
             </div>
-            {/* Fund Selection Section */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                    <div className="mb-4 sm:mb-0">
-                        <h2 className="text-lg font-semibold text-gray-900 mb-1">Portfolio Selection</h2>
-                        <p className="text-sm text-gray-600">Choose a portfolio and data view for detailed analytics and insights</p>
+            {/* Enhanced Fund Selection Section */}
+            <div className="bg-white shadow-lg border border-gray-100 overflow-hidden rounded-lg mb-8">
+                <div className="bg-gradient-to-r from-indigo-50 to-purple-50 px-6 py-4 border-b border-gray-100">
+                    <div className="flex items-center">
+                        <svg className="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                        <h2 className="text-xl font-bold text-gray-900">Portfolio Selection & Data Controls</h2>
                     </div>
-                    <div className="flex items-center gap-4">
-                        {/* Data View Toggle */}
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium text-gray-700 mb-1">Data View</label>
+                    <p className="text-sm text-gray-600 mt-1">Configure your portfolio view and data analysis parameters</p>
+                </div>
+                <div className="p-6">
+                    <div className="grid gap-6 lg:grid-cols-4">
+                        <div className="space-y-3">
+                            <div className="flex items-center space-x-2">
+                                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                <p className="text-sm font-semibold text-gray-700">Portfolio Selection</p>
+                            </div>
+                            <Select value={selectValue} onValueChange={handleSelectValueChange}>
+                                <SelectTrigger className="bg-white border-gray-200 hover:border-blue-300 transition-colors">
+                                    <SelectValue placeholder="Choose Portfolio" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Available Portfolios</SelectLabel>
+                                        {listUsersValue.map((option) => (
+                                            <SelectItem key={option.client_id} value={String(option.client_name)}>
+                                                {option.client_name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div className="space-y-3">
+                            <div className="flex items-center space-x-2">
+                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <p className="text-sm font-semibold text-gray-700">Data View</p>
+                            </div>
                             <div className="flex items-center gap-2">
                                 <button 
-                                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                                    className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                                         !useFiscalYearData 
-                                            ? 'bg-blue-500 text-white' 
+                                            ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-sm' 
                                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                     }`}
                                     onClick={() => setUseFiscalYearData(false)}
@@ -674,9 +740,9 @@ export default function GraphPageComponent() {
                                     Current
                                 </button>
                                 <button 
-                                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                                    className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                                         useFiscalYearData 
-                                            ? 'bg-blue-500 text-white' 
+                                            ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-sm' 
                                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                     }`}
                                     onClick={() => setUseFiscalYearData(true)}
@@ -686,16 +752,18 @@ export default function GraphPageComponent() {
                             </div>
                         </div>
                         
-                        {/* Fiscal Year Selector */}
                         {useFiscalYearData && (
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700 mb-1">Fiscal Year</label>
+                            <div className="space-y-3">
+                                <div className="flex items-center space-x-2">
+                                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                                    <p className="text-sm font-semibold text-gray-700">Fiscal Year</p>
+                                </div>
                                 <Select 
                                     value={selectedFiscalYear?.toString() || ""} 
                                     onValueChange={handleFiscalYearChange}
                                 >
-                                    <SelectTrigger className="w-48">
-                                        <SelectValue placeholder="Select fiscal year" />
+                                    <SelectTrigger className="bg-white border-gray-200 hover:border-purple-300 transition-colors">
+                                        <SelectValue placeholder="Select Fiscal Year" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
@@ -713,34 +781,24 @@ export default function GraphPageComponent() {
                                 </Select>
                             </div>
                         )}
-                        
-                        {/* Fund Selector */}
+
                         {selectValue && (
-                            <div className="text-right">
-                                <p className="text-sm text-gray-500">Selected Portfolio</p>
-                                <p className="font-semibold text-gray-900">{selectValue}</p>
-                                {useFiscalYearData && selectedFiscalYear && (
-                                    <p className="text-xs text-blue-600">
-                                        {fiscalYears.find(f => f.fiscal_year_id === selectedFiscalYear)?.year_label || 'Fiscal Year'}
-                                    </p>
-                                )}
+                            <div className="space-y-3">
+                                <div className="flex items-center space-x-2">
+                                    <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                                    <p className="text-sm font-semibold text-gray-700">Current Selection</p>
+                                </div>
+                                <div className="bg-gray-50 rounded-lg p-3">
+                                    <p className="text-sm text-gray-500">Portfolio</p>
+                                    <p className="font-semibold text-gray-900">{selectValue}</p>
+                                    {useFiscalYearData && selectedFiscalYear && (
+                                        <p className="text-xs text-indigo-600 mt-1">
+                                            {fiscalYears.find(f => f.fiscal_year_id === selectedFiscalYear)?.year_label || 'Fiscal Year'}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
                         )}
-                        <Select value={selectValue} onValueChange={handleSelectValueChange}>
-                            <SelectTrigger className="w-[280px]">
-                                <SelectValue placeholder="Select Fund" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>Available Portfolios</SelectLabel>
-                                    {listUsersValue.map((option) => (
-                                        <SelectItem key={option.client_id} value={String(option.client_name)}>
-                                            {option.client_name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
                     </div>
                 </div>
             </div>
@@ -1079,13 +1137,137 @@ export default function GraphPageComponent() {
             </Card>
 
             {/* Comprehensive Portfolio Analysis */}
-            <Card className="bg-white shadow-sm border border-gray-200 h-fit w-full mt-6">
+            <Card className="bg-white shadow-lg border border-gray-100 h-fit w-full mt-6">
                 <CardHeader className="pb-4">
-                    <div className="flex justify-between items-center">
-                        <CardTitle className="text-lg font-semibold text-gray-900">Comprehensive Portfolio Analysis</CardTitle>
-                        {totalPortfolioItems > 0 && (
-                            <span className="text-sm text-gray-500">({totalPortfolioItems} stocks)</span>
-                        )}
+                    <div className="flex justify-between items-center mb-4">
+                        <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
+                            <div className="w-3 h-3 bg-indigo-500 rounded-full mr-2"></div>
+                            Comprehensive Portfolio Analysis
+                            {totalPortfolioItems > 0 && (
+                                <span className="ml-2 text-sm font-normal text-gray-500">
+                                    ({totalPortfolioItems} stocks)
+                                </span>
+                            )}
+                        </CardTitle>
+                    </div>
+                    
+                    {/* Search and Column Controls for Portfolio */}
+                    <div className="flex items-center gap-3 mb-4">
+                        {/* Search Input */}
+                        <div className="relative flex-1 max-w-lg">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                            <Input
+                                placeholder="Search by company, code, or sector..."
+                                value={portfolioSearchTerm}
+                                onChange={(e) => setPortfolioSearchTerm(e.target.value)}
+                                className="pl-10 pr-10 border-gray-200 focus:border-indigo-300"
+                            />
+                            {portfolioSearchTerm && (
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => setPortfolioSearchTerm("")}
+                                    className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                                >
+                                    <X className="h-3 w-3" />
+                                </Button>
+                            )}
+                        </div>
+                        
+                        {/* Column Visibility Dropdown */}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-indigo-300">
+                                    <Settings className="h-4 w-4" />
+                                    Columns
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+                                <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuCheckboxItem
+                                    checked={portfolioColumnVisibility.companyName}
+                                    onCheckedChange={(checked) => 
+                                        setPortfolioColumnVisibility(prev => ({ ...prev, companyName: checked }))
+                                    }
+                                >
+                                    Company Name
+                                </DropdownMenuCheckboxItem>
+                                <DropdownMenuCheckboxItem
+                                    checked={portfolioColumnVisibility.code}
+                                    onCheckedChange={(checked) => 
+                                        setPortfolioColumnVisibility(prev => ({ ...prev, code: checked }))
+                                    }
+                                >
+                                    Code
+                                </DropdownMenuCheckboxItem>
+                                <DropdownMenuCheckboxItem
+                                    checked={portfolioColumnVisibility.sector}
+                                    onCheckedChange={(checked) => 
+                                        setPortfolioColumnVisibility(prev => ({ ...prev, sector: checked }))
+                                    }
+                                >
+                                    Sector
+                                </DropdownMenuCheckboxItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuCheckboxItem
+                                    checked={portfolioColumnVisibility.quantity}
+                                    onCheckedChange={(checked) => 
+                                        setPortfolioColumnVisibility(prev => ({ ...prev, quantity: checked }))
+                                    }
+                                >
+                                    Quantity
+                                </DropdownMenuCheckboxItem>
+                                <DropdownMenuCheckboxItem
+                                    checked={portfolioColumnVisibility.bookValue}
+                                    onCheckedChange={(checked) => 
+                                        setPortfolioColumnVisibility(prev => ({ ...prev, bookValue: checked }))
+                                    }
+                                >
+                                    Book Value
+                                </DropdownMenuCheckboxItem>
+                                <DropdownMenuCheckboxItem
+                                    checked={portfolioColumnVisibility.pricePerShare}
+                                    onCheckedChange={(checked) => 
+                                        setPortfolioColumnVisibility(prev => ({ ...prev, pricePerShare: checked }))
+                                    }
+                                >
+                                    Price Per Share
+                                </DropdownMenuCheckboxItem>
+                                <DropdownMenuCheckboxItem
+                                    checked={portfolioColumnVisibility.marketValue}
+                                    onCheckedChange={(checked) => 
+                                        setPortfolioColumnVisibility(prev => ({ ...prev, marketValue: checked }))
+                                    }
+                                >
+                                    Market Value
+                                </DropdownMenuCheckboxItem>
+                                <DropdownMenuCheckboxItem
+                                    checked={portfolioColumnVisibility.unrealizedGain}
+                                    onCheckedChange={(checked) => 
+                                        setPortfolioColumnVisibility(prev => ({ ...prev, unrealizedGain: checked }))
+                                    }
+                                >
+                                    Unrealized P&L
+                                </DropdownMenuCheckboxItem>
+                                <DropdownMenuCheckboxItem
+                                    checked={portfolioColumnVisibility.unrealizedGainPercent}
+                                    onCheckedChange={(checked) => 
+                                        setPortfolioColumnVisibility(prev => ({ ...prev, unrealizedGainPercent: checked }))
+                                    }
+                                >
+                                    Unrealized P&L %
+                                </DropdownMenuCheckboxItem>
+                                <DropdownMenuCheckboxItem
+                                    checked={portfolioColumnVisibility.weightage}
+                                    onCheckedChange={(checked) => 
+                                        setPortfolioColumnVisibility(prev => ({ ...prev, weightage: checked }))
+                                    }
+                                >
+                                    Weightage
+                                </DropdownMenuCheckboxItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </CardHeader>
                 <CardContent className="p-0">

@@ -30,7 +30,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { RefreshCw } from "lucide-react"
+import { RefreshCw, Search, X, Settings } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -114,6 +123,19 @@ export default function OrderBooks() {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
 
+  // Search and column visibility state
+  const [searchTerm, setSearchTerm] = useState<string>("")
+  const [columnVisibility, setColumnVisibility] = useState({
+    fileName: true,
+    uploadDate: true,
+    status: true,
+    buyQuantity: true,
+    buyValue: true,
+    sellQuantity: true,
+    sellValue: true,
+    actions: true
+  })
+
 
   const fetchOrders = async () => {
     try {
@@ -172,15 +194,21 @@ export default function OrderBooks() {
     }
   }
 
+  // Process and filter data
+  const filteredOrders = listOrders?.filter((order) => {
+    if (!searchTerm.trim()) return true;
+    return order.file_name?.toLowerCase().includes(searchTerm.toLowerCase()) || false;
+  }) || [];
+
   // Calculate summary statistics
-  const totalUploads = listOrders?.length || 0;
-  const confirmedUploads = listOrders?.filter(order => order.is_confirmed).length || 0;
+  const totalUploads = filteredOrders.length;
+  const confirmedUploads = filteredOrders.filter(order => order.is_confirmed).length;
   const pendingUploads = totalUploads - confirmedUploads;
   
   // Pagination calculations
   const totalPages = Math.ceil(totalUploads / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
-  const paginatedOrders = listOrders?.slice(startIndex, startIndex + itemsPerPage) || []
+  const paginatedOrders = filteredOrders.slice(startIndex, startIndex + itemsPerPage)
   
   // Reset to first page if current page is beyond available pages
   useEffect(() => {
@@ -190,7 +218,7 @@ export default function OrderBooks() {
   }, [currentPage, totalPages])
 
     return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+    <div className="space-y-6">
       {/* Summary Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -230,22 +258,155 @@ export default function OrderBooks() {
         </div>
       </div>
 
-      {/* Upload Actions */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <div className="mb-4 sm:mb-0">
-            <h2 className="text-lg font-semibold text-gray-900">Upload New Files</h2>
-            <p className="text-sm text-gray-600">Upload DEMAT statements or trading order books</p>
+      {/* Enhanced Upload Actions */}
+      <Card className="bg-white shadow-lg border border-gray-100 overflow-hidden">
+        <div className="bg-gradient-to-r from-orange-50 to-red-50 px-6 py-4 border-b border-gray-100">
+          <div className="flex items-center">
+            <svg className="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <CardTitle className="text-xl font-bold text-gray-900">File Upload & Management</CardTitle>
           </div>
-          {isAdmin && 
-          <div className="flex gap-3">
-            <UploadDEMAT onUpload={uploadDone} />
-            <UploadBook onUpload={uploadDone} />
-            {/* <UploadMigration onUpload={uploadDone} /> */}
-          </div>
-}
+          <p className="text-sm text-gray-600 mt-1">Upload DEMAT statements, trading order books, and manage existing files</p>
         </div>
-      </div>
+        <div className="p-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div className="mb-4 sm:mb-0">
+              <div className="grid gap-6 lg:grid-cols-3">
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <p className="text-sm font-semibold text-gray-700">Upload Actions</p>
+                  </div>
+                  {isAdmin && (
+                    <div className="flex gap-3">
+                      <UploadDEMAT onUpload={uploadDone} />
+                      <UploadBook onUpload={uploadDone} />
+                      {/* <UploadMigration onUpload={uploadDone} /> */}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* Search and Column Controls */}
+      <Card className="bg-white shadow-lg border border-gray-100">
+        <CardHeader className="pb-4">
+          <div className="flex justify-between items-center mb-4">
+            <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
+              <div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
+              Order Books Analysis
+              {filteredOrders.length > 0 && (
+                <span className="ml-2 text-sm font-normal text-gray-500">
+                  ({filteredOrders.length} files)
+                </span>
+              )}
+            </CardTitle>
+          </div>
+          <div className="flex items-center gap-3 mb-4">
+            {/* Search Input */}
+            <div className="relative flex-1 max-w-lg">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                placeholder="Search by file name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-10 border-gray-200 focus:border-orange-300"
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              )}
+            </div>
+            {/* Column Visibility Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-orange-300">
+                  <Settings className="h-4 w-4" />
+                  Columns
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+                <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.fileName}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, fileName: checked }))
+                  }
+                >
+                  File Name
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.uploadDate}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, uploadDate: checked }))
+                  }
+                >
+                  Upload Date
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.status}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, status: checked }))
+                  }
+                >
+                  Status
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.buyQuantity}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, buyQuantity: checked }))
+                  }
+                >
+                  Buy Quantity
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.buyValue}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, buyValue: checked }))
+                  }
+                >
+                  Buy Value
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.sellQuantity}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, sellQuantity: checked }))
+                  }
+                >
+                  Sell Quantity
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.sellValue}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, sellValue: checked }))
+                  }
+                >
+                  Sell Value
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.actions}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, actions: checked }))
+                  }
+                >
+                  Actions
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </CardHeader>
+      </Card>
 
       {/* Uploaded Files Section */}
       {listOrders && listOrders.length > 0 && (

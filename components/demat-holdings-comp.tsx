@@ -30,8 +30,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { RefreshCw, Database, Save, Check, X } from "lucide-react"
+import { RefreshCw, Database, Save, Check, X, Search, Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -73,6 +81,19 @@ export default function DematHoldingsComponent() {
   const [pendingUpdates, setPendingUpdates] = useState<{ symbol: string; field: 'ltp' | 'wacc'; value: number; row: DematHoldingRow }[]>([]) 
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
   const [currentUpdate, setCurrentUpdate] = useState<{ symbol: string; field: 'ltp' | 'wacc'; value: number; row: DematHoldingRow } | null>(null)
+
+  // Search and column visibility state
+  const [searchTerm, setSearchTerm] = useState<string>("")
+  const [columnVisibility, setColumnVisibility] = useState({
+    symbol: true,
+    companyName: true,
+    quantity: true,
+    wacc: true,
+    ltp: true,
+    marketValue: true,
+    unrealizedPL: true,
+    unrealizedPLPercent: true
+  })
 
   useEffect(() => {
     async function bootstrap() {
@@ -273,70 +294,232 @@ export default function DematHoldingsComponent() {
 
   const maxValueLTP = useMemo(() => Math.max(1, ...rows.map(r => r.value_ltp)), [rows])
 
+  // Process and filter data
+  const filteredRows = useMemo(() => {
+    let filtered = [...rows]
+    
+    // Apply search filtering
+    if (searchTerm.trim()) {
+      filtered = filtered.filter((row) =>
+        row.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.company.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    }
+    
+    return filtered
+  }, [rows, searchTerm])
+
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-      {/* Filters */}
-      <Card className="bg-white shadow-sm border border-gray-200">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-semibold text-gray-900">Filters</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-3 items-center">
-            <Select value={selectedFund} onValueChange={(v) => setSelectedFund(v)}>
-              <SelectTrigger className="w-64">
-                <SelectValue placeholder="Select Fund" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Fund</SelectLabel>
-                  {users.map(u => (
-                    <SelectItem key={u.client_id} value={u.client_name}>{u.client_name}</SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            
-            <Select 
-              value={selectedFiscalYear?.toString() || ""} 
-              onValueChange={(v) => setSelectedFiscalYear(v ? parseInt(v) : null)}
-            >
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Select Fiscal Year" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Fiscal Year</SelectLabel>
-                  {fiscalYears.map(fy => (
-                    <SelectItem key={fy.fiscal_year_id} value={fy.fiscal_year_id.toString()}>
-                      {fy.year_label}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            
-            <Button 
-              onClick={refresh} 
-              variant="outline" 
-              size="sm" 
-              disabled={loading}
-              className="inline-flex items-center gap-2"
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              Refresh Data
-            </Button>
-            
-            <Button 
-              onClick={refreshLTP} 
-              variant="outline" 
-              size="sm" 
-              disabled={ltpUpdateLoading}
-              className="inline-flex items-center gap-2 bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-700"
-            >
-              <Database className={`w-4 h-4 ${ltpUpdateLoading ? 'animate-spin' : ''}`} />
-              {ltpUpdateLoading ? 'Updating LTP...' : 'Refresh LTP'}
-            </Button>
+    <div className="space-y-6">
+      {/* Enhanced Filters */}
+      <Card className="bg-white shadow-lg border border-gray-100 overflow-hidden">
+        <div className="bg-gradient-to-r from-emerald-50 to-teal-50 px-6 py-4 border-b border-gray-100">
+          <div className="flex items-center">
+            <svg className="w-5 h-5 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z" />
+            </svg>
+            <CardTitle className="text-xl font-bold text-gray-900">Data Filters & Controls</CardTitle>
           </div>
+          <p className="text-sm text-gray-600 mt-1">Configure your demat holdings view and analysis parameters</p>
+        </div>
+        <CardContent className="p-6">
+          <div className="grid gap-6 lg:grid-cols-4">
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <p className="text-sm font-semibold text-gray-700">Fund Selection</p>
+              </div>
+              <Select value={selectedFund} onValueChange={(v) => setSelectedFund(v)}>
+                <SelectTrigger className="bg-white border-gray-200 hover:border-blue-300 transition-colors">
+                  <SelectValue placeholder="Choose Fund" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Available Funds</SelectLabel>
+                    {users.map(u => (
+                      <SelectItem key={u.client_id} value={u.client_name}>{u.client_name}</SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <p className="text-sm font-semibold text-gray-700">Fiscal Year</p>
+              </div>
+              <Select 
+                value={selectedFiscalYear?.toString() || ""} 
+                onValueChange={(v) => setSelectedFiscalYear(v ? parseInt(v) : null)}
+              >
+                <SelectTrigger className="bg-white border-gray-200 hover:border-green-300 transition-colors">
+                  <SelectValue placeholder="Select Fiscal Year" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Fiscal Years</SelectLabel>
+                    {fiscalYears.map(fy => (
+                      <SelectItem key={fy.fiscal_year_id} value={fy.fiscal_year_id.toString()}>
+                        {fy.year_label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <p className="text-sm font-semibold text-gray-700">Actions</p>
+              </div>
+              <Button 
+                onClick={refresh} 
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 inline-flex items-center gap-2"
+              >
+                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                Refresh Data
+              </Button>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <p className="text-sm font-semibold text-gray-700">LTP Update</p>
+              </div>
+              <Button 
+                onClick={refreshLTP} 
+                disabled={ltpUpdateLoading}
+                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200 inline-flex items-center gap-2"
+              >
+                <Database className={`w-4 h-4 ${ltpUpdateLoading ? 'animate-spin' : ''}`} />
+                {ltpUpdateLoading ? 'Updating LTP...' : 'Refresh LTP'}
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Search and Column Controls */}
+      <Card className="bg-white shadow-lg border border-gray-100">
+        <CardHeader className="pb-4">
+          <div className="flex justify-between items-center mb-4">
+            <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
+              <div className="w-3 h-3 bg-emerald-500 rounded-full mr-2"></div>
+              Demat Holdings Analysis
+              {filteredRows.length > 0 && (
+                <span className="ml-2 text-sm font-normal text-gray-500">
+                  ({filteredRows.length} holdings)
+                </span>
+              )}
+            </CardTitle>
+          </div>
+          
+          {/* Search and Column Controls */}
+          <div className="flex items-center gap-3 mb-4">
+            {/* Search Input */}
+            <div className="relative flex-1 max-w-lg">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                placeholder="Search by symbol or company name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-10 border-gray-200 focus:border-emerald-300"
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              )}
+            </div>
+            
+            {/* Column Visibility Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-emerald-300">
+                  <Settings className="h-4 w-4" />
+                  Columns
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
+                <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.symbol}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, symbol: checked }))
+                  }
+                >
+                  Symbol
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.companyName}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, companyName: checked }))
+                  }
+                >
+                  Company Name
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.quantity}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, quantity: checked }))
+                  }
+                >
+                  Quantity
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.wacc}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, wacc: checked }))
+                  }
+                >
+                  WACC
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.ltp}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, ltp: checked }))
+                  }
+                >
+                  LTP
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.marketValue}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, marketValue: checked }))
+                  }
+                >
+                  Market Value
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.unrealizedPL}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, unrealizedPL: checked }))
+                  }
+                >
+                  Unrealized P&L
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility.unrealizedPLPercent}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ ...prev, unrealizedPLPercent: checked }))
+                  }
+                >
+                  Unrealized P&L %
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
         </CardContent>
       </Card>
 
@@ -346,12 +529,12 @@ export default function DematHoldingsComponent() {
         if (loading) return (
           <Card className="bg-white shadow-sm border border-gray-200 mt-4"><CardContent className="p-9 text-center text-gray-500">Loading...</CardContent></Card>
         )
-        if (rows.length === 0) return (
-          <Card className="bg-white shadow-sm border border-gray-200 mt-4"><CardContent className="p-9 text-center text-gray-500">No data</CardContent></Card>
+        if (filteredRows.length === 0) return (
+          <Card className="bg-white shadow-sm border border-gray-200 mt-4"><CardContent className="p-9 text-center text-gray-500">No data found</CardContent></Card>
         )
 
         // Group by dp_name
-        const grouped = rows.reduce((acc, row) => {
+        const grouped = filteredRows.reduce((acc, row) => {
           (acc[row.dp_name || '-'] = acc[row.dp_name || '-'] || []).push(row);
           return acc;
         }, {} as Record<string, DematHoldingRow[]>);
@@ -472,7 +655,7 @@ export default function DematHoldingsComponent() {
           </Card>
           );
         });
-      }, [rows, editingFields, loading])}
+      }, [filteredRows, editingFields, loading])}
       
       {/* Confirmation Dialog */}
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
