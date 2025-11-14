@@ -565,13 +565,25 @@ export default function DematHoldingsComponent() {
                   <TableHeader>
                     <TableRow>
                       <TableHead className="text-center">S.N</TableHead>
-                      <TableHead>Scrip</TableHead>
-                      <TableHead className="text-right">Total Balance</TableHead>
+                      {(columnVisibility.symbol || columnVisibility.companyName) && (
+                        <TableHead>Scrip</TableHead>
+                      )}
+                      {columnVisibility.quantity && (
+                        <TableHead className="text-right">Total Balance</TableHead>
+                      )}
                       <TableHead className="text-right">Actual DEMAT</TableHead>
-                      <TableHead className="text-right">LTP (Fiscal Year)</TableHead>
-                      <TableHead className="text-right">Value @ LTP</TableHead>
-                      <TableHead className="text-right">WACC</TableHead>
-                      <TableHead className="text-right">Price Margin</TableHead>
+                      {columnVisibility.ltp && (
+                        <TableHead className="text-right">LTP (Fiscal Year)</TableHead>
+                      )}
+                      {columnVisibility.marketValue && (
+                        <TableHead className="text-right">Value @ LTP</TableHead>
+                      )}
+                      {columnVisibility.wacc && (
+                        <TableHead className="text-right">WACC</TableHead>
+                      )}
+                      {columnVisibility.unrealizedPL && (
+                        <TableHead className="text-right">Price Margin</TableHead>
+                      )}
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -583,68 +595,80 @@ export default function DematHoldingsComponent() {
                       return (
                         <TableRow key={r.symbol}>
                           <TableCell className="text-center">{idx + 1}</TableCell>
-                          <TableCell>{r.company}<br /><span className="text-xs text-gray-500">{r.symbol}</span></TableCell>
-                          <TableCell className="text-right">{r.current_balance}</TableCell>
+                          {(columnVisibility.symbol || columnVisibility.companyName) && (
+                            <TableCell>{r.company}<br /><span className="text-xs text-gray-500">{r.symbol}</span></TableCell>
+                          )}
+                          {columnVisibility.quantity && (
+                            <TableCell className="text-right">{r.current_balance}</TableCell>
+                          )}
                           <TableCell className="text-right">{r.demat}</TableCell>
-                          <TableCell className="text-right">
-                            <div className="flex items-center gap-2 justify-end">
-                              <span className="text-sm">Rs.</span>
-                              <Input
-                                type="number"
-                                step="0.01"
-                                min="0"
-                                value={editingFields[r.symbol]?.ltp || r.today_closing_price}
-                                onChange={(e) => handleFieldChange(r.symbol, 'ltp', e.target.value)}
-                                className="w-24 h-8 text-right"
-                                disabled={!isAdmin}
-                              />
-                              {isAdmin &&
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => handleSaveClick(r.symbol, 'ltp', r)}
-                                disabled={loading || (editingFields[r.symbol]?.ltp === undefined || editingFields[r.symbol]?.ltp === r.today_closing_price)}
-                                className="h-8 w-8 p-0"
-                              >
-                                <Save className="h-3 w-3" />
-                              </Button>
-                    }
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-right">Rs. {((currentLTP) * r.demat).toLocaleString()}</TableCell>
-                          <TableCell className="text-right">
-                            <div className="flex items-center gap-2 justify-end">
-                              <span className="text-sm">Rs.</span>
-                              <Input
-                                type="number"
-                                step="0.01"
-                                min="0"
-                                value={editingFields[r.symbol]?.wacc || r.wacc}
-                                onChange={(e) => handleFieldChange(r.symbol, 'wacc', e.target.value)}
-                                className="w-24 h-8 text-right"
-                                disabled
-                              />
-                              {/* {isAdmin && 
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => handleSaveClick(r.symbol, 'wacc', r)}
-                                disabled={loading || (editingFields[r.symbol]?.wacc === undefined || editingFields[r.symbol]?.wacc === r.wacc)}
-                                className="h-8 w-8 p-0"
-                              >
-                                <Save className="h-3 w-3" />
-                              </Button>
-                    } */}
-                            </div>
-                          </TableCell>
-                          <TableCell className={`text-right ${marginColor}`}>
-                            <div className="flex items-center gap-2 justify-end">
-                              <div className="w-20 h-1.5 bg-gray-200 rounded">
-                                <div className={`h-1.5 rounded ${marginBar}`} style={{ width: `${Math.min(100, Math.abs(currentMarginPercent))}%` }} />
+                          {columnVisibility.ltp && (
+                            <TableCell className="text-right">
+                              <div className="flex items-center gap-2 justify-end">
+                                <span className="text-sm">Rs.</span>
+                                <Input
+                                  type="number"
+                                  step="0.01"
+                                  min="0"
+                                  value={editingFields[r.symbol]?.ltp || r.today_closing_price}
+                                  onChange={(e) => handleFieldChange(r.symbol, 'ltp', e.target.value)}
+                                  className="w-24 h-8 text-right"
+                                  disabled={!isAdmin}
+                                />
+                                {isAdmin &&
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => handleSaveClick(r.symbol, 'ltp', r)}
+                                  disabled={loading || (editingFields[r.symbol]?.ltp === undefined || editingFields[r.symbol]?.ltp === r.today_closing_price)}
+                                  className="h-8 w-8 p-0"
+                                >
+                                  <Save className="h-3 w-3" />
+                                </Button>
+                      }
                               </div>
-                              {currentMarginPercent.toFixed(2)}%
-                            </div>
-                          </TableCell>
+                            </TableCell>
+                          )}
+                          {columnVisibility.marketValue && (
+                            <TableCell className="text-right">Rs. {((currentLTP) * r.demat).toLocaleString()}</TableCell>
+                          )}
+                          {columnVisibility.wacc && (
+                            <TableCell className="text-right">
+                              <div className="flex items-center gap-2 justify-end">
+                                <span className="text-sm">Rs.</span>
+                                <Input
+                                  type="number"
+                                  step="0.01"
+                                  min="0"
+                                  value={editingFields[r.symbol]?.wacc || r.wacc}
+                                  onChange={(e) => handleFieldChange(r.symbol, 'wacc', e.target.value)}
+                                  className="w-24 h-8 text-right"
+                                  disabled
+                                />
+                                {/* {isAdmin && 
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => handleSaveClick(r.symbol, 'wacc', r)}
+                                  disabled={loading || (editingFields[r.symbol]?.wacc === undefined || editingFields[r.symbol]?.wacc === r.wacc)}
+                                  className="h-8 w-8 p-0"
+                                >
+                                  <Save className="h-3 w-3" />
+                                </Button>
+                      } */}
+                              </div>
+                            </TableCell>
+                          )}
+                          {columnVisibility.unrealizedPL && (
+                            <TableCell className={`text-right ${marginColor}`}>
+                              <div className="flex items-center gap-2 justify-end">
+                                <div className="w-20 h-1.5 bg-gray-200 rounded">
+                                  <div className={`h-1.5 rounded ${marginBar}`} style={{ width: `${Math.min(100, Math.abs(currentMarginPercent))}%` }} />
+                                </div>
+                                {currentMarginPercent.toFixed(2)}%
+                              </div>
+                            </TableCell>
+                          )}
                         </TableRow>
                       );
                     })}

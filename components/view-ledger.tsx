@@ -799,7 +799,7 @@ export default function ViewLedger() {
               </SelectContent>
             </Select>
 
-              <Select onValueChange={handleFiscalChange}>
+              <Select value={fiscalID} onValueChange={handleFiscalChange}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Fiscal Year" />
               </SelectTrigger>
@@ -935,55 +935,69 @@ export default function ViewLedger() {
           <Table className="w-full">
   <TableHeader>
     <TableRow className="bg-gray-50">
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('transaction_date')}>
-        <div className="flex items-center justify-between">
-          Purchased Date
-          <SortIndicator field="transaction_date" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('quantity')}>
-        <div className="flex items-center justify-between">
-          Total Shares
-          <SortIndicator field="quantity" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('price')}>
-        <div className="flex items-center justify-between">
-          Average Price Per Share
-          <SortIndicator field="price" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('txn_value')}>
-        <div className="flex items-center justify-between">
-          Total Amount
-          <SortIndicator field="txn_value" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Commission Rate</TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('commission_amount')}>
-        <div className="flex items-center justify-between">
-          Total Broker Commission
-          <SortIndicator field="commission_amount" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('sebon_commission')}>
-        <div className="flex items-center justify-between">
-          Total Sebon Commission
-          <SortIndicator field="sebon_commission" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('effective_rate')}>
-        <div className="flex items-center justify-between">
-          Effective Rate
-          <SortIndicator field="effective_rate" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('net_payable')}>
-        <div className="flex items-center justify-between">
-          Total Cost
-          <SortIndicator field="net_payable" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
-        </div>
-      </TableHead>
+      {purchaseColumnVisibility.date && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('transaction_date')}>
+          <div className="flex items-center justify-between">
+            Purchased Date
+            <SortIndicator field="transaction_date" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+          </div>
+        </TableHead>
+      )}
+      {purchaseColumnVisibility.quantity && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('quantity')}>
+          <div className="flex items-center justify-between">
+            Total Shares
+            <SortIndicator field="quantity" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+          </div>
+        </TableHead>
+      )}
+      {purchaseColumnVisibility.rate && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('price')}>
+          <div className="flex items-center justify-between">
+            Average Price Per Share
+            <SortIndicator field="price" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+          </div>
+        </TableHead>
+      )}
+      {purchaseColumnVisibility.amount && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('txn_value')}>
+          <div className="flex items-center justify-between">
+            Total Amount
+            <SortIndicator field="txn_value" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+          </div>
+        </TableHead>
+      )}
+      {purchaseColumnVisibility.commission && (
+        <>
+          <TableHead className={TABLE_STYLES.HEADER}>Commission Rate</TableHead>
+          <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('commission_amount')}>
+            <div className="flex items-center justify-between">
+              Total Broker Commission
+              <SortIndicator field="commission_amount" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+            </div>
+          </TableHead>
+          <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('sebon_commission')}>
+            <div className="flex items-center justify-between">
+              Total Sebon Commission
+              <SortIndicator field="sebon_commission" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+            </div>
+          </TableHead>
+          <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('effective_rate')}>
+            <div className="flex items-center justify-between">
+              Effective Rate
+              <SortIndicator field="effective_rate" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+            </div>
+          </TableHead>
+        </>
+      )}
+      {purchaseColumnVisibility.netAmount && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('net_payable')}>
+          <div className="flex items-center justify-between">
+            Total Cost
+            <SortIndicator field="net_payable" tableSortField={purchaseSortField} tableSortOrder={purchaseSortOrder} />
+          </div>
+        </TableHead>
+      )}
       <TableHead className={`${TABLE_STYLES.HEADER} text-right cursor-pointer hover:bg-gray-100`} onClick={() => handlePurchaseHeaderClick('client_id')}>
         <div className="flex items-center justify-end">
           Client
@@ -995,33 +1009,47 @@ export default function ViewLedger() {
   <TableBody>
     {paginatedPurchaseData.map((record) => (
     <TableRow key={record.contract_number} className={record.is_closeout ? `${TABLE_STYLES.CLOSEOUT_ROW} ${TABLE_STYLES.CLOSEOUT}` : TABLE_STYLES.ROW_HOVER}>
-      <TableCell className={`font-medium ${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700' : ''}`}>
-        <div className="flex items-center gap-2">
-          {record.is_closeout ? (
-            <span className="text-red-500">📤</span>
-          ) : (
-            <span className="text-green-500">📥</span>
-          )}
-          <div>
-            <div className="font-medium">{record.transaction_date?.toLocaleDateString()}</div>
-            {record.is_closeout && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 mt-1">
-                Closeout Transaction
-              </span>
+      {purchaseColumnVisibility.date && (
+        <TableCell className={`font-medium ${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700' : ''}`}>
+          <div className="flex items-center gap-2">
+            {record.is_closeout ? (
+              <span className="text-red-500">📤</span>
+            ) : (
+              <span className="text-green-500">📥</span>
             )}
+            <div>
+              <div className="font-medium">{record.transaction_date?.toLocaleDateString()}</div>
+              {record.is_closeout && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 mt-1">
+                  Closeout Transaction
+                </span>
+              )}
+            </div>
           </div>
-        </div>
-      </TableCell>
-      <TableCell className={`${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700 font-semibold' : ''}`}>
-        {record.quantity.toLocaleString()}
-      </TableCell>
-      <TableCell className={`${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700' : ''}`}>Rs. {record.price.toFixed(2)}</TableCell>
-      <TableCell className={`${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700' : ''}`}>Rs. {record.txn_value.toLocaleString()}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>{record.commission_rate || (record.is_closeout ? 'N/A' : '')}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>Rs. {record.commission_amount?.toLocaleString() || (record.is_closeout ? '0.00' : '')}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>Rs. {record.sebon_commission?.toLocaleString() || (record.is_closeout ? '0.00' : '')}</TableCell>
-      <TableCell className={`${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700' : ''}`}>Rs. {record.effective_rate?.toFixed(2) || '0.00'}</TableCell>
-      <TableCell className={`${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700 font-semibold' : ''}`}>Rs. {record.net_payable?.toLocaleString()}</TableCell>
+        </TableCell>
+      )}
+      {purchaseColumnVisibility.quantity && (
+        <TableCell className={`${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700 font-semibold' : ''}`}>
+          {record.quantity.toLocaleString()}
+        </TableCell>
+      )}
+      {purchaseColumnVisibility.rate && (
+        <TableCell className={`${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700' : ''}`}>Rs. {record.price.toFixed(2)}</TableCell>
+      )}
+      {purchaseColumnVisibility.amount && (
+        <TableCell className={`${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700' : ''}`}>Rs. {record.txn_value.toLocaleString()}</TableCell>
+      )}
+      {purchaseColumnVisibility.commission && (
+        <>
+          <TableCell className={TABLE_STYLES.CELL}>{record.commission_rate || (record.is_closeout ? 'N/A' : '')}</TableCell>
+          <TableCell className={TABLE_STYLES.CELL}>Rs. {record.commission_amount?.toLocaleString() || (record.is_closeout ? '0.00' : '')}</TableCell>
+          <TableCell className={TABLE_STYLES.CELL}>Rs. {record.sebon_commission?.toLocaleString() || (record.is_closeout ? '0.00' : '')}</TableCell>
+          <TableCell className={`${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700' : ''}`}>Rs. {record.effective_rate?.toFixed(2) || '0.00'}</TableCell>
+        </>
+      )}
+      {purchaseColumnVisibility.netAmount && (
+        <TableCell className={`${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700 font-semibold' : ''}`}>Rs. {record.net_payable?.toLocaleString()}</TableCell>
+      )}
       <TableCell className={`text-right ${TABLE_STYLES.CELL}`}>{record.client_id}</TableCell>
     </TableRow>
     ))
@@ -1030,15 +1058,29 @@ export default function ViewLedger() {
   {ledgerData?.totals && (
     <TableFooter>
       <TableRow className={TABLE_STYLES.FOOTER}>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>TOTAL</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>{ledgerData.totals.purchase.totalQuantity.toLocaleString()}</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.purchase.totalTxnValue.toLocaleString()}</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.purchase.totalCommissionAmount.toLocaleString()}</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.purchase.totalSebonCommission.toLocaleString()}</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.purchase.totalNetPayable.toLocaleString()}</TableCell>
+        {purchaseColumnVisibility.date && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>TOTAL</TableCell>
+        )}
+        {purchaseColumnVisibility.quantity && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>{ledgerData.totals.purchase.totalQuantity.toLocaleString()}</TableCell>
+        )}
+        {purchaseColumnVisibility.rate && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
+        )}
+        {purchaseColumnVisibility.amount && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.purchase.totalTxnValue.toLocaleString()}</TableCell>
+        )}
+        {purchaseColumnVisibility.commission && (
+          <>
+            <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
+            <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.purchase.totalCommissionAmount.toLocaleString()}</TableCell>
+            <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.purchase.totalSebonCommission.toLocaleString()}</TableCell>
+            <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
+          </>
+        )}
+        {purchaseColumnVisibility.netAmount && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.purchase.totalNetPayable.toLocaleString()}</TableCell>
+        )}
         <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
       </TableRow>
     </TableFooter>
@@ -1189,36 +1231,46 @@ export default function ViewLedger() {
               <Table className="w-full">
                 <TableHeader>
                   <TableRow className="bg-gray-50">
-                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('record_type')}>
-                      <div className="flex items-center justify-between">
-                        Type
-                        <SortIndicator field="record_type" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
-                      </div>
-                    </TableHead>
-                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('date')}>
-                      <div className="flex items-center justify-between">
-                        Date
-                        <SortIndicator field="date" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
-                      </div>
-                    </TableHead>
-                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('opening_quantity')}>
-                      <div className="flex items-center justify-between">
-                        Shares
-                        <SortIndicator field="opening_quantity" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
-                      </div>
-                    </TableHead>
-                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('effective_rate')}>
-                      <div className="flex items-center justify-between">
-                        Rate
-                        <SortIndicator field="effective_rate" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
-                      </div>
-                    </TableHead>
-                    <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('total_value')}>
-                      <div className="flex items-center justify-between">
-                        Amount
-                        <SortIndicator field="total_value" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
-                      </div>
-                    </TableHead>
+                    {eligibleColumnVisibility.type && (
+                      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('record_type')}>
+                        <div className="flex items-center justify-between">
+                          Type
+                          <SortIndicator field="record_type" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                        </div>
+                      </TableHead>
+                    )}
+                    {eligibleColumnVisibility.date && (
+                      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('date')}>
+                        <div className="flex items-center justify-between">
+                          Date
+                          <SortIndicator field="date" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                        </div>
+                      </TableHead>
+                    )}
+                    {eligibleColumnVisibility.quantity && (
+                      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('opening_quantity')}>
+                        <div className="flex items-center justify-between">
+                          Shares
+                          <SortIndicator field="opening_quantity" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                        </div>
+                      </TableHead>
+                    )}
+                    {eligibleColumnVisibility.rate && (
+                      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('effective_rate')}>
+                        <div className="flex items-center justify-between">
+                          Rate
+                          <SortIndicator field="effective_rate" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                        </div>
+                      </TableHead>
+                    )}
+                    {eligibleColumnVisibility.amount && (
+                      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('total_value')}>
+                        <div className="flex items-center justify-between">
+                          Amount
+                          <SortIndicator field="total_value" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
+                        </div>
+                      </TableHead>
+                    )}
                     <TableHead className={TABLE_STYLES.HEADER}>Details</TableHead>
                     <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleEligibleHeaderClick('client_id')}>
                       <div className="flex items-center justify-between">
@@ -1226,7 +1278,9 @@ export default function ViewLedger() {
                         <SortIndicator field="client_id" tableSortField={eligibleSortField} tableSortOrder={eligibleSortOrder} />
                       </div>
                     </TableHead>
-                    <TableHead className={`${TABLE_STYLES.HEADER} text-left`}>Remarks</TableHead>
+                    {eligibleColumnVisibility.remarks && (
+                      <TableHead className={`${TABLE_STYLES.HEADER} text-left`}>Remarks</TableHead>
+                    )}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -1284,44 +1338,56 @@ export default function ViewLedger() {
                     
                     return (
                       <TableRow key={record.id} className={TABLE_STYLES.ROW_HOVER}>
-                        <TableCell className={`font-medium ${TABLE_STYLES.CELL}`}>
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg">{typeInfo.icon}</span>
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${typeInfo.color}`}>
-                              {typeInfo.label}
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell className={`${TABLE_STYLES.CELL} text-sm`}>
-                          {record.date ? record.date.toLocaleDateString() : '-'}
-                        </TableCell>
-                        <TableCell className={`${TABLE_STYLES.CELL} font-semibold`}>
-                          {record.opening_quantity.toLocaleString()}
-                        </TableCell>
-                        <TableCell className={TABLE_STYLES.CELL}>
-                          Rs. {record.effective_rate.toFixed(2)}
-                        </TableCell>
-                        <TableCell className={`${TABLE_STYLES.CELL} font-medium`}>
-                          Rs. {record.total_value.toLocaleString()}
-                        </TableCell>
+                        {eligibleColumnVisibility.type && (
+                          <TableCell className={`font-medium ${TABLE_STYLES.CELL}`}>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{typeInfo.icon}</span>
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${typeInfo.color}`}>
+                                {typeInfo.label}
+                              </span>
+                            </div>
+                          </TableCell>
+                        )}
+                        {eligibleColumnVisibility.date && (
+                          <TableCell className={`${TABLE_STYLES.CELL} text-sm`}>
+                            {record.date ? record.date.toLocaleDateString() : '-'}
+                          </TableCell>
+                        )}
+                        {eligibleColumnVisibility.quantity && (
+                          <TableCell className={`${TABLE_STYLES.CELL} font-semibold`}>
+                            {record.opening_quantity.toLocaleString()}
+                          </TableCell>
+                        )}
+                        {eligibleColumnVisibility.rate && (
+                          <TableCell className={TABLE_STYLES.CELL}>
+                            Rs. {record.effective_rate.toFixed(2)}
+                          </TableCell>
+                        )}
+                        {eligibleColumnVisibility.amount && (
+                          <TableCell className={`${TABLE_STYLES.CELL} font-medium`}>
+                            Rs. {record.total_value.toLocaleString()}
+                          </TableCell>
+                        )}
                         <TableCell className={`${TABLE_STYLES.CELL} text-sm`}>
                           {typeInfo.detail || '-'}
                         </TableCell>
                         <TableCell className={`text-right ${TABLE_STYLES.CELL}`}>{record.client_id}</TableCell>
-                        <TableCell className={`${TABLE_STYLES.CELL} text-left`}>
-                          <InlineRemarks initial={record.remarks || ''} onSave={async (value) => {
-                            await saveEligibleRemarks({
-                              type: record.record_type as any,
-                              previousFiscalYearId: record.previous_fiscal_year_id,
-                              symbol: record.symbol,
-                              bonusId: record.bonus_id,
-                              rightId: record.right_id,
-                              promoterId: record.promoter_id,
-                              clientName: currentFund,
-                              remarks: value,
-                            })
-                          }} />
-                        </TableCell>
+                        {eligibleColumnVisibility.remarks && (
+                          <TableCell className={`${TABLE_STYLES.CELL} text-left`}>
+                            <InlineRemarks initial={record.remarks || ''} onSave={async (value) => {
+                              await saveEligibleRemarks({
+                                type: record.record_type as any,
+                                previousFiscalYearId: record.previous_fiscal_year_id,
+                                symbol: record.symbol,
+                                bonusId: record.bonus_id,
+                                rightId: record.right_id,
+                                promoterId: record.promoter_id,
+                                clientName: currentFund,
+                                remarks: value,
+                              })
+                            }} />
+                          </TableCell>
+                        )}
                       </TableRow>
                     )
                   })}
@@ -1329,21 +1395,32 @@ export default function ViewLedger() {
                 {ledgerData?.totals && (
                   <TableFooter>
                     <TableRow className={TABLE_STYLES.FOOTER}>
-                      <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>TOTAL</TableCell>
+                      {eligibleColumnVisibility.type && (
+                        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>TOTAL</TableCell>
+                      )}
+                      {eligibleColumnVisibility.date && (
+                        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
+                      )}
+                      {eligibleColumnVisibility.quantity && (
+                        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>
+                          {(ledgerData.totals.eligible?.totalEligibleQuantity || 
+                            ledgerData.totals.opening.totalEligibleQuantity || 0).toLocaleString()}
+                        </TableCell>
+                      )}
+                      {eligibleColumnVisibility.rate && (
+                        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
+                      )}
+                      {eligibleColumnVisibility.amount && (
+                        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>
+                          Rs. {(ledgerData.totals.eligible?.totalEligibleValue || 
+                            ledgerData.totals.opening.totalEligibleValue || 0).toLocaleString()}
+                        </TableCell>
+                      )}
                       <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-                      <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>
-                        {(ledgerData.totals.eligible?.totalEligibleQuantity || 
-                          ledgerData.totals.opening.totalEligibleQuantity || 0).toLocaleString()}
-                      </TableCell>
                       <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-                      <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>
-                        Rs. {(ledgerData.totals.eligible?.totalEligibleValue || 
-                          ledgerData.totals.opening.totalEligibleValue || 0).toLocaleString()}
-                      </TableCell>
-                      <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-                      <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-                      <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-                      <TableCell className={`font-semibold ${TABLE_STYLES.CELL} text-left`}>-</TableCell>
+                      {eligibleColumnVisibility.remarks && (
+                        <TableCell className={`font-semibold ${TABLE_STYLES.CELL} text-left`}>-</TableCell>
+                      )}
                     </TableRow>
                   </TableFooter>
                 )}
@@ -1509,67 +1586,83 @@ export default function ViewLedger() {
           <Table className="w-full">
   <TableHeader>
     <TableRow className="bg-gray-50">
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('transaction_date')}>
-        <div className="flex items-center justify-between">
-          Sales Date
-          <SortIndicator field="transaction_date" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('quantity')}>
-        <div className="flex items-center justify-between">
-          Total Shares
-          <SortIndicator field="quantity" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('price')}>
-        <div className="flex items-center justify-between">
-          Average Price Per Share
-          <SortIndicator field="price" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('txn_value')}>
-        <div className="flex items-center justify-between">
-          Total Amount
-          <SortIndicator field="txn_value" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={TABLE_STYLES.HEADER}>Commission Rate</TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('commission_amount')}>
-        <div className="flex items-center justify-between">
-          Total Broker Commission
-          <SortIndicator field="commission_amount" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('capital_gain_tax')}>
-        <div className="flex items-center justify-between">
-          Total CGT
-          <SortIndicator field="capital_gain_tax" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('sebon_commission')}>
-        <div className="flex items-center justify-between">
-          Total Sebon Commission
-          <SortIndicator field="sebon_commission" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('effective_rate')}>
-        <div className="flex items-center justify-between">
-          Effective Rate
-          <SortIndicator field="effective_rate" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('net_receivable')}>
-        <div className="flex items-center justify-between">
-          Total Cost
-          <SortIndicator field="net_receivable" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
-        </div>
-      </TableHead>
-      <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('profit_loss')}>
-        <div className="flex items-center justify-between">
-          Total Gain/Loss
-          <SortIndicator field="profit_loss" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
-        </div>
-      </TableHead>
+      {salesColumnVisibility.date && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('transaction_date')}>
+          <div className="flex items-center justify-between">
+            Sales Date
+            <SortIndicator field="transaction_date" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+          </div>
+        </TableHead>
+      )}
+      {salesColumnVisibility.quantity && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('quantity')}>
+          <div className="flex items-center justify-between">
+            Total Shares
+            <SortIndicator field="quantity" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+          </div>
+        </TableHead>
+      )}
+      {salesColumnVisibility.rate && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('price')}>
+          <div className="flex items-center justify-between">
+            Average Price Per Share
+            <SortIndicator field="price" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+          </div>
+        </TableHead>
+      )}
+      {salesColumnVisibility.amount && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('txn_value')}>
+          <div className="flex items-center justify-between">
+            Total Amount
+            <SortIndicator field="txn_value" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+          </div>
+        </TableHead>
+      )}
+      {salesColumnVisibility.commission && (
+        <>
+          <TableHead className={TABLE_STYLES.HEADER}>Commission Rate</TableHead>
+          <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('commission_amount')}>
+            <div className="flex items-center justify-between">
+              Total Broker Commission
+              <SortIndicator field="commission_amount" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+            </div>
+          </TableHead>
+          <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('capital_gain_tax')}>
+            <div className="flex items-center justify-between">
+              Total CGT
+              <SortIndicator field="capital_gain_tax" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+            </div>
+          </TableHead>
+          <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('sebon_commission')}>
+            <div className="flex items-center justify-between">
+              Total Sebon Commission
+              <SortIndicator field="sebon_commission" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+            </div>
+          </TableHead>
+          <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('effective_rate')}>
+            <div className="flex items-center justify-between">
+              Effective Rate
+              <SortIndicator field="effective_rate" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+            </div>
+          </TableHead>
+        </>
+      )}
+      {salesColumnVisibility.netAmount && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('net_receivable')}>
+          <div className="flex items-center justify-between">
+            Total Cost
+            <SortIndicator field="net_receivable" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+          </div>
+        </TableHead>
+      )}
+      {salesColumnVisibility.profitLoss && (
+        <TableHead className={`${TABLE_STYLES.HEADER} cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('profit_loss')}>
+          <div className="flex items-center justify-between">
+            Total Gain/Loss
+            <SortIndicator field="profit_loss" tableSortField={salesSortField} tableSortOrder={salesSortOrder} />
+          </div>
+        </TableHead>
+      )}
       <TableHead className={`${TABLE_STYLES.HEADER} text-right cursor-pointer hover:bg-gray-100`} onClick={() => handleSalesHeaderClick('client_id')}>
         <div className="flex items-center justify-end">
           Client
@@ -1581,27 +1674,43 @@ export default function ViewLedger() {
   <TableBody>
     {paginatedSalesData.map((record) => (
     <TableRow key={record.contract_number} className={TABLE_STYLES.ROW_HOVER}>
-      <TableCell className={`font-medium ${TABLE_STYLES.CELL}`}>
-        <div className="flex items-center gap-2">
-          <span className="text-orange-500">💰</span>
-          <div>
-            <div className="font-medium">{record.transaction_date?.toLocaleDateString()}</div>
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-              Sale Transaction
-            </span>
+      {salesColumnVisibility.date && (
+        <TableCell className={`font-medium ${TABLE_STYLES.CELL}`}>
+          <div className="flex items-center gap-2">
+            <span className="text-orange-500">💰</span>
+            <div>
+              <div className="font-medium">{record.transaction_date?.toLocaleDateString()}</div>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                Sale Transaction
+              </span>
+            </div>
           </div>
-        </div>
-      </TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>{record.quantity.toLocaleString()}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>Rs. {record.price.toFixed(2)}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>Rs. {record.txn_value.toLocaleString()}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>{record.commission_rate}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>Rs. {record.commission_amount?.toLocaleString()}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>Rs. {record.capital_gain_tax?.toLocaleString()}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>Rs. {record.sebon_commission?.toLocaleString()}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>Rs. {record.effective_rate?.toFixed(2) || '0.00'}</TableCell>
-      <TableCell className={TABLE_STYLES.CELL}>Rs. {record.net_receivable?.toLocaleString()}</TableCell>
-      <TableCell className={`${TABLE_STYLES.CELL} ${(record.profit_loss || 0) >= 0 ? TABLE_STYLES.PROFIT : TABLE_STYLES.LOSS}`}>Rs. {record.profit_loss?.toLocaleString()}</TableCell>
+        </TableCell>
+      )}
+      {salesColumnVisibility.quantity && (
+        <TableCell className={TABLE_STYLES.CELL}>{record.quantity.toLocaleString()}</TableCell>
+      )}
+      {salesColumnVisibility.rate && (
+        <TableCell className={TABLE_STYLES.CELL}>Rs. {record.price.toFixed(2)}</TableCell>
+      )}
+      {salesColumnVisibility.amount && (
+        <TableCell className={TABLE_STYLES.CELL}>Rs. {record.txn_value.toLocaleString()}</TableCell>
+      )}
+      {salesColumnVisibility.commission && (
+        <>
+          <TableCell className={TABLE_STYLES.CELL}>{record.commission_rate}</TableCell>
+          <TableCell className={TABLE_STYLES.CELL}>Rs. {record.commission_amount?.toLocaleString()}</TableCell>
+          <TableCell className={TABLE_STYLES.CELL}>Rs. {record.capital_gain_tax?.toLocaleString()}</TableCell>
+          <TableCell className={TABLE_STYLES.CELL}>Rs. {record.sebon_commission?.toLocaleString()}</TableCell>
+          <TableCell className={TABLE_STYLES.CELL}>Rs. {record.effective_rate?.toFixed(2) || '0.00'}</TableCell>
+        </>
+      )}
+      {salesColumnVisibility.netAmount && (
+        <TableCell className={TABLE_STYLES.CELL}>Rs. {record.net_receivable?.toLocaleString()}</TableCell>
+      )}
+      {salesColumnVisibility.profitLoss && (
+        <TableCell className={`${TABLE_STYLES.CELL} ${(record.profit_loss || 0) >= 0 ? TABLE_STYLES.PROFIT : TABLE_STYLES.LOSS}`}>Rs. {record.profit_loss?.toLocaleString()}</TableCell>
+      )}
       <TableCell className={`text-right ${TABLE_STYLES.CELL}`}>{record.client_id}</TableCell>
     </TableRow>
     ))
@@ -1610,19 +1719,35 @@ export default function ViewLedger() {
   {ledgerData?.totals && (
     <TableFooter>
       <TableRow className={TABLE_STYLES.FOOTER}>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>TOTAL</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>{ledgerData.totals.sales.totalQuantity.toLocaleString()}</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.sales.totalTxnValue.toLocaleString()}</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.sales.totalCommissionAmount.toLocaleString()}</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.sales.totalCapitalGainTax.toLocaleString()}</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.sales.totalSebonCommission.toLocaleString()}</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.sales.totalNetReceivable.toLocaleString()}</TableCell>
-        <TableCell className={`font-semibold ${TABLE_STYLES.CELL} ${ledgerData.totals.sales.totalProfitLoss >= 0 ? TABLE_STYLES.PROFIT : TABLE_STYLES.LOSS}`}>
-          Rs. {ledgerData.totals.sales.totalProfitLoss.toLocaleString()}
-        </TableCell>
+        {salesColumnVisibility.date && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>TOTAL</TableCell>
+        )}
+        {salesColumnVisibility.quantity && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>{ledgerData.totals.sales.totalQuantity.toLocaleString()}</TableCell>
+        )}
+        {salesColumnVisibility.rate && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
+        )}
+        {salesColumnVisibility.amount && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.sales.totalTxnValue.toLocaleString()}</TableCell>
+        )}
+        {salesColumnVisibility.commission && (
+          <>
+            <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
+            <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.sales.totalCommissionAmount.toLocaleString()}</TableCell>
+            <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.sales.totalCapitalGainTax.toLocaleString()}</TableCell>
+            <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.sales.totalSebonCommission.toLocaleString()}</TableCell>
+            <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
+          </>
+        )}
+        {salesColumnVisibility.netAmount && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>Rs. {ledgerData.totals.sales.totalNetReceivable.toLocaleString()}</TableCell>
+        )}
+        {salesColumnVisibility.profitLoss && (
+          <TableCell className={`font-semibold ${TABLE_STYLES.CELL} ${ledgerData.totals.sales.totalProfitLoss >= 0 ? TABLE_STYLES.PROFIT : TABLE_STYLES.LOSS}`}>
+            Rs. {ledgerData.totals.sales.totalProfitLoss.toLocaleString()}
+          </TableCell>
+        )}
         <TableCell className={`font-semibold ${TABLE_STYLES.CELL}`}>-</TableCell>
       </TableRow>
     </TableFooter>

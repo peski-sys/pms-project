@@ -968,54 +968,144 @@ export default function DashboardTwo() {
             <Table className="min-w-full">
               <TableHeader>
                 <TableRow>
-                  <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'company')}>
-                    Company <SortIndicator field="company" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
-                  </TableHead>
-                  <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'code')}>
-                    Code <SortIndicator field="code" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
-                  </TableHead>
-                  <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'category')}>
-                    Category <SortIndicator field="category" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
-                  </TableHead>
-                  <TableHead colSpan={3} className="text-center border-r">Opening</TableHead>
-                  <TableHead colSpan={3} className="text-center border-r">Purchase</TableHead>
-                  <TableHead colSpan={2} className="text-center border-r">Right Share</TableHead>
-                  <TableHead colSpan={2} className="text-center border-r">Bonus</TableHead>
-                  <TableHead colSpan={4} className="text-center border-r">Sales</TableHead>
-                  <TableHead colSpan={3} className="text-center border-r">Closing</TableHead>
-                  <TableHead colSpan={2} className="text-center border-r">Holdings Type</TableHead>
-                  <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
-                  <TableHead rowSpan={2} className="text-center border-r">Revaluation Amount</TableHead>
-                  <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
+                  {columnVisibility.company && (
+                    <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'company')}>
+                      Company <SortIndicator field="company" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
+                  )}
+                  {columnVisibility.code && (
+                    <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'code')}>
+                      Code <SortIndicator field="code" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
+                  )}
+                  {columnVisibility.category && (
+                    <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'category')}>
+                      Category <SortIndicator field="category" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
+                  )}
+                  {(columnVisibility.opening_quantity || columnVisibility.opening_rate || columnVisibility.opening_amount) && (
+                    <TableHead colSpan={
+                      (columnVisibility.opening_quantity ? 1 : 0) + 
+                      (columnVisibility.opening_rate ? 1 : 0) + 
+                      (columnVisibility.opening_amount ? 1 : 0)
+                    } className="text-center border-r">Opening</TableHead>
+                  )}
+                  {(columnVisibility.purchase_quantity || columnVisibility.purchase_rate || columnVisibility.purchase_amount) && (
+                    <TableHead colSpan={
+                      (columnVisibility.purchase_quantity ? 1 : 0) + 
+                      (columnVisibility.purchase_rate ? 1 : 0) + 
+                      (columnVisibility.purchase_amount ? 1 : 0)
+                    } className="text-center border-r">Purchase</TableHead>
+                  )}
+                  {(columnVisibility.right_quantity || columnVisibility.right_total) && (
+                    <TableHead colSpan={
+                      (columnVisibility.right_quantity ? 1 : 0) + 
+                      (columnVisibility.right_total ? 1 : 0)
+                    } className="text-center border-r">Right Share</TableHead>
+                  )}
+                  {(columnVisibility.bonus_quantity || columnVisibility.bonus_book_close_date) && (
+                    <TableHead colSpan={
+                      (columnVisibility.bonus_quantity ? 1 : 0) + 
+                      (columnVisibility.bonus_book_close_date ? 1 : 0)
+                    } className="text-center border-r">Bonus</TableHead>
+                  )}
+                  {(columnVisibility.sales_quantity || columnVisibility.sales_cost || columnVisibility.sales_amount || columnVisibility.sales_profit) && (
+                    <TableHead colSpan={
+                      (columnVisibility.sales_quantity ? 1 : 0) + 
+                      (columnVisibility.sales_cost ? 1 : 0) + 
+                      (columnVisibility.sales_amount ? 1 : 0) + 
+                      (columnVisibility.sales_profit ? 1 : 0)
+                    } className="text-center border-r">Sales</TableHead>
+                  )}
+                  {(columnVisibility.closing_quantity || columnVisibility.closing_rate || columnVisibility.closing_amount) && (
+                    <TableHead colSpan={
+                      (columnVisibility.closing_quantity ? 1 : 0) + 
+                      (columnVisibility.closing_rate ? 1 : 0) + 
+                      (columnVisibility.closing_amount ? 1 : 0)
+                    } className="text-center border-r">Closing</TableHead>
+                  )}
+                  {(columnVisibility.demat || columnVisibility.non_demat) && (
+                    <TableHead colSpan={
+                      (columnVisibility.demat ? 1 : 0) + 
+                      (columnVisibility.non_demat ? 1 : 0)
+                    } className="text-center border-r">Holdings Type</TableHead>
+                  )}
+                  {columnVisibility.market_price && (
+                    <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
+                  )}
+                  {columnVisibility.revaluation_amount && (
+                    <TableHead rowSpan={2} className="text-center border-r">Revaluation Amount</TableHead>
+                  )}
+                  {columnVisibility.remarks && (
+                    <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
+                  )}
                 </TableRow>
                 
                 <TableRow>
-                  <TableHead className="text-center">Quantity</TableHead>
-                  <TableHead className="text-center">Rate</TableHead>
-                  <TableHead className="text-center border-r">Amount</TableHead>
-                  <TableHead className="text-center">Quantity</TableHead>
-                  <TableHead className="text-center">Rate</TableHead>
-                  <TableHead className="text-center border-r">Amount</TableHead>
-                  <TableHead className="text-center">Quantity</TableHead>
-                  <TableHead className="text-center border-r">Total</TableHead>
-                  <TableHead className="text-center">Quantity</TableHead>
-                  <TableHead className="text-center border-r">Book Close Date</TableHead>
-                  <TableHead className="text-center">Quantity</TableHead>
-                  <TableHead className="text-center">Cost</TableHead>
-                  <TableHead className="text-center">Amount</TableHead>
-                  <TableHead className="text-center border-r">Profit</TableHead>
-                  <TableHead className="text-center">Quantity</TableHead>
-                  <TableHead className="text-center">Rate</TableHead>
-                  <TableHead className="text-center border-r">Amount</TableHead>
-                  <TableHead className="text-center">DEMAT</TableHead>
-                  <TableHead className="text-center border-r">NON-DEMAT</TableHead>
+                  {columnVisibility.opening_quantity && (
+                    <TableHead className="text-center">Quantity</TableHead>
+                  )}
+                  {columnVisibility.opening_rate && (
+                    <TableHead className="text-center">Rate</TableHead>
+                  )}
+                  {columnVisibility.opening_amount && (
+                    <TableHead className="text-center border-r">Amount</TableHead>
+                  )}
+                  {columnVisibility.purchase_quantity && (
+                    <TableHead className="text-center">Quantity</TableHead>
+                  )}
+                  {columnVisibility.purchase_rate && (
+                    <TableHead className="text-center">Rate</TableHead>
+                  )}
+                  {columnVisibility.purchase_amount && (
+                    <TableHead className="text-center border-r">Amount</TableHead>
+                  )}
+                  {columnVisibility.right_quantity && (
+                    <TableHead className="text-center">Quantity</TableHead>
+                  )}
+                  {columnVisibility.right_total && (
+                    <TableHead className="text-center border-r">Total</TableHead>
+                  )}
+                  {columnVisibility.bonus_quantity && (
+                    <TableHead className="text-center">Quantity</TableHead>
+                  )}
+                  {columnVisibility.bonus_book_close_date && (
+                    <TableHead className="text-center border-r">Book Close Date</TableHead>
+                  )}
+                  {columnVisibility.sales_quantity && (
+                    <TableHead className="text-center">Quantity</TableHead>
+                  )}
+                  {columnVisibility.sales_cost && (
+                    <TableHead className="text-center">Cost</TableHead>
+                  )}
+                  {columnVisibility.sales_amount && (
+                    <TableHead className="text-center">Amount</TableHead>
+                  )}
+                  {columnVisibility.sales_profit && (
+                    <TableHead className="text-center border-r">Profit</TableHead>
+                  )}
+                  {columnVisibility.closing_quantity && (
+                    <TableHead className="text-center">Quantity</TableHead>
+                  )}
+                  {columnVisibility.closing_rate && (
+                    <TableHead className="text-center">Rate</TableHead>
+                  )}
+                  {columnVisibility.closing_amount && (
+                    <TableHead className="text-center border-r">Amount</TableHead>
+                  )}
+                  {columnVisibility.demat && (
+                    <TableHead className="text-center">DEMAT</TableHead>
+                  )}
+                  {columnVisibility.non_demat && (
+                    <TableHead className="text-center border-r">NON-DEMAT</TableHead>
+                  )}
                 </TableRow>
               </TableHeader>
               
               <TableBody>
                 {isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={21} className="text-center py-8">
+                    <TableCell colSpan={Object.values(columnVisibility).filter(Boolean).length} className="text-center py-8">
                       Loading {subClass.sub_name} data...
                     </TableCell>
                   </TableRow>
@@ -1026,48 +1116,98 @@ export default function DashboardTwo() {
                       className={data.isIPOStaging ? "bg-yellow-100 hover:bg-yellow-200" : ""}
                       title={data.isIPOStaging ? "IPO Staging (Not Dematerialized)" : undefined}
                     >
-                      <TableCell className="font-medium border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.company}</Link></TableCell>
-                      <TableCell className="text-center border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.code}</Link></TableCell>
-                      <TableCell className="text-center border-r">{data.category}</TableCell>
-                      <TableCell className="text-center">{data.opening_quantity.toLocaleString()}</TableCell>
-                      <TableCell className="text-center">Rs. {data.opening_rate.toFixed(2)}</TableCell>
-                      <TableCell className="text-center border-r">Rs. {data.opening_amount.toLocaleString()}</TableCell>
-                      <TableCell className="text-center">{data.purchase_quantity.toLocaleString()}</TableCell>
-                      <TableCell className="text-center">Rs. {data.purchase_rate.toFixed(2)}</TableCell>
-                      <TableCell className="text-center border-r">Rs. {data.purchase_amount.toLocaleString()}</TableCell>
-                      <TableCell className="text-center">{data.right_quantity.toLocaleString()}</TableCell>
-                      <TableCell className="text-center border-r">Rs. {data.right_total.toLocaleString()}</TableCell>
-                      <TableCell className="text-center">{data.bonus_quantity.toLocaleString()}</TableCell>
-                      <TableCell className="text-center border-r">{data.bonus_book_close_date || '-'}</TableCell>
-                      <TableCell className="text-center">{data.sales_quantity.toLocaleString()}</TableCell>
-                      <TableCell className="text-center">Rs. {data.sales_cost.toLocaleString()}</TableCell>
-                      <TableCell className="text-center">Rs. {data.sales_amount.toLocaleString()}</TableCell>
-                      <TableCell className={`text-center border-r ${
-                        data.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
-                      }`}>
-                        Rs. {data.sales_profit.toLocaleString()}
-                      </TableCell>
-                      <TableCell className="text-center">{data.closing_quantity.toLocaleString()}</TableCell>
-                      <TableCell className="text-center">Rs. {data.closing_rate.toFixed(2)}</TableCell>
-                      <TableCell className="text-center border-r">Rs. {data.closing_amount.toLocaleString()}</TableCell>
-                      <TableCell className="text-center">{data.demat.toLocaleString()}</TableCell>
-                      <TableCell className="text-center border-r">{data.non_demat.toLocaleString()}</TableCell>
-                      <TableCell className="text-center border-r font-semibold">Rs. {data.market_price.toFixed(2)}</TableCell>
-                      <TableCell className="text-center border-r font-semibold">Rs. {(data.closing_quantity * data.market_price).toLocaleString()}</TableCell>
-                      <TableCell className="text-center">
-                        <InlineRemarks
-                          initial={data.remarks || ''}
-                          onSave={async (value) => {
-                            if (!fiscalID) return;
-                            await saveFYBRemarks({ clientName: currentFund, fiscalYearId: Number(fiscalID), symbol: data.code, remarks: value })
-                          }}
-                        />
-                      </TableCell>
+                      {columnVisibility.company && (
+                        <TableCell className="font-medium border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.company}</Link></TableCell>
+                      )}
+                      {columnVisibility.code && (
+                        <TableCell className="text-center border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.code}</Link></TableCell>
+                      )}
+                      {columnVisibility.category && (
+                        <TableCell className="text-center border-r">{data.category}</TableCell>
+                      )}
+                      {columnVisibility.opening_quantity && (
+                        <TableCell className="text-center">{data.opening_quantity.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.opening_rate && (
+                        <TableCell className="text-center">Rs. {data.opening_rate.toFixed(2)}</TableCell>
+                      )}
+                      {columnVisibility.opening_amount && (
+                        <TableCell className="text-center border-r">Rs. {data.opening_amount.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.purchase_quantity && (
+                        <TableCell className="text-center">{data.purchase_quantity.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.purchase_rate && (
+                        <TableCell className="text-center">Rs. {data.purchase_rate.toFixed(2)}</TableCell>
+                      )}
+                      {columnVisibility.purchase_amount && (
+                        <TableCell className="text-center border-r">Rs. {data.purchase_amount.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.right_quantity && (
+                        <TableCell className="text-center">{data.right_quantity.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.right_total && (
+                        <TableCell className="text-center border-r">Rs. {data.right_total.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.bonus_quantity && (
+                        <TableCell className="text-center">{data.bonus_quantity.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.bonus_book_close_date && (
+                        <TableCell className="text-center border-r">{data.bonus_book_close_date || '-'}</TableCell>
+                      )}
+                      {columnVisibility.sales_quantity && (
+                        <TableCell className="text-center">{data.sales_quantity.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.sales_cost && (
+                        <TableCell className="text-center">Rs. {data.sales_cost.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.sales_amount && (
+                        <TableCell className="text-center">Rs. {data.sales_amount.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.sales_profit && (
+                        <TableCell className={`text-center border-r ${
+                          data.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
+                        }`}>
+                          Rs. {data.sales_profit.toLocaleString()}
+                        </TableCell>
+                      )}
+                      {columnVisibility.closing_quantity && (
+                        <TableCell className="text-center">{data.closing_quantity.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.closing_rate && (
+                        <TableCell className="text-center">Rs. {data.closing_rate.toFixed(2)}</TableCell>
+                      )}
+                      {columnVisibility.closing_amount && (
+                        <TableCell className="text-center border-r">Rs. {data.closing_amount.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.demat && (
+                        <TableCell className="text-center">{data.demat.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.non_demat && (
+                        <TableCell className="text-center border-r">{data.non_demat.toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.market_price && (
+                        <TableCell className="text-center border-r font-semibold">Rs. {data.market_price.toFixed(2)}</TableCell>
+                      )}
+                      {columnVisibility.revaluation_amount && (
+                        <TableCell className="text-center border-r font-semibold">Rs. {(data.closing_quantity * data.market_price).toLocaleString()}</TableCell>
+                      )}
+                      {columnVisibility.remarks && (
+                        <TableCell className="text-center">
+                          <InlineRemarks
+                            initial={data.remarks || ''}
+                            onSave={async (value) => {
+                              if (!fiscalID) return;
+                              await saveFYBRemarks({ clientName: currentFund, fiscalYearId: Number(fiscalID), symbol: data.code, remarks: value })
+                            }}
+                          />
+                        </TableCell>
+                      )}
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={21} className="text-center py-8 text-gray-500">
+                    <TableCell colSpan={Object.values(columnVisibility).filter(Boolean).length} className="text-center py-8 text-gray-500">
                       No {subClass.sub_name} securities found.
                     </TableCell>
                   </TableRow>
@@ -1078,35 +1218,85 @@ export default function DashboardTwo() {
               {filteredData.length > 0 && (
                 <TableFooter>
                   <TableRow className="bg-gray-100 font-semibold">
-                    <TableCell className="font-bold border-r">TOTAL</TableCell>
-                    <TableCell className="border-r">-</TableCell>
-                    <TableCell className="border-r">-</TableCell>
-                    <TableCell className="text-center">{subClassTotals.opening_quantity.toLocaleString()}</TableCell>
-                    <TableCell className="text-center">-</TableCell>
-                    <TableCell className="text-center border-r">Rs. {subClassTotals.opening_amount.toLocaleString()}</TableCell>
-                    <TableCell className="text-center">{subClassTotals.purchase_quantity.toLocaleString()}</TableCell>
-                    <TableCell className="text-center">-</TableCell>
-                    <TableCell className="text-center border-r">Rs. {subClassTotals.purchase_amount.toLocaleString()}</TableCell>
-                    <TableCell className="text-center">{subClassTotals.right_quantity.toLocaleString()}</TableCell>
-                    <TableCell className="text-center border-r">Rs. {subClassTotals.right_total.toLocaleString()}</TableCell>
-                    <TableCell className="text-center">{subClassTotals.bonus_quantity.toLocaleString()}</TableCell>
-                    <TableCell className="text-center border-r">-</TableCell>
-                    <TableCell className="text-center">{subClassTotals.sales_quantity.toLocaleString()}</TableCell>
-                    <TableCell className="text-center">Rs. {subClassTotals.sales_cost.toLocaleString()}</TableCell>
-                    <TableCell className="text-center">Rs. {subClassTotals.sales_amount.toLocaleString()}</TableCell>
-                    <TableCell className={`text-center border-r ${
-                      subClassTotals.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      Rs. {subClassTotals.sales_profit.toLocaleString()}
-                    </TableCell>
-                    <TableCell className="text-center">{subClassTotals.closing_quantity.toLocaleString()}</TableCell>
-                    <TableCell className="text-center">-</TableCell>
-                    <TableCell className="text-center border-r">Rs. {subClassTotals.closing_amount.toLocaleString()}</TableCell>
-                    <TableCell className="text-center">{subClassTotals.demat.toLocaleString()}</TableCell>
-                    <TableCell className="text-center border-r">{subClassTotals.non_demat.toLocaleString()}</TableCell>
-                    <TableCell className="text-center border-r">-</TableCell>
-                    <TableCell className="text-center border-r font-bold">Rs. {subClassTotals.revaluation_amount.toLocaleString()}</TableCell>
-                    <TableCell className="text-center">-</TableCell>
+                    {columnVisibility.company && (
+                      <TableCell className="font-bold border-r">TOTAL</TableCell>
+                    )}
+                    {columnVisibility.code && (
+                      <TableCell className="border-r">-</TableCell>
+                    )}
+                    {columnVisibility.category && (
+                      <TableCell className="border-r">-</TableCell>
+                    )}
+                    {columnVisibility.opening_quantity && (
+                      <TableCell className="text-center">{subClassTotals.opening_quantity.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.opening_rate && (
+                      <TableCell className="text-center">-</TableCell>
+                    )}
+                    {columnVisibility.opening_amount && (
+                      <TableCell className="text-center border-r">Rs. {subClassTotals.opening_amount.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.purchase_quantity && (
+                      <TableCell className="text-center">{subClassTotals.purchase_quantity.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.purchase_rate && (
+                      <TableCell className="text-center">-</TableCell>
+                    )}
+                    {columnVisibility.purchase_amount && (
+                      <TableCell className="text-center border-r">Rs. {subClassTotals.purchase_amount.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.right_quantity && (
+                      <TableCell className="text-center">{subClassTotals.right_quantity.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.right_total && (
+                      <TableCell className="text-center border-r">Rs. {subClassTotals.right_total.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.bonus_quantity && (
+                      <TableCell className="text-center">{subClassTotals.bonus_quantity.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.bonus_book_close_date && (
+                      <TableCell className="text-center border-r">-</TableCell>
+                    )}
+                    {columnVisibility.sales_quantity && (
+                      <TableCell className="text-center">{subClassTotals.sales_quantity.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.sales_cost && (
+                      <TableCell className="text-center">Rs. {subClassTotals.sales_cost.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.sales_amount && (
+                      <TableCell className="text-center">Rs. {subClassTotals.sales_amount.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.sales_profit && (
+                      <TableCell className={`text-center border-r ${
+                        subClassTotals.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                        Rs. {subClassTotals.sales_profit.toLocaleString()}
+                      </TableCell>
+                    )}
+                    {columnVisibility.closing_quantity && (
+                      <TableCell className="text-center">{subClassTotals.closing_quantity.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.closing_rate && (
+                      <TableCell className="text-center">-</TableCell>
+                    )}
+                    {columnVisibility.closing_amount && (
+                      <TableCell className="text-center border-r">Rs. {subClassTotals.closing_amount.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.demat && (
+                      <TableCell className="text-center">{subClassTotals.demat.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.non_demat && (
+                      <TableCell className="text-center border-r">{subClassTotals.non_demat.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.market_price && (
+                      <TableCell className="text-center border-r">-</TableCell>
+                    )}
+                    {columnVisibility.revaluation_amount && (
+                      <TableCell className="text-center border-r font-bold">Rs. {subClassTotals.revaluation_amount.toLocaleString()}</TableCell>
+                    )}
+                    {columnVisibility.remarks && (
+                      <TableCell className="text-center">-</TableCell>
+                    )}
                   </TableRow>
                 </TableFooter>
               )}
@@ -1440,113 +1630,256 @@ export default function DashboardTwo() {
         <Table className="min-w-full">
           <TableHeader>
             <TableRow>
-              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('company')}>
-                Company <SortIndicator field="company" sortField={tradingSortField} sortOrder={tradingSortOrder} />
-              </TableHead>
-              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('code')}>
-                Code <SortIndicator field="code" sortField={tradingSortField} sortOrder={tradingSortOrder} />
-              </TableHead>
-              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('category')}>
-                Category <SortIndicator field="category" sortField={tradingSortField} sortOrder={tradingSortOrder} />
-              </TableHead>
-              <TableHead colSpan={3} className="text-center border-r">Opening</TableHead>
-              <TableHead colSpan={3} className="text-center border-r">Purchase</TableHead>
-              <TableHead colSpan={2} className="text-center border-r">Right Share</TableHead>
-              <TableHead colSpan={2} className="text-center border-r">Bonus</TableHead>
-              <TableHead colSpan={4} className="text-center border-r">Sales</TableHead>
-              <TableHead colSpan={3} className="text-center border-r">Closing</TableHead>
-              <TableHead colSpan={2} className="text-center border-r">Holdings Type</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Unrealised Amount</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Until <br /> Today %</TableHead>
-              <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
+              {tradingColumnVisibility.company && (
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('company')}>
+                  Company <SortIndicator field="company" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
+              )}
+              {tradingColumnVisibility.code && (
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('code')}>
+                  Code <SortIndicator field="code" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
+              )}
+              {tradingColumnVisibility.category && (
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('category')}>
+                  Category <SortIndicator field="category" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
+              )}
+              {(tradingColumnVisibility.opening_quantity || tradingColumnVisibility.opening_rate || tradingColumnVisibility.opening_amount) && (
+                <TableHead colSpan={
+                  (tradingColumnVisibility.opening_quantity ? 1 : 0) + 
+                  (tradingColumnVisibility.opening_rate ? 1 : 0) + 
+                  (tradingColumnVisibility.opening_amount ? 1 : 0)
+                } className="text-center border-r">Opening</TableHead>
+              )}
+              {(tradingColumnVisibility.purchase_quantity || tradingColumnVisibility.purchase_rate || tradingColumnVisibility.purchase_amount) && (
+                <TableHead colSpan={
+                  (tradingColumnVisibility.purchase_quantity ? 1 : 0) + 
+                  (tradingColumnVisibility.purchase_rate ? 1 : 0) + 
+                  (tradingColumnVisibility.purchase_amount ? 1 : 0)
+                } className="text-center border-r">Purchase</TableHead>
+              )}
+              {(tradingColumnVisibility.right_quantity || tradingColumnVisibility.right_total) && (
+                <TableHead colSpan={
+                  (tradingColumnVisibility.right_quantity ? 1 : 0) + 
+                  (tradingColumnVisibility.right_total ? 1 : 0)
+                } className="text-center border-r">Right Share</TableHead>
+              )}
+              {(tradingColumnVisibility.bonus_quantity || tradingColumnVisibility.bonus_book_close_date) && (
+                <TableHead colSpan={
+                  (tradingColumnVisibility.bonus_quantity ? 1 : 0) + 
+                  (tradingColumnVisibility.bonus_book_close_date ? 1 : 0)
+                } className="text-center border-r">Bonus</TableHead>
+              )}
+              {(tradingColumnVisibility.sales_quantity || tradingColumnVisibility.sales_cost || tradingColumnVisibility.sales_amount || tradingColumnVisibility.sales_profit) && (
+                <TableHead colSpan={
+                  (tradingColumnVisibility.sales_quantity ? 1 : 0) + 
+                  (tradingColumnVisibility.sales_cost ? 1 : 0) + 
+                  (tradingColumnVisibility.sales_amount ? 1 : 0) + 
+                  (tradingColumnVisibility.sales_profit ? 1 : 0)
+                } className="text-center border-r">Sales</TableHead>
+              )}
+              {(tradingColumnVisibility.closing_quantity || tradingColumnVisibility.closing_rate || tradingColumnVisibility.closing_amount) && (
+                <TableHead colSpan={
+                  (tradingColumnVisibility.closing_quantity ? 1 : 0) + 
+                  (tradingColumnVisibility.closing_rate ? 1 : 0) + 
+                  (tradingColumnVisibility.closing_amount ? 1 : 0)
+                } className="text-center border-r">Closing</TableHead>
+              )}
+              {(tradingColumnVisibility.demat || tradingColumnVisibility.non_demat) && (
+                <TableHead colSpan={
+                  (tradingColumnVisibility.demat ? 1 : 0) + 
+                  (tradingColumnVisibility.non_demat ? 1 : 0)
+                } className="text-center border-r">Holdings Type</TableHead>
+              )}
+              {tradingColumnVisibility.market_price && (
+                <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
+              )}
+              {tradingColumnVisibility.unrealised_amount && (
+                <TableHead rowSpan={2} className="text-center border-r">Unrealised Amount</TableHead>
+              )}
+              {tradingColumnVisibility.today_return_percent && (
+                <TableHead rowSpan={2} className="text-center border-r">Until <br /> Today %</TableHead>
+              )}
+              {tradingColumnVisibility.remarks && (
+                <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
+              )}
             </TableRow>
 
             <TableRow>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center">Rate</TableHead>
-              <TableHead className="text-center border-r">Amount</TableHead>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center">Rate</TableHead>
-              <TableHead className="text-center border-r">Amount</TableHead>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center border-r">Total</TableHead>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center border-r">Book Close Date</TableHead>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center">Cost</TableHead>
-              <TableHead className="text-center">Amount</TableHead>
-              <TableHead className="text-center border-r">Profit</TableHead>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center">Rate</TableHead>
-              <TableHead className="text-center border-r">Amount</TableHead>
-              <TableHead className="text-center">DEMAT</TableHead>
-              <TableHead className="text-center border-r">NON-DEMAT</TableHead>
+              {tradingColumnVisibility.opening_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {tradingColumnVisibility.opening_rate && (
+                <TableHead className="text-center">Rate</TableHead>
+              )}
+              {tradingColumnVisibility.opening_amount && (
+                <TableHead className="text-center border-r">Amount</TableHead>
+              )}
+              {tradingColumnVisibility.purchase_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {tradingColumnVisibility.purchase_rate && (
+                <TableHead className="text-center">Rate</TableHead>
+              )}
+              {tradingColumnVisibility.purchase_amount && (
+                <TableHead className="text-center border-r">Amount</TableHead>
+              )}
+              {tradingColumnVisibility.right_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {tradingColumnVisibility.right_total && (
+                <TableHead className="text-center border-r">Total</TableHead>
+              )}
+              {tradingColumnVisibility.bonus_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {tradingColumnVisibility.bonus_book_close_date && (
+                <TableHead className="text-center border-r">Book Close Date</TableHead>
+              )}
+              {tradingColumnVisibility.sales_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {tradingColumnVisibility.sales_cost && (
+                <TableHead className="text-center">Cost</TableHead>
+              )}
+              {tradingColumnVisibility.sales_amount && (
+                <TableHead className="text-center">Amount</TableHead>
+              )}
+              {tradingColumnVisibility.sales_profit && (
+                <TableHead className="text-center border-r">Profit</TableHead>
+              )}
+              {tradingColumnVisibility.closing_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {tradingColumnVisibility.closing_rate && (
+                <TableHead className="text-center">Rate</TableHead>
+              )}
+              {tradingColumnVisibility.closing_amount && (
+                <TableHead className="text-center border-r">Amount</TableHead>
+              )}
+              {tradingColumnVisibility.demat && (
+                <TableHead className="text-center">DEMAT</TableHead>
+              )}
+              {tradingColumnVisibility.non_demat && (
+                <TableHead className="text-center border-r">NON-DEMAT</TableHead>
+              )}
             </TableRow>
           </TableHeader>
 
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={22} className="text-center py-8">
+                <TableCell colSpan={Object.values(tradingColumnVisibility).filter(Boolean).length} className="text-center py-8">
                   Loading metric data...
                 </TableCell>
               </TableRow>
             ) : sortedTradingData.length > 0 ? (
               paginatedTradingData.map((data, index) => (
                 <TableRow key={`trading-${data.code}-${index}`}>
-                  <TableCell className="font-medium border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.company}</Link></TableCell>
-                  <TableCell className="text-center border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.code}</Link></TableCell>
-                  <TableCell className="text-center border-r">{data.category}</TableCell>
-                  <TableCell className="text-center">{data.opening_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">Rs. {data.opening_rate.toFixed(2)}</TableCell>
-                  <TableCell className="text-center border-r">Rs. {data.opening_amount.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">{data.purchase_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">Rs. {data.purchase_rate.toFixed(2)}</TableCell>
-                  <TableCell className="text-center border-r">Rs. {data.purchase_amount.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">{data.right_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center border-r">Rs. {data.right_total.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">{data.bonus_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center border-r">{data.bonus_book_close_date || '-'}</TableCell>
-                  <TableCell className="text-center">{data.sales_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">Rs. {data.sales_cost.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">Rs. {data.sales_amount.toLocaleString()}</TableCell>
-                  <TableCell className={`text-center border-r ${
-                    data.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    Rs. {data.sales_profit.toLocaleString()}
-                  </TableCell>
-                  <TableCell className="text-center">{data.closing_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">Rs. {data.closing_rate.toFixed(2)}</TableCell>
-                  <TableCell className="text-center border-r">Rs. {data.closing_amount.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">{data.demat.toLocaleString()}</TableCell>
-                  <TableCell className="text-center border-r">{data.non_demat.toLocaleString()}</TableCell>
-                  <TableCell className="text-center border-r font-semibold">Rs. {data.market_price.toFixed(2)}</TableCell>
-                  <TableCell className={`text-center border-r font-semibold ${
-                    data.unrealised_amount >= 0 ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    Rs. {data.unrealised_amount.toLocaleString()}
-                  </TableCell>
-                  
-                  <TableCell className={`text-center font-semibold ${
-                    data.today_return_percent >= 0 ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    {data.today_return_percent.toFixed(2)}%
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <InlineRemarks
-                      initial={data.remarks || ''}
-                      onSave={async (value) => {
-                        if (!fiscalID) return;
-                        await saveSymbolHoldingsRemarks({ clientName: currentFund, fiscalYearId: Number(fiscalID), symbol: data.code, remarks: value })
-                      }}
-                    />
-                  </TableCell>
+                  {tradingColumnVisibility.company && (
+                    <TableCell className="font-medium border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.company}</Link></TableCell>
+                  )}
+                  {tradingColumnVisibility.code && (
+                    <TableCell className="text-center border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.code}</Link></TableCell>
+                  )}
+                  {tradingColumnVisibility.category && (
+                    <TableCell className="text-center border-r">{data.category}</TableCell>
+                  )}
+                  {tradingColumnVisibility.opening_quantity && (
+                    <TableCell className="text-center">{data.opening_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.opening_rate && (
+                    <TableCell className="text-center">Rs. {data.opening_rate.toFixed(2)}</TableCell>
+                  )}
+                  {tradingColumnVisibility.opening_amount && (
+                    <TableCell className="text-center border-r">Rs. {data.opening_amount.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.purchase_quantity && (
+                    <TableCell className="text-center">{data.purchase_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.purchase_rate && (
+                    <TableCell className="text-center">Rs. {data.purchase_rate.toFixed(2)}</TableCell>
+                  )}
+                  {tradingColumnVisibility.purchase_amount && (
+                    <TableCell className="text-center border-r">Rs. {data.purchase_amount.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.right_quantity && (
+                    <TableCell className="text-center">{data.right_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.right_total && (
+                    <TableCell className="text-center border-r">Rs. {data.right_total.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.bonus_quantity && (
+                    <TableCell className="text-center">{data.bonus_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.bonus_book_close_date && (
+                    <TableCell className="text-center border-r">{data.bonus_book_close_date || '-'}</TableCell>
+                  )}
+                  {tradingColumnVisibility.sales_quantity && (
+                    <TableCell className="text-center">{data.sales_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.sales_cost && (
+                    <TableCell className="text-center">Rs. {data.sales_cost.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.sales_amount && (
+                    <TableCell className="text-center">Rs. {data.sales_amount.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.sales_profit && (
+                    <TableCell className={`text-center border-r ${
+                      data.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      Rs. {data.sales_profit.toLocaleString()}
+                    </TableCell>
+                  )}
+                  {tradingColumnVisibility.closing_quantity && (
+                    <TableCell className="text-center">{data.closing_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.closing_rate && (
+                    <TableCell className="text-center">Rs. {data.closing_rate.toFixed(2)}</TableCell>
+                  )}
+                  {tradingColumnVisibility.closing_amount && (
+                    <TableCell className="text-center border-r">Rs. {data.closing_amount.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.demat && (
+                    <TableCell className="text-center">{data.demat.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.non_demat && (
+                    <TableCell className="text-center border-r">{data.non_demat.toLocaleString()}</TableCell>
+                  )}
+                  {tradingColumnVisibility.market_price && (
+                    <TableCell className="text-center border-r font-semibold">Rs. {data.market_price.toFixed(2)}</TableCell>
+                  )}
+                  {tradingColumnVisibility.unrealised_amount && (
+                    <TableCell className={`text-center border-r font-semibold ${
+                      data.unrealised_amount >= 0 ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      Rs. {data.unrealised_amount.toLocaleString()}
+                    </TableCell>
+                  )}
+                  {tradingColumnVisibility.today_return_percent && (
+                    <TableCell className={`text-center font-semibold ${
+                      data.today_return_percent >= 0 ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      {data.today_return_percent.toFixed(2)}%
+                    </TableCell>
+                  )}
+                  {tradingColumnVisibility.remarks && (
+                    <TableCell className="text-center">
+                      <InlineRemarks
+                        initial={data.remarks || ''}
+                        onSave={async (value) => {
+                          if (!fiscalID) return;
+                          await saveSymbolHoldingsRemarks({ clientName: currentFund, fiscalYearId: Number(fiscalID), symbol: data.code, remarks: value })
+                        }}
+                      />
+                    </TableCell>
+                  )}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={22} className="text-center py-8 text-gray-500">
+                <TableCell colSpan={Object.values(tradingColumnVisibility).filter(Boolean).length} className="text-center py-8 text-gray-500">
                   No trading securities found. Please apply filters to load data.
                 </TableCell>
               </TableRow>
@@ -1555,44 +1888,96 @@ export default function DashboardTwo() {
           {sortedTradingData.length > 0 && (
             <TableFooter>
               <TableRow className="bg-gray-100 font-semibold">
-                <TableCell className="font-bold border-r">TOTAL</TableCell>
-                <TableCell className="border-r">-</TableCell>
-                <TableCell className="border-r">-</TableCell>
-                <TableCell className="text-center">{tradingTotals.opening_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">-</TableCell>
-                <TableCell className="text-center border-r">Rs. {tradingTotals.opening_amount.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{tradingTotals.purchase_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">-</TableCell>
-                <TableCell className="text-center border-r">Rs. {tradingTotals.purchase_amount.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{tradingTotals.right_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">Rs. {tradingTotals.right_total.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{tradingTotals.bonus_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">-</TableCell>
-                <TableCell className="text-center">{tradingTotals.sales_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">Rs. {tradingTotals.sales_cost.toLocaleString()}</TableCell>
-                <TableCell className="text-center">Rs. {tradingTotals.sales_amount.toLocaleString()}</TableCell>
-                <TableCell className={`text-center border-r ${
-                  tradingTotals.sales_profit >= 0 ? "text-green-600" : "text-red-600"
-                }`}>
-                  Rs. {tradingTotals.sales_profit.toLocaleString()}
-                </TableCell>
-                <TableCell className="text-center">{tradingTotals.closing_quantity.toLocaleString()}</TableCell>
-                <TableCell className="text-center">-</TableCell>
-                <TableCell className="text-center border-r">Rs. {tradingTotals.closing_amount.toLocaleString()}</TableCell>
-                <TableCell className="text-center">{tradingTotals.demat.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">{tradingTotals.non_demat.toLocaleString()}</TableCell>
-                <TableCell className="text-center border-r">-</TableCell>
-                <TableCell className={`text-center border-r ${
-                  tradingTotals.unrealised_amount >= 0 ? "text-green-600" : "text-red-600"
-                }`}>
-                  Rs. {tradingTotals.unrealised_amount.toLocaleString()}
-                </TableCell>
-                <TableCell className={`text-center font-semibold ${
-                  tradingTotalReturnPercent >= 0 ? "text-green-600" : "text-red-600"
-                }`}>
-                  {tradingTotalReturnPercent.toFixed(2)}%
-                </TableCell>
-                <TableCell className="text-center">-</TableCell>
+                {tradingColumnVisibility.company && (
+                  <TableCell className="font-bold border-r">TOTAL</TableCell>
+                )}
+                {tradingColumnVisibility.code && (
+                  <TableCell className="border-r">-</TableCell>
+                )}
+                {tradingColumnVisibility.category && (
+                  <TableCell className="border-r">-</TableCell>
+                )}
+                {tradingColumnVisibility.opening_quantity && (
+                  <TableCell className="text-center">{tradingTotals.opening_quantity.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.opening_rate && (
+                  <TableCell className="text-center">-</TableCell>
+                )}
+                {tradingColumnVisibility.opening_amount && (
+                  <TableCell className="text-center border-r">Rs. {tradingTotals.opening_amount.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.purchase_quantity && (
+                  <TableCell className="text-center">{tradingTotals.purchase_quantity.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.purchase_rate && (
+                  <TableCell className="text-center">-</TableCell>
+                )}
+                {tradingColumnVisibility.purchase_amount && (
+                  <TableCell className="text-center border-r">Rs. {tradingTotals.purchase_amount.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.right_quantity && (
+                  <TableCell className="text-center">{tradingTotals.right_quantity.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.right_total && (
+                  <TableCell className="text-center border-r">Rs. {tradingTotals.right_total.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.bonus_quantity && (
+                  <TableCell className="text-center">{tradingTotals.bonus_quantity.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.bonus_book_close_date && (
+                  <TableCell className="text-center border-r">-</TableCell>
+                )}
+                {tradingColumnVisibility.sales_quantity && (
+                  <TableCell className="text-center">{tradingTotals.sales_quantity.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.sales_cost && (
+                  <TableCell className="text-center">Rs. {tradingTotals.sales_cost.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.sales_amount && (
+                  <TableCell className="text-center">Rs. {tradingTotals.sales_amount.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.sales_profit && (
+                  <TableCell className={`text-center border-r ${
+                    tradingTotals.sales_profit >= 0 ? "text-green-600" : "text-red-600"
+                  }`}>
+                    Rs. {tradingTotals.sales_profit.toLocaleString()}
+                  </TableCell>
+                )}
+                {tradingColumnVisibility.closing_quantity && (
+                  <TableCell className="text-center">{tradingTotals.closing_quantity.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.closing_rate && (
+                  <TableCell className="text-center">-</TableCell>
+                )}
+                {tradingColumnVisibility.closing_amount && (
+                  <TableCell className="text-center border-r">Rs. {tradingTotals.closing_amount.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.demat && (
+                  <TableCell className="text-center">{tradingTotals.demat.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.non_demat && (
+                  <TableCell className="text-center border-r">{tradingTotals.non_demat.toLocaleString()}</TableCell>
+                )}
+                {tradingColumnVisibility.market_price && (
+                  <TableCell className="text-center border-r">-</TableCell>
+                )}
+                {tradingColumnVisibility.unrealised_amount && (
+                  <TableCell className={`text-center border-r ${
+                    tradingTotals.unrealised_amount >= 0 ? "text-green-600" : "text-red-600"
+                  }`}>
+                    Rs. {tradingTotals.unrealised_amount.toLocaleString()}
+                  </TableCell>
+                )}
+                {tradingColumnVisibility.today_return_percent && (
+                  <TableCell className={`text-center font-semibold ${
+                    tradingTotalReturnPercent >= 0 ? "text-green-600" : "text-red-600"
+                  }`}>
+                    {tradingTotalReturnPercent.toFixed(2)}%
+                  </TableCell>
+                )}
+                {tradingColumnVisibility.remarks && (
+                  <TableCell className="text-center">-</TableCell>
+                )}
               </TableRow>
             </TableFooter>
           )}
@@ -1810,54 +2195,144 @@ export default function DashboardTwo() {
         <Table className="min-w-full">
           <TableHeader>
             <TableRow>
-              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('company')}>
-                Company <SortIndicator field="company" sortField={promoterSortField} sortOrder={promoterSortOrder} />
-              </TableHead>
-              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('code')}>
-                Code <SortIndicator field="code" sortField={promoterSortField} sortOrder={promoterSortOrder} />
-              </TableHead>
-              <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('category')}>
-                Category <SortIndicator field="category" sortField={promoterSortField} sortOrder={promoterSortOrder} />
-              </TableHead>
-              <TableHead colSpan={3} className="text-center border-r">Opening</TableHead>
-              <TableHead colSpan={3} className="text-center border-r">Purchase</TableHead>
-              <TableHead colSpan={2} className="text-center border-r">Right Share</TableHead>
-              <TableHead colSpan={2} className="text-center border-r">Bonus</TableHead>
-              <TableHead colSpan={4} className="text-center border-r">Sales</TableHead>
-              <TableHead colSpan={3} className="text-center border-r">Closing</TableHead>
-              <TableHead colSpan={2} className="text-center border-r">Holdings Type</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
-              <TableHead rowSpan={2} className="text-center border-r">Revaluation Amount</TableHead>
-              <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
+              {promoterColumnVisibility.company && (
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('company')}>
+                  Company <SortIndicator field="company" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
+              )}
+              {promoterColumnVisibility.code && (
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('code')}>
+                  Code <SortIndicator field="code" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
+              )}
+              {promoterColumnVisibility.category && (
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('category')}>
+                  Category <SortIndicator field="category" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
+              )}
+              {(promoterColumnVisibility.opening_quantity || promoterColumnVisibility.opening_rate || promoterColumnVisibility.opening_amount) && (
+                <TableHead colSpan={
+                  (promoterColumnVisibility.opening_quantity ? 1 : 0) + 
+                  (promoterColumnVisibility.opening_rate ? 1 : 0) + 
+                  (promoterColumnVisibility.opening_amount ? 1 : 0)
+                } className="text-center border-r">Opening</TableHead>
+              )}
+              {(promoterColumnVisibility.purchase_quantity || promoterColumnVisibility.purchase_rate || promoterColumnVisibility.purchase_amount) && (
+                <TableHead colSpan={
+                  (promoterColumnVisibility.purchase_quantity ? 1 : 0) + 
+                  (promoterColumnVisibility.purchase_rate ? 1 : 0) + 
+                  (promoterColumnVisibility.purchase_amount ? 1 : 0)
+                } className="text-center border-r">Purchase</TableHead>
+              )}
+              {(promoterColumnVisibility.right_quantity || promoterColumnVisibility.right_total) && (
+                <TableHead colSpan={
+                  (promoterColumnVisibility.right_quantity ? 1 : 0) + 
+                  (promoterColumnVisibility.right_total ? 1 : 0)
+                } className="text-center border-r">Right Share</TableHead>
+              )}
+              {(promoterColumnVisibility.bonus_quantity || promoterColumnVisibility.bonus_book_close_date) && (
+                <TableHead colSpan={
+                  (promoterColumnVisibility.bonus_quantity ? 1 : 0) + 
+                  (promoterColumnVisibility.bonus_book_close_date ? 1 : 0)
+                } className="text-center border-r">Bonus</TableHead>
+              )}
+              {(promoterColumnVisibility.sales_quantity || promoterColumnVisibility.sales_cost || promoterColumnVisibility.sales_amount || promoterColumnVisibility.sales_profit) && (
+                <TableHead colSpan={
+                  (promoterColumnVisibility.sales_quantity ? 1 : 0) + 
+                  (promoterColumnVisibility.sales_cost ? 1 : 0) + 
+                  (promoterColumnVisibility.sales_amount ? 1 : 0) + 
+                  (promoterColumnVisibility.sales_profit ? 1 : 0)
+                } className="text-center border-r">Sales</TableHead>
+              )}
+              {(promoterColumnVisibility.closing_quantity || promoterColumnVisibility.closing_rate || promoterColumnVisibility.closing_amount) && (
+                <TableHead colSpan={
+                  (promoterColumnVisibility.closing_quantity ? 1 : 0) + 
+                  (promoterColumnVisibility.closing_rate ? 1 : 0) + 
+                  (promoterColumnVisibility.closing_amount ? 1 : 0)
+                } className="text-center border-r">Closing</TableHead>
+              )}
+              {(promoterColumnVisibility.demat || promoterColumnVisibility.non_demat) && (
+                <TableHead colSpan={
+                  (promoterColumnVisibility.demat ? 1 : 0) + 
+                  (promoterColumnVisibility.non_demat ? 1 : 0)
+                } className="text-center border-r">Holdings Type</TableHead>
+              )}
+              {promoterColumnVisibility.market_price && (
+                <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
+              )}
+              {promoterColumnVisibility.revaluation_amount && (
+                <TableHead rowSpan={2} className="text-center border-r">Revaluation Amount</TableHead>
+              )}
+              {promoterColumnVisibility.remarks && (
+                <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
+              )}
             </TableRow>
             
             <TableRow>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center">Rate</TableHead>
-              <TableHead className="text-center border-r">Amount</TableHead>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center">Rate</TableHead>
-              <TableHead className="text-center border-r">Amount</TableHead>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center border-r">Total</TableHead>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center border-r">Book Close Date</TableHead>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center">Cost</TableHead>
-              <TableHead className="text-center">Amount</TableHead>
-              <TableHead className="text-center border-r">Profit</TableHead>
-              <TableHead className="text-center">Quantity</TableHead>
-              <TableHead className="text-center">Rate</TableHead>
-              <TableHead className="text-center border-r">Amount</TableHead>
-              <TableHead className="text-center">DEMAT</TableHead>
-              <TableHead className="text-center border-r">NON-DEMAT</TableHead>
+              {promoterColumnVisibility.opening_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {promoterColumnVisibility.opening_rate && (
+                <TableHead className="text-center">Rate</TableHead>
+              )}
+              {promoterColumnVisibility.opening_amount && (
+                <TableHead className="text-center border-r">Amount</TableHead>
+              )}
+              {promoterColumnVisibility.purchase_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {promoterColumnVisibility.purchase_rate && (
+                <TableHead className="text-center">Rate</TableHead>
+              )}
+              {promoterColumnVisibility.purchase_amount && (
+                <TableHead className="text-center border-r">Amount</TableHead>
+              )}
+              {promoterColumnVisibility.right_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {promoterColumnVisibility.right_total && (
+                <TableHead className="text-center border-r">Total</TableHead>
+              )}
+              {promoterColumnVisibility.bonus_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {promoterColumnVisibility.bonus_book_close_date && (
+                <TableHead className="text-center border-r">Book Close Date</TableHead>
+              )}
+              {promoterColumnVisibility.sales_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {promoterColumnVisibility.sales_cost && (
+                <TableHead className="text-center">Cost</TableHead>
+              )}
+              {promoterColumnVisibility.sales_amount && (
+                <TableHead className="text-center">Amount</TableHead>
+              )}
+              {promoterColumnVisibility.sales_profit && (
+                <TableHead className="text-center border-r">Profit</TableHead>
+              )}
+              {promoterColumnVisibility.closing_quantity && (
+                <TableHead className="text-center">Quantity</TableHead>
+              )}
+              {promoterColumnVisibility.closing_rate && (
+                <TableHead className="text-center">Rate</TableHead>
+              )}
+              {promoterColumnVisibility.closing_amount && (
+                <TableHead className="text-center border-r">Amount</TableHead>
+              )}
+              {promoterColumnVisibility.demat && (
+                <TableHead className="text-center">DEMAT</TableHead>
+              )}
+              {promoterColumnVisibility.non_demat && (
+                <TableHead className="text-center border-r">NON-DEMAT</TableHead>
+              )}
             </TableRow>
           </TableHeader>
           
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={21} className="text-center py-8">
+                <TableCell colSpan={Object.values(promoterColumnVisibility).filter(Boolean).length} className="text-center py-8">
                   Loading promoter data...
                 </TableCell>
               </TableRow>
@@ -1868,48 +2343,98 @@ export default function DashboardTwo() {
                   className={data.isIPOStaging ? "bg-yellow-100 hover:bg-yellow-200" : ""}
                   title={data.isIPOStaging ? "IPO Staging (Not Dematerialized)" : undefined}
                 >
-                  <TableCell className="font-medium border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.company}</Link></TableCell>
-                  <TableCell className="text-center border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.code}</Link></TableCell>
-                  <TableCell className="text-center border-r">{data.category}</TableCell>
-                  <TableCell className="text-center">{data.opening_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">Rs. {data.opening_rate.toFixed(2)}</TableCell>
-                  <TableCell className="text-center border-r">Rs. {data.opening_amount.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">{data.purchase_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">Rs. {data.purchase_rate.toFixed(2)}</TableCell>
-                  <TableCell className="text-center border-r">Rs. {data.purchase_amount.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">{data.right_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center border-r">Rs. {data.right_total.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">{data.bonus_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center border-r">{data.bonus_book_close_date || '-'}</TableCell>
-                  <TableCell className="text-center">{data.sales_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">Rs. {data.sales_cost.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">Rs. {data.sales_amount.toLocaleString()}</TableCell>
-                  <TableCell className={`text-center border-r ${
-                    data.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    Rs. {data.sales_profit.toLocaleString()}
-                  </TableCell>
-                  <TableCell className="text-center">{data.closing_quantity.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">Rs. {data.closing_rate.toFixed(2)}</TableCell>
-                  <TableCell className="text-center border-r">Rs. {data.closing_amount.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">{data.demat.toLocaleString()}</TableCell>
-                  <TableCell className="text-center border-r">{data.non_demat.toLocaleString()}</TableCell>
-                  <TableCell className="text-center border-r font-semibold">Rs. {data.market_price.toFixed(2)}</TableCell>
-                  <TableCell className="text-center border-r font-semibold">Rs. {(data.closing_quantity * data.market_price).toLocaleString()}</TableCell>
-                  <TableCell className="text-center">
-                    <InlineRemarks
-                      initial={data.remarks || ''}
-                      onSave={async (value) => {
-                        if (!fiscalID) return;
-                        await saveFYBRemarks({ clientName: currentFund, fiscalYearId: Number(fiscalID), symbol: data.code, remarks: value })
-                      }}
-                    />
-                  </TableCell>
+                  {promoterColumnVisibility.company && (
+                    <TableCell className="font-medium border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.company}</Link></TableCell>
+                  )}
+                  {promoterColumnVisibility.code && (
+                    <TableCell className="text-center border-r"><Link href={`/dashboard/stock/${data.code}`} target="_blank">{data.code}</Link></TableCell>
+                  )}
+                  {promoterColumnVisibility.category && (
+                    <TableCell className="text-center border-r">{data.category}</TableCell>
+                  )}
+                  {promoterColumnVisibility.opening_quantity && (
+                    <TableCell className="text-center">{data.opening_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.opening_rate && (
+                    <TableCell className="text-center">Rs. {data.opening_rate.toFixed(2)}</TableCell>
+                  )}
+                  {promoterColumnVisibility.opening_amount && (
+                    <TableCell className="text-center border-r">Rs. {data.opening_amount.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.purchase_quantity && (
+                    <TableCell className="text-center">{data.purchase_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.purchase_rate && (
+                    <TableCell className="text-center">Rs. {data.purchase_rate.toFixed(2)}</TableCell>
+                  )}
+                  {promoterColumnVisibility.purchase_amount && (
+                    <TableCell className="text-center border-r">Rs. {data.purchase_amount.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.right_quantity && (
+                    <TableCell className="text-center">{data.right_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.right_total && (
+                    <TableCell className="text-center border-r">Rs. {data.right_total.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.bonus_quantity && (
+                    <TableCell className="text-center">{data.bonus_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.bonus_book_close_date && (
+                    <TableCell className="text-center border-r">{data.bonus_book_close_date || '-'}</TableCell>
+                  )}
+                  {promoterColumnVisibility.sales_quantity && (
+                    <TableCell className="text-center">{data.sales_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.sales_cost && (
+                    <TableCell className="text-center">Rs. {data.sales_cost.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.sales_amount && (
+                    <TableCell className="text-center">Rs. {data.sales_amount.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.sales_profit && (
+                    <TableCell className={`text-center border-r ${
+                      data.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      Rs. {data.sales_profit.toLocaleString()}
+                    </TableCell>
+                  )}
+                  {promoterColumnVisibility.closing_quantity && (
+                    <TableCell className="text-center">{data.closing_quantity.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.closing_rate && (
+                    <TableCell className="text-center">Rs. {data.closing_rate.toFixed(2)}</TableCell>
+                  )}
+                  {promoterColumnVisibility.closing_amount && (
+                    <TableCell className="text-center border-r">Rs. {data.closing_amount.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.demat && (
+                    <TableCell className="text-center">{data.demat.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.non_demat && (
+                    <TableCell className="text-center border-r">{data.non_demat.toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.market_price && (
+                    <TableCell className="text-center border-r font-semibold">Rs. {data.market_price.toFixed(2)}</TableCell>
+                  )}
+                  {promoterColumnVisibility.revaluation_amount && (
+                    <TableCell className="text-center border-r font-semibold">Rs. {(data.closing_quantity * data.market_price).toLocaleString()}</TableCell>
+                  )}
+                  {promoterColumnVisibility.remarks && (
+                    <TableCell className="text-center">
+                      <InlineRemarks
+                        initial={data.remarks || ''}
+                        onSave={async (value) => {
+                          if (!fiscalID) return;
+                          await saveFYBRemarks({ clientName: currentFund, fiscalYearId: Number(fiscalID), symbol: data.code, remarks: value })
+                        }}
+                      />
+                    </TableCell>
+                  )}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={21} className="text-center py-8 text-gray-500">
+                <TableCell colSpan={Object.values(promoterColumnVisibility).filter(Boolean).length} className="text-center py-8 text-gray-500">
                   No promoter shares found. Please apply filters to load data.
                 </TableCell>
               </TableRow>

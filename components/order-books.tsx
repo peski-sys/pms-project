@@ -1,5 +1,6 @@
 "use client"
 import { UploadBook } from "./upload-dialog"
+import { BulkUploadDialog } from "./bulk-upload-dialog"
 import { getOrderBooks, viewDataFor } from "@/app/api/orderBooksAPICalls/actions"
 
 import {
@@ -30,16 +31,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { RefreshCw, Search, X, Settings } from "lucide-react"
+import { RefreshCw, Search, X } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { 
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -123,18 +116,8 @@ export default function OrderBooks() {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
 
-  // Search and column visibility state
+  // Search state
   const [searchTerm, setSearchTerm] = useState<string>("")
-  const [columnVisibility, setColumnVisibility] = useState({
-    fileName: true,
-    uploadDate: true,
-    status: true,
-    buyQuantity: true,
-    buyValue: true,
-    sellQuantity: true,
-    sellValue: true,
-    actions: true
-  })
 
 
   const fetchOrders = async () => {
@@ -279,9 +262,10 @@ export default function OrderBooks() {
                     <p className="text-sm font-semibold text-gray-700">Upload Actions</p>
                   </div>
                   {isAdmin && (
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 flex-wrap">
                       <UploadDEMAT onUpload={uploadDone} />
                       <UploadBook onUpload={uploadDone} />
+                      <BulkUploadDialog onUpload={uploadDone} />
                       {/* <UploadMigration onUpload={uploadDone} /> */}
                     </div>
                   )}
@@ -292,7 +276,7 @@ export default function OrderBooks() {
         </div>
       </Card>
 
-      {/* Search and Column Controls */}
+      {/* Search Controls */}
       <Card className="bg-white shadow-lg border border-gray-100">
         <CardHeader className="pb-4">
           <div className="flex justify-between items-center mb-4">
@@ -327,83 +311,6 @@ export default function OrderBooks() {
                 </Button>
               )}
             </div>
-            {/* Column Visibility Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-200 hover:border-orange-300">
-                  <Settings className="h-4 w-4" />
-                  Columns
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 max-h-96 overflow-y-auto">
-                <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem
-                  checked={columnVisibility.fileName}
-                  onCheckedChange={(checked) => 
-                    setColumnVisibility(prev => ({ ...prev, fileName: checked }))
-                  }
-                >
-                  File Name
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={columnVisibility.uploadDate}
-                  onCheckedChange={(checked) => 
-                    setColumnVisibility(prev => ({ ...prev, uploadDate: checked }))
-                  }
-                >
-                  Upload Date
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={columnVisibility.status}
-                  onCheckedChange={(checked) => 
-                    setColumnVisibility(prev => ({ ...prev, status: checked }))
-                  }
-                >
-                  Status
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={columnVisibility.buyQuantity}
-                  onCheckedChange={(checked) => 
-                    setColumnVisibility(prev => ({ ...prev, buyQuantity: checked }))
-                  }
-                >
-                  Buy Quantity
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={columnVisibility.buyValue}
-                  onCheckedChange={(checked) => 
-                    setColumnVisibility(prev => ({ ...prev, buyValue: checked }))
-                  }
-                >
-                  Buy Value
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={columnVisibility.sellQuantity}
-                  onCheckedChange={(checked) => 
-                    setColumnVisibility(prev => ({ ...prev, sellQuantity: checked }))
-                  }
-                >
-                  Sell Quantity
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={columnVisibility.sellValue}
-                  onCheckedChange={(checked) => 
-                    setColumnVisibility(prev => ({ ...prev, sellValue: checked }))
-                  }
-                >
-                  Sell Value
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={columnVisibility.actions}
-                  onCheckedChange={(checked) => 
-                    setColumnVisibility(prev => ({ ...prev, actions: checked }))
-                  }
-                >
-                  Actions
-                </DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
         </CardHeader>
       </Card>

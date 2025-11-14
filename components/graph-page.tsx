@@ -1275,132 +1275,194 @@ export default function GraphPageComponent() {
                         <Table className="min-w-full">
                             <TableHeader>
                                 <TableRow className="bg-gray-50">
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('companyName')}>
-                                        <div className="flex items-center justify-between">
-                                            Company Name
-                                            <SortIndicator field="companyName" tableSortField={sortField} tableSortOrder={sortOrder} />
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('code')}>
-                                        <div className="flex items-center justify-between">
-                                            Code
-                                            <SortIndicator field="code" tableSortField={sortField} tableSortOrder={sortOrder} />
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('sector')}>
-                                        <div className="flex items-center justify-between">
-                                            Sector
-                                            <SortIndicator field="sector" tableSortField={sortField} tableSortOrder={sortOrder} />
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('quantity')}>
-                                        <div className="flex items-center justify-end">
-                                            Quantity
-                                            <SortIndicator field="quantity" tableSortField={sortField} tableSortOrder={sortOrder} />
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('bookValue')}>
-                                        <div className="flex items-center justify-end">
-                                            Book Value
-                                            <SortIndicator field="bookValue" tableSortField={sortField} tableSortOrder={sortOrder} />
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('pricePerShare')}>
-                                        <div className="flex items-center justify-end">
-                                            Price Per Share
-                                            <SortIndicator field="pricePerShare" tableSortField={sortField} tableSortOrder={sortOrder} />
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('marketRate')}>
-                                        <div className="flex items-center justify-end">
-                                            Market Rate
-                                            <SortIndicator field="marketRate" tableSortField={sortField} tableSortOrder={sortOrder} />
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('unrealisedPnL')}>
-                                        <div className="flex items-center justify-end">
-                                            Unrealised P&L
-                                            <SortIndicator field="unrealisedPnL" tableSortField={sortField} tableSortOrder={sortOrder} />
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('pnlPercent')}>
-                                        <div className="flex items-center justify-end">
-                                            P&L %
-                                            <SortIndicator field="pnlPercent" tableSortField={sortField} tableSortOrder={sortOrder} />
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('realisedPnL')}>
-                                        <div className="flex items-center justify-end">
-                                            Realised P&L
-                                            <SortIndicator field="realisedPnL" tableSortField={sortField} tableSortOrder={sortOrder} />
-                                        </div>
-                                    </TableHead>
+                                    {portfolioColumnVisibility.companyName && (
+                                        <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('companyName')}>
+                                            <div className="flex items-center justify-between">
+                                                Company Name
+                                                <SortIndicator field="companyName" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                            </div>
+                                        </TableHead>
+                                    )}
+                                    {portfolioColumnVisibility.code && (
+                                        <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('code')}>
+                                            <div className="flex items-center justify-between">
+                                                Code
+                                                <SortIndicator field="code" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                            </div>
+                                        </TableHead>
+                                    )}
+                                    {portfolioColumnVisibility.sector && (
+                                        <TableHead className="font-semibold text-gray-900 py-3 px-4 cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('sector')}>
+                                            <div className="flex items-center justify-between">
+                                                Sector
+                                                <SortIndicator field="sector" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                            </div>
+                                        </TableHead>
+                                    )}
+                                    {portfolioColumnVisibility.quantity && (
+                                        <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('quantity')}>
+                                            <div className="flex items-center justify-end">
+                                                Quantity
+                                                <SortIndicator field="quantity" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                            </div>
+                                        </TableHead>
+                                    )}
+                                    {portfolioColumnVisibility.bookValue && (
+                                        <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('bookValue')}>
+                                            <div className="flex items-center justify-end">
+                                                Book Value
+                                                <SortIndicator field="bookValue" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                            </div>
+                                        </TableHead>
+                                    )}
+                                    {portfolioColumnVisibility.pricePerShare && (
+                                        <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('pricePerShare')}>
+                                            <div className="flex items-center justify-end">
+                                                Price Per Share
+                                                <SortIndicator field="pricePerShare" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                            </div>
+                                        </TableHead>
+                                    )}
+                                    {portfolioColumnVisibility.marketValue && (
+                                        <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('marketRate')}>
+                                            <div className="flex items-center justify-end">
+                                                Market Rate
+                                                <SortIndicator field="marketRate" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                            </div>
+                                        </TableHead>
+                                    )}
+                                    {portfolioColumnVisibility.unrealizedGain && (
+                                        <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('unrealisedPnL')}>
+                                            <div className="flex items-center justify-end">
+                                                Unrealised P&L
+                                                <SortIndicator field="unrealisedPnL" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                            </div>
+                                        </TableHead>
+                                    )}
+                                    {portfolioColumnVisibility.unrealizedGainPercent && (
+                                        <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('pnlPercent')}>
+                                            <div className="flex items-center justify-end">
+                                                P&L %
+                                                <SortIndicator field="pnlPercent" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                            </div>
+                                        </TableHead>
+                                    )}
+                                    {portfolioColumnVisibility.weightage && (
+                                        <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right cursor-pointer hover:bg-gray-100" onClick={() => handlePortfolioHeaderClick('realisedPnL')}>
+                                            <div className="flex items-center justify-end">
+                                                Realised P&L
+                                                <SortIndicator field="realisedPnL" tableSortField={sortField} tableSortOrder={sortOrder} />
+                                            </div>
+                                        </TableHead>
+                                    )}
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 {paginatedPortfolioData.map((stock, index) => (
                                     <TableRow key={`${stock.code}-${index}`} className="hover:bg-gray-50">
-                                        <TableCell className="font-medium py-3 px-4"><Link href={`/dashboard/stock/${stock.code}`} target="_blank">{stock.companyName}</Link></TableCell>
-                                        <TableCell className="font-mono font-semibold text-blue-600 py-3 px-4"><Link href={`/dashboard/stock/${stock.code}`} target="_blank">{stock.code}</Link></TableCell>
-                                        <TableCell className="py-3 px-4">
-                                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                                stock.sector === 'Banking' ? 'bg-blue-100 text-blue-800' :
-                                                stock.sector === 'Hydropower' ? 'bg-cyan-100 text-cyan-800' :
-                                                stock.sector === 'Insurance' ? 'bg-purple-100 text-purple-800' :
-                                                stock.sector === 'Manufacturing' ? 'bg-orange-100 text-orange-800' :
-                                                'bg-gray-100 text-gray-800'
+                                        {portfolioColumnVisibility.companyName && (
+                                            <TableCell className="font-medium py-3 px-4"><Link href={`/dashboard/stock/${stock.code}`} target="_blank">{stock.companyName}</Link></TableCell>
+                                        )}
+                                        {portfolioColumnVisibility.code && (
+                                            <TableCell className="font-mono font-semibold text-blue-600 py-3 px-4"><Link href={`/dashboard/stock/${stock.code}`} target="_blank">{stock.code}</Link></TableCell>
+                                        )}
+                                        {portfolioColumnVisibility.sector && (
+                                            <TableCell className="py-3 px-4">
+                                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                                    stock.sector === 'Banking' ? 'bg-blue-100 text-blue-800' :
+                                                    stock.sector === 'Hydropower' ? 'bg-cyan-100 text-cyan-800' :
+                                                    stock.sector === 'Insurance' ? 'bg-purple-100 text-purple-800' :
+                                                    stock.sector === 'Manufacturing' ? 'bg-orange-100 text-orange-800' :
+                                                    'bg-gray-100 text-gray-800'
+                                                }`}>
+                                                    {stock.sector}
+                                                </span>
+                                            </TableCell>
+                                        )}
+                                        {portfolioColumnVisibility.quantity && (
+                                            <TableCell className="text-right font-medium py-3 px-4">{stock.quantity.toLocaleString()}</TableCell>
+                                        )}
+                                        {portfolioColumnVisibility.bookValue && (
+                                            <TableCell className="text-right py-3 px-4">Rs. {stock.bookValue.toLocaleString()}</TableCell>
+                                        )}
+                                        {portfolioColumnVisibility.pricePerShare && (
+                                            <TableCell className="text-right py-3 px-4">Rs. {stock.pricePerShare.toLocaleString()}</TableCell>
+                                        )}
+                                        {portfolioColumnVisibility.marketValue && (
+                                            <TableCell className="text-right py-3 px-4">Rs. {stock.marketRate.toLocaleString()}</TableCell>
+                                        )}
+                                        {portfolioColumnVisibility.unrealizedGain && (
+                                            <TableCell className={`text-right font-semibold py-3 px-4 ${
+                                                stock.unrealisedPnL >= 0 ? 'text-green-600' : 'text-red-600'
                                             }`}>
-                                                {stock.sector}
-                                            </span>
-                                        </TableCell>
-                                        <TableCell className="text-right font-medium py-3 px-4">{stock.quantity.toLocaleString()}</TableCell>
-                                        <TableCell className="text-right py-3 px-4">Rs. {stock.bookValue.toLocaleString()}</TableCell>    
-                                        <TableCell className="text-right py-3 px-4">Rs. {stock.pricePerShare.toLocaleString()}</TableCell>
-                                        <TableCell className="text-right py-3 px-4">Rs. {stock.marketRate.toLocaleString()}</TableCell>
-                                        <TableCell className={`text-right font-semibold py-3 px-4 ${
-                                            stock.unrealisedPnL >= 0 ? 'text-green-600' : 'text-red-600'
-                                        }`}>
-                                            {stock.unrealisedPnL >= 0 ? '+' : ''}Rs. {stock.unrealisedPnL.toLocaleString()}
-                                        </TableCell>
-                                        <TableCell className={`text-right font-semibold py-3 px-4 ${
-                                            stock.pnlPercent >= 0 ? 'text-green-600' : 'text-red-600'
-                                        }`}>
-                                            {stock.pnlPercent >= 0 ? '+' : ''}{stock.pnlPercent.toFixed(2)}%
-                                        </TableCell>
-                                        <TableCell className={`text-right font-semibold py-3 px-4 ${
-                                            stock.realisedPnL >= 0 ? 'text-green-600' : 'text-red-600'
-                                        }`}>
-                                            {stock.realisedPnL >= 0 ? '+' : ''}Rs. {stock.realisedPnL.toLocaleString()}
-                                        </TableCell>
+                                                {stock.unrealisedPnL >= 0 ? '+' : ''}Rs. {stock.unrealisedPnL.toLocaleString()}
+                                            </TableCell>
+                                        )}
+                                        {portfolioColumnVisibility.unrealizedGainPercent && (
+                                            <TableCell className={`text-right font-semibold py-3 px-4 ${
+                                                stock.pnlPercent >= 0 ? 'text-green-600' : 'text-red-600'
+                                            }`}>
+                                                {stock.pnlPercent >= 0 ? '+' : ''}{stock.pnlPercent.toFixed(2)}%
+                                            </TableCell>
+                                        )}
+                                        {portfolioColumnVisibility.weightage && (
+                                            <TableCell className={`text-right font-semibold py-3 px-4 ${
+                                                stock.realisedPnL >= 0 ? 'text-green-600' : 'text-red-600'
+                                            }`}>
+                                                {stock.realisedPnL >= 0 ? '+' : ''}Rs. {stock.realisedPnL.toLocaleString()}
+                                            </TableCell>
+                                        )}
                                     </TableRow>
                                 ))}
                             </TableBody>
                             <TableFooter>
                                 <TableRow className="bg-gray-100">
-                                    <TableCell colSpan={3} className="font-semibold py-3 px-4">Portfolio Totals</TableCell>
-                                    <TableCell className="text-right font-bold py-3 px-4">
-                                        {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.quantity, 0).toLocaleString()}
-                                    </TableCell>
-                                    <TableCell className="text-right font-bold py-3 px-4">
-                                        Rs. {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.bookValue, 0).toLocaleString()}
-                                    </TableCell>
-                                    <TableCell className="text-right font-bold py-3 px-4">--</TableCell>
-                                    <TableCell className="text-right font-bold py-3 px-4">--</TableCell>
-                                    <TableCell className={`text-right font-bold py-3 px-4 ${
-                                        (comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.unrealisedPnL, 0) >= 0 
-                                            ? 'text-green-600' 
-                                            : 'text-red-600'
-                                    }`}>
-                                        {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.unrealisedPnL, 0) >= 0 ? '+' : ''}Rs. {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.unrealisedPnL, 0).toLocaleString()}
-                                    </TableCell>
-                                    <TableCell className="text-right font-bold py-3 px-4">--</TableCell>
-                                    <TableCell className={`text-right font-bold py-3 px-4 ${
-                                        (comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.realisedPnL, 0) >= 0 
-                                            ? 'text-green-600' 
-                                            : 'text-red-600'
-                                    }`}>
-                                        {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.realisedPnL, 0) >= 0 ? '+' : ''}Rs. {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.realisedPnL, 0).toLocaleString()}
-                                    </TableCell>
+                                    {portfolioColumnVisibility.companyName && (
+                                        <TableCell className="font-semibold py-3 px-4">Portfolio Totals</TableCell>
+                                    )}
+                                    {portfolioColumnVisibility.code && (
+                                        <TableCell className="text-center py-3 px-4">--</TableCell>
+                                    )}
+                                    {portfolioColumnVisibility.sector && (
+                                        <TableCell className="text-center py-3 px-4">--</TableCell>
+                                    )}
+                                    {portfolioColumnVisibility.quantity && (
+                                        <TableCell className="text-right font-bold py-3 px-4">
+                                            {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.quantity, 0).toLocaleString()}
+                                        </TableCell>
+                                    )}
+                                    {portfolioColumnVisibility.bookValue && (
+                                        <TableCell className="text-right font-bold py-3 px-4">
+                                            Rs. {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.bookValue, 0).toLocaleString()}
+                                        </TableCell>
+                                    )}
+                                    {portfolioColumnVisibility.pricePerShare && (
+                                        <TableCell className="text-right font-bold py-3 px-4">--</TableCell>
+                                    )}
+                                    {portfolioColumnVisibility.marketValue && (
+                                        <TableCell className="text-right font-bold py-3 px-4">--</TableCell>
+                                    )}
+                                    {portfolioColumnVisibility.unrealizedGain && (
+                                        <TableCell className={`text-right font-bold py-3 px-4 ${
+                                            (comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.unrealisedPnL, 0) >= 0 
+                                                ? 'text-green-600' 
+                                                : 'text-red-600'
+                                        }`}>
+                                            {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.unrealisedPnL, 0) >= 0 ? '+' : ''}Rs. {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.unrealisedPnL, 0).toLocaleString()}
+                                        </TableCell>
+                                    )}
+                                    {portfolioColumnVisibility.unrealizedGainPercent && (
+                                        <TableCell className="text-right font-bold py-3 px-4">--</TableCell>
+                                    )}
+                                    {portfolioColumnVisibility.weightage && (
+                                        <TableCell className={`text-right font-bold py-3 px-4 ${
+                                            (comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.realisedPnL, 0) >= 0 
+                                                ? 'text-green-600' 
+                                                : 'text-red-600'
+                                        }`}>
+                                            {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.realisedPnL, 0) >= 0 ? '+' : ''}Rs. {(comprehensivePortfolio || []).reduce((sum, stock) => sum + stock.realisedPnL, 0).toLocaleString()}
+                                        </TableCell>
+                                    )}
                                 </TableRow>
                             </TableFooter>
                         </Table>

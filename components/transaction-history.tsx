@@ -681,13 +681,27 @@ export default function TransactionHistoryComponent() {
             <Table className="min-w-full">
               <TableHeader>
                 <TableRow className="bg-gray-50">
-                  <TableHead className="font-semibold text-gray-900 py-3 px-4">Client & Stock</TableHead>
-                  <TableHead className="font-semibold text-gray-900 py-3 px-4">Type</TableHead>
-                  <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Total Qty</TableHead>
-                  <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Avg Price</TableHead>
-                  <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Total Value</TableHead>
-                  <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Trades</TableHead>
-                  <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Date Range</TableHead>
+                  {columnVisibility.symbol && (
+                    <TableHead className="font-semibold text-gray-900 py-3 px-4">Client & Stock</TableHead>
+                  )}
+                  {columnVisibility.transactionType && (
+                    <TableHead className="font-semibold text-gray-900 py-3 px-4">Type</TableHead>
+                  )}
+                  {columnVisibility.quantity && (
+                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Total Qty</TableHead>
+                  )}
+                  {columnVisibility.rate && (
+                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Avg Price</TableHead>
+                  )}
+                  {columnVisibility.amount && (
+                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Total Value</TableHead>
+                  )}
+                  {columnVisibility.commission && (
+                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Trades</TableHead>
+                  )}
+                  {columnVisibility.date && (
+                    <TableHead className="font-semibold text-gray-900 py-3 px-4 text-right">Date Range</TableHead>
+                  )}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -785,7 +799,7 @@ export default function TransactionHistoryComponent() {
                       <React.Fragment key={dateKey}>
                         {/* Date Header Row */}
                         <TableRow className="bg-gray-100 border-b-2">
-                          <TableCell colSpan={7} className="py-4 px-4">
+                          <TableCell colSpan={Object.values(columnVisibility).filter(Boolean).length} className="py-4 px-4">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-4">
                                 <div className="font-semibold text-gray-900">
@@ -837,40 +851,54 @@ export default function TransactionHistoryComponent() {
                             
                             return (
                               <TableRow key={`${dateKey}-${index}`} className="hover:bg-gray-50">
-                                <TableCell className="py-3 px-4">
-                                  <div>
-                                    <div className="font-medium text-gray-900">{group.client_name}</div>
-                                    <div className="text-sm text-gray-500">{group.client_id}</div>
-                                    <div className="font-mono font-semibold text-blue-600 mt-1">{group.symbol}</div>
-                                  </div>
-                                </TableCell>
-                                <TableCell className="py-3 px-4">
-                                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                    (group.transaction_type === 'BUY' || group.transaction_type === 'Buy') 
-                                      ? 'bg-green-100 text-green-800' 
-                                      : 'bg-red-100 text-red-800'
-                                  }`}>
-                                    {group.transaction_type.toUpperCase()}
-                                  </span>
-                                </TableCell>
-                                <TableCell className="text-right font-semibold py-3 px-4">
-                                  {group.totalQuantity.toLocaleString()}
-                                </TableCell>
-                                <TableCell className="text-right py-3 px-4">
-                                  Rs. {avgPrice.toFixed(2)}
-                                </TableCell>
-                                <TableCell className="text-right font-semibold py-3 px-4">
-                                  Rs. {group.totalValue.toLocaleString()}
-                                </TableCell>
-                                <TableCell className="text-right py-3 px-4">
-                                  <div className="text-sm">
-                                    <div className="font-medium">{group.transactions.length}</div>
-                                    <div className="text-xs text-gray-500">trade{group.transactions.length !== 1 ? 's' : ''}</div>
-                                  </div>
-                                </TableCell>
-                                <TableCell className="text-right text-xs text-gray-600 py-3 px-4">
-                                  {dateRange}
-                                </TableCell>
+                                {columnVisibility.symbol && (
+                                  <TableCell className="py-3 px-4">
+                                    <div>
+                                      <div className="font-medium text-gray-900">{group.client_name}</div>
+                                      <div className="text-sm text-gray-500">{group.client_id}</div>
+                                      <div className="font-mono font-semibold text-blue-600 mt-1">{group.symbol}</div>
+                                    </div>
+                                  </TableCell>
+                                )}
+                                {columnVisibility.transactionType && (
+                                  <TableCell className="py-3 px-4">
+                                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                      (group.transaction_type === 'BUY' || group.transaction_type === 'Buy') 
+                                        ? 'bg-green-100 text-green-800' 
+                                        : 'bg-red-100 text-red-800'
+                                    }`}>
+                                      {group.transaction_type.toUpperCase()}
+                                    </span>
+                                  </TableCell>
+                                )}
+                                {columnVisibility.quantity && (
+                                  <TableCell className="text-right font-semibold py-3 px-4">
+                                    {group.totalQuantity.toLocaleString()}
+                                  </TableCell>
+                                )}
+                                {columnVisibility.rate && (
+                                  <TableCell className="text-right py-3 px-4">
+                                    Rs. {avgPrice.toFixed(2)}
+                                  </TableCell>
+                                )}
+                                {columnVisibility.amount && (
+                                  <TableCell className="text-right font-semibold py-3 px-4">
+                                    Rs. {group.totalValue.toLocaleString()}
+                                  </TableCell>
+                                )}
+                                {columnVisibility.commission && (
+                                  <TableCell className="text-right py-3 px-4">
+                                    <div className="text-sm">
+                                      <div className="font-medium">{group.transactions.length}</div>
+                                      <div className="text-xs text-gray-500">trade{group.transactions.length !== 1 ? 's' : ''}</div>
+                                    </div>
+                                  </TableCell>
+                                )}
+                                {columnVisibility.date && (
+                                  <TableCell className="text-right text-xs text-gray-600 py-3 px-4">
+                                    {dateRange}
+                                  </TableCell>
+                                )}
                               </TableRow>
                             );
                           })

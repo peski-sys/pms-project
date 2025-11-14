@@ -155,12 +155,21 @@ export default function TaxCalculationComponent() {
     return TAX_BASE_SECTIONS.reduce((acc, section) => {
       acc[section.key] = {
         symbol: true,
-        companyName: true,
-        quantity: true,
-        taxBase: true,
-        marketValue: true,
-        difference: true,
-        percentage: true
+        company: true,
+        openingQuantity: true,
+        openingBalance: true,
+        purchaseThisYear: true,
+        bonusCost: true,
+        rightCost: true,
+        totalPurchaseCost: true,
+        salesThisYear: true,
+        realisedGainLoss: true,
+        closingValue: true,
+        closingQuantity: true,
+        waccTaxBase: true,
+        waccBooksBase: true,
+        waccMarketPrice: true,
+        waccActualGLCost: true
       }
       return acc
     }, {} as Record<SectionConfig["key"], Record<string, boolean>>)
@@ -371,70 +380,169 @@ export default function TaxCalculationComponent() {
                   Symbol
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
-                  checked={columnVisibility[section.key]?.companyName ?? true}
+                  checked={columnVisibility[section.key]?.company ?? true}
                   onCheckedChange={(checked) => 
                     setColumnVisibility(prev => ({ 
                       ...prev, 
-                      [section.key]: { ...prev[section.key], companyName: checked } 
+                      [section.key]: { ...prev[section.key], company: checked } 
                     }))
                   }
                 >
-                  Company Name
+                  Company
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
-                  checked={columnVisibility[section.key]?.quantity ?? true}
+                  checked={columnVisibility[section.key]?.openingQuantity ?? true}
                   onCheckedChange={(checked) => 
                     setColumnVisibility(prev => ({ 
                       ...prev, 
-                      [section.key]: { ...prev[section.key], quantity: checked } 
+                      [section.key]: { ...prev[section.key], openingQuantity: checked } 
                     }))
                   }
                 >
-                  Quantities
+                  Opening Qty
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
-                  checked={columnVisibility[section.key]?.taxBase ?? true}
+                  checked={columnVisibility[section.key]?.openingBalance ?? true}
                   onCheckedChange={(checked) => 
                     setColumnVisibility(prev => ({ 
                       ...prev, 
-                      [section.key]: { ...prev[section.key], taxBase: checked } 
+                      [section.key]: { ...prev[section.key], openingBalance: checked } 
                     }))
                   }
                 >
-                  Tax Base Values
+                  Opening Balance
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
-                  checked={columnVisibility[section.key]?.marketValue ?? true}
+                  checked={columnVisibility[section.key]?.purchaseThisYear ?? true}
                   onCheckedChange={(checked) => 
                     setColumnVisibility(prev => ({ 
                       ...prev, 
-                      [section.key]: { ...prev[section.key], marketValue: checked } 
+                      [section.key]: { ...prev[section.key], purchaseThisYear: checked } 
                     }))
                   }
                 >
-                  Market Values
+                  Purchase
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
-                  checked={columnVisibility[section.key]?.difference ?? true}
+                  checked={columnVisibility[section.key]?.bonusCost ?? true}
                   onCheckedChange={(checked) => 
                     setColumnVisibility(prev => ({ 
                       ...prev, 
-                      [section.key]: { ...prev[section.key], difference: checked } 
+                      [section.key]: { ...prev[section.key], bonusCost: checked } 
                     }))
                   }
                 >
-                  Differences
+                  Bonus Cost
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
-                  checked={columnVisibility[section.key]?.percentage ?? true}
+                  checked={columnVisibility[section.key]?.rightCost ?? true}
                   onCheckedChange={(checked) => 
                     setColumnVisibility(prev => ({ 
                       ...prev, 
-                      [section.key]: { ...prev[section.key], percentage: checked } 
+                      [section.key]: { ...prev[section.key], rightCost: checked } 
                     }))
                   }
                 >
-                  Percentages
+                  Right Cost
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.totalPurchaseCost ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], totalPurchaseCost: checked } 
+                    }))
+                  }
+                >
+                  Total Purchase Cost
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.salesThisYear ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], salesThisYear: checked } 
+                    }))
+                  }
+                >
+                  Sales This Year
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.realisedGainLoss ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], realisedGainLoss: checked } 
+                    }))
+                  }
+                >
+                  Realised G/L
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.closingValue ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], closingValue: checked } 
+                    }))
+                  }
+                >
+                  Closing Value
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.closingQuantity ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], closingQuantity: checked } 
+                    }))
+                  }
+                >
+                  Closing Qty
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.waccTaxBase ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], waccTaxBase: checked } 
+                    }))
+                  }
+                >
+                  Tax Base
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.waccBooksBase ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], waccBooksBase: checked } 
+                    }))
+                  }
+                >
+                  Books Base
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.waccMarketPrice ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], waccMarketPrice: checked } 
+                    }))
+                  }
+                >
+                  Market Price
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={columnVisibility[section.key]?.waccActualGLCost ?? true}
+                  onCheckedChange={(checked) => 
+                    setColumnVisibility(prev => ({ 
+                      ...prev, 
+                      [section.key]: { ...prev[section.key], waccActualGLCost: checked } 
+                    }))
+                  }
+                >
+                  Actual G/L Cost
                 </DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -445,26 +553,30 @@ export default function TaxCalculationComponent() {
             <Table className="min-w-[1200px]">
               <TableHeader>
                 <TableRow>
-                  <TableHead
-                    rowSpan={2}
-                    className="text-center align-middle cursor-pointer"
-                    onClick={() => handleSort(section.key, "symbol")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Symbol
-                      {renderSortIndicator(section.key, "symbol")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    rowSpan={2}
-                    className="text-center align-middle cursor-pointer"
-                    onClick={() => handleSort(section.key, "company")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Company
-                      {renderSortIndicator(section.key, "company")}
-                    </div>
-                  </TableHead>
+                  {columnVisibility[section.key]?.symbol && (
+                    <TableHead
+                      rowSpan={2}
+                      className="text-center align-middle cursor-pointer"
+                      onClick={() => handleSort(section.key, "symbol")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Symbol
+                        {renderSortIndicator(section.key, "symbol")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.company && (
+                    <TableHead
+                      rowSpan={2}
+                      className="text-center align-middle cursor-pointer"
+                      onClick={() => handleSort(section.key, "company")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Company
+                        {renderSortIndicator(section.key, "company")}
+                      </div>
+                    </TableHead>
+                  )}
                   <TableHead
                     rowSpan={2}
                     className="text-center align-middle cursor-pointer"
@@ -475,148 +587,180 @@ export default function TaxCalculationComponent() {
                       {renderSortIndicator(section.key, "subId")}
                     </div>
                   </TableHead>
-                  <TableHead
-                    rowSpan={2}
-                    className="text-center align-middle cursor-pointer"
-                    onClick={() => handleSort(section.key, "openingQuantity")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Opening Qty
-                      {renderSortIndicator(section.key, "openingQuantity")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    rowSpan={2}
-                    className="text-center align-middle cursor-pointer"
-                    onClick={() => handleSort(section.key, "openingBalance")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Opening Balance
-                      {renderSortIndicator(section.key, "openingBalance")}
-                    </div>
-                  </TableHead>
-                  <TableHead colSpan={4} className="text-center align-middle">This Fiscal Year Costs</TableHead>
-                  <TableHead
-                    rowSpan={2}
-                    className="text-center align-middle cursor-pointer"
-                    onClick={() => handleSort(section.key, "salesThisYear")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Sales This Year
-                      {renderSortIndicator(section.key, "salesThisYear")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    rowSpan={2}
-                    className="text-center align-middle cursor-pointer"
-                    onClick={() => handleSort(section.key, "realisedGainLoss")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Realised G/L
-                      {renderSortIndicator(section.key, "realisedGainLoss")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    rowSpan={2}
-                    className="text-center align-middle cursor-pointer"
-                    onClick={() => handleSort(section.key, "closingValue")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Closing Value
-                      {renderSortIndicator(section.key, "closingValue")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    rowSpan={2}
-                    className="text-center align-middle cursor-pointer"
-                    onClick={() => handleSort(section.key, "closingQuantity")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Closing Qty
-                      {renderSortIndicator(section.key, "closingQuantity")}
-                    </div>
-                  </TableHead>
-                  <TableHead colSpan={4} className="text-center align-middle">WACC Breakdown</TableHead>
+                  {columnVisibility[section.key]?.openingQuantity && (
+                    <TableHead
+                      rowSpan={2}
+                      className="text-center align-middle cursor-pointer"
+                      onClick={() => handleSort(section.key, "openingQuantity")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Opening Qty
+                        {renderSortIndicator(section.key, "openingQuantity")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.openingBalance && (
+                    <TableHead
+                      rowSpan={2}
+                      className="text-center align-middle cursor-pointer"
+                      onClick={() => handleSort(section.key, "openingBalance")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Opening Balance
+                        {renderSortIndicator(section.key, "openingBalance")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {(columnVisibility[section.key]?.purchaseThisYear || columnVisibility[section.key]?.bonusCost || columnVisibility[section.key]?.rightCost || columnVisibility[section.key]?.totalPurchaseCost) && (
+                    <TableHead colSpan={[columnVisibility[section.key]?.purchaseThisYear, columnVisibility[section.key]?.bonusCost, columnVisibility[section.key]?.rightCost, columnVisibility[section.key]?.totalPurchaseCost].filter(Boolean).length} className="text-center align-middle">This Fiscal Year Costs</TableHead>
+                  )}
+                  {columnVisibility[section.key]?.salesThisYear && (
+                    <TableHead
+                      rowSpan={2}
+                      className="text-center align-middle cursor-pointer"
+                      onClick={() => handleSort(section.key, "salesThisYear")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Sales This Year
+                        {renderSortIndicator(section.key, "salesThisYear")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.realisedGainLoss && (
+                    <TableHead
+                      rowSpan={2}
+                      className="text-center align-middle cursor-pointer"
+                      onClick={() => handleSort(section.key, "realisedGainLoss")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Realised G/L
+                        {renderSortIndicator(section.key, "realisedGainLoss")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.closingValue && (
+                    <TableHead
+                      rowSpan={2}
+                      className="text-center align-middle cursor-pointer"
+                      onClick={() => handleSort(section.key, "closingValue")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Closing Value
+                        {renderSortIndicator(section.key, "closingValue")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.closingQuantity && (
+                    <TableHead
+                      rowSpan={2}
+                      className="text-center align-middle cursor-pointer"
+                      onClick={() => handleSort(section.key, "closingQuantity")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Closing Qty
+                        {renderSortIndicator(section.key, "closingQuantity")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {(columnVisibility[section.key]?.waccTaxBase || columnVisibility[section.key]?.waccBooksBase || columnVisibility[section.key]?.waccMarketPrice || columnVisibility[section.key]?.waccActualGLCost) && (
+                    <TableHead colSpan={[columnVisibility[section.key]?.waccTaxBase, columnVisibility[section.key]?.waccBooksBase, columnVisibility[section.key]?.waccMarketPrice, columnVisibility[section.key]?.waccActualGLCost].filter(Boolean).length} className="text-center align-middle">WACC Breakdown</TableHead>
+                  )}
                 </TableRow>
                 <TableRow>
-                  <TableHead
-                    className="text-center cursor-pointer"
-                    onClick={() => handleSort(section.key, "purchaseThisYear")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Purchase
-                      {renderSortIndicator(section.key, "purchaseThisYear")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="text-center cursor-pointer"
-                    onClick={() => handleSort(section.key, "bonusCost")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Bonus Cost
-                      {renderSortIndicator(section.key, "bonusCost")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="text-center cursor-pointer"
-                    onClick={() => handleSort(section.key, "rightCost")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Right Cost
-                      {renderSortIndicator(section.key, "rightCost")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="text-center cursor-pointer"
-                    onClick={() => handleSort(section.key, "totalPurchaseCost")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Total Purchase Cost
-                      {renderSortIndicator(section.key, "totalPurchaseCost")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="text-center cursor-pointer"
-                    onClick={() => handleSort(section.key, "waccTaxBase")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Tax Base
-                      {renderSortIndicator(section.key, "waccTaxBase")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="text-center cursor-pointer"
-                    onClick={() => handleSort(section.key, "waccBooksBase")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Books Base
-                      {renderSortIndicator(section.key, "waccBooksBase")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="text-center cursor-pointer"
-                    onClick={() => handleSort(section.key, "waccMarketPrice")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Market Price
-                      {renderSortIndicator(section.key, "waccMarketPrice")}
-                    </div>
-                  </TableHead>
-                  <TableHead
-                    className="text-center cursor-pointer"
-                    onClick={() => handleSort(section.key, "waccActualGLCost")}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      Actual G/L Cost
-                      {renderSortIndicator(section.key, "waccActualGLCost")}
-                    </div>
-                  </TableHead>
+                  {columnVisibility[section.key]?.purchaseThisYear && (
+                    <TableHead
+                      className="text-center cursor-pointer"
+                      onClick={() => handleSort(section.key, "purchaseThisYear")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Purchase
+                        {renderSortIndicator(section.key, "purchaseThisYear")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.bonusCost && (
+                    <TableHead
+                      className="text-center cursor-pointer"
+                      onClick={() => handleSort(section.key, "bonusCost")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Bonus Cost
+                        {renderSortIndicator(section.key, "bonusCost")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.rightCost && (
+                    <TableHead
+                      className="text-center cursor-pointer"
+                      onClick={() => handleSort(section.key, "rightCost")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Right Cost
+                        {renderSortIndicator(section.key, "rightCost")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.totalPurchaseCost && (
+                    <TableHead
+                      className="text-center cursor-pointer"
+                      onClick={() => handleSort(section.key, "totalPurchaseCost")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Total Purchase Cost
+                        {renderSortIndicator(section.key, "totalPurchaseCost")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.waccTaxBase && (
+                    <TableHead
+                      className="text-center cursor-pointer"
+                      onClick={() => handleSort(section.key, "waccTaxBase")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Tax Base
+                        {renderSortIndicator(section.key, "waccTaxBase")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.waccBooksBase && (
+                    <TableHead
+                      className="text-center cursor-pointer"
+                      onClick={() => handleSort(section.key, "waccBooksBase")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Books Base
+                        {renderSortIndicator(section.key, "waccBooksBase")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.waccMarketPrice && (
+                    <TableHead
+                      className="text-center cursor-pointer"
+                      onClick={() => handleSort(section.key, "waccMarketPrice")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Market Price
+                        {renderSortIndicator(section.key, "waccMarketPrice")}
+                      </div>
+                    </TableHead>
+                  )}
+                  {columnVisibility[section.key]?.waccActualGLCost && (
+                    <TableHead
+                      className="text-center cursor-pointer"
+                      onClick={() => handleSort(section.key, "waccActualGLCost")}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        Actual G/L Cost
+                        {renderSortIndicator(section.key, "waccActualGLCost")}
+                      </div>
+                    </TableHead>
+                  )}
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {pageRows.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={12} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={Object.values(columnVisibility[section.key] || {}).filter(Boolean).length + 1} className="text-center py-8 text-muted-foreground">
                       No records available.
                     </TableCell>
                   </TableRow>
@@ -629,28 +773,60 @@ export default function TaxCalculationComponent() {
                         "transition-colors"
                       )}
                     >
-                      <TableCell className="font-medium">{row.symbol}</TableCell>
-                      <TableCell>{row.company}</TableCell>
+                      {columnVisibility[section.key]?.symbol && (
+                        <TableCell className="font-medium">{row.symbol}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.company && (
+                        <TableCell>{row.company}</TableCell>
+                      )}
                       <TableCell>
                         {row.subId ?? "-"}
                         {row.subName ? (
                           <span className="ml-2 text-xs text-slate-500">{row.subName}</span>
                         ) : null}
                       </TableCell>
-                      <TableCell>{formatQuantity(row.openingQuantity)}</TableCell>
-                      <TableCell>{formatCurrency(row.openingBalance)}</TableCell>
-                      <TableCell>{formatCurrency(row.purchaseThisYear)}</TableCell>
-                      <TableCell>{formatCurrency(row.bonusCost)}</TableCell>
-                      <TableCell>{formatCurrency(row.rightCost)}</TableCell>
-                      <TableCell>{formatCurrency(row.totalPurchaseCost)}</TableCell>
-                      <TableCell>{formatCurrency(row.salesThisYear)}</TableCell>
-                      <TableCell>{formatCurrency(row.realisedGainLoss)}</TableCell>
-                      <TableCell>{formatCurrency(row.closingValue)}</TableCell>
-                      <TableCell>{formatQuantity(row.closingQuantity)}</TableCell>
-                      <TableCell>{formatCurrency(row.waccTaxBase)}</TableCell>
-                      <TableCell>{formatCurrency(row.waccBooksBase)}</TableCell>
-                      <TableCell>{formatCurrency(row.waccMarketPrice)}</TableCell>
-                      <TableCell>{formatCurrency(row.waccActualGLCost)}</TableCell>
+                      {columnVisibility[section.key]?.openingQuantity && (
+                        <TableCell>{formatQuantity(row.openingQuantity)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.openingBalance && (
+                        <TableCell>{formatCurrency(row.openingBalance)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.purchaseThisYear && (
+                        <TableCell>{formatCurrency(row.purchaseThisYear)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.bonusCost && (
+                        <TableCell>{formatCurrency(row.bonusCost)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.rightCost && (
+                        <TableCell>{formatCurrency(row.rightCost)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.totalPurchaseCost && (
+                        <TableCell>{formatCurrency(row.totalPurchaseCost)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.salesThisYear && (
+                        <TableCell>{formatCurrency(row.salesThisYear)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.realisedGainLoss && (
+                        <TableCell>{formatCurrency(row.realisedGainLoss)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.closingValue && (
+                        <TableCell>{formatCurrency(row.closingValue)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.closingQuantity && (
+                        <TableCell>{formatQuantity(row.closingQuantity)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.waccTaxBase && (
+                        <TableCell>{formatCurrency(row.waccTaxBase)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.waccBooksBase && (
+                        <TableCell>{formatCurrency(row.waccBooksBase)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.waccMarketPrice && (
+                        <TableCell>{formatCurrency(row.waccMarketPrice)}</TableCell>
+                      )}
+                      {columnVisibility[section.key]?.waccActualGLCost && (
+                        <TableCell>{formatCurrency(row.waccActualGLCost)}</TableCell>
+                      )}
                     </TableRow>
                   ))
                 )}
@@ -658,18 +834,55 @@ export default function TaxCalculationComponent() {
               {sectionTotals && (
                 <TableFooter>
                   <TableRow className="bg-muted/50">
-                    <TableCell colSpan={3} className="font-semibold text-right">Totals</TableCell>
-                    <TableCell className="font-semibold">{formatQuantity(sectionTotals.openingQuantity)}</TableCell>
-                    <TableCell className="font-semibold">{formatCurrency(sectionTotals.openingBalance)}</TableCell>
-                    <TableCell className="font-semibold">{formatCurrency(sectionTotals.purchaseThisYear)}</TableCell>
-                    <TableCell className="font-semibold">{formatCurrency(sectionTotals.bonusCost)}</TableCell>
-                    <TableCell className="font-semibold">{formatCurrency(sectionTotals.rightCost)}</TableCell>
-                    <TableCell className="font-semibold">{formatCurrency(sectionTotals.totalPurchaseCost)}</TableCell>
-                    <TableCell className="font-semibold">{formatCurrency(sectionTotals.salesThisYear)}</TableCell>
-                    <TableCell className="font-semibold">{formatCurrency(sectionTotals.realisedGainLoss)}</TableCell>
-                    <TableCell className="font-semibold">{formatCurrency(sectionTotals.closingValue)}</TableCell>
-                    <TableCell className="font-semibold">{formatQuantity(sectionTotals.closingQuantity)}</TableCell>
-                    <TableCell colSpan={4}></TableCell>
+                    {columnVisibility[section.key]?.symbol && (
+                      <TableCell className="font-semibold text-right">Totals</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.company && (
+                      <TableCell className="font-semibold"></TableCell>
+                    )}
+                    <TableCell className="font-semibold"></TableCell>
+                    {columnVisibility[section.key]?.openingQuantity && (
+                      <TableCell className="font-semibold">{formatQuantity(sectionTotals.openingQuantity)}</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.openingBalance && (
+                      <TableCell className="font-semibold">{formatCurrency(sectionTotals.openingBalance)}</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.purchaseThisYear && (
+                      <TableCell className="font-semibold">{formatCurrency(sectionTotals.purchaseThisYear)}</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.bonusCost && (
+                      <TableCell className="font-semibold">{formatCurrency(sectionTotals.bonusCost)}</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.rightCost && (
+                      <TableCell className="font-semibold">{formatCurrency(sectionTotals.rightCost)}</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.totalPurchaseCost && (
+                      <TableCell className="font-semibold">{formatCurrency(sectionTotals.totalPurchaseCost)}</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.salesThisYear && (
+                      <TableCell className="font-semibold">{formatCurrency(sectionTotals.salesThisYear)}</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.realisedGainLoss && (
+                      <TableCell className="font-semibold">{formatCurrency(sectionTotals.realisedGainLoss)}</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.closingValue && (
+                      <TableCell className="font-semibold">{formatCurrency(sectionTotals.closingValue)}</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.closingQuantity && (
+                      <TableCell className="font-semibold">{formatQuantity(sectionTotals.closingQuantity)}</TableCell>
+                    )}
+                    {columnVisibility[section.key]?.waccTaxBase && (
+                      <TableCell className="font-semibold"></TableCell>
+                    )}
+                    {columnVisibility[section.key]?.waccBooksBase && (
+                      <TableCell className="font-semibold"></TableCell>
+                    )}
+                    {columnVisibility[section.key]?.waccMarketPrice && (
+                      <TableCell className="font-semibold"></TableCell>
+                    )}
+                    {columnVisibility[section.key]?.waccActualGLCost && (
+                      <TableCell className="font-semibold"></TableCell>
+                    )}
                   </TableRow>
                 </TableFooter>
               )}

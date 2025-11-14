@@ -27,7 +27,7 @@ export async function getCurrentLTP(symbol: string): Promise<number> {
     }
 }
 
-// Batch LTP fetching for multiple symbols
+// Batch LTP fetching for multiple symbols - OPTIMIZED
 export async function getBatchLTP(symbols: string[]): Promise<Map<string, number>> {
     const uniqueSymbols = [...new Set(symbols)];
     const results = new Map<string, number>();
@@ -45,27 +45,63 @@ export async function getBatchLTP(symbols: string[]): Promise<Map<string, number
         }
     }
     
-    // Fetch uncached symbols in parallel
+    console.log(`Cache hits: ${uniqueSymbols.length - uncachedSymbols.length}, Cache misses: ${uncachedSymbols.length}`);
+    
+    // Fetch uncached symbols using batch endpoint
     if (uncachedSymbols.length > 0) {
-        const promises = uncachedSymbols.map(async (symbol) => {
-            try {
-                const response = await fetch(`${microservice_url}/stock/${symbol}`);
-                const data = await response.json();
-                const ltp = data.ltp || 0;
+        try {
+            // Use the new batch endpoint for better performance
+            const response = await fetch(`${microservice_url}/batchStockPrices/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    symbols: uncachedSymbols
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Batch request failed: ${response.status}`);
+            }
+            
+            const batchData = await response.json();
+            
+            // Process batch results and cache them
+            for (const symbol of uncachedSymbols) {
+                const ltp = batchData[symbol]?.ltp || 0;
                 
                 // Cache the result
                 ltpCache.set(symbol, { value: ltp, timestamp: now });
-                return { symbol, ltp };
-            } catch (error) {
-                console.error(`Error fetching LTP for ${symbol}:`, error);
-                return { symbol, ltp: 0 };
+                results.set(symbol, ltp);
             }
-        });
-        
-        const fetchResults = await Promise.all(promises);
-        fetchResults.forEach(({ symbol, ltp }) => {
-            results.set(symbol, ltp);
-        });
+            
+            console.log(`Batch fetched ${uncachedSymbols.length} symbols successfully`);
+            
+        } catch (error) {
+            console.error('Batch LTP fetch failed, falling back to individual requests:', error);
+            
+            // Fallback to individual requests if batch fails
+            const promises = uncachedSymbols.map(async (symbol) => {
+                try {
+                    const response = await fetch(`${microservice_url}/stock/${symbol}`);
+                    const data = await response.json();
+                    const ltp = data.ltp || 0;
+                    
+                    // Cache the result
+                    ltpCache.set(symbol, { value: ltp, timestamp: now });
+                    return { symbol, ltp };
+                } catch (error) {
+                    console.error(`Error fetching LTP for ${symbol}:`, error);
+                    return { symbol, ltp: 0 };
+                }
+            });
+            
+            const fetchResults = await Promise.all(promises);
+            fetchResults.forEach(({ symbol, ltp }) => {
+                results.set(symbol, ltp);
+            });
+        }
     }
     
     return results;

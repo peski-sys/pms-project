@@ -645,6 +645,379 @@ export async function uploadDEMAT(file: File[] | null) {
 
 
 
+export async function bulkUploadOrderBooks(files: File[]) {
+    try {
+        if (!files || files.length === 0) {
+            return { success: false, error: 'No files provided' };
+        }
+
+        if (!microservice_url) {
+            return { success: false, error: 'Microservice URL not configured' };
+        }
+
+        const results = [];
+        let successCount = 0;
+        let errorCount = 0;
+        
+        // CRITICAL: Process Excel files FIRST, then PDFs
+        // PDFs depend on Excel data (contract numbers) being in database first
+        const excelFiles = files.filter(f => f.name.endsWith(".xlsx") || f.name.endsWith(".xls"));
+        const pdfFiles = files.filter(f => f.name.endsWith(".pdf"));
+        
+        console.log(`Processing ${excelFiles.length} Excel files first, then ${pdfFiles.length} PDF files`);
+        
+        // STEP 1: Process ALL Excel files first (sorted by date)
+        for(const forExcel of excelFiles) {
+            
+            try {
+                const formDataExcel = new FormData();
+                formDataExcel.append("file", forExcel);
+
+                const response = await fetch(`${microservice_url}/parseExcelFile/`, {
+                    method: "POST",
+                    body: formDataExcel,
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Microservice returned ${response.status}: ${response.statusText}`);
+                }
+
+                const final_excel: outputStructure[] = await response.json();
+
+                if (!final_excel || final_excel.length === 0) {
+                    throw new Error('No data received from Excel parsing');
+                }
+
+                // Create upload record
+                const uploadRecord = await prisma.uploads.create({
+                    data: { 
+                        file_name: forExcel.name,
+                        is_confirmed: false // Will be auto-confirmed after processing
+                    },
+                });
+
+                // Validate client IDs before insertion
+                const uniqueClientIds = [...new Set(final_excel.map(row => String(row["CLIENT"])))];
+                
+                const existingClients = await prisma.client_broker_mapping.findMany({
+                    where: {
+                        client_id: {
+                            in: uniqueClientIds
+                        }
+                    },
+                    select: {
+                        client_id: true,
+                        client_name: true
+                    }
+                });
+                
+                const existingClientIds = existingClients.map(c => c.client_id);
+                const missingClientIds = uniqueClientIds.filter(id => !existingClientIds.includes(id));
+                
+                if (missingClientIds.length > 0) {
+                    throw new Error(`Client IDs not found: ${missingClientIds.join(', ')}`);
+                }
+                
+                // Get fiscal year mapping
+                const fiscalYearMapping = new Map<string, number>();
+                
+                for (const row of final_excel) {
+                    const transactionDate = new Date(row["TRADE TIME"]);
+                    const dateKey = transactionDate.toDateString();
+                    
+                    if (!fiscalYearMapping.has(dateKey)) {
+                        const fiscalYear = await prisma.fiscal_years.findFirst({
+                            where: {
+                                start_date: { lte: transactionDate },
+                                end_date: { gte: transactionDate }
+                            },
+                            select: { fiscal_year_id: true }
+                        });
+                        
+                        if (fiscalYear) {
+                            fiscalYearMapping.set(dateKey, fiscalYear.fiscal_year_id);
+                        }
+                    }
+                }
+                
+                // Insert order book records
+                await prisma.order_book.createMany({
+                    data: final_excel.map((row) => {
+                        const transactionDate = new Date(row["TRADE TIME"]);
+                        const dateKey = transactionDate.toDateString();
+                        const fiscalYearId = fiscalYearMapping.get(dateKey) || null;
+                        
+                        return {
+                            upload_id: uploadRecord.upload_id,
+                            contract_number: String(row["CONTRACT NO"]),
+                            client_id: String(row["CLIENT"]),
+                            symbol: row["SYMBOL"],
+                            transaction_type: row["TYPE"],
+                            quantity: row["QTY"],
+                            price: row["PRICE"],
+                            txn_value: row["VALUE"],
+                            transaction_date: transactionDate,
+                            fiscal_year_id: fiscalYearId,
+                        };
+                    }),
+                });
+
+                // Auto-confirm the upload (bypass staging)
+                await prisma.$executeRaw`SELECT confirm_staging_records(${uploadRecord.upload_id}::INT)`;
+                
+                await prisma.uploads.update({
+                    data: { is_confirmed: true },
+                    where: { upload_id: uploadRecord.upload_id },
+                });
+
+                // Create audit log
+                await prisma.audit_log.create({
+                    data: {
+                        performed_action: `Bulk uploaded and auto-confirmed: ${forExcel.name}`,
+                    },
+                });
+
+                results.push({ file: forExcel.name, status: 'success', type: 'excel', autoConfirmed: true });
+                successCount++;
+
+            } catch (error) {
+                results.push({ 
+                    file: forExcel.name, 
+                    status: 'error', 
+                    type: 'excel',
+                    error: error instanceof Error ? error.message : 'Excel processing error'
+                });
+                errorCount++;
+            }
+        }
+
+        // STEP 2: Process PDF files ONLY after ALL Excel files are complete
+        // This ensures contract numbers from Excel are available for PDF processing
+        console.log(`Excel processing complete. Starting PDF processing for ${pdfFiles.length} files`);
+        
+        if (pdfFiles.length > 0 && excelFiles.length > 0 && successCount === 0) {
+            // If no Excel files succeeded, skip PDF processing
+            console.log('Skipping PDF processing - no Excel files were successfully processed');
+            pdfFiles.forEach(pdfFile => {
+                results.push({
+                    file: pdfFile.name,
+                    status: 'error',
+                    type: 'pdf',
+                    error: 'Skipped - no Excel files were successfully processed first'
+                });
+                errorCount++;
+            });
+        } else {
+            // Process PDF files
+            for(const forPDF of pdfFiles) {
+            
+            try {
+                const formDataPDF = new FormData();
+                formDataPDF.append("file", forPDF);
+
+                // Get PDF status
+                const statusResponse = await fetch(`${microservice_url}/status/`, {
+                    method: "POST",
+                    body: formDataPDF,
+                });
+
+                if (!statusResponse.ok) {
+                    throw new Error(`Status check failed: ${statusResponse.status}`);
+                }
+
+                const final_response: status_response = await statusResponse.json();
+
+                if (!final_response || !final_response.STATUS) {
+                    throw new Error('Invalid status response from microservice');
+                }
+
+                // Process based on BUY/SELL type (same logic as regular upload)
+                if(final_response.STATUS === "BUY") {
+                    const response = await fetch(`${microservice_url}/parseBUYData/`, {
+                        method: "POST",
+                        body: formDataPDF,
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`BUY data parsing failed: ${response.status}`);
+                    }
+
+                    const final_data: overallBuy = await response.json();
+
+                    if (!final_data || final_data["transactions"].length === 0) {
+                        throw new Error('No BUY data received from PDF parsing');
+                    }
+
+                    // Find the upload_id from the first contract
+                    const first_contract = final_data["transactions"][0];
+                    const find_first_order = await prisma.order_book.findUnique({
+                        where: { contract_number: first_contract.contract_number },
+                        include: {
+                            uploads: { select: { is_confirmed: true, upload_id: true } }
+                        }
+                    });
+
+                    if (find_first_order) {
+                        const upload_id = find_first_order.upload_id;
+
+                        // Create or update PDF record
+                        const existingPdfRecord = await prisma.pdf_records.findFirst({
+                            where: { upload_id: upload_id }
+                        });
+
+                        if (existingPdfRecord) {
+                            await prisma.pdf_records.update({
+                                where: { pdf_id: existingPdfRecord.pdf_id },
+                                data: {
+                                    dp_amount: final_data.dp_amount || 0,
+                                    is_confirmed: true // Auto-confirm for bulk upload
+                                }
+                            });
+                        } else {
+                            await prisma.pdf_records.create({
+                                data: {
+                                    upload_id: upload_id,
+                                    dp_amount: final_data.dp_amount || 0,
+                                    is_confirmed: true // Auto-confirm for bulk upload
+                                }
+                            });
+                        }
+
+                        // Process all transactions and auto-confirm
+                        for (const details of final_data["transactions"]) {
+                            const find_check = await prisma.order_book.findUnique({
+                                where: { contract_number: details.contract_number },
+                                include: {
+                                    uploads: { select: { is_confirmed: true } }
+                                }
+                            });
+
+                            if (find_check && find_check.uploads.is_confirmed) {
+                                // Update main buy_records table directly
+                                await prisma.buy_records.update({
+                                    where: { contract_number: details.contract_number },
+                                    data: {
+                                        commission_rate: details.commission_rate,
+                                        commission_amount: details.commission_amount,
+                                        sebon_commission: details.sebon_commission,
+                                        effective_rate: details.effective_rate,
+                                        net_payable: details.net_payable,
+                                    },
+                                });
+                            }
+                        }
+                    }
+                    
+                } else if(final_response.STATUS === "SELL") {
+                    const response = await fetch(`${microservice_url}/parseSELLData/`, {
+                        method: "POST",
+                        body: formDataPDF,
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`SELL data parsing failed: ${response.status}`);
+                    }
+
+                    const final_data: overallSell = await response.json();
+
+                    if (!final_data || final_data["transactions"].length === 0) {
+                        throw new Error('No SELL data received from PDF parsing');
+                    }
+
+                    // Find the upload_id from the first contract
+                    const first_contract = final_data["transactions"][0];
+                    const find_first_order = await prisma.order_book.findUnique({
+                        where: { contract_number: first_contract.contract_number },
+                        include: {
+                            uploads: { select: { is_confirmed: true, upload_id: true } }
+                        }
+                    });
+
+                    if (find_first_order) {
+                        const upload_id = find_first_order.upload_id;
+
+                        // Create or update PDF record
+                        const existingPdfRecord = await prisma.pdf_records.findFirst({
+                            where: { upload_id: upload_id }
+                        });
+
+                        if (existingPdfRecord) {
+                            await prisma.pdf_records.update({
+                                where: { pdf_id: existingPdfRecord.pdf_id },
+                                data: {
+                                    dp_amount: final_data.dp_amount || 0,
+                                    is_confirmed: true // Auto-confirm for bulk upload
+                                }
+                            });
+                        } else {
+                            await prisma.pdf_records.create({
+                                data: {
+                                    upload_id: upload_id,
+                                    dp_amount: final_data.dp_amount || 0,
+                                    is_confirmed: true // Auto-confirm for bulk upload
+                                }
+                            });
+                        }
+
+                        // Process all transactions and auto-confirm
+                        for (const details of final_data["transactions"]) {
+                            const find_check = await prisma.order_book.findUnique({
+                                where: { contract_number: details.contract_number },
+                                include: {
+                                    uploads: { select: { is_confirmed: true } }
+                                }
+                            });
+
+                            if (find_check && find_check.uploads.is_confirmed) {
+                                // Update main sell_records table directly
+                                await prisma.sell_records.update({
+                                    where: { contract_number: details.contract_number },
+                                    data: {
+                                        commission_rate: details.commission_rate,
+                                        commission_amount: details.commission_amount,
+                                        sebon_commission: details.sebon_commission,
+                                        capital_gain_tax: details.capital_gain_tax,
+                                        effective_rate: details.effective_rate,
+                                        net_receivable: details.net_receivable,
+                                    },
+                                });
+                            }
+                        }
+                    }
+                }
+
+                results.push({ file: forPDF.name, status: 'success', type: 'pdf', pdfType: final_response.STATUS });
+                successCount++;
+
+            } catch (error) {
+                results.push({ 
+                    file: forPDF.name, 
+                    status: 'error', 
+                    type: 'pdf',
+                    error: error instanceof Error ? error.message : 'PDF processing error'
+                });
+                errorCount++;
+            }
+        } // End PDF processing for loop
+        } // End else block for PDF processing
+
+        return { 
+            success: true, 
+            results, 
+            successCount, 
+            errorCount,
+            message: `Bulk upload completed: ${successCount} successful, ${errorCount} failed`
+        };
+
+    } catch (error) {
+        return { 
+            success: false, 
+            error: error instanceof Error ? error.message : 'Bulk upload failed',
+            results: []
+        };
+    }
+}
+
 export async function confirmSubmission(given_upload_id: number) {
     try {
         if (!given_upload_id || given_upload_id <= 0) {
