@@ -9330,6 +9330,7 @@ export namespace Prisma {
     profit_loss: Decimal | null
     approx_profit_loss: Decimal | null
     fiscal_year_id: number | null
+    historical_tax_base_wacc: Decimal | null
   }
 
   export type Sell_recordsSumAggregateOutputType = {
@@ -9346,6 +9347,7 @@ export namespace Prisma {
     profit_loss: Decimal | null
     approx_profit_loss: Decimal | null
     fiscal_year_id: number | null
+    historical_tax_base_wacc: Decimal | null
   }
 
   export type Sell_recordsMinAggregateOutputType = {
@@ -9368,6 +9370,7 @@ export namespace Prisma {
     approx_profit_loss: Decimal | null
     contract_number: string | null
     fiscal_year_id: number | null
+    historical_tax_base_wacc: Decimal | null
   }
 
   export type Sell_recordsMaxAggregateOutputType = {
@@ -9390,6 +9393,7 @@ export namespace Prisma {
     approx_profit_loss: Decimal | null
     contract_number: string | null
     fiscal_year_id: number | null
+    historical_tax_base_wacc: Decimal | null
   }
 
   export type Sell_recordsCountAggregateOutputType = {
@@ -9412,6 +9416,7 @@ export namespace Prisma {
     approx_profit_loss: number
     contract_number: number
     fiscal_year_id: number
+    historical_tax_base_wacc: number
     _all: number
   }
 
@@ -9430,6 +9435,7 @@ export namespace Prisma {
     profit_loss?: true
     approx_profit_loss?: true
     fiscal_year_id?: true
+    historical_tax_base_wacc?: true
   }
 
   export type Sell_recordsSumAggregateInputType = {
@@ -9446,6 +9452,7 @@ export namespace Prisma {
     profit_loss?: true
     approx_profit_loss?: true
     fiscal_year_id?: true
+    historical_tax_base_wacc?: true
   }
 
   export type Sell_recordsMinAggregateInputType = {
@@ -9468,6 +9475,7 @@ export namespace Prisma {
     approx_profit_loss?: true
     contract_number?: true
     fiscal_year_id?: true
+    historical_tax_base_wacc?: true
   }
 
   export type Sell_recordsMaxAggregateInputType = {
@@ -9490,6 +9498,7 @@ export namespace Prisma {
     approx_profit_loss?: true
     contract_number?: true
     fiscal_year_id?: true
+    historical_tax_base_wacc?: true
   }
 
   export type Sell_recordsCountAggregateInputType = {
@@ -9512,6 +9521,7 @@ export namespace Prisma {
     approx_profit_loss?: true
     contract_number?: true
     fiscal_year_id?: true
+    historical_tax_base_wacc?: true
     _all?: true
   }
 
@@ -9621,6 +9631,7 @@ export namespace Prisma {
     approx_profit_loss: Decimal | null
     contract_number: string
     fiscal_year_id: number | null
+    historical_tax_base_wacc: Decimal | null
     _count: Sell_recordsCountAggregateOutputType | null
     _avg: Sell_recordsAvgAggregateOutputType | null
     _sum: Sell_recordsSumAggregateOutputType | null
@@ -9662,6 +9673,7 @@ export namespace Prisma {
     approx_profit_loss?: boolean
     contract_number?: boolean
     fiscal_year_id?: boolean
+    historical_tax_base_wacc?: boolean
     client_broker_mapping?: boolean | client_broker_mappingDefaultArgs<ExtArgs>
     fiscal_years?: boolean | sell_records$fiscal_yearsArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
@@ -9689,6 +9701,7 @@ export namespace Prisma {
     approx_profit_loss?: boolean
     contract_number?: boolean
     fiscal_year_id?: boolean
+    historical_tax_base_wacc?: boolean
     client_broker_mapping?: boolean | client_broker_mappingDefaultArgs<ExtArgs>
     fiscal_years?: boolean | sell_records$fiscal_yearsArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
@@ -9716,6 +9729,7 @@ export namespace Prisma {
     approx_profit_loss?: boolean
     contract_number?: boolean
     fiscal_year_id?: boolean
+    historical_tax_base_wacc?: boolean
     client_broker_mapping?: boolean | client_broker_mappingDefaultArgs<ExtArgs>
     fiscal_years?: boolean | sell_records$fiscal_yearsArgs<ExtArgs>
     funds?: boolean | fundsDefaultArgs<ExtArgs>
@@ -9743,9 +9757,10 @@ export namespace Prisma {
     approx_profit_loss?: boolean
     contract_number?: boolean
     fiscal_year_id?: boolean
+    historical_tax_base_wacc?: boolean
   }
 
-  export type sell_recordsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"fund_id" | "upload_id" | "client_id" | "symbol" | "quantity" | "price" | "txn_value" | "commission_rate" | "commission_amount" | "capital_gain_tax" | "sebon_commission" | "effective_rate" | "net_receivable" | "profit_loss" | "transaction_date" | "recorded_at" | "approx_profit_loss" | "contract_number" | "fiscal_year_id", ExtArgs["result"]["sell_records"]>
+  export type sell_recordsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"fund_id" | "upload_id" | "client_id" | "symbol" | "quantity" | "price" | "txn_value" | "commission_rate" | "commission_amount" | "capital_gain_tax" | "sebon_commission" | "effective_rate" | "net_receivable" | "profit_loss" | "transaction_date" | "recorded_at" | "approx_profit_loss" | "contract_number" | "fiscal_year_id" | "historical_tax_base_wacc", ExtArgs["result"]["sell_records"]>
   export type sell_recordsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client_broker_mapping?: boolean | client_broker_mappingDefaultArgs<ExtArgs>
     fiscal_years?: boolean | sell_records$fiscal_yearsArgs<ExtArgs>
@@ -9797,6 +9812,7 @@ export namespace Prisma {
       approx_profit_loss: Prisma.Decimal | null
       contract_number: string
       fiscal_year_id: number | null
+      historical_tax_base_wacc: Prisma.Decimal | null
     }, ExtArgs["result"]["sell_records"]>
     composites: {}
   }
@@ -10244,6 +10260,7 @@ export namespace Prisma {
     readonly approx_profit_loss: FieldRef<"sell_records", 'Decimal'>
     readonly contract_number: FieldRef<"sell_records", 'String'>
     readonly fiscal_year_id: FieldRef<"sell_records", 'Int'>
+    readonly historical_tax_base_wacc: FieldRef<"sell_records", 'Decimal'>
   }
     
 
@@ -40764,7 +40781,8 @@ export namespace Prisma {
     recorded_at: 'recorded_at',
     approx_profit_loss: 'approx_profit_loss',
     contract_number: 'contract_number',
-    fiscal_year_id: 'fiscal_year_id'
+    fiscal_year_id: 'fiscal_year_id',
+    historical_tax_base_wacc: 'historical_tax_base_wacc'
   };
 
   export type Sell_recordsScalarFieldEnum = (typeof Sell_recordsScalarFieldEnum)[keyof typeof Sell_recordsScalarFieldEnum]
@@ -41623,6 +41641,7 @@ export namespace Prisma {
     approx_profit_loss?: DecimalNullableFilter<"sell_records"> | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFilter<"sell_records"> | string
     fiscal_year_id?: IntNullableFilter<"sell_records"> | number | null
+    historical_tax_base_wacc?: DecimalNullableFilter<"sell_records"> | Decimal | DecimalJsLike | number | string | null
     client_broker_mapping?: XOR<Client_broker_mappingScalarRelationFilter, client_broker_mappingWhereInput>
     fiscal_years?: XOR<Fiscal_yearsNullableScalarRelationFilter, fiscal_yearsWhereInput> | null
     funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
@@ -41650,6 +41669,7 @@ export namespace Prisma {
     approx_profit_loss?: SortOrderInput | SortOrder
     contract_number?: SortOrder
     fiscal_year_id?: SortOrderInput | SortOrder
+    historical_tax_base_wacc?: SortOrderInput | SortOrder
     client_broker_mapping?: client_broker_mappingOrderByWithRelationInput
     fiscal_years?: fiscal_yearsOrderByWithRelationInput
     funds?: fundsOrderByWithRelationInput
@@ -41680,6 +41700,7 @@ export namespace Prisma {
     recorded_at?: DateTimeNullableFilter<"sell_records"> | Date | string | null
     approx_profit_loss?: DecimalNullableFilter<"sell_records"> | Decimal | DecimalJsLike | number | string | null
     fiscal_year_id?: IntNullableFilter<"sell_records"> | number | null
+    historical_tax_base_wacc?: DecimalNullableFilter<"sell_records"> | Decimal | DecimalJsLike | number | string | null
     client_broker_mapping?: XOR<Client_broker_mappingScalarRelationFilter, client_broker_mappingWhereInput>
     fiscal_years?: XOR<Fiscal_yearsNullableScalarRelationFilter, fiscal_yearsWhereInput> | null
     funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
@@ -41707,6 +41728,7 @@ export namespace Prisma {
     approx_profit_loss?: SortOrderInput | SortOrder
     contract_number?: SortOrder
     fiscal_year_id?: SortOrderInput | SortOrder
+    historical_tax_base_wacc?: SortOrderInput | SortOrder
     _count?: sell_recordsCountOrderByAggregateInput
     _avg?: sell_recordsAvgOrderByAggregateInput
     _max?: sell_recordsMaxOrderByAggregateInput
@@ -41737,6 +41759,7 @@ export namespace Prisma {
     approx_profit_loss?: DecimalNullableWithAggregatesFilter<"sell_records"> | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringWithAggregatesFilter<"sell_records"> | string
     fiscal_year_id?: IntNullableWithAggregatesFilter<"sell_records"> | number | null
+    historical_tax_base_wacc?: DecimalNullableWithAggregatesFilter<"sell_records"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type uploadsWhereInput = {
@@ -44260,6 +44283,7 @@ export namespace Prisma {
     recorded_at?: Date | string | null
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
     client_broker_mapping: client_broker_mappingCreateNestedOneWithoutSell_recordsInput
     fiscal_years?: fiscal_yearsCreateNestedOneWithoutSell_recordsInput
     funds: fundsCreateNestedOneWithoutSell_recordsInput
@@ -44287,6 +44311,7 @@ export namespace Prisma {
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
     fiscal_year_id?: number | null
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsUpdateInput = {
@@ -44304,6 +44329,7 @@ export namespace Prisma {
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     client_broker_mapping?: client_broker_mappingUpdateOneRequiredWithoutSell_recordsNestedInput
     fiscal_years?: fiscal_yearsUpdateOneWithoutSell_recordsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSell_recordsNestedInput
@@ -44331,6 +44357,7 @@ export namespace Prisma {
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsCreateManyInput = {
@@ -44353,6 +44380,7 @@ export namespace Prisma {
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
     fiscal_year_id?: number | null
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsUpdateManyMutationInput = {
@@ -44370,6 +44398,7 @@ export namespace Prisma {
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsUncheckedUpdateManyInput = {
@@ -44392,6 +44421,7 @@ export namespace Prisma {
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type uploadsCreateInput = {
@@ -47136,6 +47166,7 @@ export namespace Prisma {
     approx_profit_loss?: SortOrder
     contract_number?: SortOrder
     fiscal_year_id?: SortOrder
+    historical_tax_base_wacc?: SortOrder
   }
 
   export type sell_recordsAvgOrderByAggregateInput = {
@@ -47152,6 +47183,7 @@ export namespace Prisma {
     profit_loss?: SortOrder
     approx_profit_loss?: SortOrder
     fiscal_year_id?: SortOrder
+    historical_tax_base_wacc?: SortOrder
   }
 
   export type sell_recordsMaxOrderByAggregateInput = {
@@ -47174,6 +47206,7 @@ export namespace Prisma {
     approx_profit_loss?: SortOrder
     contract_number?: SortOrder
     fiscal_year_id?: SortOrder
+    historical_tax_base_wacc?: SortOrder
   }
 
   export type sell_recordsMinOrderByAggregateInput = {
@@ -47196,6 +47229,7 @@ export namespace Prisma {
     approx_profit_loss?: SortOrder
     contract_number?: SortOrder
     fiscal_year_id?: SortOrder
+    historical_tax_base_wacc?: SortOrder
   }
 
   export type sell_recordsSumOrderByAggregateInput = {
@@ -47212,6 +47246,7 @@ export namespace Prisma {
     profit_loss?: SortOrder
     approx_profit_loss?: SortOrder
     fiscal_year_id?: SortOrder
+    historical_tax_base_wacc?: SortOrder
   }
 
   export type BoolNullableFilter<$PrismaModel = never> = {
@@ -54205,6 +54240,7 @@ export namespace Prisma {
     recorded_at?: Date | string | null
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
     fiscal_years?: fiscal_yearsCreateNestedOneWithoutSell_recordsInput
     funds: fundsCreateNestedOneWithoutSell_recordsInput
     stock_fulls: stock_fullsCreateNestedOneWithoutSell_recordsInput
@@ -54230,6 +54266,7 @@ export namespace Prisma {
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
     fiscal_year_id?: number | null
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsCreateOrConnectWithoutClient_broker_mappingInput = {
@@ -54751,6 +54788,7 @@ export namespace Prisma {
     approx_profit_loss?: DecimalNullableFilter<"sell_records"> | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFilter<"sell_records"> | string
     fiscal_year_id?: IntNullableFilter<"sell_records"> | number | null
+    historical_tax_base_wacc?: DecimalNullableFilter<"sell_records"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingUpsertWithWhereUniqueWithoutClient_broker_mappingInput = {
@@ -55812,6 +55850,7 @@ export namespace Prisma {
     recorded_at?: Date | string | null
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
     client_broker_mapping: client_broker_mappingCreateNestedOneWithoutSell_recordsInput
     fiscal_years?: fiscal_yearsCreateNestedOneWithoutSell_recordsInput
     funds: fundsCreateNestedOneWithoutSell_recordsInput
@@ -55837,6 +55876,7 @@ export namespace Prisma {
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
     fiscal_year_id?: number | null
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsCreateOrConnectWithoutUploadsInput = {
@@ -57490,6 +57530,7 @@ export namespace Prisma {
     recorded_at?: Date | string | null
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
     client_broker_mapping: client_broker_mappingCreateNestedOneWithoutSell_recordsInput
     funds: fundsCreateNestedOneWithoutSell_recordsInput
     stock_fulls: stock_fullsCreateNestedOneWithoutSell_recordsInput
@@ -57515,6 +57556,7 @@ export namespace Prisma {
     recorded_at?: Date | string | null
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsCreateOrConnectWithoutFiscal_yearsInput = {
@@ -58477,6 +58519,7 @@ export namespace Prisma {
     recorded_at?: Date | string | null
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
     client_broker_mapping: client_broker_mappingCreateNestedOneWithoutSell_recordsInput
     fiscal_years?: fiscal_yearsCreateNestedOneWithoutSell_recordsInput
     stock_fulls: stock_fullsCreateNestedOneWithoutSell_recordsInput
@@ -58502,6 +58545,7 @@ export namespace Prisma {
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
     fiscal_year_id?: number | null
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsCreateOrConnectWithoutFundsInput = {
@@ -59905,6 +59949,7 @@ export namespace Prisma {
     recorded_at?: Date | string | null
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
     client_broker_mapping: client_broker_mappingCreateNestedOneWithoutSell_recordsInput
     fiscal_years?: fiscal_yearsCreateNestedOneWithoutSell_recordsInput
     funds: fundsCreateNestedOneWithoutSell_recordsInput
@@ -59930,6 +59975,7 @@ export namespace Prisma {
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
     fiscal_year_id?: number | null
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsCreateOrConnectWithoutStock_fullsInput = {
@@ -65448,6 +65494,7 @@ export namespace Prisma {
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
     fiscal_year_id?: number | null
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingCreateManyClient_broker_mappingInput = {
@@ -65903,6 +65950,7 @@ export namespace Prisma {
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     fiscal_years?: fiscal_yearsUpdateOneWithoutSell_recordsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSell_recordsNestedInput
     stock_fulls?: stock_fullsUpdateOneRequiredWithoutSell_recordsNestedInput
@@ -65928,6 +65976,7 @@ export namespace Prisma {
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingInput = {
@@ -65949,6 +65998,7 @@ export namespace Prisma {
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingUpdateWithoutClient_broker_mappingInput = {
@@ -66088,6 +66138,7 @@ export namespace Prisma {
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
     fiscal_year_id?: number | null
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingCreateManyUploadsInput = {
@@ -66290,6 +66341,7 @@ export namespace Prisma {
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     client_broker_mapping?: client_broker_mappingUpdateOneRequiredWithoutSell_recordsNestedInput
     fiscal_years?: fiscal_yearsUpdateOneWithoutSell_recordsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSell_recordsNestedInput
@@ -66315,6 +66367,7 @@ export namespace Prisma {
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsUncheckedUpdateManyWithoutUploadsInput = {
@@ -66336,6 +66389,7 @@ export namespace Prisma {
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingUpdateWithoutUploadsInput = {
@@ -66609,6 +66663,7 @@ export namespace Prisma {
     recorded_at?: Date | string | null
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingCreateManyFiscal_yearsInput = {
@@ -67216,6 +67271,7 @@ export namespace Prisma {
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     client_broker_mapping?: client_broker_mappingUpdateOneRequiredWithoutSell_recordsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSell_recordsNestedInput
     stock_fulls?: stock_fullsUpdateOneRequiredWithoutSell_recordsNestedInput
@@ -67241,6 +67297,7 @@ export namespace Prisma {
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsUncheckedUpdateManyWithoutFiscal_yearsInput = {
@@ -67262,6 +67319,7 @@ export namespace Prisma {
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingUpdateWithoutFiscal_yearsInput = {
@@ -67558,6 +67616,7 @@ export namespace Prisma {
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
     fiscal_year_id?: number | null
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingCreateManyFundsInput = {
@@ -68157,6 +68216,7 @@ export namespace Prisma {
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     client_broker_mapping?: client_broker_mappingUpdateOneRequiredWithoutSell_recordsNestedInput
     fiscal_years?: fiscal_yearsUpdateOneWithoutSell_recordsNestedInput
     stock_fulls?: stock_fullsUpdateOneRequiredWithoutSell_recordsNestedInput
@@ -68182,6 +68242,7 @@ export namespace Prisma {
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsUncheckedUpdateManyWithoutFundsInput = {
@@ -68203,6 +68264,7 @@ export namespace Prisma {
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingUpdateWithoutFundsInput = {
@@ -68535,6 +68597,7 @@ export namespace Prisma {
     approx_profit_loss?: Decimal | DecimalJsLike | number | string | null
     contract_number: string
     fiscal_year_id?: number | null
+    historical_tax_base_wacc?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingCreateManyStock_fullsInput = {
@@ -69119,6 +69182,7 @@ export namespace Prisma {
     recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     client_broker_mapping?: client_broker_mappingUpdateOneRequiredWithoutSell_recordsNestedInput
     fiscal_years?: fiscal_yearsUpdateOneWithoutSell_recordsNestedInput
     funds?: fundsUpdateOneRequiredWithoutSell_recordsNestedInput
@@ -69144,6 +69208,7 @@ export namespace Prisma {
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_recordsUncheckedUpdateManyWithoutStock_fullsInput = {
@@ -69165,6 +69230,7 @@ export namespace Prisma {
     approx_profit_loss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
+    historical_tax_base_wacc?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type sell_records_stagingUpdateWithoutStock_fullsInput = {

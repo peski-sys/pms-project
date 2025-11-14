@@ -1031,10 +1031,14 @@ export default function DashboardTwo() {
                     } className="text-center border-r">Holdings Type</TableHead>
                   )}
                   {columnVisibility.market_price && (
-                    <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
+                    <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'market_price')}>
+                      Market Price <SortIndicator field="market_price" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.revaluation_amount && (
-                    <TableHead rowSpan={2} className="text-center border-r">Revaluation Amount</TableHead>
+                    <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'revaluation_amount')}>
+                      Revaluation Amount <SortIndicator field="revaluation_amount" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.remarks && (
                     <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
@@ -1043,61 +1047,99 @@ export default function DashboardTwo() {
                 
                 <TableRow>
                   {columnVisibility.opening_quantity && (
-                    <TableHead className="text-center">Quantity</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'opening_quantity')}>
+                      Quantity <SortIndicator field="opening_quantity" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.opening_rate && (
-                    <TableHead className="text-center">Rate</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'opening_rate')}>
+                      Rate <SortIndicator field="opening_rate" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.opening_amount && (
-                    <TableHead className="text-center border-r">Amount</TableHead>
+                    <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'opening_amount')}>
+                      Amount <SortIndicator field="opening_amount" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.purchase_quantity && (
-                    <TableHead className="text-center">Quantity</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'purchase_quantity')}>
+                      Quantity <SortIndicator field="purchase_quantity" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.purchase_rate && (
-                    <TableHead className="text-center">Rate</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'purchase_rate')}>
+                      Rate <SortIndicator field="purchase_rate" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.purchase_amount && (
-                    <TableHead className="text-center border-r">Amount</TableHead>
+                    <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'purchase_amount')}>
+                      Amount <SortIndicator field="purchase_amount" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.right_quantity && (
-                    <TableHead className="text-center">Quantity</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'right_quantity')}>
+                      Quantity <SortIndicator field="right_quantity" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.right_total && (
-                    <TableHead className="text-center border-r">Total</TableHead>
+                    <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'right_total')}>
+                      Total <SortIndicator field="right_total" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.bonus_quantity && (
-                    <TableHead className="text-center">Quantity</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'bonus_quantity')}>
+                      Quantity <SortIndicator field="bonus_quantity" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.bonus_book_close_date && (
-                    <TableHead className="text-center border-r">Book Close Date</TableHead>
+                    <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'bonus_book_close_date')}>
+                      Book Close Date <SortIndicator field="bonus_book_close_date" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.sales_quantity && (
-                    <TableHead className="text-center">Quantity</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'sales_quantity')}>
+                      Quantity <SortIndicator field="sales_quantity" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.sales_cost && (
-                    <TableHead className="text-center">Cost</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'sales_cost')}>
+                      Cost <SortIndicator field="sales_cost" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.sales_amount && (
-                    <TableHead className="text-center">Amount</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'sales_amount')}>
+                      Amount <SortIndicator field="sales_amount" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.sales_profit && (
-                    <TableHead className="text-center border-r">Profit</TableHead>
+                    <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'sales_profit')}>
+                      Profit <SortIndicator field="sales_profit" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.closing_quantity && (
-                    <TableHead className="text-center">Quantity</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'closing_quantity')}>
+                      Quantity <SortIndicator field="closing_quantity" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.closing_rate && (
-                    <TableHead className="text-center">Rate</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'closing_rate')}>
+                      Rate <SortIndicator field="closing_rate" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.closing_amount && (
-                    <TableHead className="text-center border-r">Amount</TableHead>
+                    <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'closing_amount')}>
+                      Amount <SortIndicator field="closing_amount" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.demat && (
-                    <TableHead className="text-center">DEMAT</TableHead>
+                    <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'demat')}>
+                      DEMAT <SortIndicator field="demat" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                   {columnVisibility.non_demat && (
-                    <TableHead className="text-center border-r">NON-DEMAT</TableHead>
+                    <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleSubClassSort(subClass.sub_id, 'non_demat')}>
+                      NON-DEMAT <SortIndicator field="non_demat" sortField={subClassSortFields.get(subClass.sub_id) || null} sortOrder={subClassSortOrders.get(subClass.sub_id) || 'asc'} />
+                    </TableHead>
                   )}
                 </TableRow>
               </TableHeader>
@@ -1693,13 +1735,19 @@ export default function DashboardTwo() {
                 } className="text-center border-r">Holdings Type</TableHead>
               )}
               {tradingColumnVisibility.market_price && (
-                <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('market_price')}>
+                  Market Price <SortIndicator field="market_price" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.unrealised_amount && (
-                <TableHead rowSpan={2} className="text-center border-r">Unrealised Amount</TableHead>
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('unrealised_amount')}>
+                  Unrealised Amount <SortIndicator field="unrealised_amount" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.today_return_percent && (
-                <TableHead rowSpan={2} className="text-center border-r">Until <br /> Today %</TableHead>
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('today_return_percent')}>
+                  Until <br /> Today % <SortIndicator field="today_return_percent" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.remarks && (
                 <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
@@ -1708,61 +1756,99 @@ export default function DashboardTwo() {
 
             <TableRow>
               {tradingColumnVisibility.opening_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('opening_quantity')}>
+                  Quantity <SortIndicator field="opening_quantity" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.opening_rate && (
-                <TableHead className="text-center">Rate</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('opening_rate')}>
+                  Rate <SortIndicator field="opening_rate" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.opening_amount && (
-                <TableHead className="text-center border-r">Amount</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('opening_amount')}>
+                  Amount <SortIndicator field="opening_amount" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.purchase_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('purchase_quantity')}>
+                  Quantity <SortIndicator field="purchase_quantity" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.purchase_rate && (
-                <TableHead className="text-center">Rate</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('purchase_rate')}>
+                  Rate <SortIndicator field="purchase_rate" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.purchase_amount && (
-                <TableHead className="text-center border-r">Amount</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('purchase_amount')}>
+                  Amount <SortIndicator field="purchase_amount" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.right_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('right_quantity')}>
+                  Quantity <SortIndicator field="right_quantity" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.right_total && (
-                <TableHead className="text-center border-r">Total</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('right_total')}>
+                  Total <SortIndicator field="right_total" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.bonus_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('bonus_quantity')}>
+                  Quantity <SortIndicator field="bonus_quantity" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.bonus_book_close_date && (
-                <TableHead className="text-center border-r">Book Close Date</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('bonus_book_close_date')}>
+                  Book Close Date <SortIndicator field="bonus_book_close_date" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.sales_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('sales_quantity')}>
+                  Quantity <SortIndicator field="sales_quantity" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.sales_cost && (
-                <TableHead className="text-center">Cost</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('sales_cost')}>
+                  Cost <SortIndicator field="sales_cost" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.sales_amount && (
-                <TableHead className="text-center">Amount</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('sales_amount')}>
+                  Amount <SortIndicator field="sales_amount" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.sales_profit && (
-                <TableHead className="text-center border-r">Profit</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('sales_profit')}>
+                  Profit <SortIndicator field="sales_profit" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.closing_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('closing_quantity')}>
+                  Quantity <SortIndicator field="closing_quantity" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.closing_rate && (
-                <TableHead className="text-center">Rate</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('closing_rate')}>
+                  Rate <SortIndicator field="closing_rate" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.closing_amount && (
-                <TableHead className="text-center border-r">Amount</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('closing_amount')}>
+                  Amount <SortIndicator field="closing_amount" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.demat && (
-                <TableHead className="text-center">DEMAT</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('demat')}>
+                  DEMAT <SortIndicator field="demat" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
               {tradingColumnVisibility.non_demat && (
-                <TableHead className="text-center border-r">NON-DEMAT</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handleTradingSort('non_demat')}>
+                  NON-DEMAT <SortIndicator field="non_demat" sortField={tradingSortField} sortOrder={tradingSortOrder} />
+                </TableHead>
               )}
             </TableRow>
           </TableHeader>
@@ -2258,10 +2344,14 @@ export default function DashboardTwo() {
                 } className="text-center border-r">Holdings Type</TableHead>
               )}
               {promoterColumnVisibility.market_price && (
-                <TableHead rowSpan={2} className="text-center border-r">Market Price</TableHead>
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('market_price')}>
+                  Market Price <SortIndicator field="market_price" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.revaluation_amount && (
-                <TableHead rowSpan={2} className="text-center border-r">Revaluation Amount</TableHead>
+                <TableHead rowSpan={2} className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('revaluation_amount')}>
+                  Revaluation Amount <SortIndicator field="revaluation_amount" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.remarks && (
                 <TableHead rowSpan={2} className="text-center">Remarks</TableHead>
@@ -2270,61 +2360,99 @@ export default function DashboardTwo() {
             
             <TableRow>
               {promoterColumnVisibility.opening_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('opening_quantity')}>
+                  Quantity <SortIndicator field="opening_quantity" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.opening_rate && (
-                <TableHead className="text-center">Rate</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('opening_rate')}>
+                  Rate <SortIndicator field="opening_rate" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.opening_amount && (
-                <TableHead className="text-center border-r">Amount</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('opening_amount')}>
+                  Amount <SortIndicator field="opening_amount" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.purchase_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('purchase_quantity')}>
+                  Quantity <SortIndicator field="purchase_quantity" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.purchase_rate && (
-                <TableHead className="text-center">Rate</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('purchase_rate')}>
+                  Rate <SortIndicator field="purchase_rate" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.purchase_amount && (
-                <TableHead className="text-center border-r">Amount</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('purchase_amount')}>
+                  Amount <SortIndicator field="purchase_amount" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.right_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('right_quantity')}>
+                  Quantity <SortIndicator field="right_quantity" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.right_total && (
-                <TableHead className="text-center border-r">Total</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('right_total')}>
+                  Total <SortIndicator field="right_total" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.bonus_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('bonus_quantity')}>
+                  Quantity <SortIndicator field="bonus_quantity" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.bonus_book_close_date && (
-                <TableHead className="text-center border-r">Book Close Date</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('bonus_book_close_date')}>
+                  Book Close Date <SortIndicator field="bonus_book_close_date" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.sales_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('sales_quantity')}>
+                  Quantity <SortIndicator field="sales_quantity" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.sales_cost && (
-                <TableHead className="text-center">Cost</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('sales_cost')}>
+                  Cost <SortIndicator field="sales_cost" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.sales_amount && (
-                <TableHead className="text-center">Amount</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('sales_amount')}>
+                  Amount <SortIndicator field="sales_amount" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.sales_profit && (
-                <TableHead className="text-center border-r">Profit</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('sales_profit')}>
+                  Profit <SortIndicator field="sales_profit" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.closing_quantity && (
-                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('closing_quantity')}>
+                  Quantity <SortIndicator field="closing_quantity" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.closing_rate && (
-                <TableHead className="text-center">Rate</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('closing_rate')}>
+                  Rate <SortIndicator field="closing_rate" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.closing_amount && (
-                <TableHead className="text-center border-r">Amount</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('closing_amount')}>
+                  Amount <SortIndicator field="closing_amount" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.demat && (
-                <TableHead className="text-center">DEMAT</TableHead>
+                <TableHead className="text-center cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('demat')}>
+                  DEMAT <SortIndicator field="demat" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
               {promoterColumnVisibility.non_demat && (
-                <TableHead className="text-center border-r">NON-DEMAT</TableHead>
+                <TableHead className="text-center border-r cursor-pointer hover:bg-gray-100" onClick={() => handlePromoterSort('non_demat')}>
+                  NON-DEMAT <SortIndicator field="non_demat" sortField={promoterSortField} sortOrder={promoterSortOrder} />
+                </TableHead>
               )}
             </TableRow>
           </TableHeader>

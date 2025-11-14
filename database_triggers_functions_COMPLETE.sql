@@ -350,6 +350,23 @@ BEGIN
             v_new_rate := v_current_rate;
         END IF;
 
+    ELSIF TG_TABLE_NAME = 'cash_records' THEN
+        -- CASH: Add cash dividend as quantity (shares), no rate change
+        -- Cash dividends don't change the cost basis, just add to holdings
+        IF TG_OP = 'INSERT' THEN
+            -- Cash dividends are treated as additional shares at zero cost
+            -- This dilutes the effective rate
+            v_quantity := 1; -- Represents cash dividend event
+            v_new_quantity := v_current_quantity; -- Quantity doesn't change for cash
+            v_new_rate := v_current_rate; -- Rate doesn't change for cash dividends
+        ELSIF TG_OP = 'UPDATE' THEN
+            v_new_quantity := v_current_quantity;
+            v_new_rate := v_current_rate;
+        ELSIF TG_OP = 'DELETE' THEN
+            v_new_quantity := v_current_quantity;
+            v_new_rate := v_current_rate;
+        END IF;
+
     ELSE
         -- Unknown table, return without changes
         RETURN COALESCE(NEW, OLD);
@@ -376,12 +393,8 @@ BEGIN
         source_type = COALESCE(v_source_type, fiscal_year_balance.source_type),
         sub_id = COALESCE(v_sub_id, fiscal_year_balance.sub_id);
 
-    -- Delete if quantity becomes zero or negative
-    DELETE FROM fiscal_year_balance
-    WHERE client_id = v_client_id
-      AND symbol = v_symbol
-      AND fiscal_year_id = v_fiscal_year_id
-      AND (COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0)) <= 0;
+    -- NOTE: Do NOT delete fiscal_year_balance rows even if quantity becomes zero
+    -- These records contain important purchase/sales history that must be preserved
 
     RETURN COALESCE(NEW, OLD);
 EXCEPTION
@@ -494,6 +507,20 @@ BEGIN
             v_new_rate := v_current_rate;
         END IF;
 
+    ELSIF TG_TABLE_NAME = 'cash_records_staging' THEN
+        -- CASH STAGING: Cash dividends don't affect quantity in staging
+        -- They are recorded for audit purposes
+        IF TG_OP = 'INSERT' THEN
+            v_new_quantity := v_current_quantity; -- No quantity change
+            v_new_rate := v_current_rate; -- No rate change
+        ELSIF TG_OP = 'UPDATE' THEN
+            v_new_quantity := v_current_quantity;
+            v_new_rate := v_current_rate;
+        ELSIF TG_OP = 'DELETE' THEN
+            v_new_quantity := v_current_quantity;
+            v_new_rate := v_current_rate;
+        END IF;
+
     ELSE
         -- Unknown table, return without changes
         RETURN COALESCE(NEW, OLD);
@@ -527,13 +554,16 @@ BEGIN
         );
     END IF;
 
-    -- Delete if quantity becomes zero or negative
-    DELETE FROM fiscal_year_balance_staging
-    WHERE symbol = v_symbol
-      AND fiscal_year_id = v_fiscal_year_id
-      AND fund_id = v_fund_id
-      AND sub_id = v_sub_id
-      AND (COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0)) <= 0;
+    -- Only delete fiscal_year_balance_staging rows for promoter shares and IPO allotments when quantity becomes zero
+    -- All other records (trading, bonus, rights, cash) should be preserved for history
+    IF (COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0)) <= 0 THEN
+        DELETE FROM fiscal_year_balance_staging
+        WHERE symbol = v_symbol
+          AND fiscal_year_id = v_fiscal_year_id
+          AND fund_id = v_fund_id
+          AND sub_id = v_sub_id
+          AND source_type IN ('PROMOTER'); -- Only delete promoter and IPO staging records
+    END IF;
 
     RETURN COALESCE(NEW, OLD);
 EXCEPTION
@@ -722,6 +752,23 @@ BEGIN
             v_commission := -COALESCE(OLD.closeout_amount, 0);
         END IF;
 
+    ELSIF TG_TABLE_NAME = 'cash_records' THEN
+        -- CASH: Cash dividends don't affect quantity or cost basis in symbol_holdings
+        -- They are recorded for audit purposes but don't change WACC calculations
+        IF TG_OP = 'INSERT' THEN
+            v_quantity := 0;  -- No quantity change
+            v_txn_value := COALESCE(NEW.amount, 0);  -- Record cash received
+            v_commission := 0;  -- No cost basis change
+        ELSIF TG_OP = 'UPDATE' THEN
+            v_quantity := 0;
+            v_txn_value := COALESCE(NEW.amount, 0) - COALESCE(OLD.amount, 0);
+            v_commission := 0;
+        ELSIF TG_OP = 'DELETE' THEN
+            v_quantity := 0;
+            v_txn_value := -COALESCE(OLD.amount, 0);
+            v_commission := 0;
+        END IF;
+
     ELSE
         -- Unknown table, return without changes
         RETURN COALESCE(NEW, OLD);
@@ -746,12 +793,8 @@ BEGIN
         total_txn_value = symbol_holdings.total_txn_value + v_txn_value,
         total_with_commission = symbol_holdings.total_with_commission + v_commission;
 
-    -- Delete if quantity becomes zero or negative
-    DELETE FROM symbol_holdings
-    WHERE symbol = v_symbol
-      AND fiscal_year_id = v_fiscal_year_id
-      AND fund_id = v_fund_id
-      AND COALESCE(quantity, 0) <= 0;
+    -- NOTE: Do NOT delete symbol_holdings rows even if quantity becomes zero
+    -- These records contain important cost basis and transaction history
 
     RETURN COALESCE(NEW, OLD);
 EXCEPTION
@@ -772,6 +815,7 @@ DECLARE
     sh_wacc_tax_base NUMERIC(14,2);
     calculated_profit_loss NUMERIC(18,4);
     calculated_approx_profit_loss NUMERIC(18,4);
+    historical_wacc NUMERIC(14,2);
 BEGIN
     -- Basic guards: require keys we need
     IF NEW.fund_id IS NULL OR NEW.fiscal_year_id IS NULL OR 
@@ -814,6 +858,7 @@ BEGIN
 
     -- Calculate accounting profit_loss using fiscal_year_balance.effective_rate
     -- profit_loss = (sell_price - buy_effective_rate) * quantity
+    -- ALSO store the current wacc_tax_base as historical snapshot
     IF NEW.price IS NOT NULL AND NEW.price > 0 THEN
         IF fy_effective_rate > 0 THEN
             calculated_profit_loss := (NEW.price - fy_effective_rate) * NEW.quantity;
@@ -821,13 +866,22 @@ BEGIN
         ELSE
             NEW.profit_loss := 0;
         END IF;
+        
+        -- Store historical wacc_tax_base for future approx_profit_loss calculations
+        -- Only store if not already set (preserve historical value)
+        IF NEW.historical_tax_base_wacc IS NULL OR NEW.historical_tax_base_wacc = 0 THEN
+            NEW.historical_tax_base_wacc := sh_wacc_tax_base;
+        END IF;
     END IF;
 
-    -- Calculate approx_profit_loss using symbol_holdings.wacc_tax_base and sell effective_rate
-    -- approx_profit_loss = (sell_effective_rate - wacc_tax_base) * quantity
+    -- Calculate approx_profit_loss using historical_tax_base_wacc (not current symbol_holdings)
+    -- approx_profit_loss = (sell_effective_rate - historical_wacc) * quantity
     IF NEW.effective_rate IS NOT NULL AND NEW.effective_rate > 0 THEN
-        IF sh_wacc_tax_base > 0 THEN
-            calculated_approx_profit_loss := (NEW.effective_rate - sh_wacc_tax_base) * NEW.quantity;
+        -- Use historical_tax_base_wacc if available, otherwise fall back to current wacc
+        historical_wacc := COALESCE(NEW.historical_tax_base_wacc, sh_wacc_tax_base);
+        
+        IF historical_wacc > 0 THEN
+            calculated_approx_profit_loss := (NEW.effective_rate - historical_wacc) * NEW.quantity;
             NEW.approx_profit_loss := ROUND(calculated_approx_profit_loss::NUMERIC, 2);
         ELSE
             NEW.approx_profit_loss := 0;
@@ -921,8 +975,11 @@ CREATE OR REPLACE FUNCTION carryforward_fiscal_year_balance(
 DECLARE
     v_record RECORD;
     v_staging_record RECORD;
+    v_symbol_holdings_record RECORD;
     v_count INTEGER := 0;
     v_staging_count INTEGER := 0;
+    v_symbol_holdings_count INTEGER := 0;
+    v_trigger_status BOOLEAN;
 BEGIN
     -- Validate fiscal years exist
     IF NOT EXISTS (SELECT 1 FROM fiscal_years WHERE fiscal_year_id = fromyear) THEN
@@ -934,13 +991,51 @@ BEGIN
     END IF;
 
     -- ========================================================================
+    -- TRIGGER PROTECTION: Temporarily disable triggers to prevent double-counting
+    -- ========================================================================
+    -- Store current trigger status
+    SELECT tgenabled INTO v_trigger_status 
+    FROM pg_trigger 
+    WHERE tgname = 'trg_buy_records_fiscal_balance' 
+    LIMIT 1;
+    
+    -- Disable all fiscal_year_balance and symbol_holdings triggers during carryforward
+    ALTER TABLE buy_records DISABLE TRIGGER trg_buy_records_fiscal_balance;
+    ALTER TABLE sell_records DISABLE TRIGGER trg_sell_records_fiscal_balance;
+    ALTER TABLE bonus_records DISABLE TRIGGER trg_bonus_records_fiscal_balance;
+    ALTER TABLE right_records DISABLE TRIGGER trg_right_records_fiscal_balance;
+    ALTER TABLE promoter_records DISABLE TRIGGER trg_promoter_records_fiscal_balance;
+    ALTER TABLE ipo_allotment_records DISABLE TRIGGER trg_ipo_allotment_records_fiscal_balance;
+    ALTER TABLE closeout_records DISABLE TRIGGER trg_closeout_records_fiscal_balance;
+    ALTER TABLE cash_records DISABLE TRIGGER trg_cash_records_fiscal_balance;
+    
+    ALTER TABLE buy_records DISABLE TRIGGER trg_buy_records_symbol_holdings;
+    ALTER TABLE sell_records DISABLE TRIGGER trg_sell_records_symbol_holdings;
+    ALTER TABLE bonus_records DISABLE TRIGGER trg_bonus_records_symbol_holdings;
+    ALTER TABLE right_records DISABLE TRIGGER trg_right_records_symbol_holdings;
+    ALTER TABLE promoter_records DISABLE TRIGGER trg_promoter_records_symbol_holdings;
+    ALTER TABLE ipo_allotment_records DISABLE TRIGGER trg_ipo_allotment_records_symbol_holdings;
+    ALTER TABLE closeout_records DISABLE TRIGGER trg_closeout_records_symbol_holdings;
+    ALTER TABLE cash_records DISABLE TRIGGER trg_cash_records_symbol_holdings;
+    
+    -- Disable profit/loss calculation triggers during carryforward
+    ALTER TABLE sell_records DISABLE TRIGGER trg_sell_records_profit_loss;
+    ALTER TABLE sell_records_staging DISABLE TRIGGER trg_sell_records_staging_profit_loss;
+    
+    -- Disable staging triggers
+    ALTER TABLE bonus_records_staging DISABLE TRIGGER trg_bonus_staging_symbol_holdings;
+    ALTER TABLE right_records_staging DISABLE TRIGGER trg_right_staging_symbol_holdings;
+    ALTER TABLE cash_records_staging DISABLE TRIGGER trg_cash_staging_symbol_holdings;
+
+    -- ========================================================================
     -- PART 1: Carryforward fiscal_year_balance (client-specific holdings)
     -- ========================================================================
     FOR v_record IN
         SELECT 
             client_id, symbol, fund_id, source_type, sub_id,
             COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0) AS closing_qty,
-            COALESCE(effective_rate, 0) AS closing_rate
+            COALESCE(effective_rate, 0) AS closing_rate,
+            COALESCE(demat, 0) AS closing_demat
         FROM fiscal_year_balance
         WHERE fiscal_year_id = fromyear
           AND (COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0)) > 0
@@ -951,13 +1046,15 @@ BEGIN
         INSERT INTO fiscal_year_balance (
             client_id, symbol, fiscal_year_id, fund_id,
             opening_quantity, added_quantity, effective_rate,
-            opening_rate, source_type, sub_id, demat
+            opening_rate, source_type, sub_id, demat,
+            remarks
         )
         VALUES (
             v_record.client_id, v_record.symbol, toyear, v_record.fund_id,
             v_record.closing_qty, 0, v_record.closing_rate,
             v_record.closing_rate, v_record.source_type, v_record.sub_id,
-            0  -- All carried forward as non_demat initially
+            v_record.closing_demat,  -- Carry forward demat status
+            'Carried forward from FY ' || fromyear
         )
         ON CONFLICT (client_id, symbol, fiscal_year_id) DO UPDATE SET
             opening_quantity = EXCLUDED.opening_quantity,
@@ -965,20 +1062,60 @@ BEGIN
             effective_rate = EXCLUDED.effective_rate,
             source_type = EXCLUDED.source_type,
             sub_id = EXCLUDED.sub_id,
+            demat = EXCLUDED.demat,
             added_quantity = 0,
-            demat = 0;
+            remarks = EXCLUDED.remarks;
         
         v_count := v_count + 1;
     END LOOP;
 
     -- ========================================================================
-    -- PART 2: Carryforward fiscal_year_balance_staging (non-dematerialized holdings)
+    -- PART 2: Carryforward symbol_holdings (fund-level aggregated holdings)
+    -- ========================================================================
+    FOR v_symbol_holdings_record IN
+        SELECT 
+            symbol, fund_id, source_type, sub_id,
+            COALESCE(quantity, 0) AS closing_qty,
+            COALESCE(total_txn_value, 0) AS total_txn,
+            COALESCE(total_with_commission, 0) AS total_commission,
+            remarks
+        FROM symbol_holdings
+        WHERE fiscal_year_id = fromyear
+          AND COALESCE(quantity, 0) > 0
+    LOOP
+        -- Insert fund-level holdings for new fiscal year
+        -- Note: wacc_tax_base is auto-generated and will be calculated automatically
+        INSERT INTO symbol_holdings (
+            symbol, fund_id, fiscal_year_id,
+            quantity, total_txn_value, total_with_commission,
+            source_type, sub_id, remarks
+        )
+        VALUES (
+            v_symbol_holdings_record.symbol, v_symbol_holdings_record.fund_id, toyear,
+            v_symbol_holdings_record.closing_qty, 0, v_symbol_holdings_record.total_commission,
+            v_symbol_holdings_record.source_type, v_symbol_holdings_record.sub_id,
+            COALESCE(v_symbol_holdings_record.remarks, '') || ' | Carried forward from FY ' || fromyear
+        )
+        ON CONFLICT (symbol, fund_id, fiscal_year_id) DO UPDATE SET
+            quantity = EXCLUDED.quantity,
+            total_with_commission = EXCLUDED.total_with_commission,
+            source_type = EXCLUDED.source_type,
+            sub_id = EXCLUDED.sub_id,
+            total_txn_value = 0,  -- Reset transaction value for new year
+            remarks = EXCLUDED.remarks;
+        
+        v_symbol_holdings_count := v_symbol_holdings_count + 1;
+    END LOOP;
+
+    -- ========================================================================
+    -- PART 3: Carryforward fiscal_year_balance_staging (non-dematerialized holdings)
     -- ========================================================================
     FOR v_staging_record IN
         SELECT 
             symbol, fund_id, source_type, sub_id,
             COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0) AS closing_qty,
             COALESCE(effective_rate, 0) AS closing_rate,
+            COALESCE(demat, 0) AS closing_demat,
             remarks
         FROM fiscal_year_balance_staging
         WHERE fiscal_year_id = fromyear
@@ -996,17 +1133,89 @@ BEGIN
             v_staging_record.symbol, toyear, v_staging_record.fund_id, v_staging_record.sub_id,
             v_staging_record.closing_qty, 0, v_staging_record.closing_rate,
             v_staging_record.closing_rate, v_staging_record.source_type,
-            0,  -- All carried forward as non_demat
+            v_staging_record.closing_demat,  -- Carry forward demat status
             COALESCE(v_staging_record.remarks, '') || ' | Carried forward from FY ' || fromyear
-        );
+        )
+        ON CONFLICT (symbol, fund_id, fiscal_year_id, sub_id) DO UPDATE SET
+            opening_quantity = EXCLUDED.opening_quantity,
+            opening_rate = EXCLUDED.opening_rate,
+            effective_rate = EXCLUDED.effective_rate,
+            source_type = EXCLUDED.source_type,
+            demat = EXCLUDED.demat,
+            added_quantity = 0,
+            remarks = EXCLUDED.remarks;
         
         v_staging_count := v_staging_count + 1;
     END LOOP;
 
-    RETURN FORMAT('Successfully carried forward %s fiscal_year_balance records and %s fiscal_year_balance_staging records from fiscal year %s to %s', 
-                  v_count, v_staging_count, fromyear, toyear);
+    -- ========================================================================
+    -- RE-ENABLE TRIGGERS: Restore trigger functionality
+    -- ========================================================================
+    ALTER TABLE buy_records ENABLE TRIGGER trg_buy_records_fiscal_balance;
+    ALTER TABLE sell_records ENABLE TRIGGER trg_sell_records_fiscal_balance;
+    ALTER TABLE bonus_records ENABLE TRIGGER trg_bonus_records_fiscal_balance;
+    ALTER TABLE right_records ENABLE TRIGGER trg_right_records_fiscal_balance;
+    ALTER TABLE promoter_records ENABLE TRIGGER trg_promoter_records_fiscal_balance;
+    ALTER TABLE ipo_allotment_records ENABLE TRIGGER trg_ipo_allotment_records_fiscal_balance;
+    ALTER TABLE closeout_records ENABLE TRIGGER trg_closeout_records_fiscal_balance;
+    ALTER TABLE cash_records ENABLE TRIGGER trg_cash_records_fiscal_balance;
+    
+    ALTER TABLE buy_records ENABLE TRIGGER trg_buy_records_symbol_holdings;
+    ALTER TABLE sell_records ENABLE TRIGGER trg_sell_records_symbol_holdings;
+    ALTER TABLE bonus_records ENABLE TRIGGER trg_bonus_records_symbol_holdings;
+    ALTER TABLE right_records ENABLE TRIGGER trg_right_records_symbol_holdings;
+    ALTER TABLE promoter_records ENABLE TRIGGER trg_promoter_records_symbol_holdings;
+    ALTER TABLE ipo_allotment_records ENABLE TRIGGER trg_ipo_allotment_records_symbol_holdings;
+    ALTER TABLE closeout_records ENABLE TRIGGER trg_closeout_records_symbol_holdings;
+    ALTER TABLE cash_records ENABLE TRIGGER trg_cash_records_symbol_holdings;
+    
+    -- Re-enable profit/loss calculation triggers
+    ALTER TABLE sell_records ENABLE TRIGGER trg_sell_records_profit_loss;
+    ALTER TABLE sell_records_staging ENABLE TRIGGER trg_sell_records_staging_profit_loss;
+    
+    -- Re-enable staging triggers
+    ALTER TABLE bonus_records_staging ENABLE TRIGGER trg_bonus_staging_symbol_holdings;
+    ALTER TABLE right_records_staging ENABLE TRIGGER trg_right_staging_symbol_holdings;
+    ALTER TABLE cash_records_staging ENABLE TRIGGER trg_cash_staging_symbol_holdings;
+
+    RETURN FORMAT('Successfully carried forward %s fiscal_year_balance records, %s symbol_holdings records, and %s fiscal_year_balance_staging records from fiscal year %s to %s', 
+                  v_count, v_symbol_holdings_count, v_staging_count, fromyear, toyear);
 EXCEPTION
     WHEN OTHERS THEN
+        -- Ensure triggers are re-enabled even if error occurs
+        BEGIN
+            ALTER TABLE buy_records ENABLE TRIGGER trg_buy_records_fiscal_balance;
+            ALTER TABLE sell_records ENABLE TRIGGER trg_sell_records_fiscal_balance;
+            ALTER TABLE bonus_records ENABLE TRIGGER trg_bonus_records_fiscal_balance;
+            ALTER TABLE right_records ENABLE TRIGGER trg_right_records_fiscal_balance;
+            ALTER TABLE promoter_records ENABLE TRIGGER trg_promoter_records_fiscal_balance;
+            ALTER TABLE ipo_allotment_records ENABLE TRIGGER trg_ipo_allotment_records_fiscal_balance;
+            ALTER TABLE closeout_records ENABLE TRIGGER trg_closeout_records_fiscal_balance;
+            ALTER TABLE cash_records ENABLE TRIGGER trg_cash_records_fiscal_balance;
+            
+            ALTER TABLE buy_records ENABLE TRIGGER trg_buy_records_symbol_holdings;
+            ALTER TABLE sell_records ENABLE TRIGGER trg_sell_records_symbol_holdings;
+            ALTER TABLE bonus_records ENABLE TRIGGER trg_bonus_records_symbol_holdings;
+            ALTER TABLE right_records ENABLE TRIGGER trg_right_records_symbol_holdings;
+            ALTER TABLE promoter_records ENABLE TRIGGER trg_promoter_records_symbol_holdings;
+            ALTER TABLE ipo_allotment_records ENABLE TRIGGER trg_ipo_allotment_records_symbol_holdings;
+            ALTER TABLE closeout_records ENABLE TRIGGER trg_closeout_records_symbol_holdings;
+            ALTER TABLE cash_records ENABLE TRIGGER trg_cash_records_symbol_holdings;
+            
+            -- Re-enable profit/loss calculation triggers in exception handler
+            ALTER TABLE sell_records ENABLE TRIGGER trg_sell_records_profit_loss;
+            ALTER TABLE sell_records_staging ENABLE TRIGGER trg_sell_records_staging_profit_loss;
+            
+            -- Re-enable staging triggers in exception handler
+            ALTER TABLE bonus_records_staging ENABLE TRIGGER trg_bonus_staging_symbol_holdings;
+            ALTER TABLE right_records_staging ENABLE TRIGGER trg_right_staging_symbol_holdings;
+            ALTER TABLE cash_records_staging ENABLE TRIGGER trg_cash_staging_symbol_holdings;
+        EXCEPTION
+            WHEN OTHERS THEN
+                -- Log trigger re-enable failure but don't mask original error
+                RAISE WARNING 'Failed to re-enable triggers during error handling: %', SQLERRM;
+        END;
+        
         RAISE EXCEPTION 'Error in carryforward_fiscal_year_balance: %', SQLERRM;
 END;
 $$ LANGUAGE plpgsql;
@@ -1173,21 +1382,16 @@ DECLARE
     v_deleted_sh INTEGER;
     v_deleted_fys INTEGER;
 BEGIN
-    -- Clean up fiscal_year_balance
-    DELETE FROM fiscal_year_balance
-    WHERE (COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0)) <= 0;
+    -- NOTE: Do NOT clean up fiscal_year_balance records - preserve purchase/sales history
+    v_deleted_fyb := 0;
     
-    GET DIAGNOSTICS v_deleted_fyb = ROW_COUNT;
+    -- NOTE: Do NOT clean up symbol_holdings records - preserve cost basis history
+    v_deleted_sh := 0;
     
-    -- Clean up symbol_holdings
-    DELETE FROM symbol_holdings
-    WHERE COALESCE(quantity, 0) <= 0;
-    
-    GET DIAGNOSTICS v_deleted_sh = ROW_COUNT;
-    
-    -- Clean up fiscal_year_balance_staging
+    -- Only clean up fiscal_year_balance_staging for promoter shares and IPO allotments
     DELETE FROM fiscal_year_balance_staging
-    WHERE (COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0)) <= 0;
+    WHERE (COALESCE(opening_quantity, 0) + COALESCE(added_quantity, 0)) <= 0
+      AND source_type IN ('PROMOTER'); -- Only clean promoter and IPO staging records
     
     GET DIAGNOSTICS v_deleted_fys = ROW_COUNT;
     
@@ -1283,6 +1487,39 @@ CREATE TRIGGER trg_ipo_allotment_records_symbol_holdings
 
 CREATE TRIGGER trg_closeout_records_symbol_holdings
     AFTER INSERT OR UPDATE OR DELETE ON closeout_records
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_symbol_holdings();
+
+-- Triggers for cash_records (both fiscal_year_balance and symbol_holdings)
+CREATE TRIGGER trg_cash_records_fiscal_balance
+    AFTER INSERT OR UPDATE OR DELETE ON cash_records
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_fiscal_year_balance();
+
+CREATE TRIGGER trg_cash_records_symbol_holdings
+    AFTER INSERT OR UPDATE OR DELETE ON cash_records
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_symbol_holdings();
+
+-- Triggers for cash_records_staging (fiscal_year_balance_staging and symbol_holdings)
+CREATE TRIGGER trg_cash_staging_fiscal_balance_staging
+    AFTER INSERT OR UPDATE OR DELETE ON cash_records_staging
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_fiscal_year_balance_staging();
+
+CREATE TRIGGER trg_cash_staging_symbol_holdings
+    AFTER INSERT OR UPDATE OR DELETE ON cash_records_staging
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_symbol_holdings();
+
+-- Triggers for staging tables to update symbol_holdings (missing triggers)
+CREATE TRIGGER trg_bonus_staging_symbol_holdings
+    AFTER INSERT OR UPDATE OR DELETE ON bonus_records_staging
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_update_symbol_holdings();
+
+CREATE TRIGGER trg_right_staging_symbol_holdings
+    AFTER INSERT OR UPDATE OR DELETE ON right_records_staging
     FOR EACH ROW
     EXECUTE FUNCTION fn_update_symbol_holdings();
 

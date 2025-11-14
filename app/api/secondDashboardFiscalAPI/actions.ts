@@ -203,7 +203,7 @@ type MetricData = {
 
     // Remarks
     remarks?: string
-    
+
     // IPO Staging indicator
     isIPOStaging?: boolean
 }
@@ -247,7 +247,56 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
             }
         })
 
-        const symbols = fiscalYearBalances.map(s => s.symbol)
+        // Get fund_id for IPO staging records
+        const fundData = await prisma.client_broker_mapping.findFirst({
+            where: {
+                client_name: given_fund
+            },
+            select: { fund_id: true }
+        })
+
+        // Get staging holdings from fiscal_year_balance_staging with sub_id = 1 (not dematerialized yet)
+        const ipoStagingRecords = fundData ? await prisma.fiscal_year_balance_staging.findMany({
+            where: {
+                fiscal_year_id: given_fiscal,
+                fund_id: fundData.fund_id,
+                sub_id: 1
+            },
+            select: {
+                symbol: true,
+                opening_quantity: true,
+                opening_rate: true,
+                closing_quantity: true,
+                effective_rate: true,
+                demat: true,
+                non_demat: true
+            }
+        }) : []
+
+        const ipoAggregated = aggregateStagingBySymbol(ipoStagingRecords)
+
+        // Get stock details for staging records
+        const ipoSymbols = Array.from(ipoAggregated.keys())
+        const ipoStockDetails = ipoSymbols.length > 0 ? await prisma.stock_fulls.findMany({
+            where: {
+                symbol: { in: ipoSymbols }
+            },
+            select: {
+                symbol: true,
+                full_form: true,
+                sector_id: true,
+                promoter_sector_id: true,
+                sectors: {
+                    select: {
+                        sector_name: true
+                    }
+                }
+            }
+        }) : []
+
+        const ipoStockMap = new Map(ipoStockDetails.map(s => [s.symbol, s]))
+
+        const symbols = [...fiscalYearBalances.map(b => b.symbol), ...ipoSymbols]
         if (symbols.length === 0) return []
 
         // Batch fetch market prices from market_snapshots
@@ -256,9 +305,7 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
         // Get promoter sector map for efficient sector name lookup
         const promoterSectorMap = await getPromoterSectorMap()
 
-        // DEMAT/NON_DEMAT values are now included in fiscalYearBalances query above
-
-        // Get purchase data from buy_records
+        // Get purchase data from buy_records (for trading securities)
         const purchaseData = await prisma.buy_records.groupBy({
             by: ['symbol'],
             where: {
@@ -270,7 +317,7 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
             },
             _sum: {
                 quantity: true,
-                net_payable: true
+                txn_value: true
             }
         })
 
@@ -278,7 +325,7 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
         const rightData = await prisma.right_records.groupBy({
             by: ['symbol'],
             where: {
-                symbol: { in: symbols },
+                symbol: { in: fiscalYearBalances.map(b => b.symbol) },
                 fiscal_year_id: given_fiscal,
                 client_broker_mapping: {
                     client_name: given_fund
@@ -293,7 +340,7 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
         // Get bonus data with book close dates from bonus_records
         const bonusData = await prisma.bonus_records.findMany({
             where: {
-                symbol: { in: symbols },
+                symbol: { in: fiscalYearBalances.map(b => b.symbol) },
                 fiscal_year_id: given_fiscal,
                 client_broker_mapping: {
                     client_name: given_fund
@@ -310,7 +357,7 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
         const salesData = await prisma.sell_records.groupBy({
             by: ['symbol'],
             where: {
-                symbol: { in: symbols },
+                symbol: { in: fiscalYearBalances.map(b => b.symbol) },
                 fiscal_year_id: given_fiscal,
                 client_broker_mapping: {
                     client_name: given_fund
@@ -318,7 +365,7 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
             },
             _sum: {
                 quantity: true,
-                net_receivable: true,
+                txn_value: true,
                 profit_loss: true
             }
         })
@@ -359,9 +406,9 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
             const openingRate = sanitizeNumeric(balance.opening_rate)
             const openingAmount = openingQty * openingRate
             
-            // Purchase data
+            // Purchase data - only from actual buy_records (not fiscal_year_balance)
             const purchaseQty = sanitizeNumeric(purchase?._sum.quantity)
-            const purchaseAmount = sanitizeNumeric(purchase?._sum.net_payable)
+            const purchaseAmount = sanitizeNumeric(purchase?._sum.txn_value)
             const purchaseRate = purchaseQty > 0 ? purchaseAmount / purchaseQty : 0
             
             // Right share data
@@ -374,13 +421,16 @@ export async function getMetricDataTradingFiscal(currentFund: string, fiscalID: 
             
             // Sales data
             const salesQty = sanitizeNumeric(sales?._sum.quantity)
-            const salesAmount = sanitizeNumeric(sales?._sum.net_receivable)
+            const salesAmount = sanitizeNumeric(sales?._sum.txn_value)
             const salesProfit = sanitizeNumeric(sales?._sum.profit_loss)
-            const salesCost = salesAmount - salesProfit // Net receivable - profit = cost
             
-            // Closing from fiscal_year_balance.closing_quantity and effective_rate
+            // Closing from fiscal_year_balance
             const closingQty = sanitizeNumeric(balance.closing_quantity)
             const closingRate = sanitizeNumeric(balance.effective_rate)
+            
+            // Sales cost should be average cost per share sold (amount / quantity)
+            const salesCost = salesQty > 0 ? salesAmount / salesQty : 0
+            
             const closingAmount = closingQty * closingRate
             
             // DEMAT/NON_DEMAT values from fiscal_year_balance (fiscal year specific)
@@ -551,7 +601,7 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             },
             _sum: {
                 quantity: true,
-                net_payable: true
+                txn_value: true
             }
         })
 
@@ -599,7 +649,7 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             },
             _sum: {
                 quantity: true,
-                net_receivable: true,
+                txn_value: true,
                 profit_loss: true
             }
         })
@@ -676,9 +726,9 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             const openingRate = sanitizeNumeric(balance.opening_rate)
             const openingAmount = openingQty * openingRate
             
-            // Purchase data
+            // Purchase data - only from actual buy_records (not fiscal_year_balance)
             const purchaseQty = sanitizeNumeric(purchase?._sum.quantity)
-            const purchaseAmount = sanitizeNumeric(purchase?._sum.net_payable)
+            const purchaseAmount = sanitizeNumeric(purchase?._sum.txn_value)
             const purchaseRate = purchaseQty > 0 ? purchaseAmount / purchaseQty : 0
             
             // Right share data
@@ -691,13 +741,15 @@ export async function getMetricDataPromoterFiscal(currentFund: string, fiscalID:
             
             // Sales data
             const salesQty = sanitizeNumeric(sales?._sum.quantity)
-            const salesAmount = sanitizeNumeric(sales?._sum.net_receivable)
+            const salesAmount = sanitizeNumeric(sales?._sum.txn_value)
             const salesProfit = sanitizeNumeric(sales?._sum.profit_loss)
-            const salesCost = salesAmount - salesProfit
             
             // Closing from fiscal_year_balance
             const closingQty = sanitizeNumeric(balance.closing_quantity)
             const closingRate = sanitizeNumeric(balance.effective_rate)
+            
+            // Sales cost should be average cost per share sold (amount / quantity)
+            const salesCost = salesQty > 0 ? salesAmount / salesQty : 0
             const closingAmount = closingQty * closingRate
             
             // DEMAT/NON_DEMAT values from fiscal_year_balance
@@ -990,7 +1042,7 @@ export async function getMetricDataSubClassFiscal(currentFund: string, fiscalID:
             },
             _sum: {
                 quantity: true,
-                net_payable: true
+                txn_value: true
             }
         })
 
@@ -1038,7 +1090,7 @@ export async function getMetricDataSubClassFiscal(currentFund: string, fiscalID:
             },
             _sum: {
                 quantity: true,
-                net_receivable: true,
+                txn_value: true,
                 profit_loss: true
             }
         })
@@ -1115,9 +1167,9 @@ export async function getMetricDataSubClassFiscal(currentFund: string, fiscalID:
             const openingRate = sanitizeNumeric(balance.opening_rate)
             const openingAmount = openingQty * openingRate
             
-            // Purchase data
+            // Purchase data - only from actual buy_records (not fiscal_year_balance)
             const purchaseQty = sanitizeNumeric(purchase?._sum.quantity)
-            const purchaseAmount = sanitizeNumeric(purchase?._sum.net_payable)
+            const purchaseAmount = sanitizeNumeric(purchase?._sum.txn_value)
             const purchaseRate = purchaseQty > 0 ? purchaseAmount / purchaseQty : 0
             
             // Right share data
@@ -1130,13 +1182,15 @@ export async function getMetricDataSubClassFiscal(currentFund: string, fiscalID:
             
             // Sales data
             const salesQty = sanitizeNumeric(sales?._sum.quantity)
-            const salesAmount = sanitizeNumeric(sales?._sum.net_receivable)
+            const salesAmount = sanitizeNumeric(sales?._sum.txn_value)
             const salesProfit = sanitizeNumeric(sales?._sum.profit_loss)
-            const salesCost = salesAmount - salesProfit
             
             // Closing from fiscal_year_balance
             const closingQty = sanitizeNumeric(balance.closing_quantity)
             const closingRate = sanitizeNumeric(balance.effective_rate)
+            
+            // Sales cost should be average cost per share sold (amount / quantity)
+            const salesCost = salesQty > 0 ? salesAmount / salesQty : 0
             const closingAmount = closingQty * closingRate
             
             // DEMAT/NON_DEMAT values from fiscal_year_balance

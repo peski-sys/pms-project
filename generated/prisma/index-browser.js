@@ -187,7 +187,8 @@ exports.Prisma.Sell_recordsScalarFieldEnum = {
   recorded_at: 'recorded_at',
   approx_profit_loss: 'approx_profit_loss',
   contract_number: 'contract_number',
-  fiscal_year_id: 'fiscal_year_id'
+  fiscal_year_id: 'fiscal_year_id',
+  historical_tax_base_wacc: 'historical_tax_base_wacc'
 };
 
 exports.Prisma.UploadsScalarFieldEnum = {

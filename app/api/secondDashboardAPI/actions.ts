@@ -134,22 +134,23 @@ export async function getMetricDataTrading(currentFund: string, fiscalID: string
         }
     }) : []
 
-    // Get purchase data
-    const purchaseData = await prisma.buy_records.groupBy({
+    // Get purchase data from fiscal_year_balance (quantity, effective_rate, amount = qty * rate)
+    // This represents the current fiscal year's purchase data merged by fund_id and symbol
+    const purchaseData = await prisma.fiscal_year_balance.groupBy({
         by: ['symbol'],
         where: {
             symbol: { in: symbols },
             fiscal_year_id: given_fiscal,
             client_broker_mapping: {
                 client_name: given_fund
-            }
+            },
+            source_type: "TRADING"
         },
         _sum: {
-            quantity: true,
-            net_payable: true
+            closing_quantity: true  // This represents the purchased quantity for this fiscal year
         },
         _avg: {
-            effective_rate: true
+            effective_rate: true    // Average effective rate for purchases
         }
     })
 
@@ -197,7 +198,7 @@ export async function getMetricDataTrading(currentFund: string, fiscalID: string
         },
         _sum: {
             quantity: true,
-            net_receivable: true,
+            txn_value: true,
             profit_loss: true
         },
         _avg: {
@@ -243,9 +244,9 @@ export async function getMetricDataTrading(currentFund: string, fiscalID: string
         const openingRate = sanitizeNumeric((opening as any)?.effective_rate)   // Previous year's effective rate
         const openingAmount = openingQty * openingRate
         
-        const purchaseQty = sanitizeNumeric((purchase as any)?._sum.quantity)
-        const purchaseAmount = sanitizeNumeric((purchase as any)?._sum.net_payable)
-        const purchaseRate = purchaseQty > 0 ? purchaseAmount / purchaseQty : 0
+        const purchaseQty = sanitizeNumeric((purchase as any)?._sum.closing_quantity)
+        const purchaseRate = sanitizeNumeric((purchase as any)?._avg.effective_rate)
+        const purchaseAmount = purchaseQty * purchaseRate
         
         const rightQty = sanitizeNumeric((right as any)?._sum.quantity)
         const rightTotal = sanitizeNumeric((right as any)?._sum.total_value)
@@ -254,12 +255,14 @@ export async function getMetricDataTrading(currentFund: string, fiscalID: string
         const bonusBookClose = bonus?.bookCloseDate || ''
         
         const salesQty = sanitizeNumeric((sales as any)?._sum.quantity)
-        const salesAmount = sanitizeNumeric((sales as any)?._sum.net_receivable)
+        const salesAmount = sanitizeNumeric((sales as any)?._sum.txn_value)
         const salesProfit = sanitizeNumeric((sales as any)?._sum.profit_loss)
-        const salesCost = salesAmount - salesProfit // Net receivable - profit = cost
         
         const closingQty = sanitizeNumeric(holding.closing_quantity)
         const closingRate = sanitizeNumeric(holding.effective_rate)
+        
+        // Sales cost should be average cost per share sold (amount / quantity)
+        const salesCost = salesQty > 0 ? salesAmount / salesQty : 0
         const closingAmount = closingQty * closingRate
         
         // DEMAT/NON_DEMAT values

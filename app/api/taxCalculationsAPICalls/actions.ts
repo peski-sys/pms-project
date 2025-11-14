@@ -101,6 +101,17 @@ const buildSymbolHoldingMap = (records: { symbol: string; wacc_tax_base: any }[]
   return map
 }
 
+const buildSymbolHoldingDataMap = (records: { symbol: string; quantity: any; wacc_tax_base: any }[]) => {
+  const map = new Map<string, { quantity: number; wacc_tax_base: number }>()
+  records.forEach((record) => {
+    map.set(record.symbol, {
+      quantity: sanitizeNumeric(record.quantity),
+      wacc_tax_base: sanitizeNumeric(record.wacc_tax_base)
+    })
+  })
+  return map
+}
+
 const consolidateRows = (rows: TaxBaseCalculationRow[]): TaxBaseCalculationRow[] => {
   const consolidated = new Map<
     string,
@@ -250,22 +261,50 @@ const buildFiscalBalanceSection = async ({
   const additionalSymbols = additionalHoldings.map((holding) => holding.symbol)
   const symbols = Array.from(new Set([...balanceSymbols, ...additionalSymbols]))
 
-  const [purchaseData, rightData, salesData, bonusRecords, ltpMap, symbolHoldings] = await Promise.all([
+  // Build purchase data queries based on source type
+  const purchaseQueries = []
+  
+  // Always include buy_records for all source types
+  purchaseQueries.push(
     prisma.buy_records.groupBy({
       by: ["symbol"],
       where: {
-        symbol: {
-          in: symbols,
-        },
+        symbol: { in: symbols },
         fiscal_year_id: fiscalYearId,
-        client_broker_mapping: {
-          client_name: clientName,
+        client_broker_mapping: { client_name: clientName },
+      },
+      _sum: { net_payable: true },
+    })
+  )
+  
+  // For PROMOTER source types, also include promoter_records and ipo_allotment_records
+  if (sourceType === "PROMOTER") {
+    purchaseQueries.push(
+      prisma.promoter_records.groupBy({
+        by: ["symbol"],
+        where: {
+          symbol: { in: symbols },
+          fiscal_year_id: fiscalYearId,
+          client_broker_mapping: { client_name: clientName },
+          ...whereExtra,
         },
-      },
-      _sum: {
-        net_payable: true,
-      },
-    }),
+        _sum: { total_value: true },
+      }),
+      prisma.ipo_allotment_records.groupBy({
+        by: ["symbol"],
+        where: {
+          symbol: { in: symbols },
+          fiscal_year_id: fiscalYearId,
+          client_broker_mapping: { client_name: clientName },
+          ...whereExtra,
+        },
+        _sum: { total_value: true },
+      })
+    )
+  }
+
+  const allQueries = [
+    ...purchaseQueries,
     prisma.right_records.groupBy({
       by: ["symbol"],
       where: {
@@ -294,7 +333,7 @@ const buildFiscalBalanceSection = async ({
       },
       _sum: {
         net_receivable: true,
-        profit_loss: true,
+        approx_profit_loss: true,
       },
     }),
     prisma.bonus_records.findMany({
@@ -324,16 +363,60 @@ const buildFiscalBalanceSection = async ({
       },
       select: {
         symbol: true,
+        quantity: true,
         wacc_tax_base: true,
       },
     }),
-  ])
+  ]
 
-  const purchaseMap = new Map(purchaseData.map((item) => [item.symbol, item]))
+  const results = await Promise.all(allQueries)
+  
+  // Extract results based on query count
+  const buyRecordsData = results[0] as { symbol: string; _sum: { net_payable: number | null } }[]
+  const rightData = results[purchaseQueries.length] as { symbol: string; _sum: { total_value: number | null } }[]
+  const salesData = results[purchaseQueries.length + 1] as { symbol: string; _sum: { net_receivable: number | null; approx_profit_loss: number | null } }[]
+  const bonusRecords = results[purchaseQueries.length + 2] as { symbol: string; quantity: number; effective_rate: any }[]
+  const ltpMap = results[purchaseQueries.length + 3] as Map<string, number>
+  const symbolHoldings = results[purchaseQueries.length + 4] as { symbol: string; quantity: any; wacc_tax_base: any }[]
+  
+  // Extract promoter data if available
+  const promoterData = sourceType === "PROMOTER" && purchaseQueries.length > 1 
+    ? [results[1], results[2]] 
+    : []
+
+  // Combine purchase data from all sources
+  const combinedPurchaseMap = new Map<string, number>()
+  
+  // Add buy_records data
+  const buyRecords = buyRecordsData as { symbol: string; _sum: { net_payable: number | null } }[]
+  buyRecords.forEach(record => {
+    const amount = sanitizeNumeric(record._sum.net_payable)
+    combinedPurchaseMap.set(record.symbol, (combinedPurchaseMap.get(record.symbol) ?? 0) + amount)
+  })
+  
+  // Add promoter_records and ipo_allotment_records data if available
+  if (sourceType === "PROMOTER" && promoterData.length >= 2) {
+    const [promoterRecords, ipoRecords] = promoterData as [
+      { symbol: string; _sum: { total_value: number | null } }[],
+      { symbol: string; _sum: { total_value: number | null } }[]
+    ]
+    
+    promoterRecords.forEach(record => {
+      const amount = sanitizeNumeric(record._sum.total_value)
+      combinedPurchaseMap.set(record.symbol, (combinedPurchaseMap.get(record.symbol) ?? 0) + amount)
+    })
+    
+    ipoRecords.forEach(record => {
+      const amount = sanitizeNumeric(record._sum.total_value)
+      combinedPurchaseMap.set(record.symbol, (combinedPurchaseMap.get(record.symbol) ?? 0) + amount)
+    })
+  }
+
   const rightMap = new Map(rightData.map((item) => [item.symbol, item]))
   const salesMap = new Map(salesData.map((item) => [item.symbol, item]))
   const bonusCostMap = buildBonusCostMap(bonusRecords)
   const symbolHoldingMap = buildSymbolHoldingMap(symbolHoldings)
+  const symbolHoldingDataMap = buildSymbolHoldingDataMap(symbolHoldings)
 
   const rows: TaxBaseCalculationRow[] = balances.map((balance) => {
     const symbol = balance.symbol
@@ -342,8 +425,7 @@ const buildFiscalBalanceSection = async ({
     const openingRate = sanitizeNumeric(balance.opening_rate)
     const openingBalance = openingQty * openingRate
 
-    const purchase = purchaseMap.get(symbol)
-    const purchaseThisYear = sanitizeNumeric(purchase?._sum.net_payable)
+    const purchaseThisYear = combinedPurchaseMap.get(symbol) ?? 0
 
     const right = rightMap.get(symbol)
     const rightCost = sanitizeNumeric(right?._sum.total_value)
@@ -352,11 +434,12 @@ const buildFiscalBalanceSection = async ({
 
     const sales = salesMap.get(symbol)
     const salesThisYear = sanitizeNumeric(sales?._sum.net_receivable)
-    const realisedGainLoss = sanitizeNumeric(sales?._sum.profit_loss)
+    const realisedGainLoss = sanitizeNumeric(sales?._sum.approx_profit_loss)
 
-    const closingQty = sanitizeNumeric(balance.closing_quantity)
+    const symbolHoldingData = symbolHoldingDataMap.get(symbol)
+    const closingQty = symbolHoldingData?.quantity ?? sanitizeNumeric(balance.closing_quantity)
     const booksBase = sanitizeNumeric(balance.effective_rate)
-    const closingValue = closingQty * booksBase
+    const closingValue = symbolHoldingData ? (symbolHoldingData.quantity * symbolHoldingData.wacc_tax_base) : (closingQty * booksBase)
 
     const totalPurchaseCost = purchaseThisYear + bonusCost + rightCost
 
@@ -407,7 +490,8 @@ const buildFiscalBalanceSection = async ({
         : holding.totalValue != null
         ? sanitizeNumeric(holding.totalValue)
         : undefined
-    const closingValue = explicitTotalValue ?? closingQuantity * booksBase
+    const symbolHoldingData = symbolHoldingDataMap.get(symbol)
+    const closingValue = explicitTotalValue ?? (symbolHoldingData ? (symbolHoldingData.quantity * symbolHoldingData.wacc_tax_base) : (closingQuantity * booksBase))
     const totalPurchaseCost = sanitizeNumeric(
       holding.totalPurchaseCost ?? purchaseThisYear + bonusCost + rightCost
     )
