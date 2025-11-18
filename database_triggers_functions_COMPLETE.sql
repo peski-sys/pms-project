@@ -326,28 +326,21 @@ BEGIN
         END IF;
 
     ELSIF TG_TABLE_NAME = 'closeout_records' THEN
+        -- CLOSEOUT: Decrease quantity (like a sale), rate extracted from amount/quantity
         IF TG_OP = 'INSERT' THEN
             v_quantity := NEW.closeout_quantity;
             v_rate := CASE 
                 WHEN NEW.closeout_quantity > 0 THEN ROUND(NEW.closeout_amount / NEW.closeout_quantity, 2)
                 ELSE 0
             END;
-            v_new_quantity := v_current_quantity + v_quantity;
-            v_new_rate := calculate_weighted_average(v_current_quantity, v_current_rate, v_quantity, v_rate);
+            v_new_quantity := v_current_quantity - v_quantity;  -- SUBTRACT quantity (negative transaction)
+            v_new_rate := v_current_rate; -- Rate doesn't change on closeout (like sells)
         ELSIF TG_OP = 'UPDATE' THEN
-            v_new_quantity := v_current_quantity - OLD.closeout_quantity + NEW.closeout_quantity;
-            v_new_rate := calculate_weighted_average(
-                v_current_quantity - OLD.closeout_quantity,
-                v_current_rate,
-                NEW.closeout_quantity,
-                CASE 
-                    WHEN NEW.closeout_quantity > 0 THEN ROUND(NEW.closeout_amount / NEW.closeout_quantity, 2)
-                    ELSE 0
-                END
-            );
+            v_new_quantity := v_current_quantity + OLD.closeout_quantity - NEW.closeout_quantity;  -- Reverse old, apply new
+            v_new_rate := v_current_rate; -- Rate doesn't change on closeout updates
         ELSIF TG_OP = 'DELETE' THEN
-            v_new_quantity := v_current_quantity - OLD.closeout_quantity;
-            v_new_rate := v_current_rate;
+            v_new_quantity := v_current_quantity + OLD.closeout_quantity;  -- Restore quantity
+            v_new_rate := v_current_rate; -- Rate doesn't change
         END IF;
 
     ELSIF TG_TABLE_NAME = 'cash_records' THEN
@@ -584,13 +577,9 @@ DECLARE
     v_fiscal_year_id INTEGER;
     v_fund_id INTEGER;
     v_quantity INTEGER := 0;
-    v_txn_value NUMERIC(16,2) := 0;
     v_commission NUMERIC(16,2) := 0;
     v_source_type VARCHAR(50) := 'TRADING';
     v_sub_id INTEGER := 1;
-    v_old_quantity INTEGER := 0;
-    v_old_txn_value NUMERIC(16,2) := 0;
-    v_old_commission NUMERIC(16,2) := 0;
 BEGIN
     -- Extract common values based on operation
     IF TG_OP = 'DELETE' THEN
@@ -616,35 +605,65 @@ BEGIN
     -- ========================================================================
     
     IF TG_TABLE_NAME = 'buy_records' THEN
-        -- BUY: Increase quantity, add transaction value, add commission (cost basis)
+        -- BUY: Increase quantity, add commission (cost basis)
+        -- Only update symbol_holdings when commission_pending = false
         IF TG_OP = 'INSERT' THEN
+            IF COALESCE(NEW.commission_pending, true) = true THEN
+                RETURN COALESCE(NEW, OLD); -- Skip symbol_holdings update until commission data available
+            END IF;
             v_quantity := NEW.quantity;
-            v_txn_value := COALESCE(NEW.txn_value, 0);
             v_commission := COALESCE(NEW.net_payable, 0);
         ELSIF TG_OP = 'UPDATE' THEN
-            v_quantity := NEW.quantity - OLD.quantity;
-            v_txn_value := COALESCE(NEW.txn_value, 0) - COALESCE(OLD.txn_value, 0);
-            v_commission := COALESCE(NEW.net_payable, 0) - COALESCE(OLD.net_payable, 0);
+            -- Handle commission_pending status changes
+            IF COALESCE(OLD.commission_pending, true) = true AND COALESCE(NEW.commission_pending, true) = false THEN
+                -- Commission data just became available, add full record
+                v_quantity := NEW.quantity;
+                v_commission := COALESCE(NEW.net_payable, 0);
+            ELSIF COALESCE(NEW.commission_pending, true) = true THEN
+                -- Still pending commission, skip update
+                RETURN COALESCE(NEW, OLD);
+            ELSE
+                -- Normal update with commission data available
+                v_quantity := NEW.quantity - OLD.quantity;
+                v_commission := COALESCE(NEW.net_payable, 0) - COALESCE(OLD.net_payable, 0);
+            END IF;
         ELSIF TG_OP = 'DELETE' THEN
+            IF COALESCE(OLD.commission_pending, true) = true THEN
+                RETURN COALESCE(NEW, OLD); -- Was never added to symbol_holdings
+            END IF;
             v_quantity := -OLD.quantity;
-            v_txn_value := -COALESCE(OLD.txn_value, 0);
             v_commission := -COALESCE(OLD.net_payable, 0);
         END IF;
 
     ELSIF TG_TABLE_NAME = 'sell_records' THEN
-        -- SELL: Decrease quantity, subtract transaction value (negative), NO commission change
+        -- SELL: Decrease quantity, NO commission change
         -- Sells don't affect cost basis (total_with_commission)
+        -- Only update symbol_holdings when commission_pending = false
         IF TG_OP = 'INSERT' THEN
+            IF COALESCE(NEW.commission_pending, true) = true THEN
+                RETURN COALESCE(NEW, OLD); -- Skip symbol_holdings update until commission data available
+            END IF;
             v_quantity := -NEW.quantity;  -- Negative because selling
-            v_txn_value := -COALESCE(NEW.txn_value, 0);  -- Negative (money out)
             v_commission := 0;  -- Sells don't affect cost basis
         ELSIF TG_OP = 'UPDATE' THEN
-            v_quantity := -(NEW.quantity - OLD.quantity);  -- Net change (negative)
-            v_txn_value := -(COALESCE(NEW.txn_value, 0) - COALESCE(OLD.txn_value, 0));
-            v_commission := 0;
+            -- Handle commission_pending status changes
+            IF COALESCE(OLD.commission_pending, true) = true AND COALESCE(NEW.commission_pending, true) = false THEN
+                -- Commission data just became available, add full record
+                v_quantity := -NEW.quantity;  -- Negative because selling
+                v_commission := 0;  -- Sells don't affect cost basis
+            ELSIF COALESCE(NEW.commission_pending, true) = true THEN
+                -- Still pending commission, skip update
+                RETURN COALESCE(NEW, OLD);
+            ELSE
+                -- Normal update with commission data available
+                v_quantity := -(NEW.quantity - OLD.quantity);  -- Net change (negative)
+                v_commission := 0;
+            END IF;
         ELSIF TG_OP = 'DELETE' THEN
+            IF COALESCE(OLD.commission_pending, true) = true THEN
+                RETURN COALESCE(NEW, OLD); -- Was never added to symbol_holdings
+            END IF;
             v_quantity := OLD.quantity;  -- Restore quantity
-            v_txn_value := COALESCE(OLD.txn_value, 0);  -- Restore value
             v_commission := 0;
         END IF;
 
@@ -653,15 +672,12 @@ BEGIN
         -- This dilutes the WACC (same total cost, more shares)
         IF TG_OP = 'INSERT' THEN
             v_quantity := NEW.quantity;
-            v_txn_value := 0;  -- Free shares
             v_commission := 0;  -- No cost
         ELSIF TG_OP = 'UPDATE' THEN
             v_quantity := NEW.quantity - OLD.quantity;
-            v_txn_value := 0;
             v_commission := 0;
         ELSIF TG_OP = 'DELETE' THEN
             v_quantity := -OLD.quantity;
-            v_txn_value := 0;
             v_commission := 0;
         END IF;
 
@@ -670,16 +686,13 @@ BEGIN
         -- Note: total_value is an auto-generated field in Prisma schema
         IF TG_OP = 'INSERT' THEN
             v_quantity := NEW.quantity;
-            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0);
-            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0); -- Calculate directly instead of using total_value
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0);
         ELSIF TG_OP = 'UPDATE' THEN
             v_quantity := NEW.quantity - OLD.quantity;
-            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := v_txn_value; -- Use calculated value instead of total_value
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
         ELSIF TG_OP = 'DELETE' THEN
             v_quantity := -OLD.quantity;
-            v_txn_value := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := v_txn_value; -- Use calculated value instead of total_value
+            v_commission := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
         END IF;
 
     ELSIF TG_TABLE_NAME = 'promoter_records' THEN
@@ -691,22 +704,19 @@ BEGIN
                 RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
             END IF;
             v_quantity := NEW.quantity;
-            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0);
-            v_commission := v_txn_value; -- Use calculated value instead of total_value
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0);
         ELSIF TG_OP = 'UPDATE' THEN
             IF NEW.remarks IS NOT NULL AND NEW.remarks LIKE 'SKIP_SYMBOL_HOLDINGS%' THEN
                 RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
             END IF;
             v_quantity := NEW.quantity - OLD.quantity;
-            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := v_txn_value; -- Use calculated value instead of total_value
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
         ELSIF TG_OP = 'DELETE' THEN
             IF OLD.remarks IS NOT NULL AND OLD.remarks LIKE 'SKIP_SYMBOL_HOLDINGS%' THEN
                 RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
             END IF;
             v_quantity := -OLD.quantity;
-            v_txn_value := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := v_txn_value; -- Use calculated value instead of total_value
+            v_commission := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
         END IF;
 
     ELSIF TG_TABLE_NAME = 'ipo_allotment_records' THEN
@@ -718,38 +728,32 @@ BEGIN
                 RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
             END IF;
             v_quantity := NEW.quantity;
-            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0);
-            v_commission := v_txn_value; -- Use calculated value instead of total_value
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0);
         ELSIF TG_OP = 'UPDATE' THEN
             IF NEW.remarks IS NOT NULL AND NEW.remarks LIKE 'SKIP_SYMBOL_HOLDINGS%' THEN
                 RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
             END IF;
             v_quantity := NEW.quantity - OLD.quantity;
-            v_txn_value := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := v_txn_value; -- Use calculated value instead of total_value
+            v_commission := COALESCE(NEW.quantity * NEW.effective_rate, 0) - COALESCE(OLD.quantity * OLD.effective_rate, 0);
         ELSIF TG_OP = 'DELETE' THEN
             IF OLD.remarks IS NOT NULL AND OLD.remarks LIKE 'SKIP_SYMBOL_HOLDINGS%' THEN
                 RETURN NULL; -- Skip symbol_holdings update for staging dematerialization
             END IF;
             v_quantity := -OLD.quantity;
-            v_txn_value := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
-            v_commission := v_txn_value; -- Use calculated value instead of total_value
+            v_commission := -COALESCE(OLD.quantity * OLD.effective_rate, 0);
         END IF;
 
     ELSIF TG_TABLE_NAME = 'closeout_records' THEN
-        -- CLOSEOUT: Increase quantity, add cost
+        -- CLOSEOUT: Decrease quantity, remove cost basis (like a sale)
         IF TG_OP = 'INSERT' THEN
-            v_quantity := NEW.closeout_quantity;
-            v_txn_value := COALESCE(NEW.closeout_amount, 0);
-            v_commission := COALESCE(NEW.closeout_amount, 0);
+            v_quantity := -NEW.closeout_quantity;  -- Negative because we're removing shares
+            v_commission := 0;  -- Closeouts don't affect cost basis (like sells)
         ELSIF TG_OP = 'UPDATE' THEN
-            v_quantity := NEW.closeout_quantity - OLD.closeout_quantity;
-            v_txn_value := COALESCE(NEW.closeout_amount, 0) - COALESCE(OLD.closeout_amount, 0);
-            v_commission := COALESCE(NEW.closeout_amount, 0) - COALESCE(OLD.closeout_amount, 0);
+            v_quantity := -(NEW.closeout_quantity - OLD.closeout_quantity);  -- Net change (negative)
+            v_commission := 0;  -- No cost basis change
         ELSIF TG_OP = 'DELETE' THEN
-            v_quantity := -OLD.closeout_quantity;
-            v_txn_value := -COALESCE(OLD.closeout_amount, 0);
-            v_commission := -COALESCE(OLD.closeout_amount, 0);
+            v_quantity := OLD.closeout_quantity;  -- Restore quantity (positive)
+            v_commission := 0;  -- No cost basis change
         END IF;
 
     ELSIF TG_TABLE_NAME = 'cash_records' THEN
@@ -757,15 +761,12 @@ BEGIN
         -- They are recorded for audit purposes but don't change WACC calculations
         IF TG_OP = 'INSERT' THEN
             v_quantity := 0;  -- No quantity change
-            v_txn_value := COALESCE(NEW.amount, 0);  -- Record cash received
             v_commission := 0;  -- No cost basis change
         ELSIF TG_OP = 'UPDATE' THEN
             v_quantity := 0;
-            v_txn_value := COALESCE(NEW.amount, 0) - COALESCE(OLD.amount, 0);
             v_commission := 0;
         ELSIF TG_OP = 'DELETE' THEN
             v_quantity := 0;
-            v_txn_value := -COALESCE(OLD.amount, 0);
             v_commission := 0;
         END IF;
 
@@ -781,16 +782,15 @@ BEGIN
     -- and should not be modified by this trigger
     INSERT INTO symbol_holdings (
         symbol, fund_id, fiscal_year_id,
-        quantity, total_txn_value, total_with_commission,
+        quantity, total_with_commission,
         source_type, sub_id
     ) VALUES (
         v_symbol, v_fund_id, v_fiscal_year_id,
-        v_quantity, v_txn_value, v_commission,
+        v_quantity, v_commission,
         v_source_type, v_sub_id
     )
     ON CONFLICT (symbol, fund_id, fiscal_year_id) DO UPDATE SET
         quantity = symbol_holdings.quantity + v_quantity,
-        total_txn_value = symbol_holdings.total_txn_value + v_txn_value,
         total_with_commission = symbol_holdings.total_with_commission + v_commission;
 
     -- NOTE: Do NOT delete symbol_holdings rows even if quantity becomes zero
@@ -814,8 +814,6 @@ DECLARE
     fy_effective_rate NUMERIC(14,2);
     sh_wacc_tax_base NUMERIC(14,2);
     calculated_profit_loss NUMERIC(18,4);
-    calculated_approx_profit_loss NUMERIC(18,4);
-    historical_wacc NUMERIC(14,2);
 BEGIN
     -- Basic guards: require keys we need
     IF NEW.fund_id IS NULL OR NEW.fiscal_year_id IS NULL OR 
@@ -867,26 +865,17 @@ BEGIN
             NEW.profit_loss := 0;
         END IF;
         
-        -- Store historical wacc_tax_base for future approx_profit_loss calculations
-        -- Only store if not already set (preserve historical value)
-        IF NEW.historical_tax_base_wacc IS NULL OR NEW.historical_tax_base_wacc = 0 THEN
+        -- Store historical wacc_tax_base for approx_profit_loss auto-calculation
+        -- Only store on INSERT and if not already set (preserve historical value)
+        -- Also only store when commission_pending = false (commission data available)
+        IF TG_OP = 'INSERT' AND (NEW.historical_tax_base_wacc IS NULL OR NEW.historical_tax_base_wacc = 0) AND 
+           COALESCE(NEW.commission_pending, true) = false THEN
             NEW.historical_tax_base_wacc := sh_wacc_tax_base;
         END IF;
     END IF;
 
-    -- Calculate approx_profit_loss using historical_tax_base_wacc (not current symbol_holdings)
-    -- approx_profit_loss = (sell_effective_rate - historical_wacc) * quantity
-    IF NEW.effective_rate IS NOT NULL AND NEW.effective_rate > 0 THEN
-        -- Use historical_tax_base_wacc if available, otherwise fall back to current wacc
-        historical_wacc := COALESCE(NEW.historical_tax_base_wacc, sh_wacc_tax_base);
-        
-        IF historical_wacc > 0 THEN
-            calculated_approx_profit_loss := (NEW.effective_rate - historical_wacc) * NEW.quantity;
-            NEW.approx_profit_loss := ROUND(calculated_approx_profit_loss::NUMERIC, 2);
-        ELSE
-            NEW.approx_profit_loss := 0;
-        END IF;
-    END IF;
+    -- Note: approx_profit_loss is now auto-generated by the database using:
+    -- CASE WHEN effective_rate <> 0 THEN (historical_tax_base_wacc - effective_rate) * quantity ELSE 0 END
 
     RETURN NEW;
 
@@ -925,32 +914,38 @@ BEGIN
     IF UPPER(NEW.transaction_type) = 'BUY' THEN
         INSERT INTO buy_records_staging (
             fund_id, upload_id, contract_number, client_id, symbol,
-            quantity, price, txn_value, transaction_date, fiscal_year_id
+            quantity, price, txn_value, transaction_date, fiscal_year_id,
+            commission_pending
         ) VALUES (
             v_fund_id, NEW.upload_id, NEW.contract_number, NEW.client_id, NEW.symbol,
-            NEW.quantity, NEW.price, NEW.txn_value, NEW.transaction_date, NEW.fiscal_year_id
+            NEW.quantity, NEW.price, NEW.txn_value, NEW.transaction_date, NEW.fiscal_year_id,
+            true  -- Commission data not yet available from Excel upload
         )
         ON CONFLICT (contract_number) DO UPDATE SET
             quantity = EXCLUDED.quantity,
             price = EXCLUDED.price,
             txn_value = EXCLUDED.txn_value,
             transaction_date = EXCLUDED.transaction_date,
-            fiscal_year_id = EXCLUDED.fiscal_year_id;
+            fiscal_year_id = EXCLUDED.fiscal_year_id,
+            commission_pending = EXCLUDED.commission_pending;
 
     ELSIF UPPER(NEW.transaction_type) = 'SELL' THEN
         INSERT INTO sell_records_staging (
             fund_id, upload_id, contract_number, client_id, symbol,
-            quantity, price, txn_value, transaction_date, fiscal_year_id
+            quantity, price, txn_value, transaction_date, fiscal_year_id,
+            commission_pending
         ) VALUES (
             v_fund_id, NEW.upload_id, NEW.contract_number, NEW.client_id, NEW.symbol,
-            NEW.quantity, NEW.price, NEW.txn_value, NEW.transaction_date, NEW.fiscal_year_id
+            NEW.quantity, NEW.price, NEW.txn_value, NEW.transaction_date, NEW.fiscal_year_id,
+            true  -- Commission data not yet available from Excel upload
         )
         ON CONFLICT (contract_number) DO UPDATE SET
             quantity = EXCLUDED.quantity,
             price = EXCLUDED.price,
             txn_value = EXCLUDED.txn_value,
             transaction_date = EXCLUDED.transaction_date,
-            fiscal_year_id = EXCLUDED.fiscal_year_id;
+            fiscal_year_id = EXCLUDED.fiscal_year_id,
+            commission_pending = EXCLUDED.commission_pending;
     END IF;
 
     RETURN NEW;
@@ -1076,7 +1071,6 @@ BEGIN
         SELECT 
             symbol, fund_id, source_type, sub_id,
             COALESCE(quantity, 0) AS closing_qty,
-            COALESCE(total_txn_value, 0) AS total_txn,
             COALESCE(total_with_commission, 0) AS total_commission,
             remarks
         FROM symbol_holdings
@@ -1087,12 +1081,12 @@ BEGIN
         -- Note: wacc_tax_base is auto-generated and will be calculated automatically
         INSERT INTO symbol_holdings (
             symbol, fund_id, fiscal_year_id,
-            quantity, total_txn_value, total_with_commission,
+            quantity, total_with_commission,
             source_type, sub_id, remarks
         )
         VALUES (
             v_symbol_holdings_record.symbol, v_symbol_holdings_record.fund_id, toyear,
-            v_symbol_holdings_record.closing_qty, 0, v_symbol_holdings_record.total_commission,
+            v_symbol_holdings_record.closing_qty, v_symbol_holdings_record.total_commission,
             v_symbol_holdings_record.source_type, v_symbol_holdings_record.sub_id,
             COALESCE(v_symbol_holdings_record.remarks, '') || ' | Carried forward from FY ' || fromyear
         )
@@ -1101,7 +1095,6 @@ BEGIN
             total_with_commission = EXCLUDED.total_with_commission,
             source_type = EXCLUDED.source_type,
             sub_id = EXCLUDED.sub_id,
-            total_txn_value = 0,  -- Reset transaction value for new year
             remarks = EXCLUDED.remarks;
         
         v_symbol_holdings_count := v_symbol_holdings_count + 1;
@@ -1245,12 +1238,14 @@ BEGIN
     INSERT INTO buy_records (
         fund_id, upload_id, client_id, symbol, quantity, price, txn_value,
         commission_rate, commission_amount, sebon_commission, effective_rate,
-        net_payable, transaction_date, recorded_at, contract_number, fiscal_year_id
+        net_payable, transaction_date, recorded_at, contract_number, fiscal_year_id,
+        commission_pending
     )
     SELECT 
         fund_id, upload_id, client_id, symbol, quantity, price, txn_value,
         commission_rate, commission_amount, sebon_commission, effective_rate,
-        net_payable, transaction_date, recorded_at, contract_number, fiscal_year_id
+        net_payable, transaction_date, recorded_at, contract_number, fiscal_year_id,
+        commission_pending
     FROM buy_records_staging
     WHERE upload_id = uploadid
     ON CONFLICT (contract_number) DO UPDATE SET
@@ -1262,21 +1257,22 @@ BEGIN
         sebon_commission = EXCLUDED.sebon_commission,
         effective_rate = EXCLUDED.effective_rate,
         net_payable = EXCLUDED.net_payable,
-        transaction_date = EXCLUDED.transaction_date;
+        transaction_date = EXCLUDED.transaction_date,
+        commission_pending = EXCLUDED.commission_pending;
 
     -- Copy sell_records_staging to sell_records
-    -- Profit/loss will be calculated by trigger
+    -- Profit/loss will be calculated by trigger, approx_profit_loss is auto-generated
     INSERT INTO sell_records (
         fund_id, upload_id, client_id, symbol, quantity, price, txn_value,
         commission_rate, commission_amount, capital_gain_tax, sebon_commission,
         effective_rate, net_receivable, transaction_date, recorded_at,
-        approx_profit_loss, contract_number, fiscal_year_id
+        contract_number, fiscal_year_id, commission_pending
     )
     SELECT 
         fund_id, upload_id, client_id, symbol, quantity, price, txn_value,
         commission_rate, commission_amount, capital_gain_tax, sebon_commission,
         effective_rate, net_receivable, transaction_date, recorded_at,
-        approx_profit_loss, contract_number, fiscal_year_id
+        contract_number, fiscal_year_id, commission_pending
     FROM sell_records_staging
     WHERE upload_id = uploadid
     ON CONFLICT (contract_number) DO UPDATE SET
@@ -1289,7 +1285,8 @@ BEGIN
         sebon_commission = EXCLUDED.sebon_commission,
         effective_rate = EXCLUDED.effective_rate,
         net_receivable = EXCLUDED.net_receivable,
-        transaction_date = EXCLUDED.transaction_date;
+        transaction_date = EXCLUDED.transaction_date,
+        commission_pending = EXCLUDED.commission_pending;
 
     -- Mark upload as confirmed
     UPDATE uploads SET is_confirmed = true WHERE upload_id = uploadid;
@@ -1343,12 +1340,11 @@ BEGIN
     RETURN QUERY
     SELECT 
         'Missing values for WACC calculation in symbol_holdings'::VARCHAR(100),
-        FORMAT('Symbol: %s, Fund: %s, FY: %s, Quantity: %s, Total Value: %s', 
-               symbol, fund_id, fiscal_year_id, quantity, total_txn_value)::TEXT
+        FORMAT('Symbol: %s, Fund: %s, FY: %s, Quantity: %s', 
+               symbol, fund_id, fiscal_year_id, quantity)::TEXT
     FROM symbol_holdings
     WHERE COALESCE(quantity, 0) > 0 
-      AND COALESCE(total_with_commission, 0) <= 0 
-      AND COALESCE(total_txn_value, 0) > 0;
+      AND COALESCE(total_with_commission, 0) <= 0;
 
     -- Check for records with NULL fiscal_year_id
     RETURN QUERY
@@ -1648,6 +1644,64 @@ BEGIN
             p_demat, p_source_type, p_remarks
         );
     END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Helper function to update commission data from PDF processing
+CREATE OR REPLACE FUNCTION update_commission_data(
+    p_contract_number VARCHAR(100),
+    p_commission_rate VARCHAR(10) DEFAULT NULL,
+    p_commission_amount NUMERIC(10,2) DEFAULT NULL,
+    p_sebon_commission NUMERIC(10,2) DEFAULT NULL,
+    p_effective_rate NUMERIC(10,2) DEFAULT NULL,
+    p_net_payable NUMERIC(16,2) DEFAULT NULL,
+    p_net_receivable NUMERIC(16,2) DEFAULT NULL,
+    p_capital_gain_tax NUMERIC(10,2) DEFAULT NULL
+) RETURNS VOID AS $$
+BEGIN
+    -- Update buy_records if exists
+    UPDATE buy_records SET
+        commission_rate = COALESCE(p_commission_rate, commission_rate),
+        commission_amount = COALESCE(p_commission_amount, commission_amount),
+        sebon_commission = COALESCE(p_sebon_commission, sebon_commission),
+        effective_rate = COALESCE(p_effective_rate, effective_rate),
+        net_payable = COALESCE(p_net_payable, net_payable),
+        commission_pending = false  -- Mark commission data as available
+    WHERE contract_number = p_contract_number;
+    
+    -- Update sell_records if exists
+    UPDATE sell_records SET
+        commission_rate = COALESCE(p_commission_rate, commission_rate),
+        commission_amount = COALESCE(p_commission_amount, commission_amount),
+        sebon_commission = COALESCE(p_sebon_commission, sebon_commission),
+        effective_rate = COALESCE(p_effective_rate, effective_rate),
+        net_receivable = COALESCE(p_net_receivable, net_receivable),
+        capital_gain_tax = COALESCE(p_capital_gain_tax, capital_gain_tax),
+        commission_pending = false  -- Mark commission data as available
+    WHERE contract_number = p_contract_number;
+    
+    -- Also update staging tables if they exist
+    UPDATE buy_records_staging SET
+        commission_rate = COALESCE(p_commission_rate, commission_rate),
+        commission_amount = COALESCE(p_commission_amount, commission_amount),
+        sebon_commission = COALESCE(p_sebon_commission, sebon_commission),
+        effective_rate = COALESCE(p_effective_rate, effective_rate),
+        net_payable = COALESCE(p_net_payable, net_payable),
+        commission_pending = false
+    WHERE contract_number = p_contract_number;
+    
+    UPDATE sell_records_staging SET
+        commission_rate = COALESCE(p_commission_rate, commission_rate),
+        commission_amount = COALESCE(p_commission_amount, commission_amount),
+        sebon_commission = COALESCE(p_sebon_commission, sebon_commission),
+        effective_rate = COALESCE(p_effective_rate, effective_rate),
+        net_receivable = COALESCE(p_net_receivable, net_receivable),
+        capital_gain_tax = COALESCE(p_capital_gain_tax, capital_gain_tax),
+        commission_pending = false
+    WHERE contract_number = p_contract_number;
+    
+    -- Log the update
+    RAISE NOTICE 'Commission data updated for contract %', p_contract_number;
 END;
 $$ LANGUAGE plpgsql;
 

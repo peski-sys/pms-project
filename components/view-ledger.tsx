@@ -43,7 +43,7 @@ import {
 import { useState, useEffect, useMemo } from "react"
 import { getCurrentSessionUser, getUsers } from "@/app/api/dashboardAPICalls/actions"
 import { getFiscal } from "@/app/api/fiscalAPI/actions"
-import { filterDataGrouped, getSymbolHoldingsEffectiveRate } from "@/app/api/ledgerPageCalls/actions"
+import { filterDataGrouped, getSymbolHoldingsEffectiveRate, getClientBalanceList } from "@/app/api/ledgerPageCalls/actions"
 import { universalExport } from "@/app/api/universalExport/actions"
 import { triggerFileDownload } from "@/lib/downloadUtils"
 import { toast } from "sonner"
@@ -178,6 +178,24 @@ interface FiscalYear {
   end_date: Date
 }
 
+interface ClientBalance {
+  client_id: string
+  client_name: string
+  broker_number: number
+  closing_quantity: number
+  effective_rate: number
+  total_value: number
+}
+
+interface ClientBalanceResponse {
+  success: boolean
+  data: ClientBalance[]
+  total_clients: number
+  total_quantity: number
+  total_value: number
+  message?: string
+}
+
 // Constants
 const INITIAL_STATE = {
   SYMBOL: '',
@@ -222,6 +240,8 @@ export default function ViewLedger() {
   const [effectiveRateLoading, setEffectiveRateLoading] = useState(INITIAL_STATE.RATE_LOADING)
   const [isLoadingMain, setIsLoadingMain] = useState(INITIAL_STATE.LOADING)
   const [isAdmin, setIsAdmin] = useState<boolean | null>()
+  const [clientBalances, setClientBalances] = useState<ClientBalance[]>([])
+  const [showBalanceList, setShowBalanceList] = useState(false)
 
   // Pagination and sorting states for Purchase Records
   const [purchasePage, setPurchasePage] = useState(1)
@@ -277,20 +297,36 @@ export default function ViewLedger() {
     remarks: true
   })
 
-  // Derived: Cost Price = (Eligible Amount + Purchase Total Cost) / (Eligible Shares + Purchase Shares)
+  // Cost Price = (Purchase Amount + Eligible Amount - Sales Amount) / (Purchase Shares + Eligible Shares - Sales Shares)
   const costPrice = useMemo(() => {
     if (!ledgerData || !ledgerData.totals) return 0
-    const eligibleQty = (ledgerData.totals.eligible?.totalEligibleQuantity ?? ledgerData.totals.opening?.totalEligibleQuantity ?? 0) || 0
-    const eligibleAmount = (ledgerData.totals.eligible?.totalEligibleValue ?? ledgerData.totals.opening?.totalEligibleValue ?? 0) || 0
+    
+    // Get eligible holdings (opening balance + bonus + rights + promoter)
+    const eligibleQty = Number(ledgerData.totals.eligible?.totalEligibleQuantity ?? ledgerData.totals.opening?.totalEligibleQuantity ?? 0) || 0
+    const eligibleAmount = Number(ledgerData.totals.eligible?.totalEligibleValue ?? ledgerData.totals.opening?.totalEligibleValue ?? 0) || 0
 
-    const purchaseQty = ledgerData.totals.purchase?.totalQuantity ?? 0
-    const purchaseCost = Number(ledgerData.totals.purchase?.totalNetPayable ?? 0)
+    // Get purchase totals (use txn_value as it's always available, regardless of commission status)
+    const purchaseQty = Number(ledgerData.totals.purchase?.totalQuantity ?? 0) || 0
+    const purchaseAmount = Number(ledgerData.totals.purchase?.totalTxnValue ?? 0) || 0
 
-    const totalQty = (eligibleQty || 0) + (purchaseQty || 0)
-    const totalCost = Number(eligibleAmount || 0) + Number(purchaseCost || 0)
+    // Get sales totals
+    const salesQty = Number(ledgerData.totals.sales?.totalQuantity ?? 0) || 0
+    const salesAmount = Number(ledgerData.totals.sales?.totalTxnValue ?? 0) || 0
+
+    // Apply the formula: (Purchase + Eligible - Sales) amounts / (Purchase + Eligible - Sales) quantities
+    const totalQty = eligibleQty + purchaseQty - salesQty
+    const totalAmount = eligibleAmount + purchaseAmount - salesAmount
+
+    console.log('Cost Price Calculation:', {
+      eligibleQty, eligibleAmount,
+      purchaseQty, purchaseAmount,
+      salesQty, salesAmount,
+      totalQty, totalAmount,
+      costPrice: totalQty > 0 ? totalAmount / totalQty : 0
+    })
 
     if (totalQty <= 0) return 0
-    return totalCost / totalQty
+    return totalAmount / totalQty
   }, [ledgerData])
 
   // Total Quantity = Eligible Quantity + Purchase Quantity - Sales Quantity
@@ -337,6 +373,25 @@ export default function ViewLedger() {
     }
   }
 
+  const fetchClientBalances = async () => {
+    if (!symbol || !fiscalID || !currentFund) return
+    
+    try {
+      const balanceData = await getClientBalanceList(symbol, fiscalID, currentFund)
+      if (balanceData.success) {
+        setClientBalances(balanceData.data)
+        setShowBalanceList(true)
+      } else {
+        toast.error(balanceData.message || 'Failed to fetch client balance data')
+        setClientBalances([])
+      }
+    } catch (error) {
+      console.error('Error fetching client balances:', error)
+      toast.error('Failed to fetch client balance data')
+      setClientBalances([])
+    }
+  }
+
   const handleFilters = async () => {
     if (!symbol || !fiscalID || !currentFund) {
       toast.error('Please fill in all filter fields')
@@ -347,6 +402,7 @@ export default function ViewLedger() {
       const data = await filterDataGrouped(symbol, fiscalID, currentFund) as OverallLedgerData
       setLedgerData(data)
       await fetchEffectiveRate(symbol, currentFund)
+      await fetchClientBalances() // Fetch client balances when applying filters
     } catch (error) {
       console.error('Error fetching ledger data:', error)
       toast.error('Failed to fetch ledger data')
@@ -733,15 +789,66 @@ export default function ViewLedger() {
               </div>
 
               {/* Total Cost Display */}
-              <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm ml-4">
+              <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm ml-4 relative">
                 <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Total Cost</div>
                 <div className="flex items-center justify-center">
                   <span className="text-lg font-bold text-gray-900">
                     <mark> Rs. {totalCost > 0 ? totalCost.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'N/A'} </mark>
                   </span>
                 </div>
+                
+                {/* Balance List Toggle */}
+                {clientBalances.length > 0 && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowBalanceList(!showBalanceList)}
+                    className="absolute -bottom-2 -right-2 h-6 w-6 p-0 bg-blue-100 hover:bg-blue-200 rounded-full"
+                  >
+                    <span className="text-xs text-blue-600">
+                      {showBalanceList ? '−' : '+'}
+                    </span>
+                  </Button>
+                )}
               </div>
             </div>
+            
+            {/* Client Balance List */}
+            {showBalanceList && clientBalances.length > 0 && (
+              <div className="mt-4 bg-white border border-gray-200 rounded-lg p-4 shadow-sm max-w-md">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-sm font-semibold text-gray-900">Client Holdings</h4>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowBalanceList(false)}
+                    className="h-6 w-6 p-0 hover:bg-gray-100 rounded-full"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+                <div className="space-y-2 max-h-60 overflow-y-auto">
+                  {clientBalances.map((balance, index) => (
+                    <div key={balance.client_id} className="flex items-center justify-between text-xs p-2 bg-gray-50 rounded">
+                      <div className="flex-1">
+                        <div className="font-medium text-gray-900">{balance.client_id}</div>
+                        <div className="text-gray-500">Broker: {balance.broker_number}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-medium text-gray-900">{balance.closing_quantity.toLocaleString()}</div>
+                        <div className="text-gray-500">Rs. {balance.total_value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-3 pt-2 border-t border-gray-200">
+                  <div className="flex justify-between text-xs font-semibold text-gray-900">
+                    <span>Total: {clientBalances.length} clients</span>
+                    <span>{clientBalances.reduce((sum, b) => sum + b.closing_quantity, 0).toLocaleString()} shares</span>
+                  </div>
+                </div>
+              </div>
+            )}
             
             <Button onClick={handleExport} disabled={isExporting} className="bg-blue-600 hover:bg-blue-700">
               <Download className="w-4 h-4 mr-2" />

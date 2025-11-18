@@ -142,7 +142,8 @@ exports.Prisma.Buy_recordsScalarFieldEnum = {
   transaction_date: 'transaction_date',
   recorded_at: 'recorded_at',
   contract_number: 'contract_number',
-  fiscal_year_id: 'fiscal_year_id'
+  fiscal_year_id: 'fiscal_year_id',
+  commission_pending: 'commission_pending'
 };
 
 exports.Prisma.Client_broker_mappingScalarFieldEnum = {
@@ -185,10 +186,11 @@ exports.Prisma.Sell_recordsScalarFieldEnum = {
   profit_loss: 'profit_loss',
   transaction_date: 'transaction_date',
   recorded_at: 'recorded_at',
-  approx_profit_loss: 'approx_profit_loss',
   contract_number: 'contract_number',
   fiscal_year_id: 'fiscal_year_id',
-  historical_tax_base_wacc: 'historical_tax_base_wacc'
+  historical_tax_base_wacc: 'historical_tax_base_wacc',
+  approx_profit_loss: 'approx_profit_loss',
+  commission_pending: 'commission_pending'
 };
 
 exports.Prisma.UploadsScalarFieldEnum = {
@@ -238,7 +240,8 @@ exports.Prisma.Buy_records_stagingScalarFieldEnum = {
   transaction_date: 'transaction_date',
   recorded_at: 'recorded_at',
   contract_number: 'contract_number',
-  fiscal_year_id: 'fiscal_year_id'
+  fiscal_year_id: 'fiscal_year_id',
+  commission_pending: 'commission_pending'
 };
 
 exports.Prisma.Fiscal_yearsScalarFieldEnum = {
@@ -274,7 +277,8 @@ exports.Prisma.Sell_records_stagingScalarFieldEnum = {
   transaction_date: 'transaction_date',
   recorded_at: 'recorded_at',
   contract_number: 'contract_number',
-  fiscal_year_id: 'fiscal_year_id'
+  fiscal_year_id: 'fiscal_year_id',
+  commission_pending: 'commission_pending'
 };
 
 exports.Prisma.Stock_fullsScalarFieldEnum = {
@@ -403,7 +407,6 @@ exports.Prisma.Symbol_holdingsScalarFieldEnum = {
   quantity: 'quantity',
   source_type: 'source_type',
   sub_id: 'sub_id',
-  total_txn_value: 'total_txn_value',
   total_with_commission: 'total_with_commission',
   wacc_tax_base: 'wacc_tax_base'
 };

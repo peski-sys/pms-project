@@ -32,6 +32,7 @@ model buy_records {
   recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
   contract_number       String                @id @db.VarChar(100)
   fiscal_year_id        Int?
+  commission_pending    Boolean?              @default(true)
   client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: Cascade)
   fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
   funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
@@ -99,10 +100,11 @@ model sell_records {
   profit_loss              Decimal?              @default(0) @db.Decimal(14, 2)
   transaction_date         DateTime              @db.Timestamp(6)
   recorded_at              DateTime?             @default(now()) @db.Timestamp(6)
-  approx_profit_loss       Decimal?              @db.Decimal(12, 2)
   contract_number          String                @id @db.VarChar(100)
   fiscal_year_id           Int?
   historical_tax_base_wacc Decimal?              @default(0) @db.Decimal(14, 2)
+  approx_profit_loss       Decimal?              @default(dbgenerated("\nCASE\n    WHEN (effective_rate <> (0)::numeric) THEN ((historical_tax_base_wacc - effective_rate) * (quantity)::numeric)\n    ELSE (0)::numeric\nEND")) @db.Decimal(18, 2)
+  commission_pending       Boolean?              @default(true)
   client_broker_mapping    client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: Cascade)
   fiscal_years             fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
   funds                    funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
@@ -172,6 +174,7 @@ model buy_records_staging {
   recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
   contract_number       String                @id @db.VarChar(100)
   fiscal_year_id        Int?
+  commission_pending    Boolean?              @default(true)
   client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: Cascade)
   fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
   funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
@@ -248,6 +251,7 @@ model sell_records_staging {
   recorded_at           DateTime?             @default(now()) @db.Timestamp(6)
   contract_number       String                @id @db.VarChar(100)
   fiscal_year_id        Int?
+  commission_pending    Boolean?              @default(true)
   client_broker_mapping client_broker_mapping @relation(fields: [client_id], references: [client_id], onDelete: Cascade)
   fiscal_years          fiscal_years?         @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)
   funds                 funds                 @relation(fields: [fund_id], references: [fund_id], onDelete: NoAction, onUpdate: NoAction)
@@ -430,7 +434,6 @@ model symbol_holdings {
   quantity              Int?         @default(0)
   source_type           String?      @default("TRADING") @db.VarChar(50)
   sub_id                Int?         @default(1)
-  total_txn_value       Decimal      @default(0) @db.Decimal(16, 2)
   total_with_commission Decimal      @default(0) @db.Decimal(16, 2)
   wacc_tax_base         Decimal?     @default(dbgenerated("\nCASE\n    WHEN (quantity = 0) THEN (0)::numeric\n    ELSE round((total_with_commission / (quantity)::numeric), 2)\nEND")) @db.Decimal(10, 2)
   fiscal_years          fiscal_years @relation(fields: [fiscal_year_id], references: [fiscal_year_id], onDelete: NoAction, onUpdate: NoAction)

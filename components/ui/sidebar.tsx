@@ -25,6 +25,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+// Fix hydration by using React's built-in useId hook
+function useStableId(prefix: string = "sidebar") {
+  const reactId = React.useId()
+  return `${prefix}-${reactId}`
+}
+
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = "16rem"
@@ -510,6 +516,7 @@ function SidebarMenuButton({
 } & VariantProps<typeof sidebarMenuButtonVariants>) {
   const Comp = asChild ? Slot : "button"
   const { isMobile, state } = useSidebar()
+  const stableId = useStableId("menu-button")
 
   const button = (
     <Comp
@@ -518,6 +525,7 @@ function SidebarMenuButton({
       data-size={size}
       data-active={isActive}
       className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+      id={props.id || stableId}
       {...props}
     />
   )

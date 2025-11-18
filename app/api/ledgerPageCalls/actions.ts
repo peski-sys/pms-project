@@ -268,12 +268,12 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
             transaction_date: record.closeout_date,
             client_id: record.client_id,
             symbol: record.symbol,
-            total_quantity: -record.closeout_quantity, // Negative quantity
-            weighted_price_sum: -FinancialCalculator.round(String(record.closeout_amount)), // Negative amount
-            total_txn_value: -FinancialCalculator.round(String(record.closeout_amount)),
+            total_quantity: record.closeout_quantity, // Positive quantity for display (DB handles negative)
+            weighted_price_sum: FinancialCalculator.round(String(record.closeout_amount)), // Positive amount for display
+            total_txn_value: FinancialCalculator.round(String(record.closeout_amount)),
             total_commission_amount: 0,
             total_sebon_commission: 0,
-            total_net_payable: -FinancialCalculator.round(String(record.closeout_amount)),
+            total_net_payable: FinancialCalculator.round(String(record.closeout_amount)),
             commission_rate: null,
             effective_rate: pricePerShare,
             fiscal_year_id: record.fiscal_year_id,
@@ -742,23 +742,27 @@ export async function filterDataGrouped(symbol: string, fiscalID: string, curren
         totalEligibleValue: 0
     });
     
-    // Round eligible totals to 2 decimal places
-    eligibleTotals.totalEligibleValue = FinancialCalculator.round(eligibleTotals.totalEligibleValue);
-    
-    const result = {
+    // Round eligible totals to 2 decimal places and ensure they are numbers
+    eligibleTotals.totalEligibleQuantity = Number(eligibleTotals.totalEligibleQuantity) || 0;
+    eligibleTotals.totalEligibleValue = Number(FinancialCalculator.round(eligibleTotals.totalEligibleValue)) || 0;
+
+    return {
         purchased_sanitized: purchased_grouped,
         sales_sanitized: sales_grouped,
-        opening_sanitized: opening_sanitized, // Fixed typo
-        eligible_sanitized: eligible_records, // New eligible records
+        opening_sanitized: opening_sanitized,
+        eligible_sanitized: eligible_records,
         totals: {
             purchase: purchaseTotals,
             sales: salesTotals,
-            opening: eligibleTotals, // Rename for clarity
-            eligible: eligibleTotals // Add eligible totals
+            eligible: eligibleTotals,
+            opening: {
+                totalOpeningQuantity: opening_all.reduce((sum, record) => sum + record.opening_quantity, 0),
+                totalValue: opening_all.reduce((sum, record) => sum + record.total_value, 0),
+                totalEligibleQuantity: eligibleTotals.totalEligibleQuantity,
+                totalEligibleValue: eligibleTotals.totalEligibleValue
+            }
         }
     }
-
-    return result
 }
 
 export async function getSymbolHoldingsEffectiveRate(symbol: string, currentFund: string) {
@@ -948,4 +952,78 @@ export async function filterData(symbol: string, fiscalID: string, currentFund: 
 
     return result
 
+}
+
+// New function to get client balance list for a specific symbol, fiscal year, and fund
+export async function getClientBalanceList(symbol: string, fiscalID: string, fundName: string) {
+    try {
+        const given_fiscal = Number(fiscalID)
+        
+        // Get fund_id from client name
+        const clientMapping = await prisma.client_broker_mapping.findFirst({
+            where: {
+                client_name: fundName
+            },
+            select: {
+                fund_id: true
+            }
+        })
+
+        if (!clientMapping) {
+            return { success: false, message: 'Fund not found', data: [] }
+        }
+
+        // Get client balance data from fiscal_year_balance table
+        const clientBalances = await prisma.fiscal_year_balance.findMany({
+            where: {
+                symbol: symbol,
+                fiscal_year_id: given_fiscal,
+                fund_id: clientMapping.fund_id,
+                closing_quantity: {
+                    gt: 0 // Only get clients with positive closing quantity
+                }
+            },
+            select: {
+                client_id: true,
+                closing_quantity: true,
+                effective_rate: true,
+                client_broker_mapping: {
+                    select: {
+                        client_name: true,
+                        client_broker: true
+                    }
+                }
+            },
+            orderBy: [
+                { closing_quantity: 'desc' },
+                { client_id: 'asc' }
+            ]
+        })
+
+        // Transform the data to include broker information
+        const balanceList = clientBalances.map(balance => ({
+            client_id: balance.client_id,
+            client_name: balance.client_broker_mapping.client_name,
+            broker_number: balance.client_broker_mapping.client_broker,
+            closing_quantity: Number(balance.closing_quantity),
+            effective_rate: Number(balance.effective_rate || 0),
+            total_value: Number(balance.closing_quantity) * Number(balance.effective_rate || 0)
+        }))
+
+        return {
+            success: true,
+            data: balanceList,
+            total_clients: balanceList.length,
+            total_quantity: balanceList.reduce((sum, item) => sum + item.closing_quantity, 0),
+            total_value: balanceList.reduce((sum, item) => sum + item.total_value, 0)
+        }
+
+    } catch (error) {
+        console.error('Error fetching client balance list:', error)
+        return { 
+            success: false, 
+            message: 'Failed to fetch client balance data',
+            data: [] 
+        }
+    }
 }
