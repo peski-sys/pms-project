@@ -55,6 +55,7 @@ import { RightDialog } from "@/components/dialogs/right-dialog"
 import { CashDialog } from "@/components/dialogs/cash-dialog"
 import { CloseoutDialog } from "@/components/dialogs/closeout-dialog"
 import { IPOAllotmentDialog } from "@/components/dialogs/ipo-allotment-dialog"
+import { StockSplitterDialog } from "@/components/dialogs/stock-splitter-dialog"
 import { Pagination } from "@/components/ui/pagination"
 
 // Type Definitions
@@ -301,9 +302,10 @@ export default function ViewLedger() {
   const costPrice = useMemo(() => {
     if (!ledgerData || !ledgerData.totals) return 0
     
-    // Get eligible holdings (opening balance + bonus + rights + promoter)
-    const eligibleQty = Number(ledgerData.totals.eligible?.totalEligibleQuantity ?? ledgerData.totals.opening?.totalEligibleQuantity ?? 0) || 0
-    const eligibleAmount = Number(ledgerData.totals.eligible?.totalEligibleValue ?? ledgerData.totals.opening?.totalEligibleValue ?? 0) || 0
+    // Get eligible holdings (opening balance + bonus + rights + promoter + IPO)
+    // Always use eligible totals as they include all opening records plus other eligible records
+    const eligibleQty = Number(ledgerData.totals.eligible?.totalEligibleQuantity ?? 0) || 0
+    const eligibleAmount = Number(ledgerData.totals.eligible?.totalEligibleValue ?? 0) || 0
 
     // Get purchase totals (use txn_value as it's always available, regardless of commission status)
     const purchaseQty = Number(ledgerData.totals.purchase?.totalQuantity ?? 0) || 0
@@ -332,7 +334,8 @@ export default function ViewLedger() {
   // Total Quantity = Eligible Quantity + Purchase Quantity - Sales Quantity
   const totalQuantity = useMemo(() => {
     if (!ledgerData || !ledgerData.totals) return 0
-    const eligibleQty = (ledgerData.totals.eligible?.totalEligibleQuantity ?? ledgerData.totals.opening?.totalEligibleQuantity ?? 0) || 0
+    // Always use eligible totals as they include all opening records plus other eligible records
+    const eligibleQty = Number(ledgerData.totals.eligible?.totalEligibleQuantity ?? 0) || 0
     const purchaseQty = ledgerData.totals.purchase?.totalQuantity ?? 0
     const salesQty = ledgerData.totals.sales?.totalQuantity ?? 0
     return (eligibleQty + purchaseQty) - salesQty
@@ -463,10 +466,12 @@ export default function ViewLedger() {
 
   const initializeData = async () => {
     try {
-      const [usersData, fiscalData] = await Promise.all([
+      const [usersData, fiscalResponse] = await Promise.all([
         getUsers(),
         getFiscal()
       ])
+      
+      const fiscalData = fiscalResponse.success ? fiscalResponse.data : []
       
       setUsers(usersData)
       setFiscalYears(fiscalData)
@@ -817,7 +822,7 @@ export default function ViewLedger() {
             {showBalanceList && clientBalances.length > 0 && (
               <div className="mt-4 bg-white border border-gray-200 rounded-lg p-4 shadow-sm max-w-md">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-semibold text-gray-900">Client Holdings</h4>
+                  <h4 className="text-sm font-semibold text-gray-900">Broker Holdings</h4>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -871,6 +876,7 @@ export default function ViewLedger() {
             <RightDialog onSuccess={() => handleFilters()} />
             <CashDialog onSuccess={() => handleFilters()} />
             <CloseoutDialog onSuccess={() => handleFilters()} />
+            <StockSplitterDialog onSuccess={() => handleFilters()} />
             <IPOAllotmentDialog onSuccess={() => handleFilters()} />
           </div>
         </CardContent>
@@ -1118,20 +1124,13 @@ export default function ViewLedger() {
     <TableRow key={record.contract_number} className={record.is_closeout ? `${TABLE_STYLES.CLOSEOUT_ROW} ${TABLE_STYLES.CLOSEOUT}` : TABLE_STYLES.ROW_HOVER}>
       {purchaseColumnVisibility.date && (
         <TableCell className={`font-medium ${TABLE_STYLES.CELL} ${record.is_closeout ? 'text-red-700' : ''}`}>
-          <div className="flex items-center gap-2">
-            {record.is_closeout ? (
-              <span className="text-red-500">📤</span>
-            ) : (
-              <span className="text-green-500">📥</span>
+          <div>
+            <div className="font-medium">{record.transaction_date?.toLocaleDateString()}</div>
+            {record.is_closeout && (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 mt-1">
+                Closeout Transaction
+              </span>
             )}
-            <div>
-              <div className="font-medium">{record.transaction_date?.toLocaleDateString()}</div>
-              {record.is_closeout && (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 mt-1">
-                  Closeout Transaction
-                </span>
-              )}
-            </div>
           </div>
         </TableCell>
       )}
@@ -1447,12 +1446,9 @@ export default function ViewLedger() {
                       <TableRow key={record.id} className={TABLE_STYLES.ROW_HOVER}>
                         {eligibleColumnVisibility.type && (
                           <TableCell className={`font-medium ${TABLE_STYLES.CELL}`}>
-                            <div className="flex items-center gap-2">
-                              <span className="text-lg">{typeInfo.icon}</span>
-                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${typeInfo.color}`}>
-                                {typeInfo.label}
-                              </span>
-                            </div>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${typeInfo.color}`}>
+                              {typeInfo.label}
+                            </span>
                           </TableCell>
                         )}
                         {eligibleColumnVisibility.date && (
@@ -1783,14 +1779,11 @@ export default function ViewLedger() {
     <TableRow key={record.contract_number} className={TABLE_STYLES.ROW_HOVER}>
       {salesColumnVisibility.date && (
         <TableCell className={`font-medium ${TABLE_STYLES.CELL}`}>
-          <div className="flex items-center gap-2">
-            <span className="text-orange-500">💰</span>
-            <div>
-              <div className="font-medium">{record.transaction_date?.toLocaleDateString()}</div>
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-                Sale Transaction
-              </span>
-            </div>
+          <div>
+            <div className="font-medium">{record.transaction_date?.toLocaleDateString()}</div>
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+              Sale Transaction
+            </span>
           </div>
         </TableCell>
       )}

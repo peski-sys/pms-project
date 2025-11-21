@@ -491,7 +491,8 @@ export default function DashboardTwo() {
       setInitialUser(firstUser)
       setcurrentFund(firstUser)
       
-      const fiscal_years = await getFiscal();
+      const fiscalResponse = await getFiscal();
+      const fiscal_years = fiscalResponse.success ? fiscalResponse.data : [];
       setFiscals(fiscal_years)
       
       // Find current fiscal year based on today's date
@@ -2568,6 +2569,93 @@ export default function DashboardTwo() {
               </TableRow>
             )}
           </TableBody>
+          
+          {/* Promoter Table Footer with Totals */}
+          {sortedPromoterData.length > 0 && (
+            <TableFooter>
+              <TableRow className="bg-gray-100 font-semibold">
+                {promoterColumnVisibility.company && (
+                  <TableCell className="font-bold border-r">TOTAL</TableCell>
+                )}
+                {promoterColumnVisibility.code && (
+                  <TableCell className="border-r">-</TableCell>
+                )}
+                {promoterColumnVisibility.category && (
+                  <TableCell className="border-r">-</TableCell>
+                )}
+                {promoterColumnVisibility.opening_quantity && (
+                  <TableCell className="text-center">{promoterTotals.opening_quantity.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.opening_rate && (
+                  <TableCell className="text-center">-</TableCell>
+                )}
+                {promoterColumnVisibility.opening_amount && (
+                  <TableCell className="text-center border-r">Rs. {promoterTotals.opening_amount.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.purchase_quantity && (
+                  <TableCell className="text-center">{promoterTotals.purchase_quantity.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.purchase_rate && (
+                  <TableCell className="text-center">-</TableCell>
+                )}
+                {promoterColumnVisibility.purchase_amount && (
+                  <TableCell className="text-center border-r">Rs. {promoterTotals.purchase_amount.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.right_quantity && (
+                  <TableCell className="text-center">{promoterTotals.right_quantity.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.right_total && (
+                  <TableCell className="text-center border-r">Rs. {promoterTotals.right_total.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.bonus_quantity && (
+                  <TableCell className="text-center">{promoterTotals.bonus_quantity.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.bonus_book_close_date && (
+                  <TableCell className="text-center border-r">-</TableCell>
+                )}
+                {promoterColumnVisibility.sales_quantity && (
+                  <TableCell className="text-center">{promoterTotals.sales_quantity.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.sales_cost && (
+                  <TableCell className="text-center">Rs. {promoterTotals.sales_cost.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.sales_amount && (
+                  <TableCell className="text-center">Rs. {promoterTotals.sales_amount.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.sales_profit && (
+                  <TableCell className={`text-center border-r font-semibold ${
+                    promoterTotals.sales_profit >= 0 ? 'text-green-600' : 'text-red-600'
+                  }`}>
+                    Rs. {promoterTotals.sales_profit.toLocaleString()}
+                  </TableCell>
+                )}
+                {promoterColumnVisibility.closing_quantity && (
+                  <TableCell className="text-center">{promoterTotals.closing_quantity.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.closing_rate && (
+                  <TableCell className="text-center">-</TableCell>
+                )}
+                {promoterColumnVisibility.closing_amount && (
+                  <TableCell className="text-center border-r">Rs. {promoterTotals.closing_amount.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.demat && (
+                  <TableCell className="text-center">{promoterTotals.demat.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.non_demat && (
+                  <TableCell className="text-center border-r">{promoterTotals.non_demat.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.market_price && (
+                  <TableCell className="text-center border-r font-semibold">-</TableCell>
+                )}
+                {promoterColumnVisibility.revaluation_amount && (
+                  <TableCell className="text-center border-r font-semibold">Rs. {promoterTotals.revaluation_amount.toLocaleString()}</TableCell>
+                )}
+                {promoterColumnVisibility.remarks && (
+                  <TableCell className="text-center">-</TableCell>
+                )}
+              </TableRow>
+            </TableFooter>
+          )}
           </Table>
         </div>
       </CardContent>

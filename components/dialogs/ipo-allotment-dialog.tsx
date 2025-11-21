@@ -81,7 +81,8 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
   const [listSubClasses, setListSubClasses] = useState<SubClass[]>()
 
   const fetchFunds = async () => {
-    const fetch_funds: response_funds[] = await getFunds();
+    const fundsResponse = await getFunds();
+    const fetch_funds: response_funds[] = fundsResponse.success ? fundsResponse.data : [];
     setListFunds(fetch_funds)
     // Set first fund as default
     if (fetch_funds.length > 0 && !currentFund) {
@@ -203,12 +204,16 @@ export function IPOAllotmentDialog({ onSuccess }: IPOAllotmentDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white shadow-lg">
+        <Button 
+          className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white shadow-lg"
+          data-ipo-dialog-trigger
+          title="Add IPO Allotment (Alt+I)"
+        >
           <Star className="w-4 h-4 mr-2" />
           Add IPO Allotment
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[550px]">
+      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-indigo-700">
             <Star className="w-5 h-5" />

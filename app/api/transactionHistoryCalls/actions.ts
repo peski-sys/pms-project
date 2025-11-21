@@ -179,8 +179,6 @@ return {
 
 export async function getClientNameID() {
     const clientDetails = await prisma.client_broker_mapping.findMany();
-
-    console.log(clientDetails);
     return clientDetails
 }
 

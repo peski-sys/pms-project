@@ -35,6 +35,14 @@ import { RefreshCw, Search, X } from "lucide-react"
 import { Input } from "@/components/ui/input"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 type buy_result = {
     _sum: {
@@ -103,6 +111,8 @@ import { UploadDEMAT } from "./upload-dialog-demat"
 import { Pagination } from "./ui/pagination"
 import { UploadMigration } from "./upload-dialog-migration"
 import { getCurrentSessionUser } from "@/app/api/dashboardAPICalls/actions"
+import { InsufficientBalanceDialog } from "./dialogs/insufficient-balance-dialog"
+import { InsufficientBalanceError } from "@/app/api/upload/validation"
 
 export default function OrderBooks() {
 
@@ -114,10 +124,15 @@ export default function OrderBooks() {
   
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 5
+  const [itemsPerPage, setItemsPerPage] = useState(5)
 
   // Search state
   const [searchTerm, setSearchTerm] = useState<string>("")
+
+  // Insufficient balance dialog state
+  const [showInsufficientBalanceDialog, setShowInsufficientBalanceDialog] = useState(false)
+  const [insufficientBalanceErrors, setInsufficientBalanceErrors] = useState<InsufficientBalanceError[]>([])
+  const [currentFileName, setCurrentFileName] = useState<string>("")
 
 
   const fetchOrders = async () => {
@@ -149,9 +164,19 @@ export default function OrderBooks() {
     }
     
     try {
-      await confirmSubmission(currentID)
-      await fetchOrders();
-      toast.success('Record confirmed successfully!')
+      const result = await confirmSubmission(currentID)
+      
+      if (result.success) {
+        await fetchOrders();
+        toast.success('Record confirmed successfully!')
+      } else if (result.validationErrors && result.validationErrors.length > 0) {
+        // Show insufficient balance dialog
+        setInsufficientBalanceErrors(result.validationErrors)
+        setCurrentFileName(result.fileName || 'Unknown File')
+        setShowInsufficientBalanceDialog(true)
+      } else {
+        toast.error(result.error || 'Failed to confirm record. Please try again.')
+      }
     } catch (error) {
       console.error('Error confirming record:', error)
       toast.error('Failed to confirm record. Please try again.')
@@ -168,9 +193,13 @@ export default function OrderBooks() {
     }
     
     try {
-      await ConfirmDelete(uploaded_id, file_name)
-      await fetchOrders();
-      toast.success('File deleted successfully!')
+      const result = await ConfirmDelete(uploaded_id, file_name)
+      if (result.success) {
+        await fetchOrders();
+        toast.success(result.message || 'File deleted successfully!')
+      } else {
+        toast.error(result.error || 'Failed to delete file')
+      }
     } catch (error) {
       console.error('Error deleting file:', error)
       toast.error('Failed to delete file. Please try again.')
@@ -550,9 +579,6 @@ export default function OrderBooks() {
             </DialogContent>
         </Dialog>
         </form>
-
-        {/* Only show delete button if record is NOT confirmed */}
-        {!orders.is_confirmed && (
           <form action={handleDelete} id={`${orders.upload_id}-${orders.file_name}`}>
             <input value={`${orders.upload_id}`} type="hidden" name="upload-id" readOnly/>
             <input value={`${orders.file_name}`} type="hidden" name="file-name" readOnly/>
@@ -583,7 +609,6 @@ export default function OrderBooks() {
           </DialogContent>
       </Dialog>
       </form>
-        )}
         </div>
     </CardAction>
   </CardHeader>
@@ -592,16 +617,48 @@ export default function OrderBooks() {
 
     ))}
     
-    {/* Pagination */}
+    {/* Records per page and Pagination */}
     {listOrders && listOrders.length > 0 && (
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-        itemsPerPage={itemsPerPage}
-        totalItems={totalUploads}
-      />
+      <div className="flex items-center justify-between mt-6">
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-gray-700">Items per page:</span>
+          <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+            setItemsPerPage(parseInt(value))
+            setCurrentPage(1)
+          }}>
+            <SelectTrigger className="w-20">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="5">5</SelectItem>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="15">15</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="25">25</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={totalUploads}
+        />
+      </div>
     )}
+
+    {/* Insufficient Balance Dialog */}
+    <InsufficientBalanceDialog
+      isOpen={showInsufficientBalanceDialog}
+      onClose={() => setShowInsufficientBalanceDialog(false)}
+      errors={insufficientBalanceErrors}
+      fileName={currentFileName}
+      uploadId={currentID || 0}
+    />
     </div>
     )
 }

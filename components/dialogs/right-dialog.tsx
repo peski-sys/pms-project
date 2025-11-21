@@ -65,7 +65,8 @@ export function RightDialog({ onSuccess }: RightDialogProps) {
   const [stagingTotalHoldings, setStagingTotalHoldings] = useState<number>(0)
 
   const fetchFunds = async () => {
-    const fetch_funds: response_funds[] = await getFunds();
+    const fundsResponse = await getFunds();
+    const fetch_funds: response_funds[] = fundsResponse.success ? fundsResponse.data : [];
     setListFunds(fetch_funds)
     // Set first fund as default
     if (fetch_funds.length > 0 && !currentFund) {
@@ -203,19 +204,26 @@ export function RightDialog({ onSuccess }: RightDialogProps) {
 
     try {
       setIsLoading(true);
+      let result;
+      
       if (activeTab === 'demat') {
-        await uploadRight(currentFund, currentClient, stock_symbol, first_right_ratio, second_right_ratio, calculatedRightShares, stock_book_close, stock_price_per_share)
+        result = await uploadRight(currentFund, currentClient, stock_symbol, first_right_ratio, second_right_ratio, calculatedRightShares, stock_book_close, stock_price_per_share)
       } else {
-        await uploadRightStaging(currentFund, stock_symbol, first_right_ratio, second_right_ratio, calculatedRightShares, stock_book_close, stock_price_per_share)
+        result = await uploadRightStaging(currentFund, stock_symbol, first_right_ratio, second_right_ratio, calculatedRightShares, stock_book_close, stock_price_per_share)
       }
-      toast.success(activeTab === 'demat' ? 'Right shares added successfully!' : 'Right staging record added successfully!')
-      resetRightCalculation()
-      setIsOpen(false);
-      onSuccess?.();
-      // Reset form
-      setCurrentFund('');
-      setCurrentClient('');
-      setActiveTab('demat')
+      
+      if (result.success) {
+        toast.success(result.message || (activeTab === 'demat' ? 'Right shares added successfully!' : 'Right staging record added successfully!'))
+        resetRightCalculation()
+        setIsOpen(false);
+        onSuccess?.();
+        // Reset form
+        setCurrentFund('');
+        setCurrentClient('');
+        setActiveTab('demat')
+      } else {
+        toast.error(result.error || 'Failed to add right shares')
+      }
     } catch (error) {
       console.error('Error adding right shares:', error)
       toast.error('Failed to add right shares. Please try again.')
@@ -227,12 +235,16 @@ export function RightDialog({ onSuccess }: RightDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg">
+        <Button 
+          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg"
+          data-rights-dialog-trigger
+          title="Add Right (Alt+R)"
+        >
           <ArrowUpRight className="w-4 h-4 mr-2" />
           Add Right
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-blue-700">
             <ArrowUpRight className="w-5 h-5" />

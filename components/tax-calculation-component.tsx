@@ -179,7 +179,8 @@ export default function TaxCalculationComponent() {
     const bootstrap = async () => {
       try {
         setIsLoading(true)
-        const [clientList, fiscalList] = await Promise.all([getUsers(), getFiscal()])
+        const [clientList, fiscalResponse] = await Promise.all([getUsers(), getFiscal()])
+        const fiscalList = fiscalResponse.success ? fiscalResponse.data : []
         setClients(clientList)
         setFiscalYears(fiscalList)
 

@@ -44,14 +44,17 @@ export default function CurrentFundsComponent() {
     const [isLoading, setIsLoading] = useState(false);
     const [isAdmin, setIsAdmin] = useState<boolean | null>()
 
-
     const fetchData = async () => {
         setIsLoading(true)
         try {
             const userPermission = await getCurrentSessionUser()
             setIsAdmin(userPermission)
-            const response: getting_funds[] = await getFunds()
-            setFund(response)
+            const response = await getFunds()
+            if (response.success) {
+                setFund(response.data)
+            } else {
+                toast.error(response.error || 'Failed to load funds')
+            }
         } catch (error) {
             console.error('Error fetching funds:', error)
             toast.error('Failed to load funds. Please try again.')
@@ -73,9 +76,13 @@ export default function CurrentFundsComponent() {
                 return
             }
             
-            await uploadFund(fund_name)
-            await fetchData();
-            toast.success('Fund added successfully!')
+            const result = await uploadFund(fund_name)
+            if (result.success) {
+                await fetchData();
+                toast.success(result.message || 'Fund added successfully!')
+            } else {
+                toast.error(result.error || 'Failed to add fund')
+            }
         } catch (error) {
             console.error('Error adding fund:', error)
             toast.error('Failed to add fund. Please try again.')

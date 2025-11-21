@@ -5,7 +5,6 @@ import { getBatchLTP, sanitizeNumeric, calculatePercentage, transformHolding } f
 import { getBatchMarketSnapshotLTP } from '@/lib/marketSnapshotUtils';
 import { withMarketSnapshotUpdate } from '@/lib/marketSnapshotAutoUpdate';
 import { FinancialCalculator } from '@/lib/decimalUtils';
-import { toast } from 'sonner';
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth-config";
 
@@ -131,7 +130,6 @@ type gainLossType = {
 async function _getTotalInvestment(selectUser: string) {
     try {
         if (!selectUser || selectUser.trim() === '') {
-            console.log('No user selected for getTotalInvestment');
             return { _sum: { total_value: 0 }, error: 'User not specified' };
         }
 
@@ -145,7 +143,6 @@ async function _getTotalInvestment(selectUser: string) {
         });
 
         if (!currentFiscalYear) {
-            console.log('No current fiscal year found');
             return { _sum: { total_value: 0 }, error: 'No current fiscal year' };
         }
 
@@ -243,7 +240,6 @@ async function _getTotalInvestment(selectUser: string) {
             }
         };
     } catch (error) {
-        console.log(`Error getting total investment for user ${selectUser}`);
         return {
             _sum: { total_value: 0 },
             error: error instanceof Error ? error.message : 'Failed to get total investment'
@@ -269,7 +265,6 @@ export async function getCurrentSessionUser() {
 export async function realisedProfitLoss(selectUser: string) {
     try {
         if (!selectUser || selectUser.trim() === '') {
-            console.log('No user selected for realised profit/loss');
             return { _sum: { profit_loss: 0 }, error: 'User not specified' };
         }
 
@@ -464,8 +459,7 @@ export async function getLatestLTP() {
         const { updateMarketSnapshotsLTP } = await import('@/lib/marketSnapshotAutoUpdate');
         await updateMarketSnapshotsLTP();
         
-        toast.success('Market snapshots updated successfully');
-        return { success: true, message: 'Market snapshots updated' };
+        return { success: true, message: 'Market snapshots updated successfully' };
     } catch (error) {
         console.log('Failed to update market snapshots');
         return { 

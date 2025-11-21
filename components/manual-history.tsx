@@ -51,6 +51,7 @@ import { BonusDialog } from "@/components/dialogs/bonus-dialog"
 import { RightDialog } from "@/components/dialogs/right-dialog"
 import { CashDialog } from "@/components/dialogs/cash-dialog"
 import { CloseoutDialog } from "@/components/dialogs/closeout-dialog"
+import { StockSplitterDialog } from "@/components/dialogs/stock-splitter-dialog"
 import { IPOAllotmentDialog } from "@/components/dialogs/ipo-allotment-dialog"
 import { getClients, getCurrentSessionUser, getUsers } from "@/app/api/dashboardAPICalls/actions";
 import { getFiscal } from "@/app/api/fiscalAPI/actions";
@@ -339,7 +340,8 @@ export default function ManualHistoryComponent() {
 
   const fetchFiscalYears = async () => {
     try {
-      const fiscalsList = await getFiscal();
+      const fiscalsResponse = await getFiscal();
+      const fiscalsList = fiscalsResponse.success ? fiscalsResponse.data : [];
       setFiscalYears(fiscalsList);
       
       // Set current fiscal year as selected if fiscal years exist and no fiscal year is currently selected
@@ -391,12 +393,13 @@ export default function ManualHistoryComponent() {
   const handleDeleteBonus = async (bonusId: number) => {
     setDeleteLoading(`bonus-${bonusId}`);
     try {
-      await deleteBonusRecord(bonusId);
+      const result = await deleteBonusRecord(bonusId);
       setBonusRecords(prev => prev.filter(record => record.bonus_id !== bonusId));
-      toast.success('Bonus record deleted successfully');
+      toast.success(result.message || 'Bonus record deleted successfully');
     } catch (error) {
       console.error('Error deleting bonus record:', error);
-      toast.error('Failed to delete bonus record');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete bonus record';
+      toast.error(errorMessage);
     } finally {
       setDeleteLoading(null);
     }
@@ -405,12 +408,13 @@ export default function ManualHistoryComponent() {
   const handleDeletePromoter = async (promoterId: number) => {
     setDeleteLoading(`promoter-${promoterId}`);
     try {
-      await deletePromoterRecord(promoterId);
+      const result = await deletePromoterRecord(promoterId);
       setPromoterRecords(prev => prev.filter(record => record.promoter_id !== promoterId));
-      toast.success('Promoter record deleted successfully');
+      toast.success(result.message || 'Promoter record deleted successfully');
     } catch (error) {
       console.error('Error deleting promoter record:', error);
-      toast.error('Failed to delete promoter record');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete promoter record';
+      toast.error(errorMessage);
     } finally {
       setDeleteLoading(null);
     }
@@ -419,12 +423,13 @@ export default function ManualHistoryComponent() {
   const handleDeleteRight = async (rightId: number) => {
     setDeleteLoading(`right-${rightId}`);
     try {
-      await deleteRightRecord(rightId);
+      const result = await deleteRightRecord(rightId);
       setRightRecords(prev => prev.filter(record => record.right_id !== rightId));
-      toast.success('Right record deleted successfully');
+      toast.success(result.message || 'Right record deleted successfully');
     } catch (error) {
       console.error('Error deleting right record:', error);
-      toast.error('Failed to delete right record');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete right record';
+      toast.error(errorMessage);
     } finally {
       setDeleteLoading(null);
     }
@@ -433,12 +438,13 @@ export default function ManualHistoryComponent() {
   const handleDeleteCash = async (cashId: number) => {
     setDeleteLoading(`cash-${cashId}`);
     try {
-      await deleteCashRecord(cashId);
+      const result = await deleteCashRecord(cashId);
       setCashRecords(prev => prev.filter(record => record.cash_id !== cashId));
-      toast.success('Cash record deleted successfully');
+      toast.success(result.message || 'Cash record deleted successfully');
     } catch (error) {
       console.error('Error deleting cash record:', error);
-      toast.error('Failed to delete cash record');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete cash record';
+      toast.error(errorMessage);
     } finally {
       setDeleteLoading(null);
     }
@@ -576,6 +582,10 @@ export default function ManualHistoryComponent() {
               fetchAllRecords(selectedFund, fiscalYearId);
             }} />
             <CloseoutDialog onSuccess={() => {
+              const fiscalYearId = selectedFiscalYear ? Number(selectedFiscalYear) : undefined;
+              fetchAllRecords(selectedFund, fiscalYearId);
+            }} />
+            <StockSplitterDialog onSuccess={() => {
               const fiscalYearId = selectedFiscalYear ? Number(selectedFiscalYear) : undefined;
               fetchAllRecords(selectedFund, fiscalYearId);
             }} />

@@ -158,6 +158,16 @@ export type right_records_staging = $Result.DefaultSelection<Prisma.$right_recor
  * 
  */
 export type fiscal_year_balance_staging = $Result.DefaultSelection<Prisma.$fiscal_year_balance_stagingPayload>
+/**
+ * Model stock_transfer_details
+ * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ */
+export type stock_transfer_details = $Result.DefaultSelection<Prisma.$stock_transfer_detailsPayload>
+/**
+ * Model stock_transfer_records
+ * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ */
+export type stock_transfer_records = $Result.DefaultSelection<Prisma.$stock_transfer_recordsPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -566,6 +576,26 @@ export class PrismaClient<
     * ```
     */
   get fiscal_year_balance_staging(): Prisma.fiscal_year_balance_stagingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.stock_transfer_details`: Exposes CRUD operations for the **stock_transfer_details** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Stock_transfer_details
+    * const stock_transfer_details = await prisma.stock_transfer_details.findMany()
+    * ```
+    */
+  get stock_transfer_details(): Prisma.stock_transfer_detailsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.stock_transfer_records`: Exposes CRUD operations for the **stock_transfer_records** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Stock_transfer_records
+    * const stock_transfer_records = await prisma.stock_transfer_records.findMany()
+    * ```
+    */
+  get stock_transfer_records(): Prisma.stock_transfer_recordsDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1034,7 +1064,9 @@ export namespace Prisma {
     bonus_records_staging: 'bonus_records_staging',
     cash_records_staging: 'cash_records_staging',
     right_records_staging: 'right_records_staging',
-    fiscal_year_balance_staging: 'fiscal_year_balance_staging'
+    fiscal_year_balance_staging: 'fiscal_year_balance_staging',
+    stock_transfer_details: 'stock_transfer_details',
+    stock_transfer_records: 'stock_transfer_records'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1053,7 +1085,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "audit_log" | "buy_records" | "client_broker_mapping" | "order_book" | "sell_records" | "uploads" | "users" | "fiscal_year_balance" | "buy_records_staging" | "fiscal_years" | "funds" | "sell_records_staging" | "stock_fulls" | "bonus_records" | "cash_records" | "promoter_records" | "right_records" | "sectors" | "client_boid_mapping" | "pdf_records" | "closeout_records" | "ipo_allotment_records" | "market_snapshots" | "symbol_holdings" | "sub_classes" | "bonus_records_staging" | "cash_records_staging" | "right_records_staging" | "fiscal_year_balance_staging"
+      modelProps: "audit_log" | "buy_records" | "client_broker_mapping" | "order_book" | "sell_records" | "uploads" | "users" | "fiscal_year_balance" | "buy_records_staging" | "fiscal_years" | "funds" | "sell_records_staging" | "stock_fulls" | "bonus_records" | "cash_records" | "promoter_records" | "right_records" | "sectors" | "client_boid_mapping" | "pdf_records" | "closeout_records" | "ipo_allotment_records" | "market_snapshots" | "symbol_holdings" | "sub_classes" | "bonus_records_staging" | "cash_records_staging" | "right_records_staging" | "fiscal_year_balance_staging" | "stock_transfer_details" | "stock_transfer_records"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3203,6 +3235,154 @@ export namespace Prisma {
           }
         }
       }
+      stock_transfer_details: {
+        payload: Prisma.$stock_transfer_detailsPayload<ExtArgs>
+        fields: Prisma.stock_transfer_detailsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.stock_transfer_detailsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.stock_transfer_detailsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload>
+          }
+          findFirst: {
+            args: Prisma.stock_transfer_detailsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.stock_transfer_detailsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload>
+          }
+          findMany: {
+            args: Prisma.stock_transfer_detailsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload>[]
+          }
+          create: {
+            args: Prisma.stock_transfer_detailsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload>
+          }
+          createMany: {
+            args: Prisma.stock_transfer_detailsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.stock_transfer_detailsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload>[]
+          }
+          delete: {
+            args: Prisma.stock_transfer_detailsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload>
+          }
+          update: {
+            args: Prisma.stock_transfer_detailsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload>
+          }
+          deleteMany: {
+            args: Prisma.stock_transfer_detailsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.stock_transfer_detailsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.stock_transfer_detailsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload>[]
+          }
+          upsert: {
+            args: Prisma.stock_transfer_detailsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_detailsPayload>
+          }
+          aggregate: {
+            args: Prisma.Stock_transfer_detailsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStock_transfer_details>
+          }
+          groupBy: {
+            args: Prisma.stock_transfer_detailsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Stock_transfer_detailsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.stock_transfer_detailsCountArgs<ExtArgs>
+            result: $Utils.Optional<Stock_transfer_detailsCountAggregateOutputType> | number
+          }
+        }
+      }
+      stock_transfer_records: {
+        payload: Prisma.$stock_transfer_recordsPayload<ExtArgs>
+        fields: Prisma.stock_transfer_recordsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.stock_transfer_recordsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.stock_transfer_recordsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload>
+          }
+          findFirst: {
+            args: Prisma.stock_transfer_recordsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.stock_transfer_recordsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload>
+          }
+          findMany: {
+            args: Prisma.stock_transfer_recordsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload>[]
+          }
+          create: {
+            args: Prisma.stock_transfer_recordsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload>
+          }
+          createMany: {
+            args: Prisma.stock_transfer_recordsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.stock_transfer_recordsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload>[]
+          }
+          delete: {
+            args: Prisma.stock_transfer_recordsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload>
+          }
+          update: {
+            args: Prisma.stock_transfer_recordsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload>
+          }
+          deleteMany: {
+            args: Prisma.stock_transfer_recordsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.stock_transfer_recordsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.stock_transfer_recordsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload>[]
+          }
+          upsert: {
+            args: Prisma.stock_transfer_recordsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$stock_transfer_recordsPayload>
+          }
+          aggregate: {
+            args: Prisma.Stock_transfer_recordsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStock_transfer_records>
+          }
+          groupBy: {
+            args: Prisma.stock_transfer_recordsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Stock_transfer_recordsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.stock_transfer_recordsCountArgs<ExtArgs>
+            result: $Utils.Optional<Stock_transfer_recordsCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3328,6 +3508,8 @@ export namespace Prisma {
     cash_records_staging?: cash_records_stagingOmit
     right_records_staging?: right_records_stagingOmit
     fiscal_year_balance_staging?: fiscal_year_balance_stagingOmit
+    stock_transfer_details?: stock_transfer_detailsOmit
+    stock_transfer_records?: stock_transfer_recordsOmit
   }
 
   /* Types for Logging */
@@ -3420,6 +3602,7 @@ export namespace Prisma {
     right_records: number
     sell_records: number
     sell_records_staging: number
+    stock_transfer_details: number
   }
 
   export type Client_broker_mappingCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3435,6 +3618,7 @@ export namespace Prisma {
     right_records?: boolean | Client_broker_mappingCountOutputTypeCountRight_recordsArgs
     sell_records?: boolean | Client_broker_mappingCountOutputTypeCountSell_recordsArgs
     sell_records_staging?: boolean | Client_broker_mappingCountOutputTypeCountSell_records_stagingArgs
+    stock_transfer_details?: boolean | Client_broker_mappingCountOutputTypeCountStock_transfer_detailsArgs
   }
 
   // Custom InputTypes
@@ -3530,6 +3714,13 @@ export namespace Prisma {
    */
   export type Client_broker_mappingCountOutputTypeCountSell_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: sell_records_stagingWhereInput
+  }
+
+  /**
+   * Client_broker_mappingCountOutputType without action
+   */
+  export type Client_broker_mappingCountOutputTypeCountStock_transfer_detailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: stock_transfer_detailsWhereInput
   }
 
 
@@ -3630,6 +3821,7 @@ export namespace Prisma {
     right_records_staging: number
     sell_records: number
     sell_records_staging: number
+    stock_transfer_records: number
     symbol_holdings: number
   }
 
@@ -3650,6 +3842,7 @@ export namespace Prisma {
     right_records_staging?: boolean | Fiscal_yearsCountOutputTypeCountRight_records_stagingArgs
     sell_records?: boolean | Fiscal_yearsCountOutputTypeCountSell_recordsArgs
     sell_records_staging?: boolean | Fiscal_yearsCountOutputTypeCountSell_records_stagingArgs
+    stock_transfer_records?: boolean | Fiscal_yearsCountOutputTypeCountStock_transfer_recordsArgs
     symbol_holdings?: boolean | Fiscal_yearsCountOutputTypeCountSymbol_holdingsArgs
   }
 
@@ -3779,6 +3972,13 @@ export namespace Prisma {
   /**
    * Fiscal_yearsCountOutputType without action
    */
+  export type Fiscal_yearsCountOutputTypeCountStock_transfer_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: stock_transfer_recordsWhereInput
+  }
+
+  /**
+   * Fiscal_yearsCountOutputType without action
+   */
   export type Fiscal_yearsCountOutputTypeCountSymbol_holdingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: symbol_holdingsWhereInput
   }
@@ -3804,6 +4004,7 @@ export namespace Prisma {
     right_records_staging: number
     sell_records: number
     sell_records_staging: number
+    stock_transfer_records: number
     sub_classes: number
     symbol_holdings: number
   }
@@ -3824,6 +4025,7 @@ export namespace Prisma {
     right_records_staging?: boolean | FundsCountOutputTypeCountRight_records_stagingArgs
     sell_records?: boolean | FundsCountOutputTypeCountSell_recordsArgs
     sell_records_staging?: boolean | FundsCountOutputTypeCountSell_records_stagingArgs
+    stock_transfer_records?: boolean | FundsCountOutputTypeCountStock_transfer_recordsArgs
     sub_classes?: boolean | FundsCountOutputTypeCountSub_classesArgs
     symbol_holdings?: boolean | FundsCountOutputTypeCountSymbol_holdingsArgs
   }
@@ -3947,6 +4149,13 @@ export namespace Prisma {
   /**
    * FundsCountOutputType without action
    */
+  export type FundsCountOutputTypeCountStock_transfer_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: stock_transfer_recordsWhereInput
+  }
+
+  /**
+   * FundsCountOutputType without action
+   */
   export type FundsCountOutputTypeCountSub_classesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: sub_classesWhereInput
   }
@@ -3979,6 +4188,7 @@ export namespace Prisma {
     right_records_staging: number
     sell_records: number
     sell_records_staging: number
+    stock_transfer_records: number
     symbol_holdings: number
   }
 
@@ -3998,6 +4208,7 @@ export namespace Prisma {
     right_records_staging?: boolean | Stock_fullsCountOutputTypeCountRight_records_stagingArgs
     sell_records?: boolean | Stock_fullsCountOutputTypeCountSell_recordsArgs
     sell_records_staging?: boolean | Stock_fullsCountOutputTypeCountSell_records_stagingArgs
+    stock_transfer_records?: boolean | Stock_fullsCountOutputTypeCountStock_transfer_recordsArgs
     symbol_holdings?: boolean | Stock_fullsCountOutputTypeCountSymbol_holdingsArgs
   }
 
@@ -4115,6 +4326,13 @@ export namespace Prisma {
    */
   export type Stock_fullsCountOutputTypeCountSell_records_stagingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: sell_records_stagingWhereInput
+  }
+
+  /**
+   * Stock_fullsCountOutputType without action
+   */
+  export type Stock_fullsCountOutputTypeCountStock_transfer_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: stock_transfer_recordsWhereInput
   }
 
   /**
@@ -4269,6 +4487,37 @@ export namespace Prisma {
    */
   export type Sub_classesCountOutputTypeCountSymbol_holdingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: symbol_holdingsWhereInput
+  }
+
+
+  /**
+   * Count Type Stock_transfer_recordsCountOutputType
+   */
+
+  export type Stock_transfer_recordsCountOutputType = {
+    stock_transfer_details: number
+  }
+
+  export type Stock_transfer_recordsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    stock_transfer_details?: boolean | Stock_transfer_recordsCountOutputTypeCountStock_transfer_detailsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Stock_transfer_recordsCountOutputType without action
+   */
+  export type Stock_transfer_recordsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stock_transfer_recordsCountOutputType
+     */
+    select?: Stock_transfer_recordsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Stock_transfer_recordsCountOutputType without action
+   */
+  export type Stock_transfer_recordsCountOutputTypeCountStock_transfer_detailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: stock_transfer_detailsWhereInput
   }
 
 
@@ -6838,6 +7087,7 @@ export namespace Prisma {
     right_records?: boolean | client_broker_mapping$right_recordsArgs<ExtArgs>
     sell_records?: boolean | client_broker_mapping$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | client_broker_mapping$sell_records_stagingArgs<ExtArgs>
+    stock_transfer_details?: boolean | client_broker_mapping$stock_transfer_detailsArgs<ExtArgs>
     _count?: boolean | Client_broker_mappingCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["client_broker_mapping"]>
 
@@ -6888,6 +7138,7 @@ export namespace Prisma {
     right_records?: boolean | client_broker_mapping$right_recordsArgs<ExtArgs>
     sell_records?: boolean | client_broker_mapping$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | client_broker_mapping$sell_records_stagingArgs<ExtArgs>
+    stock_transfer_details?: boolean | client_broker_mapping$stock_transfer_detailsArgs<ExtArgs>
     _count?: boolean | Client_broker_mappingCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type client_broker_mappingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6916,6 +7167,7 @@ export namespace Prisma {
       right_records: Prisma.$right_recordsPayload<ExtArgs>[]
       sell_records: Prisma.$sell_recordsPayload<ExtArgs>[]
       sell_records_staging: Prisma.$sell_records_stagingPayload<ExtArgs>[]
+      stock_transfer_details: Prisma.$stock_transfer_detailsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       client_id: string
@@ -7332,6 +7584,7 @@ export namespace Prisma {
     right_records<T extends client_broker_mapping$right_recordsArgs<ExtArgs> = {}>(args?: Subset<T, client_broker_mapping$right_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records<T extends client_broker_mapping$sell_recordsArgs<ExtArgs> = {}>(args?: Subset<T, client_broker_mapping$sell_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records_staging<T extends client_broker_mapping$sell_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, client_broker_mapping$sell_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    stock_transfer_details<T extends client_broker_mapping$stock_transfer_detailsArgs<ExtArgs> = {}>(args?: Subset<T, client_broker_mapping$stock_transfer_detailsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8067,6 +8320,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Sell_records_stagingScalarFieldEnum | Sell_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * client_broker_mapping.stock_transfer_details
+   */
+  export type client_broker_mapping$stock_transfer_detailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    where?: stock_transfer_detailsWhereInput
+    orderBy?: stock_transfer_detailsOrderByWithRelationInput | stock_transfer_detailsOrderByWithRelationInput[]
+    cursor?: stock_transfer_detailsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Stock_transfer_detailsScalarFieldEnum | Stock_transfer_detailsScalarFieldEnum[]
   }
 
   /**
@@ -15812,6 +16089,7 @@ export namespace Prisma {
     right_records_staging?: boolean | fiscal_years$right_records_stagingArgs<ExtArgs>
     sell_records?: boolean | fiscal_years$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | fiscal_years$sell_records_stagingArgs<ExtArgs>
+    stock_transfer_records?: boolean | fiscal_years$stock_transfer_recordsArgs<ExtArgs>
     symbol_holdings?: boolean | fiscal_years$symbol_holdingsArgs<ExtArgs>
     _count?: boolean | Fiscal_yearsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["fiscal_years"]>
@@ -15858,6 +16136,7 @@ export namespace Prisma {
     right_records_staging?: boolean | fiscal_years$right_records_stagingArgs<ExtArgs>
     sell_records?: boolean | fiscal_years$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | fiscal_years$sell_records_stagingArgs<ExtArgs>
+    stock_transfer_records?: boolean | fiscal_years$stock_transfer_recordsArgs<ExtArgs>
     symbol_holdings?: boolean | fiscal_years$symbol_holdingsArgs<ExtArgs>
     _count?: boolean | Fiscal_yearsCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -15883,6 +16162,7 @@ export namespace Prisma {
       right_records_staging: Prisma.$right_records_stagingPayload<ExtArgs>[]
       sell_records: Prisma.$sell_recordsPayload<ExtArgs>[]
       sell_records_staging: Prisma.$sell_records_stagingPayload<ExtArgs>[]
+      stock_transfer_records: Prisma.$stock_transfer_recordsPayload<ExtArgs>[]
       symbol_holdings: Prisma.$symbol_holdingsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -16301,6 +16581,7 @@ export namespace Prisma {
     right_records_staging<T extends fiscal_years$right_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$right_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records<T extends fiscal_years$sell_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$sell_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records_staging<T extends fiscal_years$sell_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$sell_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    stock_transfer_records<T extends fiscal_years$stock_transfer_recordsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$stock_transfer_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     symbol_holdings<T extends fiscal_years$symbol_holdingsArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_years$symbol_holdingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$symbol_holdingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -17108,6 +17389,30 @@ export namespace Prisma {
   }
 
   /**
+   * fiscal_years.stock_transfer_records
+   */
+  export type fiscal_years$stock_transfer_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    where?: stock_transfer_recordsWhereInput
+    orderBy?: stock_transfer_recordsOrderByWithRelationInput | stock_transfer_recordsOrderByWithRelationInput[]
+    cursor?: stock_transfer_recordsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Stock_transfer_recordsScalarFieldEnum | Stock_transfer_recordsScalarFieldEnum[]
+  }
+
+  /**
    * fiscal_years.symbol_holdings
    */
   export type fiscal_years$symbol_holdingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17347,6 +17652,7 @@ export namespace Prisma {
     right_records_staging?: boolean | funds$right_records_stagingArgs<ExtArgs>
     sell_records?: boolean | funds$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | funds$sell_records_stagingArgs<ExtArgs>
+    stock_transfer_records?: boolean | funds$stock_transfer_recordsArgs<ExtArgs>
     sub_classes?: boolean | funds$sub_classesArgs<ExtArgs>
     symbol_holdings?: boolean | funds$symbol_holdingsArgs<ExtArgs>
     _count?: boolean | FundsCountOutputTypeDefaultArgs<ExtArgs>
@@ -17387,6 +17693,7 @@ export namespace Prisma {
     right_records_staging?: boolean | funds$right_records_stagingArgs<ExtArgs>
     sell_records?: boolean | funds$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | funds$sell_records_stagingArgs<ExtArgs>
+    stock_transfer_records?: boolean | funds$stock_transfer_recordsArgs<ExtArgs>
     sub_classes?: boolean | funds$sub_classesArgs<ExtArgs>
     symbol_holdings?: boolean | funds$symbol_holdingsArgs<ExtArgs>
     _count?: boolean | FundsCountOutputTypeDefaultArgs<ExtArgs>
@@ -17412,6 +17719,7 @@ export namespace Prisma {
       right_records_staging: Prisma.$right_records_stagingPayload<ExtArgs>[]
       sell_records: Prisma.$sell_recordsPayload<ExtArgs>[]
       sell_records_staging: Prisma.$sell_records_stagingPayload<ExtArgs>[]
+      stock_transfer_records: Prisma.$stock_transfer_recordsPayload<ExtArgs>[]
       sub_classes: Prisma.$sub_classesPayload<ExtArgs>[]
       symbol_holdings: Prisma.$symbol_holdingsPayload<ExtArgs>[]
     }
@@ -17828,6 +18136,7 @@ export namespace Prisma {
     right_records_staging<T extends funds$right_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, funds$right_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$right_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records<T extends funds$sell_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$sell_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records_staging<T extends funds$sell_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, funds$sell_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    stock_transfer_records<T extends funds$stock_transfer_recordsArgs<ExtArgs> = {}>(args?: Subset<T, funds$stock_transfer_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sub_classes<T extends funds$sub_classesArgs<ExtArgs> = {}>(args?: Subset<T, funds$sub_classesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sub_classesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     symbol_holdings<T extends funds$symbol_holdingsArgs<ExtArgs> = {}>(args?: Subset<T, funds$symbol_holdingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$symbol_holdingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -18607,6 +18916,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Sell_records_stagingScalarFieldEnum | Sell_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * funds.stock_transfer_records
+   */
+  export type funds$stock_transfer_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    where?: stock_transfer_recordsWhereInput
+    orderBy?: stock_transfer_recordsOrderByWithRelationInput | stock_transfer_recordsOrderByWithRelationInput[]
+    cursor?: stock_transfer_recordsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Stock_transfer_recordsScalarFieldEnum | Stock_transfer_recordsScalarFieldEnum[]
   }
 
   /**
@@ -20280,6 +20613,7 @@ export namespace Prisma {
     sell_records?: boolean | stock_fulls$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | stock_fulls$sell_records_stagingArgs<ExtArgs>
     sectors?: boolean | sectorsDefaultArgs<ExtArgs>
+    stock_transfer_records?: boolean | stock_fulls$stock_transfer_recordsArgs<ExtArgs>
     symbol_holdings?: boolean | stock_fulls$symbol_holdingsArgs<ExtArgs>
     _count?: boolean | Stock_fullsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock_fulls"]>
@@ -20328,6 +20662,7 @@ export namespace Prisma {
     sell_records?: boolean | stock_fulls$sell_recordsArgs<ExtArgs>
     sell_records_staging?: boolean | stock_fulls$sell_records_stagingArgs<ExtArgs>
     sectors?: boolean | sectorsDefaultArgs<ExtArgs>
+    stock_transfer_records?: boolean | stock_fulls$stock_transfer_recordsArgs<ExtArgs>
     symbol_holdings?: boolean | stock_fulls$symbol_holdingsArgs<ExtArgs>
     _count?: boolean | Stock_fullsCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -20357,6 +20692,7 @@ export namespace Prisma {
       sell_records: Prisma.$sell_recordsPayload<ExtArgs>[]
       sell_records_staging: Prisma.$sell_records_stagingPayload<ExtArgs>[]
       sectors: Prisma.$sectorsPayload<ExtArgs>
+      stock_transfer_records: Prisma.$stock_transfer_recordsPayload<ExtArgs>[]
       symbol_holdings: Prisma.$symbol_holdingsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -20775,6 +21111,7 @@ export namespace Prisma {
     sell_records<T extends stock_fulls$sell_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$sell_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sell_records_staging<T extends stock_fulls$sell_records_stagingArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$sell_records_stagingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sell_records_stagingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sectors<T extends sectorsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, sectorsDefaultArgs<ExtArgs>>): Prisma__sectorsClient<$Result.GetResult<Prisma.$sectorsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    stock_transfer_records<T extends stock_fulls$stock_transfer_recordsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$stock_transfer_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     symbol_holdings<T extends stock_fulls$symbol_holdingsArgs<ExtArgs> = {}>(args?: Subset<T, stock_fulls$symbol_holdingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$symbol_holdingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -21563,6 +21900,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Sell_records_stagingScalarFieldEnum | Sell_records_stagingScalarFieldEnum[]
+  }
+
+  /**
+   * stock_fulls.stock_transfer_records
+   */
+  export type stock_fulls$stock_transfer_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    where?: stock_transfer_recordsWhereInput
+    orderBy?: stock_transfer_recordsOrderByWithRelationInput | stock_transfer_recordsOrderByWithRelationInput[]
+    cursor?: stock_transfer_recordsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Stock_transfer_recordsScalarFieldEnum | Stock_transfer_recordsScalarFieldEnum[]
   }
 
   /**
@@ -40724,6 +41085,2393 @@ export namespace Prisma {
 
 
   /**
+   * Model stock_transfer_details
+   */
+
+  export type AggregateStock_transfer_details = {
+    _count: Stock_transfer_detailsCountAggregateOutputType | null
+    _avg: Stock_transfer_detailsAvgAggregateOutputType | null
+    _sum: Stock_transfer_detailsSumAggregateOutputType | null
+    _min: Stock_transfer_detailsMinAggregateOutputType | null
+    _max: Stock_transfer_detailsMaxAggregateOutputType | null
+  }
+
+  export type Stock_transfer_detailsAvgAggregateOutputType = {
+    detail_id: number | null
+    transfer_id: number | null
+    quantity: number | null
+    from_opening_qty: number | null
+    from_added_qty: number | null
+    effective_rate: Decimal | null
+  }
+
+  export type Stock_transfer_detailsSumAggregateOutputType = {
+    detail_id: number | null
+    transfer_id: number | null
+    quantity: number | null
+    from_opening_qty: number | null
+    from_added_qty: number | null
+    effective_rate: Decimal | null
+  }
+
+  export type Stock_transfer_detailsMinAggregateOutputType = {
+    detail_id: number | null
+    transfer_id: number | null
+    client_id: string | null
+    transfer_type: string | null
+    quantity: number | null
+    from_opening_qty: number | null
+    from_added_qty: number | null
+    effective_rate: Decimal | null
+    created_at: Date | null
+  }
+
+  export type Stock_transfer_detailsMaxAggregateOutputType = {
+    detail_id: number | null
+    transfer_id: number | null
+    client_id: string | null
+    transfer_type: string | null
+    quantity: number | null
+    from_opening_qty: number | null
+    from_added_qty: number | null
+    effective_rate: Decimal | null
+    created_at: Date | null
+  }
+
+  export type Stock_transfer_detailsCountAggregateOutputType = {
+    detail_id: number
+    transfer_id: number
+    client_id: number
+    transfer_type: number
+    quantity: number
+    from_opening_qty: number
+    from_added_qty: number
+    effective_rate: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type Stock_transfer_detailsAvgAggregateInputType = {
+    detail_id?: true
+    transfer_id?: true
+    quantity?: true
+    from_opening_qty?: true
+    from_added_qty?: true
+    effective_rate?: true
+  }
+
+  export type Stock_transfer_detailsSumAggregateInputType = {
+    detail_id?: true
+    transfer_id?: true
+    quantity?: true
+    from_opening_qty?: true
+    from_added_qty?: true
+    effective_rate?: true
+  }
+
+  export type Stock_transfer_detailsMinAggregateInputType = {
+    detail_id?: true
+    transfer_id?: true
+    client_id?: true
+    transfer_type?: true
+    quantity?: true
+    from_opening_qty?: true
+    from_added_qty?: true
+    effective_rate?: true
+    created_at?: true
+  }
+
+  export type Stock_transfer_detailsMaxAggregateInputType = {
+    detail_id?: true
+    transfer_id?: true
+    client_id?: true
+    transfer_type?: true
+    quantity?: true
+    from_opening_qty?: true
+    from_added_qty?: true
+    effective_rate?: true
+    created_at?: true
+  }
+
+  export type Stock_transfer_detailsCountAggregateInputType = {
+    detail_id?: true
+    transfer_id?: true
+    client_id?: true
+    transfer_type?: true
+    quantity?: true
+    from_opening_qty?: true
+    from_added_qty?: true
+    effective_rate?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type Stock_transfer_detailsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which stock_transfer_details to aggregate.
+     */
+    where?: stock_transfer_detailsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of stock_transfer_details to fetch.
+     */
+    orderBy?: stock_transfer_detailsOrderByWithRelationInput | stock_transfer_detailsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: stock_transfer_detailsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` stock_transfer_details from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` stock_transfer_details.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned stock_transfer_details
+    **/
+    _count?: true | Stock_transfer_detailsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Stock_transfer_detailsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Stock_transfer_detailsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Stock_transfer_detailsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Stock_transfer_detailsMaxAggregateInputType
+  }
+
+  export type GetStock_transfer_detailsAggregateType<T extends Stock_transfer_detailsAggregateArgs> = {
+        [P in keyof T & keyof AggregateStock_transfer_details]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStock_transfer_details[P]>
+      : GetScalarType<T[P], AggregateStock_transfer_details[P]>
+  }
+
+
+
+
+  export type stock_transfer_detailsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: stock_transfer_detailsWhereInput
+    orderBy?: stock_transfer_detailsOrderByWithAggregationInput | stock_transfer_detailsOrderByWithAggregationInput[]
+    by: Stock_transfer_detailsScalarFieldEnum[] | Stock_transfer_detailsScalarFieldEnum
+    having?: stock_transfer_detailsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Stock_transfer_detailsCountAggregateInputType | true
+    _avg?: Stock_transfer_detailsAvgAggregateInputType
+    _sum?: Stock_transfer_detailsSumAggregateInputType
+    _min?: Stock_transfer_detailsMinAggregateInputType
+    _max?: Stock_transfer_detailsMaxAggregateInputType
+  }
+
+  export type Stock_transfer_detailsGroupByOutputType = {
+    detail_id: number
+    transfer_id: number
+    client_id: string
+    transfer_type: string
+    quantity: number
+    from_opening_qty: number | null
+    from_added_qty: number | null
+    effective_rate: Decimal | null
+    created_at: Date | null
+    _count: Stock_transfer_detailsCountAggregateOutputType | null
+    _avg: Stock_transfer_detailsAvgAggregateOutputType | null
+    _sum: Stock_transfer_detailsSumAggregateOutputType | null
+    _min: Stock_transfer_detailsMinAggregateOutputType | null
+    _max: Stock_transfer_detailsMaxAggregateOutputType | null
+  }
+
+  type GetStock_transfer_detailsGroupByPayload<T extends stock_transfer_detailsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Stock_transfer_detailsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Stock_transfer_detailsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Stock_transfer_detailsGroupByOutputType[P]>
+            : GetScalarType<T[P], Stock_transfer_detailsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type stock_transfer_detailsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    detail_id?: boolean
+    transfer_id?: boolean
+    client_id?: boolean
+    transfer_type?: boolean
+    quantity?: boolean
+    from_opening_qty?: boolean
+    from_added_qty?: boolean
+    effective_rate?: boolean
+    created_at?: boolean
+    client_broker_mapping?: boolean | client_broker_mappingDefaultArgs<ExtArgs>
+    stock_transfer_records?: boolean | stock_transfer_recordsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stock_transfer_details"]>
+
+  export type stock_transfer_detailsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    detail_id?: boolean
+    transfer_id?: boolean
+    client_id?: boolean
+    transfer_type?: boolean
+    quantity?: boolean
+    from_opening_qty?: boolean
+    from_added_qty?: boolean
+    effective_rate?: boolean
+    created_at?: boolean
+    client_broker_mapping?: boolean | client_broker_mappingDefaultArgs<ExtArgs>
+    stock_transfer_records?: boolean | stock_transfer_recordsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stock_transfer_details"]>
+
+  export type stock_transfer_detailsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    detail_id?: boolean
+    transfer_id?: boolean
+    client_id?: boolean
+    transfer_type?: boolean
+    quantity?: boolean
+    from_opening_qty?: boolean
+    from_added_qty?: boolean
+    effective_rate?: boolean
+    created_at?: boolean
+    client_broker_mapping?: boolean | client_broker_mappingDefaultArgs<ExtArgs>
+    stock_transfer_records?: boolean | stock_transfer_recordsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stock_transfer_details"]>
+
+  export type stock_transfer_detailsSelectScalar = {
+    detail_id?: boolean
+    transfer_id?: boolean
+    client_id?: boolean
+    transfer_type?: boolean
+    quantity?: boolean
+    from_opening_qty?: boolean
+    from_added_qty?: boolean
+    effective_rate?: boolean
+    created_at?: boolean
+  }
+
+  export type stock_transfer_detailsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"detail_id" | "transfer_id" | "client_id" | "transfer_type" | "quantity" | "from_opening_qty" | "from_added_qty" | "effective_rate" | "created_at", ExtArgs["result"]["stock_transfer_details"]>
+  export type stock_transfer_detailsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client_broker_mapping?: boolean | client_broker_mappingDefaultArgs<ExtArgs>
+    stock_transfer_records?: boolean | stock_transfer_recordsDefaultArgs<ExtArgs>
+  }
+  export type stock_transfer_detailsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client_broker_mapping?: boolean | client_broker_mappingDefaultArgs<ExtArgs>
+    stock_transfer_records?: boolean | stock_transfer_recordsDefaultArgs<ExtArgs>
+  }
+  export type stock_transfer_detailsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client_broker_mapping?: boolean | client_broker_mappingDefaultArgs<ExtArgs>
+    stock_transfer_records?: boolean | stock_transfer_recordsDefaultArgs<ExtArgs>
+  }
+
+  export type $stock_transfer_detailsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "stock_transfer_details"
+    objects: {
+      client_broker_mapping: Prisma.$client_broker_mappingPayload<ExtArgs>
+      stock_transfer_records: Prisma.$stock_transfer_recordsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      detail_id: number
+      transfer_id: number
+      client_id: string
+      transfer_type: string
+      quantity: number
+      from_opening_qty: number | null
+      from_added_qty: number | null
+      effective_rate: Prisma.Decimal | null
+      created_at: Date | null
+    }, ExtArgs["result"]["stock_transfer_details"]>
+    composites: {}
+  }
+
+  type stock_transfer_detailsGetPayload<S extends boolean | null | undefined | stock_transfer_detailsDefaultArgs> = $Result.GetResult<Prisma.$stock_transfer_detailsPayload, S>
+
+  type stock_transfer_detailsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<stock_transfer_detailsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Stock_transfer_detailsCountAggregateInputType | true
+    }
+
+  export interface stock_transfer_detailsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['stock_transfer_details'], meta: { name: 'stock_transfer_details' } }
+    /**
+     * Find zero or one Stock_transfer_details that matches the filter.
+     * @param {stock_transfer_detailsFindUniqueArgs} args - Arguments to find a Stock_transfer_details
+     * @example
+     * // Get one Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends stock_transfer_detailsFindUniqueArgs>(args: SelectSubset<T, stock_transfer_detailsFindUniqueArgs<ExtArgs>>): Prisma__stock_transfer_detailsClient<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Stock_transfer_details that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {stock_transfer_detailsFindUniqueOrThrowArgs} args - Arguments to find a Stock_transfer_details
+     * @example
+     * // Get one Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends stock_transfer_detailsFindUniqueOrThrowArgs>(args: SelectSubset<T, stock_transfer_detailsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__stock_transfer_detailsClient<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Stock_transfer_details that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_detailsFindFirstArgs} args - Arguments to find a Stock_transfer_details
+     * @example
+     * // Get one Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends stock_transfer_detailsFindFirstArgs>(args?: SelectSubset<T, stock_transfer_detailsFindFirstArgs<ExtArgs>>): Prisma__stock_transfer_detailsClient<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Stock_transfer_details that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_detailsFindFirstOrThrowArgs} args - Arguments to find a Stock_transfer_details
+     * @example
+     * // Get one Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends stock_transfer_detailsFindFirstOrThrowArgs>(args?: SelectSubset<T, stock_transfer_detailsFindFirstOrThrowArgs<ExtArgs>>): Prisma__stock_transfer_detailsClient<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Stock_transfer_details that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_detailsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.findMany()
+     * 
+     * // Get first 10 Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.findMany({ take: 10 })
+     * 
+     * // Only select the `detail_id`
+     * const stock_transfer_detailsWithDetail_idOnly = await prisma.stock_transfer_details.findMany({ select: { detail_id: true } })
+     * 
+     */
+    findMany<T extends stock_transfer_detailsFindManyArgs>(args?: SelectSubset<T, stock_transfer_detailsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Stock_transfer_details.
+     * @param {stock_transfer_detailsCreateArgs} args - Arguments to create a Stock_transfer_details.
+     * @example
+     * // Create one Stock_transfer_details
+     * const Stock_transfer_details = await prisma.stock_transfer_details.create({
+     *   data: {
+     *     // ... data to create a Stock_transfer_details
+     *   }
+     * })
+     * 
+     */
+    create<T extends stock_transfer_detailsCreateArgs>(args: SelectSubset<T, stock_transfer_detailsCreateArgs<ExtArgs>>): Prisma__stock_transfer_detailsClient<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Stock_transfer_details.
+     * @param {stock_transfer_detailsCreateManyArgs} args - Arguments to create many Stock_transfer_details.
+     * @example
+     * // Create many Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends stock_transfer_detailsCreateManyArgs>(args?: SelectSubset<T, stock_transfer_detailsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Stock_transfer_details and returns the data saved in the database.
+     * @param {stock_transfer_detailsCreateManyAndReturnArgs} args - Arguments to create many Stock_transfer_details.
+     * @example
+     * // Create many Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Stock_transfer_details and only return the `detail_id`
+     * const stock_transfer_detailsWithDetail_idOnly = await prisma.stock_transfer_details.createManyAndReturn({
+     *   select: { detail_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends stock_transfer_detailsCreateManyAndReturnArgs>(args?: SelectSubset<T, stock_transfer_detailsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Stock_transfer_details.
+     * @param {stock_transfer_detailsDeleteArgs} args - Arguments to delete one Stock_transfer_details.
+     * @example
+     * // Delete one Stock_transfer_details
+     * const Stock_transfer_details = await prisma.stock_transfer_details.delete({
+     *   where: {
+     *     // ... filter to delete one Stock_transfer_details
+     *   }
+     * })
+     * 
+     */
+    delete<T extends stock_transfer_detailsDeleteArgs>(args: SelectSubset<T, stock_transfer_detailsDeleteArgs<ExtArgs>>): Prisma__stock_transfer_detailsClient<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Stock_transfer_details.
+     * @param {stock_transfer_detailsUpdateArgs} args - Arguments to update one Stock_transfer_details.
+     * @example
+     * // Update one Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends stock_transfer_detailsUpdateArgs>(args: SelectSubset<T, stock_transfer_detailsUpdateArgs<ExtArgs>>): Prisma__stock_transfer_detailsClient<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Stock_transfer_details.
+     * @param {stock_transfer_detailsDeleteManyArgs} args - Arguments to filter Stock_transfer_details to delete.
+     * @example
+     * // Delete a few Stock_transfer_details
+     * const { count } = await prisma.stock_transfer_details.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends stock_transfer_detailsDeleteManyArgs>(args?: SelectSubset<T, stock_transfer_detailsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Stock_transfer_details.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_detailsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends stock_transfer_detailsUpdateManyArgs>(args: SelectSubset<T, stock_transfer_detailsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Stock_transfer_details and returns the data updated in the database.
+     * @param {stock_transfer_detailsUpdateManyAndReturnArgs} args - Arguments to update many Stock_transfer_details.
+     * @example
+     * // Update many Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Stock_transfer_details and only return the `detail_id`
+     * const stock_transfer_detailsWithDetail_idOnly = await prisma.stock_transfer_details.updateManyAndReturn({
+     *   select: { detail_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends stock_transfer_detailsUpdateManyAndReturnArgs>(args: SelectSubset<T, stock_transfer_detailsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Stock_transfer_details.
+     * @param {stock_transfer_detailsUpsertArgs} args - Arguments to update or create a Stock_transfer_details.
+     * @example
+     * // Update or create a Stock_transfer_details
+     * const stock_transfer_details = await prisma.stock_transfer_details.upsert({
+     *   create: {
+     *     // ... data to create a Stock_transfer_details
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Stock_transfer_details we want to update
+     *   }
+     * })
+     */
+    upsert<T extends stock_transfer_detailsUpsertArgs>(args: SelectSubset<T, stock_transfer_detailsUpsertArgs<ExtArgs>>): Prisma__stock_transfer_detailsClient<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Stock_transfer_details.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_detailsCountArgs} args - Arguments to filter Stock_transfer_details to count.
+     * @example
+     * // Count the number of Stock_transfer_details
+     * const count = await prisma.stock_transfer_details.count({
+     *   where: {
+     *     // ... the filter for the Stock_transfer_details we want to count
+     *   }
+     * })
+    **/
+    count<T extends stock_transfer_detailsCountArgs>(
+      args?: Subset<T, stock_transfer_detailsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Stock_transfer_detailsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Stock_transfer_details.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Stock_transfer_detailsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Stock_transfer_detailsAggregateArgs>(args: Subset<T, Stock_transfer_detailsAggregateArgs>): Prisma.PrismaPromise<GetStock_transfer_detailsAggregateType<T>>
+
+    /**
+     * Group by Stock_transfer_details.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_detailsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends stock_transfer_detailsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: stock_transfer_detailsGroupByArgs['orderBy'] }
+        : { orderBy?: stock_transfer_detailsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, stock_transfer_detailsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStock_transfer_detailsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the stock_transfer_details model
+   */
+  readonly fields: stock_transfer_detailsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for stock_transfer_details.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__stock_transfer_detailsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    client_broker_mapping<T extends client_broker_mappingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, client_broker_mappingDefaultArgs<ExtArgs>>): Prisma__client_broker_mappingClient<$Result.GetResult<Prisma.$client_broker_mappingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    stock_transfer_records<T extends stock_transfer_recordsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, stock_transfer_recordsDefaultArgs<ExtArgs>>): Prisma__stock_transfer_recordsClient<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the stock_transfer_details model
+   */
+  interface stock_transfer_detailsFieldRefs {
+    readonly detail_id: FieldRef<"stock_transfer_details", 'Int'>
+    readonly transfer_id: FieldRef<"stock_transfer_details", 'Int'>
+    readonly client_id: FieldRef<"stock_transfer_details", 'String'>
+    readonly transfer_type: FieldRef<"stock_transfer_details", 'String'>
+    readonly quantity: FieldRef<"stock_transfer_details", 'Int'>
+    readonly from_opening_qty: FieldRef<"stock_transfer_details", 'Int'>
+    readonly from_added_qty: FieldRef<"stock_transfer_details", 'Int'>
+    readonly effective_rate: FieldRef<"stock_transfer_details", 'Decimal'>
+    readonly created_at: FieldRef<"stock_transfer_details", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * stock_transfer_details findUnique
+   */
+  export type stock_transfer_detailsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    /**
+     * Filter, which stock_transfer_details to fetch.
+     */
+    where: stock_transfer_detailsWhereUniqueInput
+  }
+
+  /**
+   * stock_transfer_details findUniqueOrThrow
+   */
+  export type stock_transfer_detailsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    /**
+     * Filter, which stock_transfer_details to fetch.
+     */
+    where: stock_transfer_detailsWhereUniqueInput
+  }
+
+  /**
+   * stock_transfer_details findFirst
+   */
+  export type stock_transfer_detailsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    /**
+     * Filter, which stock_transfer_details to fetch.
+     */
+    where?: stock_transfer_detailsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of stock_transfer_details to fetch.
+     */
+    orderBy?: stock_transfer_detailsOrderByWithRelationInput | stock_transfer_detailsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for stock_transfer_details.
+     */
+    cursor?: stock_transfer_detailsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` stock_transfer_details from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` stock_transfer_details.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of stock_transfer_details.
+     */
+    distinct?: Stock_transfer_detailsScalarFieldEnum | Stock_transfer_detailsScalarFieldEnum[]
+  }
+
+  /**
+   * stock_transfer_details findFirstOrThrow
+   */
+  export type stock_transfer_detailsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    /**
+     * Filter, which stock_transfer_details to fetch.
+     */
+    where?: stock_transfer_detailsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of stock_transfer_details to fetch.
+     */
+    orderBy?: stock_transfer_detailsOrderByWithRelationInput | stock_transfer_detailsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for stock_transfer_details.
+     */
+    cursor?: stock_transfer_detailsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` stock_transfer_details from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` stock_transfer_details.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of stock_transfer_details.
+     */
+    distinct?: Stock_transfer_detailsScalarFieldEnum | Stock_transfer_detailsScalarFieldEnum[]
+  }
+
+  /**
+   * stock_transfer_details findMany
+   */
+  export type stock_transfer_detailsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    /**
+     * Filter, which stock_transfer_details to fetch.
+     */
+    where?: stock_transfer_detailsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of stock_transfer_details to fetch.
+     */
+    orderBy?: stock_transfer_detailsOrderByWithRelationInput | stock_transfer_detailsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing stock_transfer_details.
+     */
+    cursor?: stock_transfer_detailsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` stock_transfer_details from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` stock_transfer_details.
+     */
+    skip?: number
+    distinct?: Stock_transfer_detailsScalarFieldEnum | Stock_transfer_detailsScalarFieldEnum[]
+  }
+
+  /**
+   * stock_transfer_details create
+   */
+  export type stock_transfer_detailsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a stock_transfer_details.
+     */
+    data: XOR<stock_transfer_detailsCreateInput, stock_transfer_detailsUncheckedCreateInput>
+  }
+
+  /**
+   * stock_transfer_details createMany
+   */
+  export type stock_transfer_detailsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many stock_transfer_details.
+     */
+    data: stock_transfer_detailsCreateManyInput | stock_transfer_detailsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * stock_transfer_details createManyAndReturn
+   */
+  export type stock_transfer_detailsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * The data used to create many stock_transfer_details.
+     */
+    data: stock_transfer_detailsCreateManyInput | stock_transfer_detailsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * stock_transfer_details update
+   */
+  export type stock_transfer_detailsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a stock_transfer_details.
+     */
+    data: XOR<stock_transfer_detailsUpdateInput, stock_transfer_detailsUncheckedUpdateInput>
+    /**
+     * Choose, which stock_transfer_details to update.
+     */
+    where: stock_transfer_detailsWhereUniqueInput
+  }
+
+  /**
+   * stock_transfer_details updateMany
+   */
+  export type stock_transfer_detailsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update stock_transfer_details.
+     */
+    data: XOR<stock_transfer_detailsUpdateManyMutationInput, stock_transfer_detailsUncheckedUpdateManyInput>
+    /**
+     * Filter which stock_transfer_details to update
+     */
+    where?: stock_transfer_detailsWhereInput
+    /**
+     * Limit how many stock_transfer_details to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * stock_transfer_details updateManyAndReturn
+   */
+  export type stock_transfer_detailsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * The data used to update stock_transfer_details.
+     */
+    data: XOR<stock_transfer_detailsUpdateManyMutationInput, stock_transfer_detailsUncheckedUpdateManyInput>
+    /**
+     * Filter which stock_transfer_details to update
+     */
+    where?: stock_transfer_detailsWhereInput
+    /**
+     * Limit how many stock_transfer_details to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * stock_transfer_details upsert
+   */
+  export type stock_transfer_detailsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the stock_transfer_details to update in case it exists.
+     */
+    where: stock_transfer_detailsWhereUniqueInput
+    /**
+     * In case the stock_transfer_details found by the `where` argument doesn't exist, create a new stock_transfer_details with this data.
+     */
+    create: XOR<stock_transfer_detailsCreateInput, stock_transfer_detailsUncheckedCreateInput>
+    /**
+     * In case the stock_transfer_details was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<stock_transfer_detailsUpdateInput, stock_transfer_detailsUncheckedUpdateInput>
+  }
+
+  /**
+   * stock_transfer_details delete
+   */
+  export type stock_transfer_detailsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    /**
+     * Filter which stock_transfer_details to delete.
+     */
+    where: stock_transfer_detailsWhereUniqueInput
+  }
+
+  /**
+   * stock_transfer_details deleteMany
+   */
+  export type stock_transfer_detailsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which stock_transfer_details to delete
+     */
+    where?: stock_transfer_detailsWhereInput
+    /**
+     * Limit how many stock_transfer_details to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * stock_transfer_details without action
+   */
+  export type stock_transfer_detailsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model stock_transfer_records
+   */
+
+  export type AggregateStock_transfer_records = {
+    _count: Stock_transfer_recordsCountAggregateOutputType | null
+    _avg: Stock_transfer_recordsAvgAggregateOutputType | null
+    _sum: Stock_transfer_recordsSumAggregateOutputType | null
+    _min: Stock_transfer_recordsMinAggregateOutputType | null
+    _max: Stock_transfer_recordsMaxAggregateOutputType | null
+  }
+
+  export type Stock_transfer_recordsAvgAggregateOutputType = {
+    transfer_id: number | null
+    fund_id: number | null
+    fiscal_year_id: number | null
+    total_quantity: number | null
+  }
+
+  export type Stock_transfer_recordsSumAggregateOutputType = {
+    transfer_id: number | null
+    fund_id: number | null
+    fiscal_year_id: number | null
+    total_quantity: number | null
+  }
+
+  export type Stock_transfer_recordsMinAggregateOutputType = {
+    transfer_id: number | null
+    fund_id: number | null
+    fiscal_year_id: number | null
+    symbol: string | null
+    transfer_date: Date | null
+    initiated_by: string | null
+    remarks: string | null
+    total_quantity: number | null
+    status: string | null
+    created_at: Date | null
+  }
+
+  export type Stock_transfer_recordsMaxAggregateOutputType = {
+    transfer_id: number | null
+    fund_id: number | null
+    fiscal_year_id: number | null
+    symbol: string | null
+    transfer_date: Date | null
+    initiated_by: string | null
+    remarks: string | null
+    total_quantity: number | null
+    status: string | null
+    created_at: Date | null
+  }
+
+  export type Stock_transfer_recordsCountAggregateOutputType = {
+    transfer_id: number
+    fund_id: number
+    fiscal_year_id: number
+    symbol: number
+    transfer_date: number
+    initiated_by: number
+    remarks: number
+    total_quantity: number
+    status: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type Stock_transfer_recordsAvgAggregateInputType = {
+    transfer_id?: true
+    fund_id?: true
+    fiscal_year_id?: true
+    total_quantity?: true
+  }
+
+  export type Stock_transfer_recordsSumAggregateInputType = {
+    transfer_id?: true
+    fund_id?: true
+    fiscal_year_id?: true
+    total_quantity?: true
+  }
+
+  export type Stock_transfer_recordsMinAggregateInputType = {
+    transfer_id?: true
+    fund_id?: true
+    fiscal_year_id?: true
+    symbol?: true
+    transfer_date?: true
+    initiated_by?: true
+    remarks?: true
+    total_quantity?: true
+    status?: true
+    created_at?: true
+  }
+
+  export type Stock_transfer_recordsMaxAggregateInputType = {
+    transfer_id?: true
+    fund_id?: true
+    fiscal_year_id?: true
+    symbol?: true
+    transfer_date?: true
+    initiated_by?: true
+    remarks?: true
+    total_quantity?: true
+    status?: true
+    created_at?: true
+  }
+
+  export type Stock_transfer_recordsCountAggregateInputType = {
+    transfer_id?: true
+    fund_id?: true
+    fiscal_year_id?: true
+    symbol?: true
+    transfer_date?: true
+    initiated_by?: true
+    remarks?: true
+    total_quantity?: true
+    status?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type Stock_transfer_recordsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which stock_transfer_records to aggregate.
+     */
+    where?: stock_transfer_recordsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of stock_transfer_records to fetch.
+     */
+    orderBy?: stock_transfer_recordsOrderByWithRelationInput | stock_transfer_recordsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: stock_transfer_recordsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` stock_transfer_records from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` stock_transfer_records.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned stock_transfer_records
+    **/
+    _count?: true | Stock_transfer_recordsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Stock_transfer_recordsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Stock_transfer_recordsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Stock_transfer_recordsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Stock_transfer_recordsMaxAggregateInputType
+  }
+
+  export type GetStock_transfer_recordsAggregateType<T extends Stock_transfer_recordsAggregateArgs> = {
+        [P in keyof T & keyof AggregateStock_transfer_records]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStock_transfer_records[P]>
+      : GetScalarType<T[P], AggregateStock_transfer_records[P]>
+  }
+
+
+
+
+  export type stock_transfer_recordsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: stock_transfer_recordsWhereInput
+    orderBy?: stock_transfer_recordsOrderByWithAggregationInput | stock_transfer_recordsOrderByWithAggregationInput[]
+    by: Stock_transfer_recordsScalarFieldEnum[] | Stock_transfer_recordsScalarFieldEnum
+    having?: stock_transfer_recordsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Stock_transfer_recordsCountAggregateInputType | true
+    _avg?: Stock_transfer_recordsAvgAggregateInputType
+    _sum?: Stock_transfer_recordsSumAggregateInputType
+    _min?: Stock_transfer_recordsMinAggregateInputType
+    _max?: Stock_transfer_recordsMaxAggregateInputType
+  }
+
+  export type Stock_transfer_recordsGroupByOutputType = {
+    transfer_id: number
+    fund_id: number
+    fiscal_year_id: number
+    symbol: string
+    transfer_date: Date
+    initiated_by: string | null
+    remarks: string | null
+    total_quantity: number
+    status: string | null
+    created_at: Date | null
+    _count: Stock_transfer_recordsCountAggregateOutputType | null
+    _avg: Stock_transfer_recordsAvgAggregateOutputType | null
+    _sum: Stock_transfer_recordsSumAggregateOutputType | null
+    _min: Stock_transfer_recordsMinAggregateOutputType | null
+    _max: Stock_transfer_recordsMaxAggregateOutputType | null
+  }
+
+  type GetStock_transfer_recordsGroupByPayload<T extends stock_transfer_recordsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Stock_transfer_recordsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Stock_transfer_recordsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Stock_transfer_recordsGroupByOutputType[P]>
+            : GetScalarType<T[P], Stock_transfer_recordsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type stock_transfer_recordsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    transfer_id?: boolean
+    fund_id?: boolean
+    fiscal_year_id?: boolean
+    symbol?: boolean
+    transfer_date?: boolean
+    initiated_by?: boolean
+    remarks?: boolean
+    total_quantity?: boolean
+    status?: boolean
+    created_at?: boolean
+    stock_transfer_details?: boolean | stock_transfer_records$stock_transfer_detailsArgs<ExtArgs>
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+    _count?: boolean | Stock_transfer_recordsCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stock_transfer_records"]>
+
+  export type stock_transfer_recordsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    transfer_id?: boolean
+    fund_id?: boolean
+    fiscal_year_id?: boolean
+    symbol?: boolean
+    transfer_date?: boolean
+    initiated_by?: boolean
+    remarks?: boolean
+    total_quantity?: boolean
+    status?: boolean
+    created_at?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stock_transfer_records"]>
+
+  export type stock_transfer_recordsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    transfer_id?: boolean
+    fund_id?: boolean
+    fiscal_year_id?: boolean
+    symbol?: boolean
+    transfer_date?: boolean
+    initiated_by?: boolean
+    remarks?: boolean
+    total_quantity?: boolean
+    status?: boolean
+    created_at?: boolean
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stock_transfer_records"]>
+
+  export type stock_transfer_recordsSelectScalar = {
+    transfer_id?: boolean
+    fund_id?: boolean
+    fiscal_year_id?: boolean
+    symbol?: boolean
+    transfer_date?: boolean
+    initiated_by?: boolean
+    remarks?: boolean
+    total_quantity?: boolean
+    status?: boolean
+    created_at?: boolean
+  }
+
+  export type stock_transfer_recordsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"transfer_id" | "fund_id" | "fiscal_year_id" | "symbol" | "transfer_date" | "initiated_by" | "remarks" | "total_quantity" | "status" | "created_at", ExtArgs["result"]["stock_transfer_records"]>
+  export type stock_transfer_recordsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    stock_transfer_details?: boolean | stock_transfer_records$stock_transfer_detailsArgs<ExtArgs>
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+    _count?: boolean | Stock_transfer_recordsCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type stock_transfer_recordsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+  export type stock_transfer_recordsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fiscal_years?: boolean | fiscal_yearsDefaultArgs<ExtArgs>
+    funds?: boolean | fundsDefaultArgs<ExtArgs>
+    stock_fulls?: boolean | stock_fullsDefaultArgs<ExtArgs>
+  }
+
+  export type $stock_transfer_recordsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "stock_transfer_records"
+    objects: {
+      stock_transfer_details: Prisma.$stock_transfer_detailsPayload<ExtArgs>[]
+      fiscal_years: Prisma.$fiscal_yearsPayload<ExtArgs>
+      funds: Prisma.$fundsPayload<ExtArgs>
+      stock_fulls: Prisma.$stock_fullsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      transfer_id: number
+      fund_id: number
+      fiscal_year_id: number
+      symbol: string
+      transfer_date: Date
+      initiated_by: string | null
+      remarks: string | null
+      total_quantity: number
+      status: string | null
+      created_at: Date | null
+    }, ExtArgs["result"]["stock_transfer_records"]>
+    composites: {}
+  }
+
+  type stock_transfer_recordsGetPayload<S extends boolean | null | undefined | stock_transfer_recordsDefaultArgs> = $Result.GetResult<Prisma.$stock_transfer_recordsPayload, S>
+
+  type stock_transfer_recordsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<stock_transfer_recordsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Stock_transfer_recordsCountAggregateInputType | true
+    }
+
+  export interface stock_transfer_recordsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['stock_transfer_records'], meta: { name: 'stock_transfer_records' } }
+    /**
+     * Find zero or one Stock_transfer_records that matches the filter.
+     * @param {stock_transfer_recordsFindUniqueArgs} args - Arguments to find a Stock_transfer_records
+     * @example
+     * // Get one Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends stock_transfer_recordsFindUniqueArgs>(args: SelectSubset<T, stock_transfer_recordsFindUniqueArgs<ExtArgs>>): Prisma__stock_transfer_recordsClient<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Stock_transfer_records that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {stock_transfer_recordsFindUniqueOrThrowArgs} args - Arguments to find a Stock_transfer_records
+     * @example
+     * // Get one Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends stock_transfer_recordsFindUniqueOrThrowArgs>(args: SelectSubset<T, stock_transfer_recordsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__stock_transfer_recordsClient<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Stock_transfer_records that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_recordsFindFirstArgs} args - Arguments to find a Stock_transfer_records
+     * @example
+     * // Get one Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends stock_transfer_recordsFindFirstArgs>(args?: SelectSubset<T, stock_transfer_recordsFindFirstArgs<ExtArgs>>): Prisma__stock_transfer_recordsClient<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Stock_transfer_records that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_recordsFindFirstOrThrowArgs} args - Arguments to find a Stock_transfer_records
+     * @example
+     * // Get one Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends stock_transfer_recordsFindFirstOrThrowArgs>(args?: SelectSubset<T, stock_transfer_recordsFindFirstOrThrowArgs<ExtArgs>>): Prisma__stock_transfer_recordsClient<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Stock_transfer_records that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_recordsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.findMany()
+     * 
+     * // Get first 10 Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.findMany({ take: 10 })
+     * 
+     * // Only select the `transfer_id`
+     * const stock_transfer_recordsWithTransfer_idOnly = await prisma.stock_transfer_records.findMany({ select: { transfer_id: true } })
+     * 
+     */
+    findMany<T extends stock_transfer_recordsFindManyArgs>(args?: SelectSubset<T, stock_transfer_recordsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Stock_transfer_records.
+     * @param {stock_transfer_recordsCreateArgs} args - Arguments to create a Stock_transfer_records.
+     * @example
+     * // Create one Stock_transfer_records
+     * const Stock_transfer_records = await prisma.stock_transfer_records.create({
+     *   data: {
+     *     // ... data to create a Stock_transfer_records
+     *   }
+     * })
+     * 
+     */
+    create<T extends stock_transfer_recordsCreateArgs>(args: SelectSubset<T, stock_transfer_recordsCreateArgs<ExtArgs>>): Prisma__stock_transfer_recordsClient<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Stock_transfer_records.
+     * @param {stock_transfer_recordsCreateManyArgs} args - Arguments to create many Stock_transfer_records.
+     * @example
+     * // Create many Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends stock_transfer_recordsCreateManyArgs>(args?: SelectSubset<T, stock_transfer_recordsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Stock_transfer_records and returns the data saved in the database.
+     * @param {stock_transfer_recordsCreateManyAndReturnArgs} args - Arguments to create many Stock_transfer_records.
+     * @example
+     * // Create many Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Stock_transfer_records and only return the `transfer_id`
+     * const stock_transfer_recordsWithTransfer_idOnly = await prisma.stock_transfer_records.createManyAndReturn({
+     *   select: { transfer_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends stock_transfer_recordsCreateManyAndReturnArgs>(args?: SelectSubset<T, stock_transfer_recordsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Stock_transfer_records.
+     * @param {stock_transfer_recordsDeleteArgs} args - Arguments to delete one Stock_transfer_records.
+     * @example
+     * // Delete one Stock_transfer_records
+     * const Stock_transfer_records = await prisma.stock_transfer_records.delete({
+     *   where: {
+     *     // ... filter to delete one Stock_transfer_records
+     *   }
+     * })
+     * 
+     */
+    delete<T extends stock_transfer_recordsDeleteArgs>(args: SelectSubset<T, stock_transfer_recordsDeleteArgs<ExtArgs>>): Prisma__stock_transfer_recordsClient<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Stock_transfer_records.
+     * @param {stock_transfer_recordsUpdateArgs} args - Arguments to update one Stock_transfer_records.
+     * @example
+     * // Update one Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends stock_transfer_recordsUpdateArgs>(args: SelectSubset<T, stock_transfer_recordsUpdateArgs<ExtArgs>>): Prisma__stock_transfer_recordsClient<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Stock_transfer_records.
+     * @param {stock_transfer_recordsDeleteManyArgs} args - Arguments to filter Stock_transfer_records to delete.
+     * @example
+     * // Delete a few Stock_transfer_records
+     * const { count } = await prisma.stock_transfer_records.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends stock_transfer_recordsDeleteManyArgs>(args?: SelectSubset<T, stock_transfer_recordsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Stock_transfer_records.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_recordsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends stock_transfer_recordsUpdateManyArgs>(args: SelectSubset<T, stock_transfer_recordsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Stock_transfer_records and returns the data updated in the database.
+     * @param {stock_transfer_recordsUpdateManyAndReturnArgs} args - Arguments to update many Stock_transfer_records.
+     * @example
+     * // Update many Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Stock_transfer_records and only return the `transfer_id`
+     * const stock_transfer_recordsWithTransfer_idOnly = await prisma.stock_transfer_records.updateManyAndReturn({
+     *   select: { transfer_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends stock_transfer_recordsUpdateManyAndReturnArgs>(args: SelectSubset<T, stock_transfer_recordsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Stock_transfer_records.
+     * @param {stock_transfer_recordsUpsertArgs} args - Arguments to update or create a Stock_transfer_records.
+     * @example
+     * // Update or create a Stock_transfer_records
+     * const stock_transfer_records = await prisma.stock_transfer_records.upsert({
+     *   create: {
+     *     // ... data to create a Stock_transfer_records
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Stock_transfer_records we want to update
+     *   }
+     * })
+     */
+    upsert<T extends stock_transfer_recordsUpsertArgs>(args: SelectSubset<T, stock_transfer_recordsUpsertArgs<ExtArgs>>): Prisma__stock_transfer_recordsClient<$Result.GetResult<Prisma.$stock_transfer_recordsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Stock_transfer_records.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_recordsCountArgs} args - Arguments to filter Stock_transfer_records to count.
+     * @example
+     * // Count the number of Stock_transfer_records
+     * const count = await prisma.stock_transfer_records.count({
+     *   where: {
+     *     // ... the filter for the Stock_transfer_records we want to count
+     *   }
+     * })
+    **/
+    count<T extends stock_transfer_recordsCountArgs>(
+      args?: Subset<T, stock_transfer_recordsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Stock_transfer_recordsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Stock_transfer_records.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Stock_transfer_recordsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Stock_transfer_recordsAggregateArgs>(args: Subset<T, Stock_transfer_recordsAggregateArgs>): Prisma.PrismaPromise<GetStock_transfer_recordsAggregateType<T>>
+
+    /**
+     * Group by Stock_transfer_records.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {stock_transfer_recordsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends stock_transfer_recordsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: stock_transfer_recordsGroupByArgs['orderBy'] }
+        : { orderBy?: stock_transfer_recordsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, stock_transfer_recordsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStock_transfer_recordsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the stock_transfer_records model
+   */
+  readonly fields: stock_transfer_recordsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for stock_transfer_records.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__stock_transfer_recordsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    stock_transfer_details<T extends stock_transfer_records$stock_transfer_detailsArgs<ExtArgs> = {}>(args?: Subset<T, stock_transfer_records$stock_transfer_detailsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stock_transfer_detailsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    fiscal_years<T extends fiscal_yearsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fiscal_yearsDefaultArgs<ExtArgs>>): Prisma__fiscal_yearsClient<$Result.GetResult<Prisma.$fiscal_yearsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    funds<T extends fundsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, fundsDefaultArgs<ExtArgs>>): Prisma__fundsClient<$Result.GetResult<Prisma.$fundsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    stock_fulls<T extends stock_fullsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, stock_fullsDefaultArgs<ExtArgs>>): Prisma__stock_fullsClient<$Result.GetResult<Prisma.$stock_fullsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the stock_transfer_records model
+   */
+  interface stock_transfer_recordsFieldRefs {
+    readonly transfer_id: FieldRef<"stock_transfer_records", 'Int'>
+    readonly fund_id: FieldRef<"stock_transfer_records", 'Int'>
+    readonly fiscal_year_id: FieldRef<"stock_transfer_records", 'Int'>
+    readonly symbol: FieldRef<"stock_transfer_records", 'String'>
+    readonly transfer_date: FieldRef<"stock_transfer_records", 'DateTime'>
+    readonly initiated_by: FieldRef<"stock_transfer_records", 'String'>
+    readonly remarks: FieldRef<"stock_transfer_records", 'String'>
+    readonly total_quantity: FieldRef<"stock_transfer_records", 'Int'>
+    readonly status: FieldRef<"stock_transfer_records", 'String'>
+    readonly created_at: FieldRef<"stock_transfer_records", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * stock_transfer_records findUnique
+   */
+  export type stock_transfer_recordsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    /**
+     * Filter, which stock_transfer_records to fetch.
+     */
+    where: stock_transfer_recordsWhereUniqueInput
+  }
+
+  /**
+   * stock_transfer_records findUniqueOrThrow
+   */
+  export type stock_transfer_recordsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    /**
+     * Filter, which stock_transfer_records to fetch.
+     */
+    where: stock_transfer_recordsWhereUniqueInput
+  }
+
+  /**
+   * stock_transfer_records findFirst
+   */
+  export type stock_transfer_recordsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    /**
+     * Filter, which stock_transfer_records to fetch.
+     */
+    where?: stock_transfer_recordsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of stock_transfer_records to fetch.
+     */
+    orderBy?: stock_transfer_recordsOrderByWithRelationInput | stock_transfer_recordsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for stock_transfer_records.
+     */
+    cursor?: stock_transfer_recordsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` stock_transfer_records from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` stock_transfer_records.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of stock_transfer_records.
+     */
+    distinct?: Stock_transfer_recordsScalarFieldEnum | Stock_transfer_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * stock_transfer_records findFirstOrThrow
+   */
+  export type stock_transfer_recordsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    /**
+     * Filter, which stock_transfer_records to fetch.
+     */
+    where?: stock_transfer_recordsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of stock_transfer_records to fetch.
+     */
+    orderBy?: stock_transfer_recordsOrderByWithRelationInput | stock_transfer_recordsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for stock_transfer_records.
+     */
+    cursor?: stock_transfer_recordsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` stock_transfer_records from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` stock_transfer_records.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of stock_transfer_records.
+     */
+    distinct?: Stock_transfer_recordsScalarFieldEnum | Stock_transfer_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * stock_transfer_records findMany
+   */
+  export type stock_transfer_recordsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    /**
+     * Filter, which stock_transfer_records to fetch.
+     */
+    where?: stock_transfer_recordsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of stock_transfer_records to fetch.
+     */
+    orderBy?: stock_transfer_recordsOrderByWithRelationInput | stock_transfer_recordsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing stock_transfer_records.
+     */
+    cursor?: stock_transfer_recordsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` stock_transfer_records from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` stock_transfer_records.
+     */
+    skip?: number
+    distinct?: Stock_transfer_recordsScalarFieldEnum | Stock_transfer_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * stock_transfer_records create
+   */
+  export type stock_transfer_recordsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a stock_transfer_records.
+     */
+    data: XOR<stock_transfer_recordsCreateInput, stock_transfer_recordsUncheckedCreateInput>
+  }
+
+  /**
+   * stock_transfer_records createMany
+   */
+  export type stock_transfer_recordsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many stock_transfer_records.
+     */
+    data: stock_transfer_recordsCreateManyInput | stock_transfer_recordsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * stock_transfer_records createManyAndReturn
+   */
+  export type stock_transfer_recordsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * The data used to create many stock_transfer_records.
+     */
+    data: stock_transfer_recordsCreateManyInput | stock_transfer_recordsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * stock_transfer_records update
+   */
+  export type stock_transfer_recordsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a stock_transfer_records.
+     */
+    data: XOR<stock_transfer_recordsUpdateInput, stock_transfer_recordsUncheckedUpdateInput>
+    /**
+     * Choose, which stock_transfer_records to update.
+     */
+    where: stock_transfer_recordsWhereUniqueInput
+  }
+
+  /**
+   * stock_transfer_records updateMany
+   */
+  export type stock_transfer_recordsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update stock_transfer_records.
+     */
+    data: XOR<stock_transfer_recordsUpdateManyMutationInput, stock_transfer_recordsUncheckedUpdateManyInput>
+    /**
+     * Filter which stock_transfer_records to update
+     */
+    where?: stock_transfer_recordsWhereInput
+    /**
+     * Limit how many stock_transfer_records to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * stock_transfer_records updateManyAndReturn
+   */
+  export type stock_transfer_recordsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * The data used to update stock_transfer_records.
+     */
+    data: XOR<stock_transfer_recordsUpdateManyMutationInput, stock_transfer_recordsUncheckedUpdateManyInput>
+    /**
+     * Filter which stock_transfer_records to update
+     */
+    where?: stock_transfer_recordsWhereInput
+    /**
+     * Limit how many stock_transfer_records to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * stock_transfer_records upsert
+   */
+  export type stock_transfer_recordsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the stock_transfer_records to update in case it exists.
+     */
+    where: stock_transfer_recordsWhereUniqueInput
+    /**
+     * In case the stock_transfer_records found by the `where` argument doesn't exist, create a new stock_transfer_records with this data.
+     */
+    create: XOR<stock_transfer_recordsCreateInput, stock_transfer_recordsUncheckedCreateInput>
+    /**
+     * In case the stock_transfer_records was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<stock_transfer_recordsUpdateInput, stock_transfer_recordsUncheckedUpdateInput>
+  }
+
+  /**
+   * stock_transfer_records delete
+   */
+  export type stock_transfer_recordsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+    /**
+     * Filter which stock_transfer_records to delete.
+     */
+    where: stock_transfer_recordsWhereUniqueInput
+  }
+
+  /**
+   * stock_transfer_records deleteMany
+   */
+  export type stock_transfer_recordsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which stock_transfer_records to delete
+     */
+    where?: stock_transfer_recordsWhereInput
+    /**
+     * Limit how many stock_transfer_records to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * stock_transfer_records.stock_transfer_details
+   */
+  export type stock_transfer_records$stock_transfer_detailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_details
+     */
+    select?: stock_transfer_detailsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_details
+     */
+    omit?: stock_transfer_detailsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_detailsInclude<ExtArgs> | null
+    where?: stock_transfer_detailsWhereInput
+    orderBy?: stock_transfer_detailsOrderByWithRelationInput | stock_transfer_detailsOrderByWithRelationInput[]
+    cursor?: stock_transfer_detailsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Stock_transfer_detailsScalarFieldEnum | Stock_transfer_detailsScalarFieldEnum[]
+  }
+
+  /**
+   * stock_transfer_records without action
+   */
+  export type stock_transfer_recordsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the stock_transfer_records
+     */
+    select?: stock_transfer_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the stock_transfer_records
+     */
+    omit?: stock_transfer_recordsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: stock_transfer_recordsInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -41182,6 +43930,37 @@ export namespace Prisma {
   export type Fiscal_year_balance_stagingScalarFieldEnum = (typeof Fiscal_year_balance_stagingScalarFieldEnum)[keyof typeof Fiscal_year_balance_stagingScalarFieldEnum]
 
 
+  export const Stock_transfer_detailsScalarFieldEnum: {
+    detail_id: 'detail_id',
+    transfer_id: 'transfer_id',
+    client_id: 'client_id',
+    transfer_type: 'transfer_type',
+    quantity: 'quantity',
+    from_opening_qty: 'from_opening_qty',
+    from_added_qty: 'from_added_qty',
+    effective_rate: 'effective_rate',
+    created_at: 'created_at'
+  };
+
+  export type Stock_transfer_detailsScalarFieldEnum = (typeof Stock_transfer_detailsScalarFieldEnum)[keyof typeof Stock_transfer_detailsScalarFieldEnum]
+
+
+  export const Stock_transfer_recordsScalarFieldEnum: {
+    transfer_id: 'transfer_id',
+    fund_id: 'fund_id',
+    fiscal_year_id: 'fiscal_year_id',
+    symbol: 'symbol',
+    transfer_date: 'transfer_date',
+    initiated_by: 'initiated_by',
+    remarks: 'remarks',
+    total_quantity: 'total_quantity',
+    status: 'status',
+    created_at: 'created_at'
+  };
+
+  export type Stock_transfer_recordsScalarFieldEnum = (typeof Stock_transfer_recordsScalarFieldEnum)[keyof typeof Stock_transfer_recordsScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -41488,6 +44267,7 @@ export namespace Prisma {
     right_records?: Right_recordsListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
+    stock_transfer_details?: Stock_transfer_detailsListRelationFilter
   }
 
   export type client_broker_mappingOrderByWithRelationInput = {
@@ -41511,6 +44291,7 @@ export namespace Prisma {
     right_records?: right_recordsOrderByRelationAggregateInput
     sell_records?: sell_recordsOrderByRelationAggregateInput
     sell_records_staging?: sell_records_stagingOrderByRelationAggregateInput
+    stock_transfer_details?: stock_transfer_detailsOrderByRelationAggregateInput
   }
 
   export type client_broker_mappingWhereUniqueInput = Prisma.AtLeast<{
@@ -41537,6 +44318,7 @@ export namespace Prisma {
     right_records?: Right_recordsListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
+    stock_transfer_details?: Stock_transfer_detailsListRelationFilter
   }, "client_id">
 
   export type client_broker_mappingOrderByWithAggregationInput = {
@@ -42195,6 +44977,7 @@ export namespace Prisma {
     right_records_staging?: Right_records_stagingListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
+    stock_transfer_records?: Stock_transfer_recordsListRelationFilter
     symbol_holdings?: Symbol_holdingsListRelationFilter
   }
 
@@ -42220,6 +45003,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingOrderByRelationAggregateInput
     sell_records?: sell_recordsOrderByRelationAggregateInput
     sell_records_staging?: sell_records_stagingOrderByRelationAggregateInput
+    stock_transfer_records?: stock_transfer_recordsOrderByRelationAggregateInput
     symbol_holdings?: symbol_holdingsOrderByRelationAggregateInput
   }
 
@@ -42248,6 +45032,7 @@ export namespace Prisma {
     right_records_staging?: Right_records_stagingListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
+    stock_transfer_records?: Stock_transfer_recordsListRelationFilter
     symbol_holdings?: Symbol_holdingsListRelationFilter
   }, "fiscal_year_id">
 
@@ -42297,6 +45082,7 @@ export namespace Prisma {
     right_records_staging?: Right_records_stagingListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
+    stock_transfer_records?: Stock_transfer_recordsListRelationFilter
     sub_classes?: Sub_classesListRelationFilter
     symbol_holdings?: Symbol_holdingsListRelationFilter
   }
@@ -42320,6 +45106,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingOrderByRelationAggregateInput
     sell_records?: sell_recordsOrderByRelationAggregateInput
     sell_records_staging?: sell_records_stagingOrderByRelationAggregateInput
+    stock_transfer_records?: stock_transfer_recordsOrderByRelationAggregateInput
     sub_classes?: sub_classesOrderByRelationAggregateInput
     symbol_holdings?: symbol_holdingsOrderByRelationAggregateInput
   }
@@ -42346,6 +45133,7 @@ export namespace Prisma {
     right_records_staging?: Right_records_stagingListRelationFilter
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
+    stock_transfer_records?: Stock_transfer_recordsListRelationFilter
     sub_classes?: Sub_classesListRelationFilter
     symbol_holdings?: Symbol_holdingsListRelationFilter
   }, "fund_id">
@@ -42539,6 +45327,7 @@ export namespace Prisma {
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
     sectors?: XOR<SectorsScalarRelationFilter, sectorsWhereInput>
+    stock_transfer_records?: Stock_transfer_recordsListRelationFilter
     symbol_holdings?: Symbol_holdingsListRelationFilter
   }
 
@@ -42564,6 +45353,7 @@ export namespace Prisma {
     sell_records?: sell_recordsOrderByRelationAggregateInput
     sell_records_staging?: sell_records_stagingOrderByRelationAggregateInput
     sectors?: sectorsOrderByWithRelationInput
+    stock_transfer_records?: stock_transfer_recordsOrderByRelationAggregateInput
     symbol_holdings?: symbol_holdingsOrderByRelationAggregateInput
   }
 
@@ -42592,6 +45382,7 @@ export namespace Prisma {
     sell_records?: Sell_recordsListRelationFilter
     sell_records_staging?: Sell_records_stagingListRelationFilter
     sectors?: XOR<SectorsScalarRelationFilter, sectorsWhereInput>
+    stock_transfer_records?: Stock_transfer_recordsListRelationFilter
     symbol_holdings?: Symbol_holdingsListRelationFilter
   }, "symbol">
 
@@ -43951,6 +46742,177 @@ export namespace Prisma {
     staging_id?: IntWithAggregatesFilter<"fiscal_year_balance_staging"> | number
   }
 
+  export type stock_transfer_detailsWhereInput = {
+    AND?: stock_transfer_detailsWhereInput | stock_transfer_detailsWhereInput[]
+    OR?: stock_transfer_detailsWhereInput[]
+    NOT?: stock_transfer_detailsWhereInput | stock_transfer_detailsWhereInput[]
+    detail_id?: IntFilter<"stock_transfer_details"> | number
+    transfer_id?: IntFilter<"stock_transfer_details"> | number
+    client_id?: StringFilter<"stock_transfer_details"> | string
+    transfer_type?: StringFilter<"stock_transfer_details"> | string
+    quantity?: IntFilter<"stock_transfer_details"> | number
+    from_opening_qty?: IntNullableFilter<"stock_transfer_details"> | number | null
+    from_added_qty?: IntNullableFilter<"stock_transfer_details"> | number | null
+    effective_rate?: DecimalNullableFilter<"stock_transfer_details"> | Decimal | DecimalJsLike | number | string | null
+    created_at?: DateTimeNullableFilter<"stock_transfer_details"> | Date | string | null
+    client_broker_mapping?: XOR<Client_broker_mappingScalarRelationFilter, client_broker_mappingWhereInput>
+    stock_transfer_records?: XOR<Stock_transfer_recordsScalarRelationFilter, stock_transfer_recordsWhereInput>
+  }
+
+  export type stock_transfer_detailsOrderByWithRelationInput = {
+    detail_id?: SortOrder
+    transfer_id?: SortOrder
+    client_id?: SortOrder
+    transfer_type?: SortOrder
+    quantity?: SortOrder
+    from_opening_qty?: SortOrderInput | SortOrder
+    from_added_qty?: SortOrderInput | SortOrder
+    effective_rate?: SortOrderInput | SortOrder
+    created_at?: SortOrderInput | SortOrder
+    client_broker_mapping?: client_broker_mappingOrderByWithRelationInput
+    stock_transfer_records?: stock_transfer_recordsOrderByWithRelationInput
+  }
+
+  export type stock_transfer_detailsWhereUniqueInput = Prisma.AtLeast<{
+    detail_id?: number
+    AND?: stock_transfer_detailsWhereInput | stock_transfer_detailsWhereInput[]
+    OR?: stock_transfer_detailsWhereInput[]
+    NOT?: stock_transfer_detailsWhereInput | stock_transfer_detailsWhereInput[]
+    transfer_id?: IntFilter<"stock_transfer_details"> | number
+    client_id?: StringFilter<"stock_transfer_details"> | string
+    transfer_type?: StringFilter<"stock_transfer_details"> | string
+    quantity?: IntFilter<"stock_transfer_details"> | number
+    from_opening_qty?: IntNullableFilter<"stock_transfer_details"> | number | null
+    from_added_qty?: IntNullableFilter<"stock_transfer_details"> | number | null
+    effective_rate?: DecimalNullableFilter<"stock_transfer_details"> | Decimal | DecimalJsLike | number | string | null
+    created_at?: DateTimeNullableFilter<"stock_transfer_details"> | Date | string | null
+    client_broker_mapping?: XOR<Client_broker_mappingScalarRelationFilter, client_broker_mappingWhereInput>
+    stock_transfer_records?: XOR<Stock_transfer_recordsScalarRelationFilter, stock_transfer_recordsWhereInput>
+  }, "detail_id">
+
+  export type stock_transfer_detailsOrderByWithAggregationInput = {
+    detail_id?: SortOrder
+    transfer_id?: SortOrder
+    client_id?: SortOrder
+    transfer_type?: SortOrder
+    quantity?: SortOrder
+    from_opening_qty?: SortOrderInput | SortOrder
+    from_added_qty?: SortOrderInput | SortOrder
+    effective_rate?: SortOrderInput | SortOrder
+    created_at?: SortOrderInput | SortOrder
+    _count?: stock_transfer_detailsCountOrderByAggregateInput
+    _avg?: stock_transfer_detailsAvgOrderByAggregateInput
+    _max?: stock_transfer_detailsMaxOrderByAggregateInput
+    _min?: stock_transfer_detailsMinOrderByAggregateInput
+    _sum?: stock_transfer_detailsSumOrderByAggregateInput
+  }
+
+  export type stock_transfer_detailsScalarWhereWithAggregatesInput = {
+    AND?: stock_transfer_detailsScalarWhereWithAggregatesInput | stock_transfer_detailsScalarWhereWithAggregatesInput[]
+    OR?: stock_transfer_detailsScalarWhereWithAggregatesInput[]
+    NOT?: stock_transfer_detailsScalarWhereWithAggregatesInput | stock_transfer_detailsScalarWhereWithAggregatesInput[]
+    detail_id?: IntWithAggregatesFilter<"stock_transfer_details"> | number
+    transfer_id?: IntWithAggregatesFilter<"stock_transfer_details"> | number
+    client_id?: StringWithAggregatesFilter<"stock_transfer_details"> | string
+    transfer_type?: StringWithAggregatesFilter<"stock_transfer_details"> | string
+    quantity?: IntWithAggregatesFilter<"stock_transfer_details"> | number
+    from_opening_qty?: IntNullableWithAggregatesFilter<"stock_transfer_details"> | number | null
+    from_added_qty?: IntNullableWithAggregatesFilter<"stock_transfer_details"> | number | null
+    effective_rate?: DecimalNullableWithAggregatesFilter<"stock_transfer_details"> | Decimal | DecimalJsLike | number | string | null
+    created_at?: DateTimeNullableWithAggregatesFilter<"stock_transfer_details"> | Date | string | null
+  }
+
+  export type stock_transfer_recordsWhereInput = {
+    AND?: stock_transfer_recordsWhereInput | stock_transfer_recordsWhereInput[]
+    OR?: stock_transfer_recordsWhereInput[]
+    NOT?: stock_transfer_recordsWhereInput | stock_transfer_recordsWhereInput[]
+    transfer_id?: IntFilter<"stock_transfer_records"> | number
+    fund_id?: IntFilter<"stock_transfer_records"> | number
+    fiscal_year_id?: IntFilter<"stock_transfer_records"> | number
+    symbol?: StringFilter<"stock_transfer_records"> | string
+    transfer_date?: DateTimeFilter<"stock_transfer_records"> | Date | string
+    initiated_by?: StringNullableFilter<"stock_transfer_records"> | string | null
+    remarks?: StringNullableFilter<"stock_transfer_records"> | string | null
+    total_quantity?: IntFilter<"stock_transfer_records"> | number
+    status?: StringNullableFilter<"stock_transfer_records"> | string | null
+    created_at?: DateTimeNullableFilter<"stock_transfer_records"> | Date | string | null
+    stock_transfer_details?: Stock_transfer_detailsListRelationFilter
+    fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
+    funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
+    stock_fulls?: XOR<Stock_fullsScalarRelationFilter, stock_fullsWhereInput>
+  }
+
+  export type stock_transfer_recordsOrderByWithRelationInput = {
+    transfer_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    symbol?: SortOrder
+    transfer_date?: SortOrder
+    initiated_by?: SortOrderInput | SortOrder
+    remarks?: SortOrderInput | SortOrder
+    total_quantity?: SortOrder
+    status?: SortOrderInput | SortOrder
+    created_at?: SortOrderInput | SortOrder
+    stock_transfer_details?: stock_transfer_detailsOrderByRelationAggregateInput
+    fiscal_years?: fiscal_yearsOrderByWithRelationInput
+    funds?: fundsOrderByWithRelationInput
+    stock_fulls?: stock_fullsOrderByWithRelationInput
+  }
+
+  export type stock_transfer_recordsWhereUniqueInput = Prisma.AtLeast<{
+    transfer_id?: number
+    AND?: stock_transfer_recordsWhereInput | stock_transfer_recordsWhereInput[]
+    OR?: stock_transfer_recordsWhereInput[]
+    NOT?: stock_transfer_recordsWhereInput | stock_transfer_recordsWhereInput[]
+    fund_id?: IntFilter<"stock_transfer_records"> | number
+    fiscal_year_id?: IntFilter<"stock_transfer_records"> | number
+    symbol?: StringFilter<"stock_transfer_records"> | string
+    transfer_date?: DateTimeFilter<"stock_transfer_records"> | Date | string
+    initiated_by?: StringNullableFilter<"stock_transfer_records"> | string | null
+    remarks?: StringNullableFilter<"stock_transfer_records"> | string | null
+    total_quantity?: IntFilter<"stock_transfer_records"> | number
+    status?: StringNullableFilter<"stock_transfer_records"> | string | null
+    created_at?: DateTimeNullableFilter<"stock_transfer_records"> | Date | string | null
+    stock_transfer_details?: Stock_transfer_detailsListRelationFilter
+    fiscal_years?: XOR<Fiscal_yearsScalarRelationFilter, fiscal_yearsWhereInput>
+    funds?: XOR<FundsScalarRelationFilter, fundsWhereInput>
+    stock_fulls?: XOR<Stock_fullsScalarRelationFilter, stock_fullsWhereInput>
+  }, "transfer_id">
+
+  export type stock_transfer_recordsOrderByWithAggregationInput = {
+    transfer_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    symbol?: SortOrder
+    transfer_date?: SortOrder
+    initiated_by?: SortOrderInput | SortOrder
+    remarks?: SortOrderInput | SortOrder
+    total_quantity?: SortOrder
+    status?: SortOrderInput | SortOrder
+    created_at?: SortOrderInput | SortOrder
+    _count?: stock_transfer_recordsCountOrderByAggregateInput
+    _avg?: stock_transfer_recordsAvgOrderByAggregateInput
+    _max?: stock_transfer_recordsMaxOrderByAggregateInput
+    _min?: stock_transfer_recordsMinOrderByAggregateInput
+    _sum?: stock_transfer_recordsSumOrderByAggregateInput
+  }
+
+  export type stock_transfer_recordsScalarWhereWithAggregatesInput = {
+    AND?: stock_transfer_recordsScalarWhereWithAggregatesInput | stock_transfer_recordsScalarWhereWithAggregatesInput[]
+    OR?: stock_transfer_recordsScalarWhereWithAggregatesInput[]
+    NOT?: stock_transfer_recordsScalarWhereWithAggregatesInput | stock_transfer_recordsScalarWhereWithAggregatesInput[]
+    transfer_id?: IntWithAggregatesFilter<"stock_transfer_records"> | number
+    fund_id?: IntWithAggregatesFilter<"stock_transfer_records"> | number
+    fiscal_year_id?: IntWithAggregatesFilter<"stock_transfer_records"> | number
+    symbol?: StringWithAggregatesFilter<"stock_transfer_records"> | string
+    transfer_date?: DateTimeWithAggregatesFilter<"stock_transfer_records"> | Date | string
+    initiated_by?: StringNullableWithAggregatesFilter<"stock_transfer_records"> | string | null
+    remarks?: StringNullableWithAggregatesFilter<"stock_transfer_records"> | string | null
+    total_quantity?: IntWithAggregatesFilter<"stock_transfer_records"> | number
+    status?: StringNullableWithAggregatesFilter<"stock_transfer_records"> | string | null
+    created_at?: DateTimeNullableWithAggregatesFilter<"stock_transfer_records"> | Date | string | null
+  }
+
   export type audit_logCreateInput = {
     performed_action: string
     date_time?: Date | string | null
@@ -44144,6 +47106,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateInput = {
@@ -44165,6 +47128,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUpdateInput = {
@@ -44186,6 +47150,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateInput = {
@@ -44207,6 +47172,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingCreateManyInput = {
@@ -44880,6 +47846,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -44905,6 +47872,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -44929,6 +47897,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -44954,6 +47923,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -44998,6 +47968,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -45021,6 +47992,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -45043,6 +48015,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -45066,6 +48039,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -45264,6 +48238,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -45288,6 +48263,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -45312,6 +48288,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -45336,6 +48313,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -46637,6 +49615,174 @@ export namespace Prisma {
     staging_id?: IntFieldUpdateOperationsInput | number
   }
 
+  export type stock_transfer_detailsCreateInput = {
+    transfer_type: string
+    quantity: number
+    from_opening_qty?: number | null
+    from_added_qty?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    created_at?: Date | string | null
+    client_broker_mapping: client_broker_mappingCreateNestedOneWithoutStock_transfer_detailsInput
+    stock_transfer_records: stock_transfer_recordsCreateNestedOneWithoutStock_transfer_detailsInput
+  }
+
+  export type stock_transfer_detailsUncheckedCreateInput = {
+    detail_id?: number
+    transfer_id: number
+    client_id: string
+    transfer_type: string
+    quantity: number
+    from_opening_qty?: number | null
+    from_added_qty?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    created_at?: Date | string | null
+  }
+
+  export type stock_transfer_detailsUpdateInput = {
+    transfer_type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    from_opening_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    from_added_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    client_broker_mapping?: client_broker_mappingUpdateOneRequiredWithoutStock_transfer_detailsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateOneRequiredWithoutStock_transfer_detailsNestedInput
+  }
+
+  export type stock_transfer_detailsUncheckedUpdateInput = {
+    detail_id?: IntFieldUpdateOperationsInput | number
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    client_id?: StringFieldUpdateOperationsInput | string
+    transfer_type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    from_opening_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    from_added_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type stock_transfer_detailsCreateManyInput = {
+    detail_id?: number
+    transfer_id: number
+    client_id: string
+    transfer_type: string
+    quantity: number
+    from_opening_qty?: number | null
+    from_added_qty?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    created_at?: Date | string | null
+  }
+
+  export type stock_transfer_detailsUpdateManyMutationInput = {
+    transfer_type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    from_opening_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    from_added_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type stock_transfer_detailsUncheckedUpdateManyInput = {
+    detail_id?: IntFieldUpdateOperationsInput | number
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    client_id?: StringFieldUpdateOperationsInput | string
+    transfer_type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    from_opening_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    from_added_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type stock_transfer_recordsCreateInput = {
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutStock_transfer_recordsInput
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutStock_transfer_recordsInput
+    funds: fundsCreateNestedOneWithoutStock_transfer_recordsInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutStock_transfer_recordsInput
+  }
+
+  export type stock_transfer_recordsUncheckedCreateInput = {
+    transfer_id?: number
+    fund_id: number
+    fiscal_year_id: number
+    symbol: string
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutStock_transfer_recordsInput
+  }
+
+  export type stock_transfer_recordsUpdateInput = {
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutStock_transfer_recordsNestedInput
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+    funds?: fundsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+  }
+
+  export type stock_transfer_recordsUncheckedUpdateInput = {
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutStock_transfer_recordsNestedInput
+  }
+
+  export type stock_transfer_recordsCreateManyInput = {
+    transfer_id?: number
+    fund_id: number
+    fiscal_year_id: number
+    symbol: string
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+  }
+
+  export type stock_transfer_recordsUpdateManyMutationInput = {
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type stock_transfer_recordsUncheckedUpdateManyInput = {
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -47093,6 +50239,12 @@ export namespace Prisma {
     none?: sell_records_stagingWhereInput
   }
 
+  export type Stock_transfer_detailsListRelationFilter = {
+    every?: stock_transfer_detailsWhereInput
+    some?: stock_transfer_detailsWhereInput
+    none?: stock_transfer_detailsWhereInput
+  }
+
   export type bonus_recordsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -47138,6 +50290,10 @@ export namespace Prisma {
   }
 
   export type sell_records_stagingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type stock_transfer_detailsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -47626,6 +50782,12 @@ export namespace Prisma {
     none?: right_records_stagingWhereInput
   }
 
+  export type Stock_transfer_recordsListRelationFilter = {
+    every?: stock_transfer_recordsWhereInput
+    some?: stock_transfer_recordsWhereInput
+    none?: stock_transfer_recordsWhereInput
+  }
+
   export type Symbol_holdingsListRelationFilter = {
     every?: symbol_holdingsWhereInput
     some?: symbol_holdingsWhereInput
@@ -47645,6 +50807,10 @@ export namespace Prisma {
   }
 
   export type right_records_stagingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type stock_transfer_recordsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -48715,6 +51881,118 @@ export namespace Prisma {
     staging_id?: SortOrder
   }
 
+  export type Stock_transfer_recordsScalarRelationFilter = {
+    is?: stock_transfer_recordsWhereInput
+    isNot?: stock_transfer_recordsWhereInput
+  }
+
+  export type stock_transfer_detailsCountOrderByAggregateInput = {
+    detail_id?: SortOrder
+    transfer_id?: SortOrder
+    client_id?: SortOrder
+    transfer_type?: SortOrder
+    quantity?: SortOrder
+    from_opening_qty?: SortOrder
+    from_added_qty?: SortOrder
+    effective_rate?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type stock_transfer_detailsAvgOrderByAggregateInput = {
+    detail_id?: SortOrder
+    transfer_id?: SortOrder
+    quantity?: SortOrder
+    from_opening_qty?: SortOrder
+    from_added_qty?: SortOrder
+    effective_rate?: SortOrder
+  }
+
+  export type stock_transfer_detailsMaxOrderByAggregateInput = {
+    detail_id?: SortOrder
+    transfer_id?: SortOrder
+    client_id?: SortOrder
+    transfer_type?: SortOrder
+    quantity?: SortOrder
+    from_opening_qty?: SortOrder
+    from_added_qty?: SortOrder
+    effective_rate?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type stock_transfer_detailsMinOrderByAggregateInput = {
+    detail_id?: SortOrder
+    transfer_id?: SortOrder
+    client_id?: SortOrder
+    transfer_type?: SortOrder
+    quantity?: SortOrder
+    from_opening_qty?: SortOrder
+    from_added_qty?: SortOrder
+    effective_rate?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type stock_transfer_detailsSumOrderByAggregateInput = {
+    detail_id?: SortOrder
+    transfer_id?: SortOrder
+    quantity?: SortOrder
+    from_opening_qty?: SortOrder
+    from_added_qty?: SortOrder
+    effective_rate?: SortOrder
+  }
+
+  export type stock_transfer_recordsCountOrderByAggregateInput = {
+    transfer_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    symbol?: SortOrder
+    transfer_date?: SortOrder
+    initiated_by?: SortOrder
+    remarks?: SortOrder
+    total_quantity?: SortOrder
+    status?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type stock_transfer_recordsAvgOrderByAggregateInput = {
+    transfer_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    total_quantity?: SortOrder
+  }
+
+  export type stock_transfer_recordsMaxOrderByAggregateInput = {
+    transfer_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    symbol?: SortOrder
+    transfer_date?: SortOrder
+    initiated_by?: SortOrder
+    remarks?: SortOrder
+    total_quantity?: SortOrder
+    status?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type stock_transfer_recordsMinOrderByAggregateInput = {
+    transfer_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    symbol?: SortOrder
+    transfer_date?: SortOrder
+    initiated_by?: SortOrder
+    remarks?: SortOrder
+    total_quantity?: SortOrder
+    status?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type stock_transfer_recordsSumOrderByAggregateInput = {
+    transfer_id?: SortOrder
+    fund_id?: SortOrder
+    fiscal_year_id?: SortOrder
+    total_quantity?: SortOrder
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -48935,6 +52213,13 @@ export namespace Prisma {
     connect?: sell_records_stagingWhereUniqueInput | sell_records_stagingWhereUniqueInput[]
   }
 
+  export type stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput = {
+    create?: XOR<stock_transfer_detailsCreateWithoutClient_broker_mappingInput, stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput> | stock_transfer_detailsCreateWithoutClient_broker_mappingInput[] | stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput[]
+    connectOrCreate?: stock_transfer_detailsCreateOrConnectWithoutClient_broker_mappingInput | stock_transfer_detailsCreateOrConnectWithoutClient_broker_mappingInput[]
+    createMany?: stock_transfer_detailsCreateManyClient_broker_mappingInputEnvelope
+    connect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+  }
+
   export type bonus_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput = {
     create?: XOR<bonus_recordsCreateWithoutClient_broker_mappingInput, bonus_recordsUncheckedCreateWithoutClient_broker_mappingInput> | bonus_recordsCreateWithoutClient_broker_mappingInput[] | bonus_recordsUncheckedCreateWithoutClient_broker_mappingInput[]
     connectOrCreate?: bonus_recordsCreateOrConnectWithoutClient_broker_mappingInput | bonus_recordsCreateOrConnectWithoutClient_broker_mappingInput[]
@@ -49017,6 +52302,13 @@ export namespace Prisma {
     connectOrCreate?: sell_records_stagingCreateOrConnectWithoutClient_broker_mappingInput | sell_records_stagingCreateOrConnectWithoutClient_broker_mappingInput[]
     createMany?: sell_records_stagingCreateManyClient_broker_mappingInputEnvelope
     connect?: sell_records_stagingWhereUniqueInput | sell_records_stagingWhereUniqueInput[]
+  }
+
+  export type stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput = {
+    create?: XOR<stock_transfer_detailsCreateWithoutClient_broker_mappingInput, stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput> | stock_transfer_detailsCreateWithoutClient_broker_mappingInput[] | stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput[]
+    connectOrCreate?: stock_transfer_detailsCreateOrConnectWithoutClient_broker_mappingInput | stock_transfer_detailsCreateOrConnectWithoutClient_broker_mappingInput[]
+    createMany?: stock_transfer_detailsCreateManyClient_broker_mappingInputEnvelope
+    connect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
   }
 
   export type bonus_recordsUpdateManyWithoutClient_broker_mappingNestedInput = {
@@ -49205,6 +52497,20 @@ export namespace Prisma {
     deleteMany?: sell_records_stagingScalarWhereInput | sell_records_stagingScalarWhereInput[]
   }
 
+  export type stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput = {
+    create?: XOR<stock_transfer_detailsCreateWithoutClient_broker_mappingInput, stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput> | stock_transfer_detailsCreateWithoutClient_broker_mappingInput[] | stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput[]
+    connectOrCreate?: stock_transfer_detailsCreateOrConnectWithoutClient_broker_mappingInput | stock_transfer_detailsCreateOrConnectWithoutClient_broker_mappingInput[]
+    upsert?: stock_transfer_detailsUpsertWithWhereUniqueWithoutClient_broker_mappingInput | stock_transfer_detailsUpsertWithWhereUniqueWithoutClient_broker_mappingInput[]
+    createMany?: stock_transfer_detailsCreateManyClient_broker_mappingInputEnvelope
+    set?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    disconnect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    delete?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    connect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    update?: stock_transfer_detailsUpdateWithWhereUniqueWithoutClient_broker_mappingInput | stock_transfer_detailsUpdateWithWhereUniqueWithoutClient_broker_mappingInput[]
+    updateMany?: stock_transfer_detailsUpdateManyWithWhereWithoutClient_broker_mappingInput | stock_transfer_detailsUpdateManyWithWhereWithoutClient_broker_mappingInput[]
+    deleteMany?: stock_transfer_detailsScalarWhereInput | stock_transfer_detailsScalarWhereInput[]
+  }
+
   export type bonus_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput = {
     create?: XOR<bonus_recordsCreateWithoutClient_broker_mappingInput, bonus_recordsUncheckedCreateWithoutClient_broker_mappingInput> | bonus_recordsCreateWithoutClient_broker_mappingInput[] | bonus_recordsUncheckedCreateWithoutClient_broker_mappingInput[]
     connectOrCreate?: bonus_recordsCreateOrConnectWithoutClient_broker_mappingInput | bonus_recordsCreateOrConnectWithoutClient_broker_mappingInput[]
@@ -49371,6 +52677,20 @@ export namespace Prisma {
     update?: sell_records_stagingUpdateWithWhereUniqueWithoutClient_broker_mappingInput | sell_records_stagingUpdateWithWhereUniqueWithoutClient_broker_mappingInput[]
     updateMany?: sell_records_stagingUpdateManyWithWhereWithoutClient_broker_mappingInput | sell_records_stagingUpdateManyWithWhereWithoutClient_broker_mappingInput[]
     deleteMany?: sell_records_stagingScalarWhereInput | sell_records_stagingScalarWhereInput[]
+  }
+
+  export type stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput = {
+    create?: XOR<stock_transfer_detailsCreateWithoutClient_broker_mappingInput, stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput> | stock_transfer_detailsCreateWithoutClient_broker_mappingInput[] | stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput[]
+    connectOrCreate?: stock_transfer_detailsCreateOrConnectWithoutClient_broker_mappingInput | stock_transfer_detailsCreateOrConnectWithoutClient_broker_mappingInput[]
+    upsert?: stock_transfer_detailsUpsertWithWhereUniqueWithoutClient_broker_mappingInput | stock_transfer_detailsUpsertWithWhereUniqueWithoutClient_broker_mappingInput[]
+    createMany?: stock_transfer_detailsCreateManyClient_broker_mappingInputEnvelope
+    set?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    disconnect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    delete?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    connect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    update?: stock_transfer_detailsUpdateWithWhereUniqueWithoutClient_broker_mappingInput | stock_transfer_detailsUpdateWithWhereUniqueWithoutClient_broker_mappingInput[]
+    updateMany?: stock_transfer_detailsUpdateManyWithWhereWithoutClient_broker_mappingInput | stock_transfer_detailsUpdateManyWithWhereWithoutClient_broker_mappingInput[]
+    deleteMany?: stock_transfer_detailsScalarWhereInput | stock_transfer_detailsScalarWhereInput[]
   }
 
   export type client_broker_mappingCreateNestedOneWithoutOrder_bookInput = {
@@ -50015,6 +53335,13 @@ export namespace Prisma {
     connect?: sell_records_stagingWhereUniqueInput | sell_records_stagingWhereUniqueInput[]
   }
 
+  export type stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutFiscal_yearsInput, stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput> | stock_transfer_recordsCreateWithoutFiscal_yearsInput[] | stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutFiscal_yearsInput | stock_transfer_recordsCreateOrConnectWithoutFiscal_yearsInput[]
+    createMany?: stock_transfer_recordsCreateManyFiscal_yearsInputEnvelope
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+  }
+
   export type symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput = {
     create?: XOR<symbol_holdingsCreateWithoutFiscal_yearsInput, symbol_holdingsUncheckedCreateWithoutFiscal_yearsInput> | symbol_holdingsCreateWithoutFiscal_yearsInput[] | symbol_holdingsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: symbol_holdingsCreateOrConnectWithoutFiscal_yearsInput | symbol_holdingsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -50132,6 +53459,13 @@ export namespace Prisma {
     connectOrCreate?: sell_records_stagingCreateOrConnectWithoutFiscal_yearsInput | sell_records_stagingCreateOrConnectWithoutFiscal_yearsInput[]
     createMany?: sell_records_stagingCreateManyFiscal_yearsInputEnvelope
     connect?: sell_records_stagingWhereUniqueInput | sell_records_stagingWhereUniqueInput[]
+  }
+
+  export type stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutFiscal_yearsInput, stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput> | stock_transfer_recordsCreateWithoutFiscal_yearsInput[] | stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutFiscal_yearsInput | stock_transfer_recordsCreateOrConnectWithoutFiscal_yearsInput[]
+    createMany?: stock_transfer_recordsCreateManyFiscal_yearsInputEnvelope
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
   }
 
   export type symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput = {
@@ -50363,6 +53697,20 @@ export namespace Prisma {
     update?: sell_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput | sell_records_stagingUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
     updateMany?: sell_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput | sell_records_stagingUpdateManyWithWhereWithoutFiscal_yearsInput[]
     deleteMany?: sell_records_stagingScalarWhereInput | sell_records_stagingScalarWhereInput[]
+  }
+
+  export type stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutFiscal_yearsInput, stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput> | stock_transfer_recordsCreateWithoutFiscal_yearsInput[] | stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutFiscal_yearsInput | stock_transfer_recordsCreateOrConnectWithoutFiscal_yearsInput[]
+    upsert?: stock_transfer_recordsUpsertWithWhereUniqueWithoutFiscal_yearsInput | stock_transfer_recordsUpsertWithWhereUniqueWithoutFiscal_yearsInput[]
+    createMany?: stock_transfer_recordsCreateManyFiscal_yearsInputEnvelope
+    set?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    disconnect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    delete?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    update?: stock_transfer_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput | stock_transfer_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
+    updateMany?: stock_transfer_recordsUpdateManyWithWhereWithoutFiscal_yearsInput | stock_transfer_recordsUpdateManyWithWhereWithoutFiscal_yearsInput[]
+    deleteMany?: stock_transfer_recordsScalarWhereInput | stock_transfer_recordsScalarWhereInput[]
   }
 
   export type symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput = {
@@ -50603,6 +53951,20 @@ export namespace Prisma {
     deleteMany?: sell_records_stagingScalarWhereInput | sell_records_stagingScalarWhereInput[]
   }
 
+  export type stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutFiscal_yearsInput, stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput> | stock_transfer_recordsCreateWithoutFiscal_yearsInput[] | stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutFiscal_yearsInput | stock_transfer_recordsCreateOrConnectWithoutFiscal_yearsInput[]
+    upsert?: stock_transfer_recordsUpsertWithWhereUniqueWithoutFiscal_yearsInput | stock_transfer_recordsUpsertWithWhereUniqueWithoutFiscal_yearsInput[]
+    createMany?: stock_transfer_recordsCreateManyFiscal_yearsInputEnvelope
+    set?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    disconnect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    delete?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    update?: stock_transfer_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput | stock_transfer_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput[]
+    updateMany?: stock_transfer_recordsUpdateManyWithWhereWithoutFiscal_yearsInput | stock_transfer_recordsUpdateManyWithWhereWithoutFiscal_yearsInput[]
+    deleteMany?: stock_transfer_recordsScalarWhereInput | stock_transfer_recordsScalarWhereInput[]
+  }
+
   export type symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput = {
     create?: XOR<symbol_holdingsCreateWithoutFiscal_yearsInput, symbol_holdingsUncheckedCreateWithoutFiscal_yearsInput> | symbol_holdingsCreateWithoutFiscal_yearsInput[] | symbol_holdingsUncheckedCreateWithoutFiscal_yearsInput[]
     connectOrCreate?: symbol_holdingsCreateOrConnectWithoutFiscal_yearsInput | symbol_holdingsCreateOrConnectWithoutFiscal_yearsInput[]
@@ -50722,6 +54084,13 @@ export namespace Prisma {
     connect?: sell_records_stagingWhereUniqueInput | sell_records_stagingWhereUniqueInput[]
   }
 
+  export type stock_transfer_recordsCreateNestedManyWithoutFundsInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutFundsInput, stock_transfer_recordsUncheckedCreateWithoutFundsInput> | stock_transfer_recordsCreateWithoutFundsInput[] | stock_transfer_recordsUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutFundsInput | stock_transfer_recordsCreateOrConnectWithoutFundsInput[]
+    createMany?: stock_transfer_recordsCreateManyFundsInputEnvelope
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+  }
+
   export type sub_classesCreateNestedManyWithoutFundsInput = {
     create?: XOR<sub_classesCreateWithoutFundsInput, sub_classesUncheckedCreateWithoutFundsInput> | sub_classesCreateWithoutFundsInput[] | sub_classesUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: sub_classesCreateOrConnectWithoutFundsInput | sub_classesCreateOrConnectWithoutFundsInput[]
@@ -50839,6 +54208,13 @@ export namespace Prisma {
     connectOrCreate?: sell_records_stagingCreateOrConnectWithoutFundsInput | sell_records_stagingCreateOrConnectWithoutFundsInput[]
     createMany?: sell_records_stagingCreateManyFundsInputEnvelope
     connect?: sell_records_stagingWhereUniqueInput | sell_records_stagingWhereUniqueInput[]
+  }
+
+  export type stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutFundsInput, stock_transfer_recordsUncheckedCreateWithoutFundsInput> | stock_transfer_recordsCreateWithoutFundsInput[] | stock_transfer_recordsUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutFundsInput | stock_transfer_recordsCreateOrConnectWithoutFundsInput[]
+    createMany?: stock_transfer_recordsCreateManyFundsInputEnvelope
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
   }
 
   export type sub_classesUncheckedCreateNestedManyWithoutFundsInput = {
@@ -51063,6 +54439,20 @@ export namespace Prisma {
     update?: sell_records_stagingUpdateWithWhereUniqueWithoutFundsInput | sell_records_stagingUpdateWithWhereUniqueWithoutFundsInput[]
     updateMany?: sell_records_stagingUpdateManyWithWhereWithoutFundsInput | sell_records_stagingUpdateManyWithWhereWithoutFundsInput[]
     deleteMany?: sell_records_stagingScalarWhereInput | sell_records_stagingScalarWhereInput[]
+  }
+
+  export type stock_transfer_recordsUpdateManyWithoutFundsNestedInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutFundsInput, stock_transfer_recordsUncheckedCreateWithoutFundsInput> | stock_transfer_recordsCreateWithoutFundsInput[] | stock_transfer_recordsUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutFundsInput | stock_transfer_recordsCreateOrConnectWithoutFundsInput[]
+    upsert?: stock_transfer_recordsUpsertWithWhereUniqueWithoutFundsInput | stock_transfer_recordsUpsertWithWhereUniqueWithoutFundsInput[]
+    createMany?: stock_transfer_recordsCreateManyFundsInputEnvelope
+    set?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    disconnect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    delete?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    update?: stock_transfer_recordsUpdateWithWhereUniqueWithoutFundsInput | stock_transfer_recordsUpdateWithWhereUniqueWithoutFundsInput[]
+    updateMany?: stock_transfer_recordsUpdateManyWithWhereWithoutFundsInput | stock_transfer_recordsUpdateManyWithWhereWithoutFundsInput[]
+    deleteMany?: stock_transfer_recordsScalarWhereInput | stock_transfer_recordsScalarWhereInput[]
   }
 
   export type sub_classesUpdateManyWithoutFundsNestedInput = {
@@ -51303,6 +54693,20 @@ export namespace Prisma {
     deleteMany?: sell_records_stagingScalarWhereInput | sell_records_stagingScalarWhereInput[]
   }
 
+  export type stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutFundsInput, stock_transfer_recordsUncheckedCreateWithoutFundsInput> | stock_transfer_recordsCreateWithoutFundsInput[] | stock_transfer_recordsUncheckedCreateWithoutFundsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutFundsInput | stock_transfer_recordsCreateOrConnectWithoutFundsInput[]
+    upsert?: stock_transfer_recordsUpsertWithWhereUniqueWithoutFundsInput | stock_transfer_recordsUpsertWithWhereUniqueWithoutFundsInput[]
+    createMany?: stock_transfer_recordsCreateManyFundsInputEnvelope
+    set?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    disconnect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    delete?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    update?: stock_transfer_recordsUpdateWithWhereUniqueWithoutFundsInput | stock_transfer_recordsUpdateWithWhereUniqueWithoutFundsInput[]
+    updateMany?: stock_transfer_recordsUpdateManyWithWhereWithoutFundsInput | stock_transfer_recordsUpdateManyWithWhereWithoutFundsInput[]
+    deleteMany?: stock_transfer_recordsScalarWhereInput | stock_transfer_recordsScalarWhereInput[]
+  }
+
   export type sub_classesUncheckedUpdateManyWithoutFundsNestedInput = {
     create?: XOR<sub_classesCreateWithoutFundsInput, sub_classesUncheckedCreateWithoutFundsInput> | sub_classesCreateWithoutFundsInput[] | sub_classesUncheckedCreateWithoutFundsInput[]
     connectOrCreate?: sub_classesCreateOrConnectWithoutFundsInput | sub_classesCreateOrConnectWithoutFundsInput[]
@@ -51514,6 +54918,13 @@ export namespace Prisma {
     connect?: sectorsWhereUniqueInput
   }
 
+  export type stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutStock_fullsInput, stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput> | stock_transfer_recordsCreateWithoutStock_fullsInput[] | stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutStock_fullsInput | stock_transfer_recordsCreateOrConnectWithoutStock_fullsInput[]
+    createMany?: stock_transfer_recordsCreateManyStock_fullsInputEnvelope
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+  }
+
   export type symbol_holdingsCreateNestedManyWithoutStock_fullsInput = {
     create?: XOR<symbol_holdingsCreateWithoutStock_fullsInput, symbol_holdingsUncheckedCreateWithoutStock_fullsInput> | symbol_holdingsCreateWithoutStock_fullsInput[] | symbol_holdingsUncheckedCreateWithoutStock_fullsInput[]
     connectOrCreate?: symbol_holdingsCreateOrConnectWithoutStock_fullsInput | symbol_holdingsCreateOrConnectWithoutStock_fullsInput[]
@@ -51624,6 +55035,13 @@ export namespace Prisma {
     connectOrCreate?: sell_records_stagingCreateOrConnectWithoutStock_fullsInput | sell_records_stagingCreateOrConnectWithoutStock_fullsInput[]
     createMany?: sell_records_stagingCreateManyStock_fullsInputEnvelope
     connect?: sell_records_stagingWhereUniqueInput | sell_records_stagingWhereUniqueInput[]
+  }
+
+  export type stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutStock_fullsInput, stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput> | stock_transfer_recordsCreateWithoutStock_fullsInput[] | stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutStock_fullsInput | stock_transfer_recordsCreateOrConnectWithoutStock_fullsInput[]
+    createMany?: stock_transfer_recordsCreateManyStock_fullsInputEnvelope
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
   }
 
   export type symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput = {
@@ -51851,6 +55269,20 @@ export namespace Prisma {
     update?: XOR<XOR<sectorsUpdateToOneWithWhereWithoutStock_fullsInput, sectorsUpdateWithoutStock_fullsInput>, sectorsUncheckedUpdateWithoutStock_fullsInput>
   }
 
+  export type stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutStock_fullsInput, stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput> | stock_transfer_recordsCreateWithoutStock_fullsInput[] | stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutStock_fullsInput | stock_transfer_recordsCreateOrConnectWithoutStock_fullsInput[]
+    upsert?: stock_transfer_recordsUpsertWithWhereUniqueWithoutStock_fullsInput | stock_transfer_recordsUpsertWithWhereUniqueWithoutStock_fullsInput[]
+    createMany?: stock_transfer_recordsCreateManyStock_fullsInputEnvelope
+    set?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    disconnect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    delete?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    update?: stock_transfer_recordsUpdateWithWhereUniqueWithoutStock_fullsInput | stock_transfer_recordsUpdateWithWhereUniqueWithoutStock_fullsInput[]
+    updateMany?: stock_transfer_recordsUpdateManyWithWhereWithoutStock_fullsInput | stock_transfer_recordsUpdateManyWithWhereWithoutStock_fullsInput[]
+    deleteMany?: stock_transfer_recordsScalarWhereInput | stock_transfer_recordsScalarWhereInput[]
+  }
+
   export type symbol_holdingsUpdateManyWithoutStock_fullsNestedInput = {
     create?: XOR<symbol_holdingsCreateWithoutStock_fullsInput, symbol_holdingsUncheckedCreateWithoutStock_fullsInput> | symbol_holdingsCreateWithoutStock_fullsInput[] | symbol_holdingsUncheckedCreateWithoutStock_fullsInput[]
     connectOrCreate?: symbol_holdingsCreateOrConnectWithoutStock_fullsInput | symbol_holdingsCreateOrConnectWithoutStock_fullsInput[]
@@ -52073,6 +55505,20 @@ export namespace Prisma {
     update?: sell_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput | sell_records_stagingUpdateWithWhereUniqueWithoutStock_fullsInput[]
     updateMany?: sell_records_stagingUpdateManyWithWhereWithoutStock_fullsInput | sell_records_stagingUpdateManyWithWhereWithoutStock_fullsInput[]
     deleteMany?: sell_records_stagingScalarWhereInput | sell_records_stagingScalarWhereInput[]
+  }
+
+  export type stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutStock_fullsInput, stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput> | stock_transfer_recordsCreateWithoutStock_fullsInput[] | stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput[]
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutStock_fullsInput | stock_transfer_recordsCreateOrConnectWithoutStock_fullsInput[]
+    upsert?: stock_transfer_recordsUpsertWithWhereUniqueWithoutStock_fullsInput | stock_transfer_recordsUpsertWithWhereUniqueWithoutStock_fullsInput[]
+    createMany?: stock_transfer_recordsCreateManyStock_fullsInputEnvelope
+    set?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    disconnect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    delete?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    connect?: stock_transfer_recordsWhereUniqueInput | stock_transfer_recordsWhereUniqueInput[]
+    update?: stock_transfer_recordsUpdateWithWhereUniqueWithoutStock_fullsInput | stock_transfer_recordsUpdateWithWhereUniqueWithoutStock_fullsInput[]
+    updateMany?: stock_transfer_recordsUpdateManyWithWhereWithoutStock_fullsInput | stock_transfer_recordsUpdateManyWithWhereWithoutStock_fullsInput[]
+    deleteMany?: stock_transfer_recordsScalarWhereInput | stock_transfer_recordsScalarWhereInput[]
   }
 
   export type symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput = {
@@ -53119,6 +56565,118 @@ export namespace Prisma {
     update?: XOR<XOR<stock_fullsUpdateToOneWithWhereWithoutRight_records_stagingInput, stock_fullsUpdateWithoutRight_records_stagingInput>, stock_fullsUncheckedUpdateWithoutRight_records_stagingInput>
   }
 
+  export type client_broker_mappingCreateNestedOneWithoutStock_transfer_detailsInput = {
+    create?: XOR<client_broker_mappingCreateWithoutStock_transfer_detailsInput, client_broker_mappingUncheckedCreateWithoutStock_transfer_detailsInput>
+    connectOrCreate?: client_broker_mappingCreateOrConnectWithoutStock_transfer_detailsInput
+    connect?: client_broker_mappingWhereUniqueInput
+  }
+
+  export type stock_transfer_recordsCreateNestedOneWithoutStock_transfer_detailsInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutStock_transfer_detailsInput, stock_transfer_recordsUncheckedCreateWithoutStock_transfer_detailsInput>
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutStock_transfer_detailsInput
+    connect?: stock_transfer_recordsWhereUniqueInput
+  }
+
+  export type client_broker_mappingUpdateOneRequiredWithoutStock_transfer_detailsNestedInput = {
+    create?: XOR<client_broker_mappingCreateWithoutStock_transfer_detailsInput, client_broker_mappingUncheckedCreateWithoutStock_transfer_detailsInput>
+    connectOrCreate?: client_broker_mappingCreateOrConnectWithoutStock_transfer_detailsInput
+    upsert?: client_broker_mappingUpsertWithoutStock_transfer_detailsInput
+    connect?: client_broker_mappingWhereUniqueInput
+    update?: XOR<XOR<client_broker_mappingUpdateToOneWithWhereWithoutStock_transfer_detailsInput, client_broker_mappingUpdateWithoutStock_transfer_detailsInput>, client_broker_mappingUncheckedUpdateWithoutStock_transfer_detailsInput>
+  }
+
+  export type stock_transfer_recordsUpdateOneRequiredWithoutStock_transfer_detailsNestedInput = {
+    create?: XOR<stock_transfer_recordsCreateWithoutStock_transfer_detailsInput, stock_transfer_recordsUncheckedCreateWithoutStock_transfer_detailsInput>
+    connectOrCreate?: stock_transfer_recordsCreateOrConnectWithoutStock_transfer_detailsInput
+    upsert?: stock_transfer_recordsUpsertWithoutStock_transfer_detailsInput
+    connect?: stock_transfer_recordsWhereUniqueInput
+    update?: XOR<XOR<stock_transfer_recordsUpdateToOneWithWhereWithoutStock_transfer_detailsInput, stock_transfer_recordsUpdateWithoutStock_transfer_detailsInput>, stock_transfer_recordsUncheckedUpdateWithoutStock_transfer_detailsInput>
+  }
+
+  export type stock_transfer_detailsCreateNestedManyWithoutStock_transfer_recordsInput = {
+    create?: XOR<stock_transfer_detailsCreateWithoutStock_transfer_recordsInput, stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput> | stock_transfer_detailsCreateWithoutStock_transfer_recordsInput[] | stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput[]
+    connectOrCreate?: stock_transfer_detailsCreateOrConnectWithoutStock_transfer_recordsInput | stock_transfer_detailsCreateOrConnectWithoutStock_transfer_recordsInput[]
+    createMany?: stock_transfer_detailsCreateManyStock_transfer_recordsInputEnvelope
+    connect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+  }
+
+  export type fiscal_yearsCreateNestedOneWithoutStock_transfer_recordsInput = {
+    create?: XOR<fiscal_yearsCreateWithoutStock_transfer_recordsInput, fiscal_yearsUncheckedCreateWithoutStock_transfer_recordsInput>
+    connectOrCreate?: fiscal_yearsCreateOrConnectWithoutStock_transfer_recordsInput
+    connect?: fiscal_yearsWhereUniqueInput
+  }
+
+  export type fundsCreateNestedOneWithoutStock_transfer_recordsInput = {
+    create?: XOR<fundsCreateWithoutStock_transfer_recordsInput, fundsUncheckedCreateWithoutStock_transfer_recordsInput>
+    connectOrCreate?: fundsCreateOrConnectWithoutStock_transfer_recordsInput
+    connect?: fundsWhereUniqueInput
+  }
+
+  export type stock_fullsCreateNestedOneWithoutStock_transfer_recordsInput = {
+    create?: XOR<stock_fullsCreateWithoutStock_transfer_recordsInput, stock_fullsUncheckedCreateWithoutStock_transfer_recordsInput>
+    connectOrCreate?: stock_fullsCreateOrConnectWithoutStock_transfer_recordsInput
+    connect?: stock_fullsWhereUniqueInput
+  }
+
+  export type stock_transfer_detailsUncheckedCreateNestedManyWithoutStock_transfer_recordsInput = {
+    create?: XOR<stock_transfer_detailsCreateWithoutStock_transfer_recordsInput, stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput> | stock_transfer_detailsCreateWithoutStock_transfer_recordsInput[] | stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput[]
+    connectOrCreate?: stock_transfer_detailsCreateOrConnectWithoutStock_transfer_recordsInput | stock_transfer_detailsCreateOrConnectWithoutStock_transfer_recordsInput[]
+    createMany?: stock_transfer_detailsCreateManyStock_transfer_recordsInputEnvelope
+    connect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+  }
+
+  export type stock_transfer_detailsUpdateManyWithoutStock_transfer_recordsNestedInput = {
+    create?: XOR<stock_transfer_detailsCreateWithoutStock_transfer_recordsInput, stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput> | stock_transfer_detailsCreateWithoutStock_transfer_recordsInput[] | stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput[]
+    connectOrCreate?: stock_transfer_detailsCreateOrConnectWithoutStock_transfer_recordsInput | stock_transfer_detailsCreateOrConnectWithoutStock_transfer_recordsInput[]
+    upsert?: stock_transfer_detailsUpsertWithWhereUniqueWithoutStock_transfer_recordsInput | stock_transfer_detailsUpsertWithWhereUniqueWithoutStock_transfer_recordsInput[]
+    createMany?: stock_transfer_detailsCreateManyStock_transfer_recordsInputEnvelope
+    set?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    disconnect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    delete?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    connect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    update?: stock_transfer_detailsUpdateWithWhereUniqueWithoutStock_transfer_recordsInput | stock_transfer_detailsUpdateWithWhereUniqueWithoutStock_transfer_recordsInput[]
+    updateMany?: stock_transfer_detailsUpdateManyWithWhereWithoutStock_transfer_recordsInput | stock_transfer_detailsUpdateManyWithWhereWithoutStock_transfer_recordsInput[]
+    deleteMany?: stock_transfer_detailsScalarWhereInput | stock_transfer_detailsScalarWhereInput[]
+  }
+
+  export type fiscal_yearsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput = {
+    create?: XOR<fiscal_yearsCreateWithoutStock_transfer_recordsInput, fiscal_yearsUncheckedCreateWithoutStock_transfer_recordsInput>
+    connectOrCreate?: fiscal_yearsCreateOrConnectWithoutStock_transfer_recordsInput
+    upsert?: fiscal_yearsUpsertWithoutStock_transfer_recordsInput
+    connect?: fiscal_yearsWhereUniqueInput
+    update?: XOR<XOR<fiscal_yearsUpdateToOneWithWhereWithoutStock_transfer_recordsInput, fiscal_yearsUpdateWithoutStock_transfer_recordsInput>, fiscal_yearsUncheckedUpdateWithoutStock_transfer_recordsInput>
+  }
+
+  export type fundsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput = {
+    create?: XOR<fundsCreateWithoutStock_transfer_recordsInput, fundsUncheckedCreateWithoutStock_transfer_recordsInput>
+    connectOrCreate?: fundsCreateOrConnectWithoutStock_transfer_recordsInput
+    upsert?: fundsUpsertWithoutStock_transfer_recordsInput
+    connect?: fundsWhereUniqueInput
+    update?: XOR<XOR<fundsUpdateToOneWithWhereWithoutStock_transfer_recordsInput, fundsUpdateWithoutStock_transfer_recordsInput>, fundsUncheckedUpdateWithoutStock_transfer_recordsInput>
+  }
+
+  export type stock_fullsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput = {
+    create?: XOR<stock_fullsCreateWithoutStock_transfer_recordsInput, stock_fullsUncheckedCreateWithoutStock_transfer_recordsInput>
+    connectOrCreate?: stock_fullsCreateOrConnectWithoutStock_transfer_recordsInput
+    upsert?: stock_fullsUpsertWithoutStock_transfer_recordsInput
+    connect?: stock_fullsWhereUniqueInput
+    update?: XOR<XOR<stock_fullsUpdateToOneWithWhereWithoutStock_transfer_recordsInput, stock_fullsUpdateWithoutStock_transfer_recordsInput>, stock_fullsUncheckedUpdateWithoutStock_transfer_recordsInput>
+  }
+
+  export type stock_transfer_detailsUncheckedUpdateManyWithoutStock_transfer_recordsNestedInput = {
+    create?: XOR<stock_transfer_detailsCreateWithoutStock_transfer_recordsInput, stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput> | stock_transfer_detailsCreateWithoutStock_transfer_recordsInput[] | stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput[]
+    connectOrCreate?: stock_transfer_detailsCreateOrConnectWithoutStock_transfer_recordsInput | stock_transfer_detailsCreateOrConnectWithoutStock_transfer_recordsInput[]
+    upsert?: stock_transfer_detailsUpsertWithWhereUniqueWithoutStock_transfer_recordsInput | stock_transfer_detailsUpsertWithWhereUniqueWithoutStock_transfer_recordsInput[]
+    createMany?: stock_transfer_detailsCreateManyStock_transfer_recordsInputEnvelope
+    set?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    disconnect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    delete?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    connect?: stock_transfer_detailsWhereUniqueInput | stock_transfer_detailsWhereUniqueInput[]
+    update?: stock_transfer_detailsUpdateWithWhereUniqueWithoutStock_transfer_recordsInput | stock_transfer_detailsUpdateWithWhereUniqueWithoutStock_transfer_recordsInput[]
+    updateMany?: stock_transfer_detailsUpdateManyWithWhereWithoutStock_transfer_recordsInput | stock_transfer_detailsUpdateManyWithWhereWithoutStock_transfer_recordsInput[]
+    deleteMany?: stock_transfer_detailsScalarWhereInput | stock_transfer_detailsScalarWhereInput[]
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -53405,6 +56963,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutBuy_recordsInput = {
@@ -53425,6 +56984,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutBuy_recordsInput = {
@@ -53452,6 +57012,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -53476,6 +57037,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -53501,6 +57063,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -53523,6 +57086,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -53552,6 +57116,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -53575,6 +57140,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -53640,6 +57206,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutBuy_recordsInput = {
@@ -53660,6 +57227,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutBuy_recordsInput = {
@@ -53693,6 +57261,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -53717,6 +57286,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -53748,6 +57318,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -53770,6 +57341,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -53805,6 +57377,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -53828,6 +57401,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -54059,6 +57633,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -54081,6 +57656,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -54420,6 +57996,37 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type stock_transfer_detailsCreateWithoutClient_broker_mappingInput = {
+    transfer_type: string
+    quantity: number
+    from_opening_qty?: number | null
+    from_added_qty?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    created_at?: Date | string | null
+    stock_transfer_records: stock_transfer_recordsCreateNestedOneWithoutStock_transfer_detailsInput
+  }
+
+  export type stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput = {
+    detail_id?: number
+    transfer_id: number
+    transfer_type: string
+    quantity: number
+    from_opening_qty?: number | null
+    from_added_qty?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    created_at?: Date | string | null
+  }
+
+  export type stock_transfer_detailsCreateOrConnectWithoutClient_broker_mappingInput = {
+    where: stock_transfer_detailsWhereUniqueInput
+    create: XOR<stock_transfer_detailsCreateWithoutClient_broker_mappingInput, stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput>
+  }
+
+  export type stock_transfer_detailsCreateManyClient_broker_mappingInputEnvelope = {
+    data: stock_transfer_detailsCreateManyClient_broker_mappingInput | stock_transfer_detailsCreateManyClient_broker_mappingInput[]
+    skipDuplicates?: boolean
+  }
+
   export type bonus_recordsUpsertWithWhereUniqueWithoutClient_broker_mappingInput = {
     where: bonus_recordsWhereUniqueInput
     update: XOR<bonus_recordsUpdateWithoutClient_broker_mappingInput, bonus_recordsUncheckedUpdateWithoutClient_broker_mappingInput>
@@ -54612,6 +58219,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -54634,6 +58242,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -54925,6 +58534,37 @@ export namespace Prisma {
     commission_pending?: BoolNullableFilter<"sell_records_staging"> | boolean | null
   }
 
+  export type stock_transfer_detailsUpsertWithWhereUniqueWithoutClient_broker_mappingInput = {
+    where: stock_transfer_detailsWhereUniqueInput
+    update: XOR<stock_transfer_detailsUpdateWithoutClient_broker_mappingInput, stock_transfer_detailsUncheckedUpdateWithoutClient_broker_mappingInput>
+    create: XOR<stock_transfer_detailsCreateWithoutClient_broker_mappingInput, stock_transfer_detailsUncheckedCreateWithoutClient_broker_mappingInput>
+  }
+
+  export type stock_transfer_detailsUpdateWithWhereUniqueWithoutClient_broker_mappingInput = {
+    where: stock_transfer_detailsWhereUniqueInput
+    data: XOR<stock_transfer_detailsUpdateWithoutClient_broker_mappingInput, stock_transfer_detailsUncheckedUpdateWithoutClient_broker_mappingInput>
+  }
+
+  export type stock_transfer_detailsUpdateManyWithWhereWithoutClient_broker_mappingInput = {
+    where: stock_transfer_detailsScalarWhereInput
+    data: XOR<stock_transfer_detailsUpdateManyMutationInput, stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingInput>
+  }
+
+  export type stock_transfer_detailsScalarWhereInput = {
+    AND?: stock_transfer_detailsScalarWhereInput | stock_transfer_detailsScalarWhereInput[]
+    OR?: stock_transfer_detailsScalarWhereInput[]
+    NOT?: stock_transfer_detailsScalarWhereInput | stock_transfer_detailsScalarWhereInput[]
+    detail_id?: IntFilter<"stock_transfer_details"> | number
+    transfer_id?: IntFilter<"stock_transfer_details"> | number
+    client_id?: StringFilter<"stock_transfer_details"> | string
+    transfer_type?: StringFilter<"stock_transfer_details"> | string
+    quantity?: IntFilter<"stock_transfer_details"> | number
+    from_opening_qty?: IntNullableFilter<"stock_transfer_details"> | number | null
+    from_added_qty?: IntNullableFilter<"stock_transfer_details"> | number | null
+    effective_rate?: DecimalNullableFilter<"stock_transfer_details"> | Decimal | DecimalJsLike | number | string | null
+    created_at?: DateTimeNullableFilter<"stock_transfer_details"> | Date | string | null
+  }
+
   export type client_broker_mappingCreateWithoutOrder_bookInput = {
     client_id: string
     client_name: string
@@ -54943,6 +58583,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutOrder_bookInput = {
@@ -54963,6 +58604,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutOrder_bookInput = {
@@ -54990,6 +58632,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -55014,6 +58657,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -55042,6 +58686,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -55065,6 +58710,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -55130,6 +58776,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutOrder_bookInput = {
@@ -55150,6 +58797,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutOrder_bookInput = {
@@ -55183,6 +58831,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -55207,6 +58856,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -55241,6 +58891,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -55264,6 +58915,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -55319,6 +58971,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsCreateNestedManyWithoutClient_broker_mappingInput
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutSell_recordsInput = {
@@ -55339,6 +58992,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutSell_recordsInput = {
@@ -55366,6 +59020,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -55390,6 +59045,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -55415,6 +59071,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -55437,6 +59094,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -55466,6 +59124,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -55489,6 +59148,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -55554,6 +59214,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutSell_recordsInput = {
@@ -55574,6 +59235,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutSell_recordsInput = {
@@ -55607,6 +59269,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -55631,6 +59294,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -55662,6 +59326,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -55684,6 +59349,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -55719,6 +59385,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -55742,6 +59409,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -56166,6 +59834,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutFiscal_year_balanceInput = {
@@ -56186,6 +59855,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutFiscal_year_balanceInput = {
@@ -56213,6 +59883,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -56237,6 +59908,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -56262,6 +59934,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -56284,6 +59957,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -56343,6 +60017,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -56366,6 +60041,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -56403,6 +60079,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutFiscal_year_balanceInput = {
@@ -56423,6 +60100,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutFiscal_year_balanceInput = {
@@ -56456,6 +60134,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -56480,6 +60159,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -56511,6 +60191,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -56533,6 +60214,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -56604,6 +60286,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -56627,6 +60310,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -56648,6 +60332,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutBuy_records_stagingInput = {
@@ -56668,6 +60353,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutBuy_records_stagingInput = {
@@ -56695,6 +60381,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -56719,6 +60406,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -56744,6 +60432,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -56766,6 +60455,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -56795,6 +60485,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -56818,6 +60509,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -56883,6 +60575,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutBuy_records_stagingInput = {
@@ -56903,6 +60596,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutBuy_records_stagingInput = {
@@ -56936,6 +60630,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -56960,6 +60655,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -56991,6 +60687,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -57013,6 +60710,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -57048,6 +60746,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -57071,6 +60770,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -57730,6 +61430,41 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type stock_transfer_recordsCreateWithoutFiscal_yearsInput = {
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutStock_transfer_recordsInput
+    funds: fundsCreateNestedOneWithoutStock_transfer_recordsInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutStock_transfer_recordsInput
+  }
+
+  export type stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput = {
+    transfer_id?: number
+    fund_id: number
+    symbol: string
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutStock_transfer_recordsInput
+  }
+
+  export type stock_transfer_recordsCreateOrConnectWithoutFiscal_yearsInput = {
+    where: stock_transfer_recordsWhereUniqueInput
+    create: XOR<stock_transfer_recordsCreateWithoutFiscal_yearsInput, stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput>
+  }
+
+  export type stock_transfer_recordsCreateManyFiscal_yearsInputEnvelope = {
+    data: stock_transfer_recordsCreateManyFiscal_yearsInput | stock_transfer_recordsCreateManyFiscal_yearsInput[]
+    skipDuplicates?: boolean
+  }
+
   export type symbol_holdingsCreateWithoutFiscal_yearsInput = {
     remarks?: string | null
     quantity?: number | null
@@ -58082,6 +61817,38 @@ export namespace Prisma {
     data: XOR<sell_records_stagingUpdateManyMutationInput, sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsInput>
   }
 
+  export type stock_transfer_recordsUpsertWithWhereUniqueWithoutFiscal_yearsInput = {
+    where: stock_transfer_recordsWhereUniqueInput
+    update: XOR<stock_transfer_recordsUpdateWithoutFiscal_yearsInput, stock_transfer_recordsUncheckedUpdateWithoutFiscal_yearsInput>
+    create: XOR<stock_transfer_recordsCreateWithoutFiscal_yearsInput, stock_transfer_recordsUncheckedCreateWithoutFiscal_yearsInput>
+  }
+
+  export type stock_transfer_recordsUpdateWithWhereUniqueWithoutFiscal_yearsInput = {
+    where: stock_transfer_recordsWhereUniqueInput
+    data: XOR<stock_transfer_recordsUpdateWithoutFiscal_yearsInput, stock_transfer_recordsUncheckedUpdateWithoutFiscal_yearsInput>
+  }
+
+  export type stock_transfer_recordsUpdateManyWithWhereWithoutFiscal_yearsInput = {
+    where: stock_transfer_recordsScalarWhereInput
+    data: XOR<stock_transfer_recordsUpdateManyMutationInput, stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsInput>
+  }
+
+  export type stock_transfer_recordsScalarWhereInput = {
+    AND?: stock_transfer_recordsScalarWhereInput | stock_transfer_recordsScalarWhereInput[]
+    OR?: stock_transfer_recordsScalarWhereInput[]
+    NOT?: stock_transfer_recordsScalarWhereInput | stock_transfer_recordsScalarWhereInput[]
+    transfer_id?: IntFilter<"stock_transfer_records"> | number
+    fund_id?: IntFilter<"stock_transfer_records"> | number
+    fiscal_year_id?: IntFilter<"stock_transfer_records"> | number
+    symbol?: StringFilter<"stock_transfer_records"> | string
+    transfer_date?: DateTimeFilter<"stock_transfer_records"> | Date | string
+    initiated_by?: StringNullableFilter<"stock_transfer_records"> | string | null
+    remarks?: StringNullableFilter<"stock_transfer_records"> | string | null
+    total_quantity?: IntFilter<"stock_transfer_records"> | number
+    status?: StringNullableFilter<"stock_transfer_records"> | string | null
+    created_at?: DateTimeNullableFilter<"stock_transfer_records"> | Date | string | null
+  }
+
   export type symbol_holdingsUpsertWithWhereUniqueWithoutFiscal_yearsInput = {
     where: symbol_holdingsWhereUniqueInput
     update: XOR<symbol_holdingsUpdateWithoutFiscal_yearsInput, symbol_holdingsUncheckedUpdateWithoutFiscal_yearsInput>
@@ -58359,6 +62126,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutFundsInput = {
@@ -58379,6 +62147,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutFundsInput = {
@@ -58724,6 +62493,41 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type stock_transfer_recordsCreateWithoutFundsInput = {
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutStock_transfer_recordsInput
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutStock_transfer_recordsInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutStock_transfer_recordsInput
+  }
+
+  export type stock_transfer_recordsUncheckedCreateWithoutFundsInput = {
+    transfer_id?: number
+    fiscal_year_id: number
+    symbol: string
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutStock_transfer_recordsInput
+  }
+
+  export type stock_transfer_recordsCreateOrConnectWithoutFundsInput = {
+    where: stock_transfer_recordsWhereUniqueInput
+    create: XOR<stock_transfer_recordsCreateWithoutFundsInput, stock_transfer_recordsUncheckedCreateWithoutFundsInput>
+  }
+
+  export type stock_transfer_recordsCreateManyFundsInputEnvelope = {
+    data: stock_transfer_recordsCreateManyFundsInput | stock_transfer_recordsCreateManyFundsInput[]
+    skipDuplicates?: boolean
+  }
+
   export type sub_classesCreateWithoutFundsInput = {
     sub_name: string
     added_at?: Date | string | null
@@ -59043,6 +62847,22 @@ export namespace Prisma {
     data: XOR<sell_records_stagingUpdateManyMutationInput, sell_records_stagingUncheckedUpdateManyWithoutFundsInput>
   }
 
+  export type stock_transfer_recordsUpsertWithWhereUniqueWithoutFundsInput = {
+    where: stock_transfer_recordsWhereUniqueInput
+    update: XOR<stock_transfer_recordsUpdateWithoutFundsInput, stock_transfer_recordsUncheckedUpdateWithoutFundsInput>
+    create: XOR<stock_transfer_recordsCreateWithoutFundsInput, stock_transfer_recordsUncheckedCreateWithoutFundsInput>
+  }
+
+  export type stock_transfer_recordsUpdateWithWhereUniqueWithoutFundsInput = {
+    where: stock_transfer_recordsWhereUniqueInput
+    data: XOR<stock_transfer_recordsUpdateWithoutFundsInput, stock_transfer_recordsUncheckedUpdateWithoutFundsInput>
+  }
+
+  export type stock_transfer_recordsUpdateManyWithWhereWithoutFundsInput = {
+    where: stock_transfer_recordsScalarWhereInput
+    data: XOR<stock_transfer_recordsUpdateManyMutationInput, stock_transfer_recordsUncheckedUpdateManyWithoutFundsInput>
+  }
+
   export type sub_classesUpsertWithWhereUniqueWithoutFundsInput = {
     where: sub_classesWhereUniqueInput
     update: XOR<sub_classesUpdateWithoutFundsInput, sub_classesUncheckedUpdateWithoutFundsInput>
@@ -59103,6 +62923,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsCreateNestedManyWithoutClient_broker_mappingInput
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutSell_records_stagingInput = {
@@ -59123,6 +62944,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutSell_records_stagingInput = {
@@ -59150,6 +62972,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -59174,6 +62997,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -59199,6 +63023,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -59221,6 +63046,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -59250,6 +63076,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -59273,6 +63100,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -59338,6 +63166,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutSell_records_stagingInput = {
@@ -59358,6 +63187,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutSell_records_stagingInput = {
@@ -59391,6 +63221,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -59415,6 +63246,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -59446,6 +63278,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -59468,6 +63301,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -59503,6 +63337,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -59526,6 +63361,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -60177,6 +64013,41 @@ export namespace Prisma {
     create: XOR<sectorsCreateWithoutStock_fullsInput, sectorsUncheckedCreateWithoutStock_fullsInput>
   }
 
+  export type stock_transfer_recordsCreateWithoutStock_fullsInput = {
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutStock_transfer_recordsInput
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutStock_transfer_recordsInput
+    funds: fundsCreateNestedOneWithoutStock_transfer_recordsInput
+  }
+
+  export type stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput = {
+    transfer_id?: number
+    fund_id: number
+    fiscal_year_id: number
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutStock_transfer_recordsInput
+  }
+
+  export type stock_transfer_recordsCreateOrConnectWithoutStock_fullsInput = {
+    where: stock_transfer_recordsWhereUniqueInput
+    create: XOR<stock_transfer_recordsCreateWithoutStock_fullsInput, stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput>
+  }
+
+  export type stock_transfer_recordsCreateManyStock_fullsInputEnvelope = {
+    data: stock_transfer_recordsCreateManyStock_fullsInput | stock_transfer_recordsCreateManyStock_fullsInput[]
+    skipDuplicates?: boolean
+  }
+
   export type symbol_holdingsCreateWithoutStock_fullsInput = {
     remarks?: string | null
     quantity?: number | null
@@ -60472,6 +64343,22 @@ export namespace Prisma {
     instrument_type?: StringFieldUpdateOperationsInput | string
   }
 
+  export type stock_transfer_recordsUpsertWithWhereUniqueWithoutStock_fullsInput = {
+    where: stock_transfer_recordsWhereUniqueInput
+    update: XOR<stock_transfer_recordsUpdateWithoutStock_fullsInput, stock_transfer_recordsUncheckedUpdateWithoutStock_fullsInput>
+    create: XOR<stock_transfer_recordsCreateWithoutStock_fullsInput, stock_transfer_recordsUncheckedCreateWithoutStock_fullsInput>
+  }
+
+  export type stock_transfer_recordsUpdateWithWhereUniqueWithoutStock_fullsInput = {
+    where: stock_transfer_recordsWhereUniqueInput
+    data: XOR<stock_transfer_recordsUpdateWithoutStock_fullsInput, stock_transfer_recordsUncheckedUpdateWithoutStock_fullsInput>
+  }
+
+  export type stock_transfer_recordsUpdateManyWithWhereWithoutStock_fullsInput = {
+    where: stock_transfer_recordsScalarWhereInput
+    data: XOR<stock_transfer_recordsUpdateManyMutationInput, stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsInput>
+  }
+
   export type symbol_holdingsUpsertWithWhereUniqueWithoutStock_fullsInput = {
     where: symbol_holdingsWhereUniqueInput
     update: XOR<symbol_holdingsUpdateWithoutStock_fullsInput, symbol_holdingsUncheckedUpdateWithoutStock_fullsInput>
@@ -60506,6 +64393,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutBonus_recordsInput = {
@@ -60526,6 +64414,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutBonus_recordsInput = {
@@ -60553,6 +64442,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -60577,6 +64467,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -60602,6 +64493,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -60624,6 +64516,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -60653,6 +64546,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -60676,6 +64570,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -60713,6 +64608,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutBonus_recordsInput = {
@@ -60733,6 +64629,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutBonus_recordsInput = {
@@ -60766,6 +64663,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -60790,6 +64688,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -60821,6 +64720,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -60843,6 +64743,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -60878,6 +64779,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -60901,6 +64803,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -60922,6 +64825,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutCash_recordsInput = {
@@ -60942,6 +64846,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutCash_recordsInput = {
@@ -60969,6 +64874,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -60993,6 +64899,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -61018,6 +64925,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -61040,6 +64948,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -61069,6 +64978,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -61092,6 +65002,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -61129,6 +65040,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutCash_recordsInput = {
@@ -61149,6 +65061,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutCash_recordsInput = {
@@ -61182,6 +65095,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -61206,6 +65120,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -61237,6 +65152,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -61259,6 +65175,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -61294,6 +65211,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -61317,6 +65235,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -61338,6 +65257,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutPromoter_recordsInput = {
@@ -61358,6 +65278,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutPromoter_recordsInput = {
@@ -61385,6 +65306,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -61409,6 +65331,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -61434,6 +65357,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -61456,6 +65380,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -61515,6 +65440,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -61538,6 +65464,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -61575,6 +65502,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutPromoter_recordsInput = {
@@ -61595,6 +65523,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutPromoter_recordsInput = {
@@ -61628,6 +65557,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -61652,6 +65582,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -61683,6 +65614,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -61705,6 +65637,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -61776,6 +65709,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -61799,6 +65733,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -61820,6 +65755,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutRight_recordsInput = {
@@ -61840,6 +65776,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutRight_recordsInput = {
@@ -61867,6 +65804,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -61891,6 +65829,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -61916,6 +65855,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -61938,6 +65878,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -61967,6 +65908,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -61990,6 +65932,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -62027,6 +65970,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutRight_recordsInput = {
@@ -62047,6 +65991,7 @@ export namespace Prisma {
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutRight_recordsInput = {
@@ -62080,6 +66025,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -62104,6 +66050,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -62135,6 +66082,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -62157,6 +66105,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -62192,6 +66141,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -62215,6 +66165,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -62238,6 +66189,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -62261,6 +66213,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -62319,6 +66272,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutClient_boid_mapping_client_broker_mapping_boidToclient_boid_mappingInput = {
@@ -62339,6 +66293,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutClient_boid_mapping_client_broker_mapping_boidToclient_boid_mappingInput = {
@@ -62447,6 +66402,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutCloseout_recordsInput = {
@@ -62467,6 +66423,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutCloseout_recordsInput = {
@@ -62494,6 +66451,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -62518,6 +66476,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -62543,6 +66502,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -62565,6 +66525,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -62594,6 +66555,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -62617,6 +66579,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -62654,6 +66617,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutCloseout_recordsInput = {
@@ -62674,6 +66638,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutCloseout_recordsInput = {
@@ -62707,6 +66672,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -62731,6 +66697,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -62762,6 +66729,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -62784,6 +66752,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -62819,6 +66788,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -62842,6 +66812,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -62863,6 +66834,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingUncheckedCreateWithoutIpo_allotment_recordsInput = {
@@ -62883,6 +66855,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
   }
 
   export type client_broker_mappingCreateOrConnectWithoutIpo_allotment_recordsInput = {
@@ -62910,6 +66883,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -62934,6 +66908,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -62959,6 +66934,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -62981,6 +66957,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -63040,6 +67017,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -63063,6 +67041,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -63100,6 +67079,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutIpo_allotment_recordsInput = {
@@ -63120,6 +67100,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type fiscal_yearsUpsertWithoutIpo_allotment_recordsInput = {
@@ -63153,6 +67134,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -63177,6 +67159,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -63208,6 +67191,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -63230,6 +67214,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -63301,6 +67286,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -63324,6 +67310,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -63347,6 +67334,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -63371,6 +67359,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -63410,6 +67399,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -63434,6 +67424,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -63458,6 +67449,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
   }
 
   export type fiscal_yearsUncheckedCreateWithoutSymbol_holdingsInput = {
@@ -63482,6 +67474,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
   export type fiscal_yearsCreateOrConnectWithoutSymbol_holdingsInput = {
@@ -63507,6 +67500,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
   }
 
@@ -63529,6 +67523,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
   }
 
@@ -63588,6 +67583,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
   }
 
   export type stock_fullsUncheckedCreateWithoutSymbol_holdingsInput = {
@@ -63611,6 +67607,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
   export type stock_fullsCreateOrConnectWithoutSymbol_holdingsInput = {
@@ -63650,6 +67647,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
   export type fiscal_yearsUncheckedUpdateWithoutSymbol_holdingsInput = {
@@ -63674,6 +67672,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
   export type fundsUpsertWithoutSymbol_holdingsInput = {
@@ -63705,6 +67704,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
   }
 
@@ -63727,6 +67727,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
   }
 
@@ -63798,6 +67799,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
   }
 
   export type stock_fullsUncheckedUpdateWithoutSymbol_holdingsInput = {
@@ -63821,6 +67823,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
   export type bonus_records_stagingCreateWithoutSub_classesInput = {
@@ -64064,6 +68067,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
 
@@ -64086,6 +68090,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
 
@@ -64251,6 +68256,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
 
@@ -64273,6 +68279,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
 
@@ -64312,6 +68319,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -64336,6 +68344,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -64361,6 +68370,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -64383,6 +68393,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -64442,6 +68453,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -64465,6 +68477,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -64504,6 +68517,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -64528,6 +68542,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -64559,6 +68574,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -64581,6 +68597,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -64652,6 +68669,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -64675,6 +68693,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -64698,6 +68717,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -64722,6 +68742,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -64747,6 +68768,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -64769,6 +68791,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -64828,6 +68851,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -64851,6 +68875,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -64890,6 +68915,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -64914,6 +68940,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -64945,6 +68972,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -64967,6 +68995,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -65038,6 +69067,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -65061,6 +69091,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -65084,6 +69115,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -65108,6 +69140,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
   }
 
@@ -65133,6 +69166,7 @@ export namespace Prisma {
     right_records?: right_recordsCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
   }
@@ -65155,6 +69189,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutFundsInput
     sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
   }
@@ -65214,6 +69249,7 @@ export namespace Prisma {
     sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
     sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -65237,6 +69273,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
     symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
   }
 
@@ -65276,6 +69313,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -65300,6 +69338,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
   }
 
@@ -65331,6 +69370,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
   }
@@ -65353,6 +69393,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutFundsNestedInput
     sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
   }
@@ -65424,6 +69465,7 @@ export namespace Prisma {
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -65445,6 +69487,552 @@ export namespace Prisma {
     order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
     promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
+  }
+
+  export type client_broker_mappingCreateWithoutStock_transfer_detailsInput = {
+    client_id: string
+    client_name: string
+    client_broker: number
+    recorded_at?: Date | string | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutClient_broker_mappingInput
+    buy_records?: buy_recordsCreateNestedManyWithoutClient_broker_mappingInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+    cash_records?: cash_recordsCreateNestedManyWithoutClient_broker_mappingInput
+    client_boid_mapping_client_broker_mapping_boidToclient_boid_mapping?: client_boid_mappingCreateNestedOneWithoutClient_broker_mapping_client_broker_mapping_boidToclient_boid_mappingInput
+    funds: fundsCreateNestedOneWithoutClient_broker_mappingInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutClient_broker_mappingInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutClient_broker_mappingInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutClient_broker_mappingInput
+    order_book?: order_bookCreateNestedManyWithoutClient_broker_mappingInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutClient_broker_mappingInput
+    right_records?: right_recordsCreateNestedManyWithoutClient_broker_mappingInput
+    sell_records?: sell_recordsCreateNestedManyWithoutClient_broker_mappingInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutClient_broker_mappingInput
+  }
+
+  export type client_broker_mappingUncheckedCreateWithoutStock_transfer_detailsInput = {
+    client_id: string
+    fund_id: number
+    client_name: string
+    client_broker: number
+    recorded_at?: Date | string | null
+    boid?: string | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    order_book?: order_bookUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutClient_broker_mappingInput
+  }
+
+  export type client_broker_mappingCreateOrConnectWithoutStock_transfer_detailsInput = {
+    where: client_broker_mappingWhereUniqueInput
+    create: XOR<client_broker_mappingCreateWithoutStock_transfer_detailsInput, client_broker_mappingUncheckedCreateWithoutStock_transfer_detailsInput>
+  }
+
+  export type stock_transfer_recordsCreateWithoutStock_transfer_detailsInput = {
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+    fiscal_years: fiscal_yearsCreateNestedOneWithoutStock_transfer_recordsInput
+    funds: fundsCreateNestedOneWithoutStock_transfer_recordsInput
+    stock_fulls: stock_fullsCreateNestedOneWithoutStock_transfer_recordsInput
+  }
+
+  export type stock_transfer_recordsUncheckedCreateWithoutStock_transfer_detailsInput = {
+    transfer_id?: number
+    fund_id: number
+    fiscal_year_id: number
+    symbol: string
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
+  }
+
+  export type stock_transfer_recordsCreateOrConnectWithoutStock_transfer_detailsInput = {
+    where: stock_transfer_recordsWhereUniqueInput
+    create: XOR<stock_transfer_recordsCreateWithoutStock_transfer_detailsInput, stock_transfer_recordsUncheckedCreateWithoutStock_transfer_detailsInput>
+  }
+
+  export type client_broker_mappingUpsertWithoutStock_transfer_detailsInput = {
+    update: XOR<client_broker_mappingUpdateWithoutStock_transfer_detailsInput, client_broker_mappingUncheckedUpdateWithoutStock_transfer_detailsInput>
+    create: XOR<client_broker_mappingCreateWithoutStock_transfer_detailsInput, client_broker_mappingUncheckedCreateWithoutStock_transfer_detailsInput>
+    where?: client_broker_mappingWhereInput
+  }
+
+  export type client_broker_mappingUpdateToOneWithWhereWithoutStock_transfer_detailsInput = {
+    where?: client_broker_mappingWhereInput
+    data: XOR<client_broker_mappingUpdateWithoutStock_transfer_detailsInput, client_broker_mappingUncheckedUpdateWithoutStock_transfer_detailsInput>
+  }
+
+  export type client_broker_mappingUpdateWithoutStock_transfer_detailsInput = {
+    client_id?: StringFieldUpdateOperationsInput | string
+    client_name?: StringFieldUpdateOperationsInput | string
+    client_broker?: IntFieldUpdateOperationsInput | number
+    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records?: bonus_recordsUpdateManyWithoutClient_broker_mappingNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutClient_broker_mappingNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutClient_broker_mappingNestedInput
+    client_boid_mapping_client_broker_mapping_boidToclient_boid_mapping?: client_boid_mappingUpdateOneWithoutClient_broker_mapping_client_broker_mapping_boidToclient_boid_mappingNestedInput
+    funds?: fundsUpdateOneRequiredWithoutClient_broker_mappingNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutClient_broker_mappingNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutClient_broker_mappingNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutClient_broker_mappingNestedInput
+    order_book?: order_bookUpdateManyWithoutClient_broker_mappingNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutClient_broker_mappingNestedInput
+    right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+  }
+
+  export type client_broker_mappingUncheckedUpdateWithoutStock_transfer_detailsInput = {
+    client_id?: StringFieldUpdateOperationsInput | string
+    fund_id?: IntFieldUpdateOperationsInput | number
+    client_name?: StringFieldUpdateOperationsInput | string
+    client_broker?: IntFieldUpdateOperationsInput | number
+    recorded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    boid?: NullableStringFieldUpdateOperationsInput | string | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    order_book?: order_bookUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+  }
+
+  export type stock_transfer_recordsUpsertWithoutStock_transfer_detailsInput = {
+    update: XOR<stock_transfer_recordsUpdateWithoutStock_transfer_detailsInput, stock_transfer_recordsUncheckedUpdateWithoutStock_transfer_detailsInput>
+    create: XOR<stock_transfer_recordsCreateWithoutStock_transfer_detailsInput, stock_transfer_recordsUncheckedCreateWithoutStock_transfer_detailsInput>
+    where?: stock_transfer_recordsWhereInput
+  }
+
+  export type stock_transfer_recordsUpdateToOneWithWhereWithoutStock_transfer_detailsInput = {
+    where?: stock_transfer_recordsWhereInput
+    data: XOR<stock_transfer_recordsUpdateWithoutStock_transfer_detailsInput, stock_transfer_recordsUncheckedUpdateWithoutStock_transfer_detailsInput>
+  }
+
+  export type stock_transfer_recordsUpdateWithoutStock_transfer_detailsInput = {
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+    funds?: fundsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+  }
+
+  export type stock_transfer_recordsUncheckedUpdateWithoutStock_transfer_detailsInput = {
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type stock_transfer_detailsCreateWithoutStock_transfer_recordsInput = {
+    transfer_type: string
+    quantity: number
+    from_opening_qty?: number | null
+    from_added_qty?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    created_at?: Date | string | null
+    client_broker_mapping: client_broker_mappingCreateNestedOneWithoutStock_transfer_detailsInput
+  }
+
+  export type stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput = {
+    detail_id?: number
+    client_id: string
+    transfer_type: string
+    quantity: number
+    from_opening_qty?: number | null
+    from_added_qty?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    created_at?: Date | string | null
+  }
+
+  export type stock_transfer_detailsCreateOrConnectWithoutStock_transfer_recordsInput = {
+    where: stock_transfer_detailsWhereUniqueInput
+    create: XOR<stock_transfer_detailsCreateWithoutStock_transfer_recordsInput, stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput>
+  }
+
+  export type stock_transfer_detailsCreateManyStock_transfer_recordsInputEnvelope = {
+    data: stock_transfer_detailsCreateManyStock_transfer_recordsInput | stock_transfer_detailsCreateManyStock_transfer_recordsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type fiscal_yearsCreateWithoutStock_transfer_recordsInput = {
+    year_label: string
+    start_date: Date | string
+    end_date: Date | string
+    initial_balance_synced?: boolean | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutFiscal_yearsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutFiscal_yearsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFiscal_yearsInput
+    market_snapshots?: market_snapshotsCreateNestedManyWithoutFiscal_yearsInput
+    order_book?: order_bookCreateNestedManyWithoutFiscal_yearsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records?: right_recordsCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutFiscal_yearsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFiscal_yearsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFiscal_yearsInput
+  }
+
+  export type fiscal_yearsUncheckedCreateWithoutStock_transfer_recordsInput = {
+    fiscal_year_id?: number
+    year_label: string
+    start_date: Date | string
+    end_date: Date | string
+    initial_balance_synced?: boolean | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    market_snapshots?: market_snapshotsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    order_book?: order_bookUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFiscal_yearsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFiscal_yearsInput
+  }
+
+  export type fiscal_yearsCreateOrConnectWithoutStock_transfer_recordsInput = {
+    where: fiscal_yearsWhereUniqueInput
+    create: XOR<fiscal_yearsCreateWithoutStock_transfer_recordsInput, fiscal_yearsUncheckedCreateWithoutStock_transfer_recordsInput>
+  }
+
+  export type fundsCreateWithoutStock_transfer_recordsInput = {
+    fund_name: string
+    uploaded_at?: Date | string | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutFundsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutFundsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutFundsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutFundsInput
+    client_broker_mapping?: client_broker_mappingCreateNestedManyWithoutFundsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutFundsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutFundsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutFundsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutFundsInput
+    right_records?: right_recordsCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutFundsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutFundsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutFundsInput
+    sub_classes?: sub_classesCreateNestedManyWithoutFundsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutFundsInput
+  }
+
+  export type fundsUncheckedCreateWithoutStock_transfer_recordsInput = {
+    fund_id?: number
+    fund_name: string
+    uploaded_at?: Date | string | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutFundsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutFundsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutFundsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    client_broker_mapping?: client_broker_mappingUncheckedCreateNestedManyWithoutFundsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutFundsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutFundsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutFundsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutFundsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutFundsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutFundsInput
+    sub_classes?: sub_classesUncheckedCreateNestedManyWithoutFundsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutFundsInput
+  }
+
+  export type fundsCreateOrConnectWithoutStock_transfer_recordsInput = {
+    where: fundsWhereUniqueInput
+    create: XOR<fundsCreateWithoutStock_transfer_recordsInput, fundsUncheckedCreateWithoutStock_transfer_recordsInput>
+  }
+
+  export type stock_fullsCreateWithoutStock_transfer_recordsInput = {
+    symbol: string
+    full_form: string
+    is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
+    bonus_records?: bonus_recordsCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingCreateNestedManyWithoutStock_fullsInput
+    buy_records?: buy_recordsCreateNestedManyWithoutStock_fullsInput
+    buy_records_staging?: buy_records_stagingCreateNestedManyWithoutStock_fullsInput
+    cash_records?: cash_recordsCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingCreateNestedManyWithoutStock_fullsInput
+    closeout_records?: closeout_recordsCreateNestedManyWithoutStock_fullsInput
+    fiscal_year_balance?: fiscal_year_balanceCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_records?: ipo_allotment_recordsCreateNestedManyWithoutStock_fullsInput
+    order_book?: order_bookCreateNestedManyWithoutStock_fullsInput
+    promoter_records?: promoter_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records?: right_recordsCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingCreateNestedManyWithoutStock_fullsInput
+    sell_records?: sell_recordsCreateNestedManyWithoutStock_fullsInput
+    sell_records_staging?: sell_records_stagingCreateNestedManyWithoutStock_fullsInput
+    sectors: sectorsCreateNestedOneWithoutStock_fullsInput
+    symbol_holdings?: symbol_holdingsCreateNestedManyWithoutStock_fullsInput
+  }
+
+  export type stock_fullsUncheckedCreateWithoutStock_transfer_recordsInput = {
+    symbol: string
+    full_form: string
+    sector_id: number
+    is_auto_generated?: boolean | null
+    promoter_sector_id?: number | null
+    bonus_records?: bonus_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    bonus_records_staging?: bonus_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    buy_records?: buy_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    buy_records_staging?: buy_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records?: cash_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    cash_records_staging?: cash_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    closeout_records?: closeout_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedCreateNestedManyWithoutStock_fullsInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    order_book?: order_bookUncheckedCreateNestedManyWithoutStock_fullsInput
+    promoter_records?: promoter_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records?: right_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    right_records_staging?: right_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    sell_records?: sell_recordsUncheckedCreateNestedManyWithoutStock_fullsInput
+    sell_records_staging?: sell_records_stagingUncheckedCreateNestedManyWithoutStock_fullsInput
+    symbol_holdings?: symbol_holdingsUncheckedCreateNestedManyWithoutStock_fullsInput
+  }
+
+  export type stock_fullsCreateOrConnectWithoutStock_transfer_recordsInput = {
+    where: stock_fullsWhereUniqueInput
+    create: XOR<stock_fullsCreateWithoutStock_transfer_recordsInput, stock_fullsUncheckedCreateWithoutStock_transfer_recordsInput>
+  }
+
+  export type stock_transfer_detailsUpsertWithWhereUniqueWithoutStock_transfer_recordsInput = {
+    where: stock_transfer_detailsWhereUniqueInput
+    update: XOR<stock_transfer_detailsUpdateWithoutStock_transfer_recordsInput, stock_transfer_detailsUncheckedUpdateWithoutStock_transfer_recordsInput>
+    create: XOR<stock_transfer_detailsCreateWithoutStock_transfer_recordsInput, stock_transfer_detailsUncheckedCreateWithoutStock_transfer_recordsInput>
+  }
+
+  export type stock_transfer_detailsUpdateWithWhereUniqueWithoutStock_transfer_recordsInput = {
+    where: stock_transfer_detailsWhereUniqueInput
+    data: XOR<stock_transfer_detailsUpdateWithoutStock_transfer_recordsInput, stock_transfer_detailsUncheckedUpdateWithoutStock_transfer_recordsInput>
+  }
+
+  export type stock_transfer_detailsUpdateManyWithWhereWithoutStock_transfer_recordsInput = {
+    where: stock_transfer_detailsScalarWhereInput
+    data: XOR<stock_transfer_detailsUpdateManyMutationInput, stock_transfer_detailsUncheckedUpdateManyWithoutStock_transfer_recordsInput>
+  }
+
+  export type fiscal_yearsUpsertWithoutStock_transfer_recordsInput = {
+    update: XOR<fiscal_yearsUpdateWithoutStock_transfer_recordsInput, fiscal_yearsUncheckedUpdateWithoutStock_transfer_recordsInput>
+    create: XOR<fiscal_yearsCreateWithoutStock_transfer_recordsInput, fiscal_yearsUncheckedCreateWithoutStock_transfer_recordsInput>
+    where?: fiscal_yearsWhereInput
+  }
+
+  export type fiscal_yearsUpdateToOneWithWhereWithoutStock_transfer_recordsInput = {
+    where?: fiscal_yearsWhereInput
+    data: XOR<fiscal_yearsUpdateWithoutStock_transfer_recordsInput, fiscal_yearsUncheckedUpdateWithoutStock_transfer_recordsInput>
+  }
+
+  export type fiscal_yearsUpdateWithoutStock_transfer_recordsInput = {
+    year_label?: StringFieldUpdateOperationsInput | string
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bonus_records?: bonus_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    market_snapshots?: market_snapshotsUpdateManyWithoutFiscal_yearsNestedInput
+    order_book?: order_bookUpdateManyWithoutFiscal_yearsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records?: right_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutFiscal_yearsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutFiscal_yearsNestedInput
+  }
+
+  export type fiscal_yearsUncheckedUpdateWithoutStock_transfer_recordsInput = {
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    year_label?: StringFieldUpdateOperationsInput | string
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initial_balance_synced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    market_snapshots?: market_snapshotsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    order_book?: order_bookUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFiscal_yearsNestedInput
+  }
+
+  export type fundsUpsertWithoutStock_transfer_recordsInput = {
+    update: XOR<fundsUpdateWithoutStock_transfer_recordsInput, fundsUncheckedUpdateWithoutStock_transfer_recordsInput>
+    create: XOR<fundsCreateWithoutStock_transfer_recordsInput, fundsUncheckedCreateWithoutStock_transfer_recordsInput>
+    where?: fundsWhereInput
+  }
+
+  export type fundsUpdateToOneWithWhereWithoutStock_transfer_recordsInput = {
+    where?: fundsWhereInput
+    data: XOR<fundsUpdateWithoutStock_transfer_recordsInput, fundsUncheckedUpdateWithoutStock_transfer_recordsInput>
+  }
+
+  export type fundsUpdateWithoutStock_transfer_recordsInput = {
+    fund_name?: StringFieldUpdateOperationsInput | string
+    uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records?: bonus_recordsUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutFundsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutFundsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutFundsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutFundsNestedInput
+    client_broker_mapping?: client_broker_mappingUpdateManyWithoutFundsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutFundsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutFundsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutFundsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutFundsNestedInput
+    right_records?: right_recordsUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutFundsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutFundsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutFundsNestedInput
+    sub_classes?: sub_classesUpdateManyWithoutFundsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutFundsNestedInput
+  }
+
+  export type fundsUncheckedUpdateWithoutStock_transfer_recordsInput = {
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fund_name?: StringFieldUpdateOperationsInput | string
+    uploaded_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    client_broker_mapping?: client_broker_mappingUncheckedUpdateManyWithoutFundsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutFundsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    sell_records?: sell_recordsUncheckedUpdateManyWithoutFundsNestedInput
+    sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutFundsNestedInput
+    sub_classes?: sub_classesUncheckedUpdateManyWithoutFundsNestedInput
+    symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutFundsNestedInput
+  }
+
+  export type stock_fullsUpsertWithoutStock_transfer_recordsInput = {
+    update: XOR<stock_fullsUpdateWithoutStock_transfer_recordsInput, stock_fullsUncheckedUpdateWithoutStock_transfer_recordsInput>
+    create: XOR<stock_fullsCreateWithoutStock_transfer_recordsInput, stock_fullsUncheckedCreateWithoutStock_transfer_recordsInput>
+    where?: stock_fullsWhereInput
+  }
+
+  export type stock_fullsUpdateToOneWithWhereWithoutStock_transfer_recordsInput = {
+    where?: stock_fullsWhereInput
+    data: XOR<stock_fullsUpdateWithoutStock_transfer_recordsInput, stock_fullsUncheckedUpdateWithoutStock_transfer_recordsInput>
+  }
+
+  export type stock_fullsUpdateWithoutStock_transfer_recordsInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    full_form?: StringFieldUpdateOperationsInput | string
+    is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus_records?: bonus_recordsUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    buy_records?: buy_recordsUpdateManyWithoutStock_fullsNestedInput
+    buy_records_staging?: buy_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    cash_records?: cash_recordsUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    closeout_records?: closeout_recordsUpdateManyWithoutStock_fullsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUpdateManyWithoutStock_fullsNestedInput
+    order_book?: order_bookUpdateManyWithoutStock_fullsNestedInput
+    promoter_records?: promoter_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records?: right_recordsUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
+    sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    sectors?: sectorsUpdateOneRequiredWithoutStock_fullsNestedInput
+    symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
+  }
+
+  export type stock_fullsUncheckedUpdateWithoutStock_transfer_recordsInput = {
+    symbol?: StringFieldUpdateOperationsInput | string
+    full_form?: StringFieldUpdateOperationsInput | string
+    sector_id?: IntFieldUpdateOperationsInput | number
+    is_auto_generated?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    promoter_sector_id?: NullableIntFieldUpdateOperationsInput | number | null
+    bonus_records?: bonus_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    bonus_records_staging?: bonus_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    buy_records?: buy_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    buy_records_staging?: buy_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records?: cash_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    cash_records_staging?: cash_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    closeout_records?: closeout_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    fiscal_year_balance?: fiscal_year_balanceUncheckedUpdateManyWithoutStock_fullsNestedInput
+    ipo_allotment_records?: ipo_allotment_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    order_book?: order_bookUncheckedUpdateManyWithoutStock_fullsNestedInput
+    promoter_records?: promoter_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records?: right_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
+    right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
@@ -65636,6 +70224,17 @@ export namespace Prisma {
     contract_number: string
     fiscal_year_id?: number | null
     commission_pending?: boolean | null
+  }
+
+  export type stock_transfer_detailsCreateManyClient_broker_mappingInput = {
+    detail_id?: number
+    transfer_id: number
+    transfer_type: string
+    quantity: number
+    from_opening_qty?: number | null
+    from_added_qty?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    created_at?: Date | string | null
   }
 
   export type bonus_recordsUpdateWithoutClient_broker_mappingInput = {
@@ -66194,6 +70793,38 @@ export namespace Prisma {
     contract_number?: StringFieldUpdateOperationsInput | string
     fiscal_year_id?: NullableIntFieldUpdateOperationsInput | number | null
     commission_pending?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type stock_transfer_detailsUpdateWithoutClient_broker_mappingInput = {
+    transfer_type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    from_opening_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    from_added_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stock_transfer_records?: stock_transfer_recordsUpdateOneRequiredWithoutStock_transfer_detailsNestedInput
+  }
+
+  export type stock_transfer_detailsUncheckedUpdateWithoutClient_broker_mappingInput = {
+    detail_id?: IntFieldUpdateOperationsInput | number
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    transfer_type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    from_opening_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    from_added_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingInput = {
+    detail_id?: IntFieldUpdateOperationsInput | number
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    transfer_type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    from_opening_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    from_added_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type buy_recordsCreateManyUploadsInput = {
@@ -66837,6 +71468,18 @@ export namespace Prisma {
     recorded_at?: Date | string | null
     contract_number: string
     commission_pending?: boolean | null
+  }
+
+  export type stock_transfer_recordsCreateManyFiscal_yearsInput = {
+    transfer_id?: number
+    fund_id: number
+    symbol: string
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
   }
 
   export type symbol_holdingsCreateManyFiscal_yearsInput = {
@@ -67548,6 +72191,43 @@ export namespace Prisma {
     commission_pending?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
+  export type stock_transfer_recordsUpdateWithoutFiscal_yearsInput = {
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutStock_transfer_recordsNestedInput
+    funds?: fundsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+  }
+
+  export type stock_transfer_recordsUncheckedUpdateWithoutFiscal_yearsInput = {
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutStock_transfer_recordsNestedInput
+  }
+
+  export type stock_transfer_recordsUncheckedUpdateManyWithoutFiscal_yearsInput = {
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type symbol_holdingsUpdateWithoutFiscal_yearsInput = {
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
@@ -67802,6 +72482,18 @@ export namespace Prisma {
     contract_number: string
     fiscal_year_id?: number | null
     commission_pending?: boolean | null
+  }
+
+  export type stock_transfer_recordsCreateManyFundsInput = {
+    transfer_id?: number
+    fiscal_year_id: number
+    symbol: string
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
   }
 
   export type sub_classesCreateManyFundsInput = {
@@ -68093,6 +72785,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutFundsInput = {
@@ -68113,6 +72806,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateManyWithoutFundsInput = {
@@ -68505,6 +73199,43 @@ export namespace Prisma {
     commission_pending?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
+  export type stock_transfer_recordsUpdateWithoutFundsInput = {
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutStock_transfer_recordsNestedInput
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+    stock_fulls?: stock_fullsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+  }
+
+  export type stock_transfer_recordsUncheckedUpdateWithoutFundsInput = {
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutStock_transfer_recordsNestedInput
+  }
+
+  export type stock_transfer_recordsUncheckedUpdateManyWithoutFundsInput = {
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    symbol?: StringFieldUpdateOperationsInput | string
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type sub_classesUpdateWithoutFundsInput = {
     sub_name?: StringFieldUpdateOperationsInput | string
     added_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -68795,6 +73526,18 @@ export namespace Prisma {
     contract_number: string
     fiscal_year_id?: number | null
     commission_pending?: boolean | null
+  }
+
+  export type stock_transfer_recordsCreateManyStock_fullsInput = {
+    transfer_id?: number
+    fund_id: number
+    fiscal_year_id: number
+    transfer_date?: Date | string
+    initiated_by?: string | null
+    remarks?: string | null
+    total_quantity: number
+    status?: string | null
+    created_at?: Date | string | null
   }
 
   export type symbol_holdingsCreateManyStock_fullsInput = {
@@ -69483,6 +74226,43 @@ export namespace Prisma {
     commission_pending?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
+  export type stock_transfer_recordsUpdateWithoutStock_fullsInput = {
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutStock_transfer_recordsNestedInput
+    fiscal_years?: fiscal_yearsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+    funds?: fundsUpdateOneRequiredWithoutStock_transfer_recordsNestedInput
+  }
+
+  export type stock_transfer_recordsUncheckedUpdateWithoutStock_fullsInput = {
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutStock_transfer_recordsNestedInput
+  }
+
+  export type stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsInput = {
+    transfer_id?: IntFieldUpdateOperationsInput | number
+    fund_id?: IntFieldUpdateOperationsInput | number
+    fiscal_year_id?: IntFieldUpdateOperationsInput | number
+    transfer_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    initiated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type symbol_holdingsUpdateWithoutStock_fullsInput = {
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
@@ -69543,6 +74323,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -69566,6 +74347,7 @@ export namespace Prisma {
     right_records_staging?: right_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutStock_fullsNestedInput
+    stock_transfer_records?: stock_transfer_recordsUncheckedUpdateManyWithoutStock_fullsNestedInput
     symbol_holdings?: symbol_holdingsUncheckedUpdateManyWithoutStock_fullsNestedInput
   }
 
@@ -69602,6 +74384,7 @@ export namespace Prisma {
     right_records?: right_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateWithoutClient_boid_mapping_client_broker_mapping_boidToclient_boid_mappingInput = {
@@ -69622,6 +74405,7 @@ export namespace Prisma {
     right_records?: right_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records?: sell_recordsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
     sell_records_staging?: sell_records_stagingUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
+    stock_transfer_details?: stock_transfer_detailsUncheckedUpdateManyWithoutClient_broker_mappingNestedInput
   }
 
   export type client_broker_mappingUncheckedUpdateManyWithoutClient_boid_mapping_client_broker_mapping_boidToclient_boid_mappingInput = {
@@ -70005,6 +74789,49 @@ export namespace Prisma {
     source_type?: NullableStringFieldUpdateOperationsInput | string | null
     total_with_commission?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     wacc_tax_base?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type stock_transfer_detailsCreateManyStock_transfer_recordsInput = {
+    detail_id?: number
+    client_id: string
+    transfer_type: string
+    quantity: number
+    from_opening_qty?: number | null
+    from_added_qty?: number | null
+    effective_rate?: Decimal | DecimalJsLike | number | string | null
+    created_at?: Date | string | null
+  }
+
+  export type stock_transfer_detailsUpdateWithoutStock_transfer_recordsInput = {
+    transfer_type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    from_opening_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    from_added_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    client_broker_mapping?: client_broker_mappingUpdateOneRequiredWithoutStock_transfer_detailsNestedInput
+  }
+
+  export type stock_transfer_detailsUncheckedUpdateWithoutStock_transfer_recordsInput = {
+    detail_id?: IntFieldUpdateOperationsInput | number
+    client_id?: StringFieldUpdateOperationsInput | string
+    transfer_type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    from_opening_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    from_added_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type stock_transfer_detailsUncheckedUpdateManyWithoutStock_transfer_recordsInput = {
+    detail_id?: IntFieldUpdateOperationsInput | number
+    client_id?: StringFieldUpdateOperationsInput | string
+    transfer_type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    from_opening_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    from_added_qty?: NullableIntFieldUpdateOperationsInput | number | null
+    effective_rate?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

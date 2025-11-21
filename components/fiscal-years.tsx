@@ -49,8 +49,12 @@ export default function FiscalYearComponent() {
         try {
           const userPermission = await getCurrentSessionUser()
           setIsAdmin(userPermission)
-            const response: getting_fiscal[] = await getFiscal()
-            setFiscal(response)
+            const response = await getFiscal()
+            if (response.success) {
+                setFiscal(response.data)
+            } else {
+                toast.error(response.error || 'Failed to load fiscal years')
+            }
         } catch (error) {
             console.error('Error fetching fiscal years:', error)
             toast.error('Failed to load fiscal years. Please try again.')
@@ -82,9 +86,13 @@ export default function FiscalYearComponent() {
                 return
             }
 
-            await uploadFiscal(given_year_label, startDate, endDate);
-            await fetchFiscal();
-            toast.success('Fiscal year added successfully!');
+            const result = await uploadFiscal(given_year_label, startDate, endDate);
+            if (result.success) {
+                await fetchFiscal();
+                toast.success(result.message || 'Fiscal year added successfully!');
+            } else {
+                toast.error(result.error || 'Failed to add fiscal year');
+            }
         } catch (error) {
             console.error('Error adding fiscal year:', error)
             toast.error('Failed to add fiscal year. Please try again.')

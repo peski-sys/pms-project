@@ -1,5 +1,7 @@
 "use server"
 
+import { prisma } from "@/lib/db";
+
 const microservice_url = process.env.MICROSERVICE_URL;
 
 export type ExportData = {
@@ -20,8 +22,12 @@ export type ExportData = {
 
 export async function universalExport(exportData: ExportData) {
   try {
-    console.log('Starting export for page:', exportData.pageType);
-    console.log('Data count:', exportData.data.length);
+    // Create audit log for export operation
+    await prisma.audit_log.create({
+      data: {
+        performed_action: `Export initiated for ${exportData.pageType}: ${exportData.data.length} records`
+      }
+    });
     
     if (!exportData.data || exportData.data.length === 0) {
       throw new Error('No data available to export');
@@ -37,8 +43,7 @@ export async function universalExport(exportData: ExportData) {
       totalRecords: exportData.data.length
     };
     
-    // Send to microservice
-    console.log('Sending data to microservice...');
+    // Send to microservice for processing
     const response = await fetch(`${microservice_url}/exportFile/`, {
       method: "POST",
       headers: { 
@@ -59,7 +64,10 @@ export async function universalExport(exportData: ExportData) {
       throw new Error('Received empty file from server');
     }
     
-    console.log('Received blob size:', blob.size);
+    // Validate received file size
+    if (blob.size === 0) {
+      throw new Error('Received empty file from server');
+    }
     
     // Convert blob to base64 for client-side download
     const buffer = await blob.arrayBuffer();

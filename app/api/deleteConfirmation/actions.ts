@@ -1,59 +1,66 @@
 "use server"
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { toast } from "sonner";
 
 
 export async function ConfirmDelete(uploaded_id: number, file_name: string) {
     try {
         // Validate inputs
         if (!uploaded_id || uploaded_id <= 0) {
-            throw new Error('Invalid upload ID provided');
+            throw new Error("Invalid upload ID provided");
         }
 
-        if (!file_name || file_name.trim() === '') {
-            throw new Error('File name not provided');
+        if (!file_name || file_name.trim() === "") {
+            throw new Error("File name not provided");
         }
 
-        // Check if the upload exists before deletion
+        // Check if the upload exists before attempting safe deletion
         const existingUpload = await prisma.uploads.findUnique({
             where: { upload_id: uploaded_id },
-            select: { upload_id: true, file_name: true, is_confirmed: true }
+            select: { upload_id: true, file_name: true, is_confirmed: true },
         });
 
         if (!existingUpload) {
             throw new Error(`Upload with ID ${uploaded_id} not found`);
         }
 
-        // Delete the upload (this will cascade delete related records)
-        await prisma.uploads.delete({
-            where: { upload_id: uploaded_id }
-        });
+        // Use database-level safe deletion to ensure holdings and sell records remain consistent
+        const rawResult = await prisma.$queryRaw<
+            Array<{ result: any }>
+        >`
+            SELECT safe_delete_upload(${uploaded_id}::INT) as result
+        `;
 
-        // Create audit log
+        const deleteResult = rawResult[0]?.result;
+
+        if (!deleteResult || deleteResult.success === false) {
+            const errMsg = deleteResult?.error || deleteResult?.message || "Safe deletion failed";
+            return {
+                success: false,
+                error: errMsg,
+            };
+        }
+
+        // Create audit log (safe_delete_upload already logs at DB level, this is an application-level log)
         await prisma.audit_log.create({
             data: {
-                performed_action: `Deleted File: ${file_name} (ID: ${uploaded_id}, Confirmed: ${existingUpload.is_confirmed})`
-            }
+                performed_action: `Deleted File via safe_delete_upload: ${file_name} (ID: ${uploaded_id}, Confirmed: ${existingUpload.is_confirmed})`,
+            },
         });
 
         // Revalidate the page
-        revalidatePath('/dashboard/order-books');
+        revalidatePath("/dashboard/order-books");
 
-        toast.success(`Successfully deleted upload: ${file_name}`);
         return {
             success: true,
-            message: 'Upload deleted successfully',
+            message: deleteResult.message || "Upload deleted successfully",
             deletedId: uploaded_id,
-            fileName: file_name
+            fileName: file_name,
         };
-
     } catch (error) {
-        console.log(`Error deleting upload ${uploaded_id}`);
-
         return {
             success: false,
-            error: error instanceof Error ? error.message : 'Failed to delete upload'
+            error: error instanceof Error ? error.message : "Failed to delete upload",
         };
     }
 }

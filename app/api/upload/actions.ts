@@ -664,7 +664,12 @@ export async function bulkUploadOrderBooks(files: File[]) {
         const excelFiles = files.filter(f => f.name.endsWith(".xlsx") || f.name.endsWith(".xls"));
         const pdfFiles = files.filter(f => f.name.endsWith(".pdf"));
         
-        console.log(`Processing ${excelFiles.length} Excel files first, then ${pdfFiles.length} PDF files`);
+        // Create audit log for bulk upload process
+        await prisma.audit_log.create({
+            data: {
+                performed_action: `Bulk upload initiated: ${excelFiles.length} Excel files, ${pdfFiles.length} PDF files`
+            }
+        });
         
         // STEP 1: Process ALL Excel files first (sorted by date)
         for(const forExcel of excelFiles) {
@@ -793,11 +798,21 @@ export async function bulkUploadOrderBooks(files: File[]) {
 
         // STEP 2: Process PDF files ONLY after ALL Excel files are complete
         // This ensures contract numbers from Excel are available for PDF processing
-        console.log(`Excel processing complete. Starting PDF processing for ${pdfFiles.length} files`);
+        // Create audit log for PDF processing phase
+        await prisma.audit_log.create({
+            data: {
+                performed_action: `Excel processing complete (${successCount} successful). Starting PDF processing for ${pdfFiles.length} files`
+            }
+        });
         
         if (pdfFiles.length > 0 && excelFiles.length > 0 && successCount === 0) {
             // If no Excel files succeeded, skip PDF processing
-            console.log('Skipping PDF processing - no Excel files were successfully processed');
+            // Log warning about skipped PDF processing
+            await prisma.audit_log.create({
+                data: {
+                    performed_action: 'WARNING: PDF processing skipped - no Excel files were successfully processed'
+                }
+            });
             pdfFiles.forEach(pdfFile => {
                 results.push({
                     file: pdfFile.name,
@@ -1036,6 +1051,20 @@ export async function confirmSubmission(given_upload_id: number) {
 
         if (uploadExists.is_confirmed) {
             return { success: true, message: 'Upload already confirmed', alreadyConfirmed: true };
+        }
+
+        // Validate quantities before confirmation
+        const { validateStagingQuantities } = await import('./validation');
+        const validationResult = await validateStagingQuantities(given_upload_id);
+        
+        if (!validationResult.success) {
+            return {
+                success: false,
+                error: 'Insufficient balance detected',
+                validationErrors: validationResult.errors,
+                uploadId: given_upload_id,
+                fileName: uploadExists.file_name
+            };
         }
 
         // Execute the staging records confirmation procedure

@@ -3,7 +3,6 @@
 import { prisma } from "@/lib/db";
 import { getBatchLTP, sanitizeNumeric } from "@/lib/apiUtils";
 import { getBatchLTPFromMarketSnapshots } from "@/lib/marketSnapshotAutoUpdate";
-import { toast } from "sonner";
 
 export type DematHoldingRow = {
   symbol: string;
@@ -51,7 +50,7 @@ async function getCurrentFiscalYearId(): Promise<number | null> {
     
     return fiscalYear?.fiscal_year_id || null;
   } catch (error) {
-    toast.error('Error getting current fiscal year');
+    console.error('Error getting current fiscal year:', error);
     return null;
   }
 }
@@ -75,7 +74,7 @@ export async function getFiscalYears() {
     
     return fiscalYears;
   } catch (error) {
-    toast.error('Error getting fiscal years');
+    console.error('Error getting fiscal years:', error);
     return [];
   }
 }

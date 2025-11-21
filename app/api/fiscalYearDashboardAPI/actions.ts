@@ -301,7 +301,6 @@ async function _getUnrealizedGainsFiscal(selectUser: string, fiscalYearId: numbe
         });
 
         if (!holdings || holdings.length === 0) {
-            console.log(`No fiscal year balance found for user: ${selectUser} in fiscal year: ${fiscalYearId}`);
             return {
                 total_unrealized_gain: 0,
                 total_market_value: 0,

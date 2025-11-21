@@ -1,8 +1,6 @@
 "use server"
 
 import { prisma } from "@/lib/db";
-import { toast } from "sonner";
-
 
 export async function getBrokerClientData() {
     try {
@@ -36,8 +34,8 @@ export async function getBrokerClientData() {
             dp_name: item.client_boid_mapping_client_broker_mapping_boidToclient_boid_mapping?.dp_name || null
         }));
     } catch (error) {
-        toast.error("Failed to fetch broker client data");
-        throw error;
+        console.error('Failed to fetch broker client data:', error);
+        return { success: false, error: 'Failed to fetch broker client data', data: [] };
     }
 }
 
@@ -80,8 +78,8 @@ export async function uploadNewClient(formData: FormData, selectValue: string) {
             performed_action: `Created new Client and DP: ${given_client_id}, ${given_client_name}, ${given_client_broker}`
         }
     } )
-    toast.success(`Client created successfully: ${given_client_name}`);
+    return { success: true, message: `Client created successfully: ${given_client_name}` };
     } else {
-        toast.error("Client already exists!");
+        return { success: false, error: "Client already exists!" };
     }
 }

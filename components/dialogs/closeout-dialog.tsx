@@ -55,7 +55,8 @@ export function CloseoutDialog({ onSuccess }: CloseoutDialogProps) {
   const [listClients, setListClients] = useState<cbMAP[]>()
 
   const fetchFunds = async () => {
-    const fetch_funds: response_funds[] = await getFunds();
+    const fundsResponse = await getFunds();
+    const fetch_funds: response_funds[] = fundsResponse.success ? fundsResponse.data : [];
     setListFunds(fetch_funds)
     // Set first fund as default
     if (fetch_funds.length > 0 && !currentFund) {
@@ -106,13 +107,18 @@ export function CloseoutDialog({ onSuccess }: CloseoutDialogProps) {
 
     try {
       setIsLoading(true);
-      await uploadCloseout(currentFund, currentClient, stock_symbol, stock_quantity, stock_amount, stock_added_at)
-      toast.success('Closeout shares added successfully!')
-      setIsOpen(false);
-      onSuccess?.();
-      // Reset form
-      setCurrentFund('');
-      setCurrentClient('');
+      const result = await uploadCloseout(currentFund, currentClient, stock_symbol, stock_quantity, stock_amount, stock_added_at)
+      
+      if (result.success) {
+        toast.success(result.message || 'Closeout shares added successfully!')
+        setIsOpen(false);
+        onSuccess?.();
+        // Reset form
+        setCurrentFund('');
+        setCurrentClient('');
+      } else {
+        toast.error(result.error || 'Failed to add closeout shares')
+      }
     } catch (error) {
       console.error('Error adding Closeout shares:', error)
       toast.error('Failed to add closeout shares. Please try again.')
@@ -129,7 +135,7 @@ export function CloseoutDialog({ onSuccess }: CloseoutDialogProps) {
           Add Closeout
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-red-700">
             <X className="w-5 h-5" />

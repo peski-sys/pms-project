@@ -239,24 +239,27 @@ export async function uploadCloseout(currentFund: string, currentClient: string,
         const stock_fiscal_id = get_fiscal[0].fiscal_year_id;
         const stock_fund_id = get_fund_id[0].fund_id;
 
-        // Create promoter record
-        await prisma.closeout_records.create({
-            data: {
-                fund_id: Number(stock_fund_id),
-                client_id: currentClient,
-                symbol: stock_symbol.toUpperCase(),
-                closeout_quantity: stock_quantity,
-                closeout_amount: stock_amount,
-                closeout_date: parsed_date,
-                fiscal_year_id: stock_fiscal_id
-            }
-        });
+        // Use transaction to ensure atomicity
+        await prisma.$transaction(async (tx) => {
+            // Create closeout record
+            await tx.closeout_records.create({
+                data: {
+                    fund_id: Number(stock_fund_id),
+                    client_id: currentClient,
+                    symbol: stock_symbol.toUpperCase(),
+                    closeout_quantity: stock_quantity,
+                    closeout_amount: stock_amount,
+                    closeout_date: parsed_date,
+                    fiscal_year_id: stock_fiscal_id
+                }
+            });
 
-        // Create audit log
-        await prisma.audit_log.create({
-            data: {
-                performed_action: `Added New Closeout Balance: ${stock_symbol} for ${currentClient} (${stock_quantity} shares for total amount of ${stock_amount})`
-            }
+            // Create audit log
+            await tx.audit_log.create({
+                data: {
+                    performed_action: `Added New Closeout Balance: ${stock_symbol} for ${currentClient} (${stock_quantity} shares for total amount of ${stock_amount})`
+                }
+            });
         });
 
         return {
@@ -522,52 +525,80 @@ export async function uploadBonusStaging(currentFund: string, stock_symbol: stri
 }
 
 export async function uploadRight(currentFund: string, currentClient: string, stock_symbol: string, first_right_ratio: number, second_right_ratio: number, calculatedRightShares: number, stock_book_close: string, stock_price_per_share: number) {
-    const parsed_date = new Date(stock_book_close)
+    try {
+        if (!currentFund || !currentClient || !stock_symbol || !stock_book_close) {
+            throw new Error('Missing required parameters for right record upload');
+        }
+
+        if (!first_right_ratio || !second_right_ratio || calculatedRightShares <= 0 || stock_price_per_share <= 0) {
+            throw new Error('Right ratios, calculated shares, and price must be greater than 0');
+        }
+
+        const parsed_date = new Date(stock_book_close);
+        if (isNaN(parsed_date.getTime())) {
+            throw new Error('Invalid book close date format');
+        }
 
         const get_fiscal = await prisma.fiscal_years.findMany({
-        where: {
-            start_date: {
-                lte: parsed_date
+            where: {
+                start_date: { lte: parsed_date },
+                end_date: { gte: parsed_date },
             },
-            end_date: {
-                gte: parsed_date
-            },
-        },
-        select: {
-            fiscal_year_id: true,
+            select: { fiscal_year_id: true }
+        });
+
+        if (!get_fiscal || get_fiscal.length === 0) {
+            throw new Error(`No fiscal year found for date: ${stock_book_close}`);
         }
-    })
 
-    const get_fund_id = await prisma.funds.findMany({
-        where: {
-            fund_name: currentFund
+        const get_fund_id = await prisma.funds.findMany({
+            where: { fund_name: currentFund }
+        });
+
+        if (!get_fund_id || get_fund_id.length === 0) {
+            throw new Error(`Fund not found: ${currentFund}`);
         }
-    })
 
-    const stock_fiscal_id = get_fiscal[0].fiscal_year_id
-    const stock_fund_id = get_fund_id[0].fund_id
+        const stock_fiscal_id = get_fiscal[0].fiscal_year_id;
+        const stock_fund_id = get_fund_id[0].fund_id;
 
-    try {
         await prisma.right_records.create({
             data: {
                 fund_id: stock_fund_id,
                 client_id: currentClient,
-                symbol: stock_symbol,
+                symbol: stock_symbol.toUpperCase(),
                 right_ratio: `${first_right_ratio}:${second_right_ratio}`,
                 bookclose_date: parsed_date,
                 quantity: calculatedRightShares,
                 effective_rate: stock_price_per_share,
                 fiscal_year_id: stock_fiscal_id
             }
-        })
+        });
 
         await prisma.audit_log.create({
             data: {
-                performed_action: `Uploaded Right Shares Record for ${stock_symbol} (${first_right_ratio}:${second_right_ratio})`
+                performed_action: `Uploaded Right Shares Record for ${stock_symbol} (${first_right_ratio}:${second_right_ratio}, ${calculatedRightShares} shares)`
             }
-        })
-    } catch(e) {
-        // Error handled silently
+        });
+
+        return {
+            success: true,
+            message: 'Right record uploaded successfully',
+            data: {
+                symbol: stock_symbol,
+                rightRatio: `${first_right_ratio}:${second_right_ratio}`,
+                rightShares: calculatedRightShares,
+                pricePerShare: stock_price_per_share,
+                client: currentClient,
+                fund: currentFund
+            }
+        };
+
+    } catch (error) {
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Failed to upload right record'
+        };
     }
 }
 
@@ -654,43 +685,85 @@ export async function uploadRightStaging(currentFund: string, stock_symbol: stri
 }
 
 export async function uploadCash(currentFund: string, currentClient: string, stock_symbol: string, stock_cash_amount: number, stock_book_close: string) {
-    const parsed_date = new Date(stock_book_close)
-
-    const get_fund_id = await prisma.funds.findMany({
-        where: {
-            fund_name: currentFund,
+    try {
+        // Validate inputs
+        if (!currentFund || !currentClient || !stock_symbol || !stock_book_close) {
+            throw new Error('Missing required parameters for cash record upload');
         }
-    })
-    const stock_fund_id = get_fund_id[0].fund_id
 
-    const get_fiscal_id = await prisma.fiscal_years.findMany({
-        where: {
-            start_date: {
-                lte: parsed_date
-            },
-            end_date: {
-                gte: parsed_date
+        if (stock_cash_amount <= 0) {
+            throw new Error('Cash amount must be greater than 0');
+        }
+
+        const parsed_date = new Date(stock_book_close);
+        if (isNaN(parsed_date.getTime())) {
+            throw new Error('Invalid book close date format');
+        }
+
+        // Get fund ID with validation
+        const get_fund_id = await prisma.funds.findMany({
+            where: { fund_name: currentFund }
+        });
+
+        if (!get_fund_id || get_fund_id.length === 0) {
+            throw new Error(`Fund not found: ${currentFund}`);
+        }
+
+        const stock_fund_id = get_fund_id[0].fund_id;
+
+        // Get fiscal year with validation
+        const get_fiscal_id = await prisma.fiscal_years.findMany({
+            where: {
+                start_date: { lte: parsed_date },
+                end_date: { gte: parsed_date }
             }
-        }
-    })
-    const stock_fiscal_id = get_fiscal_id[0].fiscal_year_id
+        });
 
-    await prisma.cash_records.create({
-        data: {
-            fund_id: stock_fund_id,
-            fiscal_year_id: stock_fiscal_id,
-            client_id: currentClient,
-            symbol: stock_symbol,
-            amount: stock_cash_amount,
-            bookclose_date: parsed_date
+        if (!get_fiscal_id || get_fiscal_id.length === 0) {
+            throw new Error(`No fiscal year found for date: ${stock_book_close}`);
         }
-    })
 
-    await prisma.audit_log.create({
-        data: {
-            performed_action: `Uploaded Cash Record for ${currentClient} | Amount: ${stock_cash_amount}`
-        }
-    })
+        const stock_fiscal_id = get_fiscal_id[0].fiscal_year_id;
+
+        // Use transaction to ensure atomicity
+        await prisma.$transaction(async (tx) => {
+            // Create cash record
+            await tx.cash_records.create({
+                data: {
+                    fund_id: stock_fund_id,
+                    fiscal_year_id: stock_fiscal_id,
+                    client_id: currentClient,
+                    symbol: stock_symbol.toUpperCase(),
+                    amount: stock_cash_amount,
+                    bookclose_date: parsed_date
+                }
+            });
+
+            // Create audit log
+            await tx.audit_log.create({
+                data: {
+                    performed_action: `Uploaded Cash Record for ${currentClient} - ${stock_symbol} (Amount: Rs. ${stock_cash_amount})`
+                }
+            });
+        });
+
+        return {
+            success: true,
+            message: 'Cash record uploaded successfully',
+            data: {
+                symbol: stock_symbol,
+                amount: stock_cash_amount,
+                client: currentClient,
+                fund: currentFund
+            }
+        };
+
+    } catch (error) {
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Failed to upload cash record'
+        };
+    }
 }
 
 export async function uploadCashStaging(

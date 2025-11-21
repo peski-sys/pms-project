@@ -478,6 +478,31 @@ exports.Prisma.Fiscal_year_balance_stagingScalarFieldEnum = {
   staging_id: 'staging_id'
 };
 
+exports.Prisma.Stock_transfer_detailsScalarFieldEnum = {
+  detail_id: 'detail_id',
+  transfer_id: 'transfer_id',
+  client_id: 'client_id',
+  transfer_type: 'transfer_type',
+  quantity: 'quantity',
+  from_opening_qty: 'from_opening_qty',
+  from_added_qty: 'from_added_qty',
+  effective_rate: 'effective_rate',
+  created_at: 'created_at'
+};
+
+exports.Prisma.Stock_transfer_recordsScalarFieldEnum = {
+  transfer_id: 'transfer_id',
+  fund_id: 'fund_id',
+  fiscal_year_id: 'fiscal_year_id',
+  symbol: 'symbol',
+  transfer_date: 'transfer_date',
+  initiated_by: 'initiated_by',
+  remarks: 'remarks',
+  total_quantity: 'total_quantity',
+  status: 'status',
+  created_at: 'created_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -523,7 +548,9 @@ exports.Prisma.ModelName = {
   bonus_records_staging: 'bonus_records_staging',
   cash_records_staging: 'cash_records_staging',
   right_records_staging: 'right_records_staging',
-  fiscal_year_balance_staging: 'fiscal_year_balance_staging'
+  fiscal_year_balance_staging: 'fiscal_year_balance_staging',
+  stock_transfer_details: 'stock_transfer_details',
+  stock_transfer_records: 'stock_transfer_records'
 };
 
 /**

@@ -78,11 +78,20 @@ export default function ClientMap() {
         try {
           const userPermission = await getCurrentSessionUser()
           setIsAdmin(userPermission)
-            const response: BrokerClientData[] = await getBrokerClientData();
-            setFetchBrokerClientData(response);
+            const response = await getBrokerClientData();
+            // getBrokerClientData returns array directly, not wrapped in success object
+            if (Array.isArray(response)) {
+                setFetchBrokerClientData(response);
+            } else {
+                toast.error('Failed to load broker client data');
+            }
 
-            const fund_response: fund_data[] = await getFunds()
-            selectlistFunds(fund_response)
+            const fund_response = await getFunds()
+            if (fund_response.success) {
+                selectlistFunds(fund_response.data)
+            } else {
+                toast.error(fund_response.error || 'Failed to load funds');
+            }
         } catch (error) {
             console.error('Error fetching broker client data:', error);
             toast.error('Failed to load broker client data. Please try again.');
@@ -97,10 +106,14 @@ export default function ClientMap() {
 
     const handleUploadNewClient = async (formData: FormData) => {
         try {
-            await uploadNewClient(formData, selectValue);
-            // Refresh the data after successful upload
-            await loadBrokerClientData();
-            toast.success('Client mapping added successfully!');
+            const result = await uploadNewClient(formData, selectValue);
+            if (result.success) {
+                // Refresh the data after successful upload
+                await loadBrokerClientData();
+                toast.success(result.message || 'Client mapping added successfully!');
+            } else {
+                toast.error(result.error || 'Failed to add client mapping');
+            }
         } catch (error) {
             console.error('Error adding client mapping:', error);
             toast.error('Failed to add client mapping. Please try again.');

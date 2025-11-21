@@ -64,7 +64,8 @@ export function BonusDialog({ onSuccess }: BonusDialogProps) {
   const [stagingTotalHoldings, setStagingTotalHoldings] = useState<number>(0)
 
   const fetchFunds = async () => {
-    const fetch_funds: response_funds[] = await getFunds();
+    const fundsResponse = await getFunds();
+    const fetch_funds: response_funds[] = fundsResponse.success ? fundsResponse.data : [];
     setListFunds(fetch_funds)
     // Set first fund as default
     if (fetch_funds.length > 0 && !currentFund) {
@@ -200,22 +201,29 @@ export function BonusDialog({ onSuccess }: BonusDialogProps) {
 
     try {
       setIsLoading(true);
+      let result;
+      
       if (activeTab === 'demat') {
-        await uploadBonus(currentFund, currentClient, stock_symbol, stock_bonus_percent, calculatedBonusShares, book_close, price_per_share)
+        result = await uploadBonus(currentFund, currentClient, stock_symbol, stock_bonus_percent, calculatedBonusShares, book_close, price_per_share)
       } else {
-        await uploadBonusStaging(currentFund, stock_symbol, stock_bonus_percent, calculatedBonusShares, book_close, price_per_share)
+        result = await uploadBonusStaging(currentFund, stock_symbol, stock_bonus_percent, calculatedBonusShares, book_close, price_per_share)
       }
-      toast.success(activeTab === 'demat' ? 'Bonus shares added successfully!' : 'Bonus staging record added successfully!')
-      resetBonusCalculation()
-      setIsOpen(false);
-      onSuccess?.();
-      // Reset form
-      setCurrentFund('');
-      setCurrentClient('');
-      setBonusSymbol('');
-      setBonusPercent(0);
-      setCalculatedBonusShares(0);
-      setActiveTab('demat')
+      
+      if (result.success) {
+        toast.success(result.message || (activeTab === 'demat' ? 'Bonus shares added successfully!' : 'Bonus staging record added successfully!'))
+        resetBonusCalculation()
+        setIsOpen(false);
+        onSuccess?.();
+        // Reset form
+        setCurrentFund('');
+        setCurrentClient('');
+        setBonusSymbol('');
+        setBonusPercent(0);
+        setCalculatedBonusShares(0);
+        setActiveTab('demat')
+      } else {
+        toast.error(result.error || 'Failed to add bonus shares')
+      }
     } catch (error) {
       console.error('Error adding bonus shares:', error)
       toast.error('Failed to add bonus shares. Please try again.')
@@ -227,12 +235,16 @@ export function BonusDialog({ onSuccess }: BonusDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-lg">
+        <Button 
+          className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-lg"
+          data-bonus-dialog-trigger
+          title="Add Bonus (Alt+B)"
+        >
           <TrendingUp className="w-4 h-4 mr-2" />
           Add Bonus
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-emerald-700">
             <TrendingUp className="w-5 h-5" />

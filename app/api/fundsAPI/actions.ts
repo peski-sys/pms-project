@@ -1,43 +1,47 @@
 "use server"
 import { prisma } from "@/lib/db"
 import { revalidatePath } from "next/cache"
-import { toast } from "sonner"
 
 export async function getFunds() {
     try {
         const get_funds = await prisma.funds.findMany()
-        return get_funds
+        return { success: true, data: get_funds }
     } catch (error) {
-        toast.error('Failed to fetch funds');
-        return [];
+        console.error('Failed to fetch funds:', error);
+        return { success: false, error: 'Failed to fetch funds', data: [] };
     }
 }
 
 export async function uploadFund(fundName: string) {
-
-    const doesExist = await prisma.funds.findMany({
-        where: {
-            fund_name: fundName.toUpperCase(),
-        }
-    })
-
-    if(doesExist.length === 0) {
-        const upload_fund = await prisma.funds.create( { 
-            data: {
+    try {
+        const doesExist = await prisma.funds.findMany({
+            where: {
                 fund_name: fundName.toUpperCase(),
             }
-        } )
-
-        await prisma.audit_log.create({
-            data: {
-                performed_action: `Created New Fund: ${upload_fund.fund_name}`
-            }
         })
-        toast.success(`Fund ${upload_fund.fund_name} created successfully`);
-    } else {
-        toast.error('Fund already exists!');
+
+        if(doesExist.length === 0) {
+            const upload_fund = await prisma.funds.create( { 
+                data: {
+                    fund_name: fundName.toUpperCase(),
+                }
+            } )
+
+            await prisma.audit_log.create({
+                data: {
+                    performed_action: `Created New Fund: ${upload_fund.fund_name}`
+                }
+            })
+            
+            revalidatePath('/dashboard/current-funds')
+            return { success: true, message: `Fund ${upload_fund.fund_name} created successfully` };
+        } else {
+            return { success: false, error: 'Fund already exists!' };
+        }
+    } catch (error) {
+        console.error('Failed to upload fund:', error);
+        return { success: false, error: 'Failed to create fund' };
     }
-    revalidatePath('/dashboard/current-funds')
 }
 
 export async function fetchClientsFor(currentFund: string) {

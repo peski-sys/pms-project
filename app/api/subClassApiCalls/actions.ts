@@ -2,7 +2,6 @@
 
 import { prisma } from "@/lib/db"
 import { revalidatePath } from "next/cache"
-import { toast } from "sonner"
 
 export async function getSubClasses() {
     try {

@@ -75,7 +75,7 @@ export async function getListed() {
         
         return stocksWithPromoterSectors
     } catch (error) {
-        console.log('Failed to fetch listed securities');
+        // Return empty array on error - this is a non-critical operation
         return [];
     }
 }
@@ -127,17 +127,17 @@ export async function getNewData() {
                     updatedCount++;
                 } catch (error) {
                     const errorMsg = `Failed to update/insert ${stock.symbol}: ${error instanceof Error ? error.message : 'Unknown error'}`;
-                    console.log(`Failed to update ${stock.symbol}`);
                     errors.push(errorMsg);
                 }
             }
         }
         
-        if (errors.length > 0) {
-            console.log(`Encountered ${errors.length} errors during update`);
-        } else {
-            console.log(`Successfully updated/inserted ${updatedCount} stock records`);
-        }
+        // Create audit log for stock data refresh
+        await prisma.audit_log.create({
+            data: {
+                performed_action: `Stock data refresh completed: ${updatedCount} updated, ${errors.length} errors`
+            }
+        });
         
         return {
             success: true,
@@ -148,7 +148,12 @@ export async function getNewData() {
         
     } catch (error) {
         const errorMessage = `Stock data refresh failed: ${error instanceof Error ? error.message : 'Unknown error'}`;
-        console.log('Stock data refresh failed');
+        // Log error to audit trail
+        await prisma.audit_log.create({
+            data: {
+                performed_action: `Stock data refresh failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+            }
+        });
         
         return {
             success: false,

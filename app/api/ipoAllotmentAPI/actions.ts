@@ -43,28 +43,31 @@ export async function uploadIPOAllotment(currentFund: string, currentClient: str
         const stock_fiscal_id = get_fiscal[0].fiscal_year_id;
         const stock_fund_id = get_fund_id[0].fund_id;
 
-        // Create IPO allotment record
-        await prisma.ipo_allotment_records.create({
-            data: {
-                fund_id: Number(stock_fund_id),
-                client_id: currentClient,
-                symbol: symbol,
-                quantity: stock_quantity,
-                effective_rate: stock_price,
-                added_at: parsed_date,
-                fiscal_year_id: stock_fiscal_id,
-                sub_id: sub_id || 1  // Default to 1 if not provided
-            }
+        // Use transaction to ensure atomicity
+        await prisma.$transaction(async (tx) => {
+            // Create IPO allotment record
+            await tx.ipo_allotment_records.create({
+                data: {
+                    fund_id: Number(stock_fund_id),
+                    client_id: currentClient,
+                    symbol: symbol,
+                    quantity: stock_quantity,
+                    effective_rate: stock_price,
+                    added_at: parsed_date,
+                    fiscal_year_id: stock_fiscal_id,
+                    sub_id: sub_id || 1  // Default to 1 if not provided
+                }
+            });
+
+            // Create audit log
+            await tx.audit_log.create({
+                data: {
+                    performed_action: `Added New IPO Allotment Record for ${currentClient} - ${symbol} (${stock_quantity} shares at Rs. ${stock_price})`
+                }
+            });
         });
 
-        // Create audit log
-        await prisma.audit_log.create({
-            data: {
-                performed_action: `Added New IPO Allotment Record for ${currentClient} - ${symbol} (${stock_quantity} shares at Rs. ${stock_price})`
-            }
-        });
-
-        console.log(`Successfully uploaded IPO allotment record for ${currentClient} - ${symbol}`);
+        // Success - audit log already created above
         return {
             success: true,
             message: 'IPO allotment record uploaded successfully',
@@ -146,38 +149,38 @@ export async function getIPOAllotmentRecords(fundName?: string, fiscalYearId?: n
 
 export async function deleteIPOAllotmentRecord(allotmentId: number) {
     try {
-        // First, get the record details for the audit log
+        // Get record details for safe deletion
         const record = await prisma.ipo_allotment_records.findUnique({
             where: { allotment_id: allotmentId },
-            include: {
-                client_broker_mapping: {
-                    select: { client_name: true }
-                },
-                stock_fulls: {
-                    select: { symbol: true, full_form: true }
-                }
-            }
+            select: { client_id: true, symbol: true, fiscal_year_id: true }
         });
 
         if (!record) {
             throw new Error('IPO allotment record not found');
         }
 
-        // Delete the record
-        await prisma.ipo_allotment_records.delete({
-            where: { allotment_id: allotmentId }
-        });
+        // Use safe deletion function
+        const result = await prisma.$queryRaw`
+            SELECT safe_delete_record(
+                'ipo_allotment_records'::VARCHAR(50),
+                ${allotmentId}::INTEGER,
+                ${record.client_id}::VARCHAR(25),
+                ${record.symbol}::VARCHAR(15),
+                ${record.fiscal_year_id}::INTEGER,
+                false::BOOLEAN
+            ) as result
+        ` as any[];
 
-        // Create audit log
-        await prisma.audit_log.create({
-            data: {
-                performed_action: `Deleted IPO Allotment Record for ${record.client_broker_mapping.client_name} - ${record.stock_fulls.symbol} (${record.quantity} shares at Rs. ${record.effective_rate})`
-            }
-        });
+        const deleteResult = result[0]?.result;
+
+        if (!deleteResult?.success) {
+            throw new Error(deleteResult?.message || 'Safe deletion failed');
+        }
 
         return {
             success: true,
-            message: 'IPO allotment record deleted successfully'
+            message: deleteResult.message,
+            data: deleteResult
         };
 
     } catch (error) {
@@ -262,7 +265,7 @@ export async function uploadIPOAllotmentStaging(currentFund: string, symbol: str
             }
         });
 
-        console.log(`Successfully uploaded IPO allotment staging record for ${symbol}`);
+        // Success - audit log already created above
         return {
             success: true,
             message: 'IPO allotment staging record uploaded successfully',

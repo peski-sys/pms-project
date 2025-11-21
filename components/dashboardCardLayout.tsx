@@ -304,7 +304,10 @@ const fetchSelect = async () => {
                 setSelectedFiscalYear(currentFiscalYear.fiscal_year_id);
             }
             
-            await getLatestLTP();
+            const ltpResult = await getLatestLTP();
+            if (!ltpResult.success) {
+                console.error('Failed to update market snapshots:', ltpResult.error);
+            }
         } else {
             console.warn('No users found in the database');
             // Set a default empty value or handle the empty state

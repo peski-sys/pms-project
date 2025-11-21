@@ -1,7 +1,6 @@
 "use server"
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { toast } from "sonner";
 
 type outputStructure = {
     "UPLOAD_ID": string,
@@ -20,12 +19,12 @@ const microservice_url = process.env.MICROSERVICE_URL
 export async function fileSubmittedMigration(file: File | null) {
     try {
         if (!file) {
-            toast.error('No files provided to fileSubmitted function');
+            console.error('No files provided to fileSubmitted function');
             return { success: false, error: 'No files provided' };
         }
 
         if (!microservice_url) {
-            toast.error('MICROSERVICE_URL is not configured');
+            console.error('MICROSERVICE_URL is not configured');
             return { success: false, error: 'Microservice URL not configured' };
         }
 
@@ -74,8 +73,7 @@ export async function fileSubmittedMigration(file: File | null) {
                             },
                         });
 
-                        toast.success(`Successfully processed Excel file: ${file.name}`);
-                        results.push({ file: file.name, status: 'success', type: 'excel' });
+                        results.push({ file: file.name, status: 'success', type: 'excel', message: `Successfully processed Excel file: ${file.name}` });
 
                     } catch (dbError) {
                         console.error(`Database error while processing ${file.name}:`, dbError);
@@ -126,7 +124,12 @@ export async function confirmSubmissionMigration(given_upload_id: number) {
             return { success: false, error: 'Invalid upload ID provided' };
         }
 
-        console.log(`Confirming submission for upload ID: ${given_upload_id}`);
+        // Create audit log for confirmation process
+        await prisma.audit_log.create({
+            data: {
+                performed_action: `Migration confirmation initiated for upload ID: ${given_upload_id}`
+            }
+        });
 
         // First check if the upload exists and is not already confirmed
         const uploadExists = await prisma.uploads.findUnique({
@@ -159,7 +162,12 @@ export async function confirmSubmissionMigration(given_upload_id: number) {
             },
         });
 
-        console.log(`Successfully confirmed submission for upload ID: ${given_upload_id}`);
+        // Create success audit log
+        await prisma.audit_log.create({
+            data: {
+                performed_action: `Migration confirmation completed successfully for upload ID: ${given_upload_id}`
+            }
+        });
         return { 
             success: true, 
             message: 'Upload confirmed successfully',

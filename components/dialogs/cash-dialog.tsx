@@ -63,7 +63,8 @@ export function CashDialog({ onSuccess }: CashDialogProps) {
   const [stagingTotalHoldings, setStagingTotalHoldings] = useState<number>(0)
 
   const fetchFunds = async () => {
-    const fetch_funds: response_funds[] = await getFunds();
+    const fundsResponse = await getFunds();
+    const fetch_funds: response_funds[] = fundsResponse.success ? fundsResponse.data : [];
     setListFunds(fetch_funds)
     // Set first fund as default
     if (fetch_funds.length > 0 && !currentFund) {
@@ -205,19 +206,26 @@ export function CashDialog({ onSuccess }: CashDialogProps) {
 
     try {
       setIsLoading(true);
+      let result;
+      
       if (activeTab === 'demat') {
-        await uploadCash(currentFund, currentClient, stock_symbol, resolvedAmount, stock_book_close)
+        result = await uploadCash(currentFund, currentClient, stock_symbol, resolvedAmount, stock_book_close)
       } else {
-        await uploadCashStaging(currentFund, stock_symbol, resolvedAmount, stock_book_close)
+        result = await uploadCashStaging(currentFund, stock_symbol, resolvedAmount, stock_book_close)
       }
-      toast.success(activeTab === 'demat' ? 'Cash dividend added successfully!' : 'Cash staging record added successfully!')
-      resetCashCalculation()
-      setIsOpen(false);
-      onSuccess?.();
-      // Reset form
-      setCurrentFund('');
-      setCurrentClient('');
-      setActiveTab('demat')
+      
+      if (result.success) {
+        toast.success(result.message || (activeTab === 'demat' ? 'Cash dividend added successfully!' : 'Cash staging record added successfully!'))
+        resetCashCalculation()
+        setIsOpen(false);
+        onSuccess?.();
+        // Reset form
+        setCurrentFund('');
+        setCurrentClient('');
+        setActiveTab('demat')
+      } else {
+        toast.error(result.error || 'Failed to add cash dividend')
+      }
     } catch (error) {
       console.error('Error adding cash dividend:', error)
       toast.error('Failed to add cash dividend. Please try again.')
@@ -229,12 +237,16 @@ export function CashDialog({ onSuccess }: CashDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg">
+        <Button 
+          className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg"
+          data-cash-dialog-trigger
+          title="Add Cash (Alt+C)"
+        >
           <DollarSign className="w-4 h-4 mr-2" />
           Add Cash
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-orange-700">
             <DollarSign className="w-5 h-5" />

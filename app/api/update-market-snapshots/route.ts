@@ -3,7 +3,7 @@ import { updateMarketSnapshotsLTP } from '@/lib/marketSnapshotAutoUpdate'
 
 export async function GET() {
     try {
-        console.log('Manual market snapshots update triggered via API')
+        // Manual market snapshots update triggered via API
         await updateMarketSnapshotsLTP()
 
         return NextResponse.json({

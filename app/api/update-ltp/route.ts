@@ -7,7 +7,7 @@ import { updateMarketSnapshotsLTP } from '@/lib/marketSnapshotAutoUpdate'
  */
 export async function POST(request: NextRequest) {
   try {
-    console.log('Manual LTP update triggered via API')
+    // Manual LTP update triggered via API
     await updateMarketSnapshotsLTP()
     
     return NextResponse.json({ 

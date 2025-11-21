@@ -230,84 +230,172 @@ export async function getCashRecords(fundName?: string, fiscalYearId?: number) {
   }
 }
 
-// Delete bonus record
+// Delete bonus record using safe deletion system
 export async function deleteBonusRecord(bonusId: number) {
   try {
-    await prisma.bonus_records.delete({
-      where: { bonus_id: bonusId }
+    // Get record details for safe deletion
+    const record = await prisma.bonus_records.findUnique({
+      where: { bonus_id: bonusId },
+      select: { client_id: true, symbol: true, fiscal_year_id: true }
     });
 
-    await prisma.audit_log.create({
-      data: {
-        performed_action: `Deleted bonus record with ID: ${bonusId}`
-      }
-    });
+    if (!record) {
+      throw new Error('Bonus record not found');
+    }
+
+    // Use safe deletion function from fiscalAPI
+    const result = await prisma.$queryRaw`
+      SELECT safe_delete_record(
+        'bonus_records'::VARCHAR(50),
+        ${bonusId}::INTEGER,
+        ${record.client_id}::VARCHAR(25),
+        ${record.symbol}::VARCHAR(15),
+        ${record.fiscal_year_id}::INTEGER,
+        false::BOOLEAN
+      ) as result
+    ` as any[];
+
+    const deleteResult = result[0]?.result;
+
+    if (!deleteResult?.success) {
+      throw new Error(deleteResult?.message || 'Safe deletion failed');
+    }
 
     revalidatePath('/dashboard/manual-stock-history');
-    return { success: true, message: 'Bonus record deleted successfully' };
+    return { 
+      success: true, 
+      message: deleteResult.message,
+      data: deleteResult
+    };
   } catch (error) {
     console.error('Error deleting bonus record:', error);
     throw new Error('Failed to delete bonus record');
   }
 }
 
-// Delete promoter record
+// Delete promoter record using safe deletion system
 export async function deletePromoterRecord(promoterId: number) {
   try {
-    await prisma.promoter_records.delete({
-      where: { promoter_id: promoterId }
+    // Get record details for safe deletion
+    const record = await prisma.promoter_records.findUnique({
+      where: { promoter_id: promoterId },
+      select: { client_id: true, symbol: true, fiscal_year_id: true }
     });
 
-    await prisma.audit_log.create({
-      data: {
-        performed_action: `Deleted promoter record with ID: ${promoterId}`
-      }
-    });
+    if (!record) {
+      throw new Error('Promoter record not found');
+    }
+
+    // Use safe deletion function
+    const result = await prisma.$queryRaw`
+      SELECT safe_delete_record(
+        'promoter_records'::VARCHAR(50),
+        ${promoterId}::INTEGER,
+        ${record.client_id}::VARCHAR(25),
+        ${record.symbol}::VARCHAR(15),
+        ${record.fiscal_year_id}::INTEGER,
+        false::BOOLEAN
+      ) as result
+    ` as any[];
+
+    const deleteResult = result[0]?.result;
+
+    if (!deleteResult?.success) {
+      throw new Error(deleteResult?.message || 'Safe deletion failed');
+    }
 
     revalidatePath('/dashboard/manual-stock-history');
-    return { success: true, message: 'Promoter record deleted successfully' };
+    return { 
+      success: true, 
+      message: deleteResult.message,
+      data: deleteResult
+    };
   } catch (error) {
     console.error('Error deleting promoter record:', error);
     throw new Error('Failed to delete promoter record');
   }
 }
 
-// Delete right record
+// Delete right record using safe deletion system
 export async function deleteRightRecord(rightId: number) {
   try {
-    await prisma.right_records.delete({
-      where: { right_id: rightId }
+    // Get record details for safe deletion
+    const record = await prisma.right_records.findUnique({
+      where: { right_id: rightId },
+      select: { client_id: true, symbol: true, fiscal_year_id: true }
     });
 
-    await prisma.audit_log.create({
-      data: {
-        performed_action: `Deleted right record with ID: ${rightId}`
-      }
-    });
+    if (!record) {
+      throw new Error('Right record not found');
+    }
+
+    // Use safe deletion function
+    const result = await prisma.$queryRaw`
+      SELECT safe_delete_record(
+        'right_records'::VARCHAR(50),
+        ${rightId}::INTEGER,
+        ${record.client_id}::VARCHAR(25),
+        ${record.symbol}::VARCHAR(15),
+        ${record.fiscal_year_id}::INTEGER,
+        false::BOOLEAN
+      ) as result
+    ` as any[];
+
+    const deleteResult = result[0]?.result;
+
+    if (!deleteResult?.success) {
+      throw new Error(deleteResult?.message || 'Safe deletion failed');
+    }
 
     revalidatePath('/dashboard/manual-stock-history');
-    return { success: true, message: 'Right record deleted successfully' };
+    return { 
+      success: true, 
+      message: deleteResult.message,
+      data: deleteResult
+    };
   } catch (error) {
     console.error('Error deleting right record:', error);
     throw new Error('Failed to delete right record');
   }
 }
 
-// Delete cash record
+// Delete cash record using safe deletion system
 export async function deleteCashRecord(cashId: number) {
   try {
-    await prisma.cash_records.delete({
-      where: { cash_id: cashId }
+    // Get record details for safe deletion
+    const record = await prisma.cash_records.findUnique({
+      where: { cash_id: cashId },
+      select: { client_id: true, symbol: true, fiscal_year_id: true }
     });
 
-    await prisma.audit_log.create({
-      data: {
-        performed_action: `Deleted cash record with ID: ${cashId}`
-      }
-    });
+    if (!record) {
+      throw new Error('Cash record not found');
+    }
+
+    // Use safe deletion function
+    const result = await prisma.$queryRaw`
+      SELECT safe_delete_record(
+        'cash_records'::VARCHAR(50),
+        ${cashId}::INTEGER,
+        ${record.client_id}::VARCHAR(25),
+        ${record.symbol}::VARCHAR(15),
+        ${record.fiscal_year_id}::INTEGER,
+        false::BOOLEAN
+      ) as result
+    ` as any[];
+
+    const deleteResult = result[0]?.result;
+
+    if (!deleteResult?.success) {
+      throw new Error(deleteResult?.message || 'Safe deletion failed');
+    }
 
     revalidatePath('/dashboard/manual-stock-history');
-    return { success: true, message: 'Cash record deleted successfully' };
+    return { 
+      success: true, 
+      message: deleteResult.message,
+      data: deleteResult
+    };
   } catch (error) {
     console.error('Error deleting cash record:', error);
     throw new Error('Failed to delete cash record');

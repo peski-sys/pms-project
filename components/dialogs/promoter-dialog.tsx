@@ -67,7 +67,8 @@ export function PromoterDialog({ onSuccess }: PromoterDialogProps) {
   const [listSubClasses, setListSubClasses] = useState<SubClass[]>()
 
   const fetchFunds = async () => {
-    const fetch_funds: response_funds[] = await getFunds();
+    const fundsResponse = await getFunds();
+    const fetch_funds: response_funds[] = fundsResponse.success ? fundsResponse.data : [];
     setListFunds(fetch_funds)
     // Set first fund as default
     if (fetch_funds.length > 0 && !currentFund) {
@@ -138,14 +139,19 @@ export function PromoterDialog({ onSuccess }: PromoterDialogProps) {
 
     try {
       setIsLoading(true);
-      await uploadPromoter(currentFund, currentClient, stock_symbol, stock_quantity, stock_price, stock_added_at, parseInt(currentSubClass))
-      toast.success('Promoter shares added successfully!')
-      setIsOpen(false);
-      onSuccess?.();
-      // Reset form
-      setCurrentFund('');
-      setCurrentClient('');
-      setCurrentSubClass('');
+      const result = await uploadPromoter(currentFund, currentClient, stock_symbol, stock_quantity, stock_price, stock_added_at, parseInt(currentSubClass))
+      
+      if (result.success) {
+        toast.success(result.message || 'Promoter shares added successfully!')
+        setIsOpen(false);
+        onSuccess?.();
+        // Reset form
+        setCurrentFund('');
+        setCurrentClient('');
+        setCurrentSubClass('');
+      } else {
+        toast.error(result.error || 'Failed to add promoter shares')
+      }
     } catch (error) {
       console.error('Error adding promoter shares:', error)
       toast.error('Failed to add promoter shares. Please try again.')
@@ -157,12 +163,16 @@ export function PromoterDialog({ onSuccess }: PromoterDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg">
+        <Button 
+          className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg"
+          data-promoter-dialog-trigger
+          title="Add Promoter (Alt+P)"
+        >
           <Users className="w-4 h-4 mr-2" />
           Add Promoter
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-purple-700">
             <Users className="w-5 h-5" />
